@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
-@
+
 public class Member {
 	private String member_id;
 	private String password;

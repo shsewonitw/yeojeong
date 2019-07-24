@@ -1,48 +1,50 @@
 @charset "UTF-8";
 
 * { margin:0px;padding:0px;}
-ul { list-style:none;}
+ul { list-style:none; height: 100%;}
 a { text-decoration:none;}
 img { border:none; vertical-align:top;}
 
 .carousel{
-    width: 40%;
+    width: 100%;
 	height:50%;
 	margin-top: 3%;
-	margin-left: 28%;
 	overflow : hidden;
 }
 
 .carousel .view{
-    width: 100%; margin: 0 auto;
+    width: 33%; margin: 0 auto;
     overflow: hidden;
-    height: 100%;
+    height: 50%;
 }
+
+.carousel .view .list > li ul li.a1{height: 100%; }
+.carousel .view .list > li ul li.a2{height: 100%; }
+.carousel .view .list > li ul li.a3{height: 100%; }
+.carousel .view .list > li ul li.a4{height: 100%; }
+.carousel .view .list > li ul li.a5{height: 100%;}
+.carousel .view .list > li ul li.a6{height: 100%;}
+.carousel .view .list > li ul li.a7{height: 100%; }
+.carousel .view .list > li ul li.a8{height: 100%; }
+.carousel .view .list > li ul li.a9{height: 100%; }
 
 .carousel .view .list{
     width: 2000px; margin-left: -450px;
+    height: 100%;
 }
 .carousel .view .list:after{content: "";display: block;clear: both;}
 
 .carousel .view .list > li{
+	height: 100%;
     float:left;
 }
-.carousel .view .list > li ul:after{content: "";display: block;clear: both;}
+.carousel .view .list > li ul:after{content: "";display: block;clear: both; }
 
 .carousel .view .list > li ul li{
     float: left;
-    width: 200px; height: 150px;
+    width: 200px; height: 100%;
     margin-left: 10px; margin-right: 10px;
 }
-.carousel .view .list > li ul li.a1{background-color: red;} 
-.carousel .view .list > li ul li.a2{background-color: green;} 
-.carousel .view .list > li ul li.a3{background-color: gray;} 
-.carousel .view .list > li ul li.a4{background-color: darkgray;} 
-.carousel .view .list > li ul li.a5{background-color: firebrick;} 
-.carousel .view .list > li ul li.a6{background-color: purple;} 
-.carousel .view .list > li ul li.a7{background-color: orange;} 
-.carousel .view .list > li ul li.a8{background-color: blue;} 
-.carousel .view .list > li ul li.a9{background-color: blueviolet;} 
 
 .carousel .prev{
     position: absolute; width: 25px; height: 50px; background-color: #000; color:#fff;

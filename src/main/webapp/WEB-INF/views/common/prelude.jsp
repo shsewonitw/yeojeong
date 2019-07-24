@@ -46,7 +46,7 @@
 	    </ul>
 	   </li>
 	 <li><a href="#" ><b class="menu_font">같이갈래?</b></a></li>
-	 <li><a href="#"><b class="menu_font">여행자들의 웃음(여행후기)</b></a></li>
+	 <li><a href="<%=request.getContextPath()%>/review"><b class="menu_font">여행자들의 웃음(여행후기)</b></a></li>
 	 <li><a href="#"><b class="menu_font">자주 묻는 질문</b></a></li>
 	</ul>
 	</div>

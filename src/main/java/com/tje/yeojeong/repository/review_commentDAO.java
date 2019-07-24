@@ -56,5 +56,9 @@ public class Review_CommentDAO {
 				new Review_CommentRowMapper(), model.getArticle_id());				
 	}
 
-
+	// 댓글 수정
+	public int update(Review_Comment model) {
+		return this.jdbcTemplate.update("update review_comment where comment_id = ? and write_time is ",
+				new Review_CommentRowMapper(), model.getArticle_id());				
+		}
 }

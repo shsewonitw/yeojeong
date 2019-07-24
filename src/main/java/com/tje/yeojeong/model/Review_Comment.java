@@ -7,12 +7,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 
 public class Review_Comment {
-	public int comment_id;
-	public String member_id;
-	public int article_id;
-	public String content;
+	private int comment_id;
+	private String member_id;
+	private int article_id;
+	private String content;
 	@DateTimeFormat
-	public Date write_time;
+	private Date write_time;
 
 	public Review_Comment() {
 	}

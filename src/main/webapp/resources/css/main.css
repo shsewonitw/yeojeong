@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+@import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+
 boby{
 	height: 100%;
 }
@@ -39,9 +41,23 @@ video {
 
 
 .monthTravel{
-	background-color : pink;
 	width: 20%;
 	height: 5%;
 	margin-top: 3%;
-	margin-left: 50%;
+	margin-left: 40%;
+	font-size: 30px;
+	overflow : hidden;
+	font-family: 'Nanum Brush Script', cursive;
 }
+
+/*
+.carousel{
+	width: 40%;
+	height:50%;
+	margin-top: 3%;
+	margin-left: 28%;
+	overflow : hidden;
+	background-color: pink;
+}
+*/
+

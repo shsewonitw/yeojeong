@@ -30,9 +30,7 @@ th, td {
 </style>
 </head>
 <body>
-	<script type="text/javascript">
-		alert(2);
-	</script>
+	
 
 	<div style="height: 25%;"></div>
 			<div

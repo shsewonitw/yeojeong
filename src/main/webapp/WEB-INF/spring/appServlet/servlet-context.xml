@@ -25,9 +25,9 @@
 	
 	<context:component-scan base-package="com.tje.yeojeong" />
 		
-	<context:component-scan base-package="com.tje.webapp.repository" />
-	<context:component-scan base-package="com.tje.webapp.service" />
-	<context:component-scan base-package="com.tje.webapp.controller" />
+	<context:component-scan base-package="com.tje.yeojeong.service" />
+	<context:component-scan base-package="com.tje.yeojeong.controller" />
+	<context:component-scan base-package="com.tje.yeojeong.repository" />
 	
 	
 </beans:beans>

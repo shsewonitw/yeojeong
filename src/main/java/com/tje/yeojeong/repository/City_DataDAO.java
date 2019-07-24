@@ -70,4 +70,47 @@ public class City_DataDAO {
 
 		return keyHolder.getKey().intValue();
 	}
+	
+	// 여행지 데이터 수정
+	public int update(City_Data model) {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		this.jdbcTemplate.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+
+				PreparedStatement pstmt = con.prepareStatement(
+						"update city_data set country = ?, city = ?, flight_time = ?, local_voltage = ?,"
+						+ "visa = ?, latitude = ?, logitude = ?, danger_level = ? where city_code = ?");
+				pstmt.setString(1, model.getCountry());
+				pstmt.setString(2, model.getCity());
+				pstmt.setString(4, model.getFlight_time());
+				pstmt.setString(5, model.getLocal_voltage());
+				pstmt.setString(6, model.getVisa());
+				pstmt.setString(7, model.getLatitude());
+				pstmt.setString(8, model.getLogitude());
+				pstmt.setString(9, model.getDanger_levelString());
+				pstmt.setInt(10, model.getCity_code());
+				return pstmt;
+			}
+		}, keyHolder);
+
+		return keyHolder.getKey().intValue();
+	}
+	
+	// 여행지 데이터 삭제
+	public int delete(City_Data model) {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		this.jdbcTemplate.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+
+				PreparedStatement pstmt = con.prepareStatement(
+						"delete from city_data where city_code = ?");
+				pstmt.setInt(1, model.getCity_code());
+				return pstmt;
+			}
+		}, keyHolder);
+
+		return keyHolder.getKey().intValue();
+	}
 }

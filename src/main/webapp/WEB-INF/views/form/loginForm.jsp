@@ -13,31 +13,73 @@
 
 <title>로그인 화면</title>
 
-<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="resources/css/kh_bootstrap.min.css?asd=asdda"
+	rel="stylesheet">
 <script type="text/javascript" src="resources/js/jquery.js"></script>
-<script src="resources/js/bootstrap.min.js"></script>
+<script src="resources/js/kh_bootstrap.min.js"></script>
 
+
+<style type="text/css">
+th, td {
+	padding-bottom: 8px;
+}
+
+.img_attr {
+	height: 45%;
+}
+</style>
 </head>
 <body>
-	r 52 g 152 b 219
+	<script type="text/javascript">
+		alert(2);
+	</script>
 
-	<form:form modelAttribute="member">
+	<div style="height: 25%;"></div>
+			<div
+				style="color: rgb(52, 152, 219); margin: auto; font-family: sans-serif; font-size: 30px; text-align: center; ">
+				<img
+					style="width: auto; height: auto; max-width: 100px; max-height: 100px;"
+					src="<%=request.getContextPath()%>/resources/images/logo.png"
+					alt="logo"> <b>여정 로그인&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+		</div>
+	<form:form modelAttribute="member" class="form-inline">
 
-		<table>
-		<tr>
-				<th style="color: rgb(52,152,219); font-family: sans-serif;">여정 로그인</th>
+		<table style="margin: auto;">
+
+			<tr>
+				<th>
+					<div class="input-group" style="width: 100%">
+						<div class="input-group-addon">
+							<img class="img_attr"
+								src="<%=request.getContextPath()%>/resources/images/login_id.png"
+								alt="login_id">
+						</div>
+						<form:input class="form-control" path="member_id"
+							placeholder="아이디" />
+					</div>
+				</th>
 			</tr>
 			<tr>
-				<th><form:input path="member_id" /></th>
+				<th>
+					<div class="input-group" style="width: 100%">
+						<div class="input-group-addon">
+							<img class="img_attr"
+								src="<%=request.getContextPath()%>/resources/images/login_password.png"
+								alt="login_password">
+						</div>
+						<form:password class="form-control" path="password"
+							placeholder="비밀번호" />
+					</div>
+				</th>
 			</tr>
 			<tr>
-				<th><form:password path="password" /></th>
+				<td><label><input type="checkbox" style=""
+						name="rememberID" /> 아이디 저장</label></td>
 			</tr>
 			<tr>
-				<th><inputcheckbox path="checkbox" label="아이디 저장" /></th>
-			</tr>
-			<tr>
-				<th><input type="submit" value="로그인"></th>
+				<th>
+					<button style="width: 100%" type="button" class="btn btn-primary">로그인</button>
+				</th>
 			</tr>
 			<tr>
 				<th>네이버</th>

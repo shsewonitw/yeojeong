@@ -1,9 +1,9 @@
 package com.tje.yeojeong.model;
 
 public class QA_Article {
-	public int articled_id;
-	public String title;
-	public String content;
+	private int articled_id;
+	private String title;
+	private String content;
 
 	public QA_Article() {
 	}

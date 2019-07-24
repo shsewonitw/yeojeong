@@ -6,7 +6,10 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.tje.yeojeong.model.*;
@@ -35,10 +38,10 @@ public class Like_ThumbDAO {
 				Integer.class, model.getArticle_id());
 	}
 	
-	// 좋아요 기능
-	public Like_Thumb inputLike(Like_Thumb model) {
-		return this.jdbcTemplate.queryForObject("select * from review_article where member_id = ? order by article_id = ?", new Like_ThumbRowMapper(),
+	// 좋아요 클릭
+	public Like_Thumb insertLike(Like_Thumb model) {
+		return this.jdbcTemplate.queryForObject("insert into like_thumb values(?, ?)", new Like_ThumbRowMapper(),
+				model.getArticle_id(),
 				model.getMember_id());
 	}
-	
 }

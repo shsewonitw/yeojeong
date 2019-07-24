@@ -1,5 +1,8 @@
 @charset "UTF-8";
 
+boby{
+	height: 100%;
+}
 
 video {
 	top: 0;
@@ -25,11 +28,20 @@ video {
 }
 
 .tophegiht{
-	height: 17%;
+	height: 170px;
 	width: 100%;
 }
 
 .imgsize{
 	height: 60%;
 	width: 20%;
+}
+
+
+.monthTravel{
+	background-color : pink;
+	width: 20%;
+	height: 5%;
+	margin-top: 3%;
+	margin-left: 50%;
 }

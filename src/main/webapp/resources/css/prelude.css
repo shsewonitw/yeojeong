@@ -4,6 +4,7 @@
 
 <!------------------>
 
+
 .dropmenu{
 border:none;
 border:0px;
@@ -11,7 +12,6 @@ margin:0px;
 padding:0px;
 font: "sans-serif";
 font-size:18px;
-overflow-x:hidden;overflow-y:hidden
 }
 
 .dropmenu ul{
@@ -107,12 +107,11 @@ clear:left;
 }
 
 .main_menu{
-	width : 55%;
+	width : 1100px;
 	margin: 0 auto;
+	overflow: hidden;
 	
 }
-
-
 
 .menu_font{
      font-family: 'Nanum Pen Script', cursive;

@@ -33,7 +33,7 @@ public class QA_articleDAO {
 		}
 	}
 	// 글 리스트
-	public List<QA_Article> selectAll(int page){
+	public List<QA_Article> selectAll(){
 		List<QA_Article> result = this.jdbcTemplate.query("select * from qa_article",
 				new QA_articleRowMapper());
 		

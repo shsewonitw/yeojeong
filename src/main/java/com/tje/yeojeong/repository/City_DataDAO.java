@@ -1,0 +1,73 @@
+package com.tje.yeojeong.repository;
+
+import java.sql.*;
+import java.util.*;
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
+
+import com.tje.yeojeong.model.*;
+
+@Repository
+public class City_DataDAO {
+	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	public City_DataDAO(DataSource dataSource) {
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	}
+	
+	class City_DataRowMapper implements RowMapper<City_Data> {
+		public City_Data mapRow(ResultSet rs, int rowNum) throws SQLException {
+			City_Data city_data = new City_Data(
+				rs.getInt(1), 			// city_code
+				rs.getString(2),		// country
+				rs.getString(3), 		// city
+				rs.getTimestamp(4), 	// local_time
+				rs.getString(5), 		// flight_time
+				rs.getString(6),		// local_voltage
+				rs.getString(7),		// visa
+				rs.getString(8),		// latitude
+				rs.getString(9),		// logitude
+				rs.getInt(10));			// danger_level
+			return city_data;
+		}
+	}
+
+	public List<City_Data> selectAll(int page) {
+		List<City_Data> result = this.jdbcTemplate.query("select * from city_data", new City_DataRowMapper());
+
+		return result.isEmpty() ? null : result;
+	}
+	
+	// 여행지 데이터 입력
+	public int insert(City_Data model) {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		this.jdbcTemplate.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+
+				PreparedStatement pstmt = con.prepareStatement(
+						"insert into city_data values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?)", new String[] { "city_code" });
+				pstmt.setString(1, model.getCountry());
+				pstmt.setString(2, model.getCity());
+				pstmt.setString(4, model.getFlight_time());
+				pstmt.setString(5, model.getLocal_voltage());
+				pstmt.setString(6, model.getVisa());
+				pstmt.setString(7, model.getLatitude());
+				pstmt.setString(8, model.getLogitude());
+				pstmt.setString(9, model.getDanger_levelString());
+				return pstmt;
+			}
+		}, keyHolder);
+
+		return keyHolder.getKey().intValue();
+	}
+}

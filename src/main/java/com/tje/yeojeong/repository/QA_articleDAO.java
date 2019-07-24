@@ -1,6 +1,7 @@
 package com.tje.yeojeong.repository;
 
 import java.sql.*;
+import java.util.*;
 
 import com.tje.yeojeong.model.*;
 
@@ -22,7 +23,7 @@ public class QA_articleDAO {
 	}
 	
 	// RowMap 사용
-	class QA_articleMapper implements RowMapper<QA_Article> {
+	class QA_articleRowMapper implements RowMapper<QA_Article> {
 		public QA_Article mapRow(ResultSet rs, int rowNum) throws SQLException{
 			QA_Article qArticle = new QA_Article(
 					rs.getInt(1),      // article_id 
@@ -31,6 +32,13 @@ public class QA_articleDAO {
 			return qArticle;
 		}
 	}
+	// 글 리스트
+	public List<QA_Article> selectAll(){
+		List<QA_Article> result = this.jdbcTemplate.query("select * from qa_article",
+				new QA_articleRowMapper());
+		
+		return result.isEmpty() ? null : result;
+	}	
 	
 	// 글 등록
 	public int insert(QA_Article model) {
@@ -42,7 +50,7 @@ public class QA_articleDAO {
 	// 글 삭제
 	public int delete(QA_Article model) {
 		return this.jdbcTemplate.update("delete from qa_article where article_id = ?",
-				new QA_articleMapper(), model.getArticled_id());
+				new QA_articleRowMapper(), model.getArticled_id());
 				
 	}
 }

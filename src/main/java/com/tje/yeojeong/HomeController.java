@@ -36,4 +36,8 @@ public class HomeController {
 		return "form/receiveForm";
 	}
 	
+	@RequestMapping(value = "/qaarticleForm")
+	public String qaarticleForm() {
+		return "form/qaarticleForm";
+	}
 }

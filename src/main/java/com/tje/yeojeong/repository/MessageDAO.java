@@ -136,6 +136,23 @@ public class MessageDAO {
 		return keyHolder.getKey().intValue();
 	}
 	
+	// 메세지 삭제
+	public int delete(Message model) {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		this.jdbcTemplate.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+
+				PreparedStatement pstmt = con.prepareStatement(
+						"delete from message where message_id = ?");
+				pstmt.setInt(1, model.getMessage_id());
+				return pstmt;
+			}
+		}, keyHolder);
+
+		return keyHolder.getKey().intValue();
+	}
+	
 	// 메세지 수신확인 표시
 	public int updateReceiveTime(Message model) {
 		return this.jdbcTemplate.update(

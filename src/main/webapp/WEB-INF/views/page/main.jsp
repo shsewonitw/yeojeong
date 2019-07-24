@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/main.css">
+	
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
+	
+	
+	
+	
 	<div id="main" class="scroll-container">
 	
 		<section class="section1">
@@ -14,18 +20,15 @@
 		
 		<section class="section2">
 		<div class="tophegiht"></div>
-		
-		<div>
-			<span><img src="<%=request.getContextPath() %>/resources/img/1.png" class="imgsize"></span>
-			<span><img src="<%=request.getContextPath() %>/resources/img/2.png" class="imgsize"></span>
-			<span><img src="<%=request.getContextPath() %>/resources/img/3.png" class="imgsize"></span>
-			</div>
-		</section>
+        <div class="monthTravel">이 달의 추천 여행지</div>
+            
+ 
+      </section>
 		
 		
 		<section class="section3">
 			<div class="tophegiht"></div>
-			<h2>3페이지</h2>
+			
 		</section>
 		
 		

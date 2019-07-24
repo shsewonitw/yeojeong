@@ -32,11 +32,11 @@
 	</script>
 </head>
 <body>
-<div class="dropmenu" style="z-index:100;position:absolute; background-color:black; width:100%; height:17%; opacity:0; transition:all 0.4s ease-out;" id="menu">
+<div class="dropmenu" style="z-index:100;position:absolute; background-color:black; width:100%; height:170px; opacity:0; transition:all 0.4s ease-out;" id="menu">
 <a href="<%= request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/img/test1.png" style="height: 50%;"></a>
 	<a href="#" class="login_link">로그인</a> 
 	<a href="#" class="regist_link">회원가입</a>
-	<div class="main_menu" style="overflow:hidden;">
+	<div class="main_menu">
 	<ul>
 	 <li><a href="<%= request.getContextPath()%>"><b class="menu_font">Home</b></a></li>
 	 <li><a href="#" ><b class="menu_font">여행</b></a>

@@ -22,7 +22,6 @@
 	</beans:bean>
 	
 	<beans:bean class="com.tje.yeojeong.setting.PagingInfo" />
-	
 	<context:component-scan base-package="com.tje.yeojeong" />
 		
 	<context:component-scan base-package="com.tje.yeojeong.service" />

@@ -32,7 +32,7 @@
 	</script>
 </head>
 <body>
-<div class="dropmenu" style="z-index:100;position:absolute; background-color:black; width:100%; height:170px; opacity:0; transition:all 0.4s ease-out;" id="menu">
+<div class="dropmenu" style="z-index:100;position:absolute; background-color:black; width:100%; height:170px; opacity:0.2; transition:all 0.4s ease-out;" id="menu">
 <a href="<%= request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/img/test1.png" style="height: 50%;"></a>
 	<a href="#" class="login_link">로그인</a> 
 	<a href="#" class="regist_link">회원가입</a>

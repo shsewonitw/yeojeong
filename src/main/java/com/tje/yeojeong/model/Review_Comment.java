@@ -11,7 +11,7 @@ public class Review_Comment {
 	private String member_id;
 	private int article_id;
 	private String content;
-	@DateTimeFormat
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date write_time;
 
 	public Review_Comment() {

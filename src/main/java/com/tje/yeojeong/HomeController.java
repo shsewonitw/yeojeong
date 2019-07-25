@@ -33,11 +33,11 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "form/receiveForm";
+		return "page/main";
 	}
 	
 	@RequestMapping(value = "/qaarticleForm")
 	public String qaarticleForm() {
-		return "form/qaarticleForm";
+		return "form/main";
 	}
 }

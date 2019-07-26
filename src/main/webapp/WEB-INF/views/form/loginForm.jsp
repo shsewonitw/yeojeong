@@ -45,6 +45,7 @@ th, td {
 					src="<%=request.getContextPath()%>/resources/images/logo.png"
 					alt="logo"> <b>여정 로그인&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
 		</div>
+		
 	<form:form modelAttribute="member" class="form-inline">
 
 		<table style="margin: auto;">
@@ -77,11 +78,11 @@ th, td {
 			</tr>
 			<tr>
 				<td><label><input type="checkbox" style=""
-						name="rememberID" /> 아이디 저장</label></td>
+						name="rememberID" ${cookie.rememberID.value != null ? "checked" : "" }/> 아이디 저장</label></td>
 			</tr>
 			<tr>
 				<th>
-					<button style="width: 100%" type="button" class="btn btn-primary">로그인</button>
+					<button style="width: 100%" type="submit" class="btn btn-primary">로그인</button>
 				</th>
 			</tr>
 			<tr>

@@ -11,11 +11,11 @@ public class Member {
 	private String password;
 	private String name;
 	private int gender;
-	@DateTimeFormat
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date birth;
 	private String tel;
 	private String email;
-	@DateTimeFormat
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date regist_date;
 	private int level;
 

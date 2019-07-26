@@ -18,7 +18,6 @@
 <script src="resources/js/kh_bootstrap.min.js"></script>
 
 <style type="text/css">
-
 .form-control {
 	border-radius: 4px 4px 4px 4px;
 	border-left-color: #ccc;
@@ -58,17 +57,118 @@
 	var emailCheck_1 = /\s/g;
 	var emailCheck_2 = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 	
-	var telCheck_1 = ^(0|1);
-	var telCheck_2 = /\s/g;
-	var telCheck_3 = /^[0-9]{19,19}$/;
+	var telCheck_1 = /\s/g;
+	var telCheck_2 = /^[0-9]{11,11}$/;
 	
 	
 	
 	var send_email_code = "";
 	$(function() {
+// 		````````````````````이메일 인증 관련//
+
+		
+$("#regist_btn").on("click",function(){
+	
+			var all_flag = false;
+			
+					
+					if(!flag_id){
+						alert("아이디를 확인하세요");
+						$("#member_id").focus();
+						all_flag = false;
+						return;
+					}else if(!flag_password){
+						alert("패스워드를  확인하세요.");
+						$("#password").focus();
+						all_flag = false;
+						return;
+					}else if(!flag_name){
+						alert("이름을  확인하세요.");
+						$("#name").focus();
+						all_flag = false;
+						return;
+					}else if(!flag_year){
+						alert("(년)을  확인하세요.");
+						$("#year").focus();
+						all_flag = false;
+						return;
+					}else if(!flag_month){
+						alert("(월)을  확인하세요.");
+						$("#month").focus();
+						all_flag = false;
+						return;
+					}else if(!flag_day){
+						alert("(일)을  확인하세요.");
+						$("#day").focus();
+						all_flag = false;
+						return;
+					}else if(!flag_email){
+						alert("이메일을  확인하세요.");
+						$("#email").focus();
+						all_flag = false;
+						return;
+					}else if(!flag_email_Certified){
+						alert("이메일인증을  확인하세요.");
+						all_flag = false;
+						return;
+					}else if(!flag_tel){
+						alert("휴대전화를  확인하세요.");
+						$("#tel").focus();
+						all_flag = false;
+						return;
+					}
+					all_flag = true;
+					var member = new Object();
+					
+					member.member_id = $("#member_id").val();
+					member.password = $("#password").val();
+					member.name = $("#name").val();
+					member.gender = $('input[name="gender"]:checked').val();
+// 					날짜 포맷
+					var birth = $("#year").val()+"-"+$("#month").val() +"-" + $("#day").val();
+			        console.log(birth);
+			        member.birth = birth;
+			        
+					member.email = $("#email").val();
+					member.tel = $("#tel").val();
+					
+					var memberJsonObject = JSON.stringify(member);
+					alert(memberJsonObject);
+				
+			if(all_flag){
+				$.ajax({
+					url : "<%=request.getContextPath()%>/regist",
+					type : "post",
+					contentType : "application/json; charset=UTF-8",
+					data : memberJsonObject,
+					dataType : "text",
+					success : function(data) {
+						alert(data);
+						alert(member.name +"님 회원가입 성공. 로그인 페이지로 이동합니다.");
+						
+						if(eval(data)){
+							window.location.href = 'http://localhost:8080/yeojeong/login';
+						}else{
+							alert("회원가입 실패(관리자에게 문의하세요.)");
+						}
+					},
+					error : function(data) {
+						alert("통신오류(관리자에게 문의하세요.)");
+					}
+				});
+			};
+});
+			
+// 		``````````````````````````//
+		
+		
+		
+		
+		
+// 		`````````````````월 입력 이벤트//
 		$('#month').change(function() {
 		    var month = $(this).val();
-		    if(month==""){
+		    if(month=="0"){
 		    	$("#span_ymd").css("color", "red")
 				$("#span_ymd").text("월을 정확히 입력하세요.");
 		    	flag_month = false;
@@ -81,7 +181,16 @@
 		   
 		});
 		$("#email_ac").on("focusout",function(){
+			
 			var email_ac = $("#email_ac").val();
+			if(email_ac==""){
+				$("#span_email_ac").text("코드를 입력하세요.");
+				   $("#span_email_ac").css("color","red")
+					flag_email_Certified = false;
+				   return;
+			}
+			
+			
 			if(email_ac== send_email_code){
 				$("#span_email_ac").text("코드 일치");
 				$("#time_ac").text("");
@@ -94,7 +203,7 @@
 			}
 			
 		});
-		
+// 		````````````````````````````//
 		
 		
 		
@@ -114,8 +223,11 @@
 				}
 		        msLeft = endTime - (+new Date);
 		        if ( msLeft < 1000 ) {
+		        	
 		            element.innerHTML = "인증번호를 다시 발급받으세요.";
+		        	send_email_code = "";
 		            flag_email_Certified = false;
+		            		            
 		            $("#span_email_ac").css("color","red");
 		        } else {
 		            time = new Date( msLeft );
@@ -137,7 +249,6 @@
 			var email = $("#email").val();
 			 $("#span_email_ac").text("");
 			countdown("time_ac", 3, 0 );
-			alert(1);
 			$.ajax({
 				url : "<%=request.getContextPath()%>/sendMail",
 				type : "post",
@@ -153,9 +264,7 @@
 			});
 		});
 		
-		function email_click(){
-			
-		};
+		
 		
 	});
 // ````````````````````//
@@ -231,7 +340,6 @@
 			flag_password = false;
 			return;
 		} else {
-			var password = $("#password").val();
 			flag_password = true;
 			$("#span_password").css("color", "blue")
 			$("#span_password").text("사용 가능한 패스워드입니다.");
@@ -255,7 +363,6 @@
 			flag_name = false;
 			return;
 		} else {
-			var name = $("#name").val();
 			flag_name = true;
 			$("#span_name").css("color", "blue")
 			$("#span_name").text("사용 가능한 이름입니다.");
@@ -278,10 +385,14 @@
 			flag_year = false;
 			return;
 		} else {
-			var year = $("#year").val();
 			flag_year = true;
 			$("#span_ymd").css("color", "blue")
 			$("#span_ymd").text("사용 가능한 년도입니다.");
+			var month = $("#month").val();
+			if(month=="0"){
+				$("#span_ymd").css("color", "red")
+				$("#span_ymd").text("월을 입력하세요");
+			}
 		}
 	};
 	function day_keyup() {
@@ -301,13 +412,20 @@
 			flag_day = false;
 			return;
 		} else {
-			var year = $("#day").val();
 			flag_day = true;
 			$("#span_ymd").css("color", "blue")
 			$("#span_ymd").text("사용 가능한 일입니다.");
+			var month = $("#month").val();
+			if(month=="0"){
+				$("#span_ymd").css("color", "red")
+				$("#span_ymd").text("월을 입력하세요");
+			}
 		}
 	};
+// 	```````````````이메일검사//
 	function email_keyup() {
+	
+	
 		if ($("#email").val() == "") {
 			$("#span_email").text("이메일을 입력하세요.");
 			$("#span_email").css("color", "red")
@@ -324,12 +442,37 @@
 			flag_email = false;
 			return;
 		} else {
-			var year = $("#email").val();
-			flag_email = true;
-			$("#span_email").css("color", "blue")
-			$("#span_email").text("이메일 형식이 맞습니다.");
-		}
+			var email = $("#email").val();
+			$.ajax({
+				url : "<%=request.getContextPath()%>/searchEmail",
+				type : "post",
+				data : "email=" + email,
+				dataType : "text",
+				success : function(data) {
+					if (eval(data)) {
+						flag_email = true;
+						$("#span_email").css("color", "blue");
+						$("#span_email").text("사용 가능한 이메일입니다.");
+					} else {
+						flag_email = false;
+						$("#span_email").text("이미 사용중인 이메일 입니다.");
+					}
+				},
+				error : function(data) {
+					alert("통신오류(관리자에게 문의하세요.)");
+				}
+			});
+		} 
+		
+		
+		
+		
+		
+		
+		
+		
 	};
+// 	```````````````````````````//
 	function tel_keyup() {
 		if ($("#tel").val() == "") {
 			$("#span_tel").text("전화번호를 입력하세요.");
@@ -337,39 +480,22 @@
 			flag_tel = false;
 			return;
 		} else if (telCheck_1.test($("#tel").val())) {
-			$("#span_tel").text("010, 011 로 시작해야합니다.");
-			$("#span_tel").css("color", "red")
-			flag_tel = false;
-			return;
-		} else if (telCheck_2.test($("#tel").val())) {
 			$("#span_tel").text("공백을 포함하지 않습니다.");
 			$("#span_tel").css("color", "red")
 			flag_tel = false;
 			return;
-		} else if (!telCheck_3.test($("#tel").val())) {
-			$("#span_tel").text("전화번호 19자리를 확인하세요.");
+		} else if (!telCheck_2.test($("#tel").val())) {
+			$("#span_tel").text("전화번호 11자리를 확인하세요.");
 			$("#span_tel").css("color", "red")
 			flag_tel = false;
 			return;
 		} else {
-			var year = $("#email").val();
+			var year = $("#tel").val();
 			flag_tel = true;
 			$("#span_tel").css("color", "blue")
-			$("#span_tel").text("전화번호 19자리를 확인하세요.");
+			$("#span_tel").text("사용 가능한 전화번호입니다.");
 		}
 	};
-	
-	
-	
-
-	
-	
-	
-	
-	
-
-	
-	
 </script>
 </head>
 <body>
@@ -405,10 +531,9 @@
 					style="color: red;"></span></th>
 			</tr>
 			<tr>
-				<th style="text-align: center;" colspan="3"><form:radiobutton
-						path="gender" value="1" label="남자" />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <form:radiobutton path="gender"
-						value="2" label="여자" /></th>
+				<th style="text-align: center;" colspan="3"><label><input
+						type="radio" name="gender" value="1" checked />남자</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<label><input type="radio" name="gender" value="2" />여자</label></th>
 			</tr>
 
 			<tr>
@@ -417,7 +542,7 @@
 					onkeyup="year_keyup();" /></th>
 				<th style="width: 100px"><select style="" id="month"
 					class="form-control" name="month">
-						<option value="" selected="selected">월</option>
+						<option value="0" selected="selected">월</option>
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -436,46 +561,44 @@
 					onkeyup="day_keyup();" /></th>
 			</tr>
 			<tr>
-				<td colspan="3"><span id="span_ymd" style="color: red;"></span></td>
+				<th colspan="3"><span id="span_ymd" style="color: red;"></span></th>
 			</tr>
 			<tr>
 				<th colspan="2"><form:input id="email" size="30"
 						class="form-control" path="email" placeholder="이메일(선택)"
 						onkeyup="email_keyup();" /></th>
 				<td><button id="email_button" style="width: 100%; height: 40px"
-						type="button" class="btn btn-primary"">이메일
-						인증</button></td>
+						type="button" class="btn btn-primary">이메일 인증</button></td>
 			</tr>
 			<tr>
-				<td colspan="3"><span id="span_email" style="color: red;"></span>
-				</td>
+				<th colspan="3"><span id="span_email" style="color: red;"></span>
+				</th>
 			</tr>
 			<tr>
 				<th colspan="2"><input id="email_ac" size="30"
 					class="form-control" placeholder="코드를 입력하세요." /></th>
-					<th colspan="1"><span id="time_ac" ></span></th>
+				<th colspan="1"><span id="time_ac"></span></th>
 			</tr>
-			
+
 			<tr>
-				<td><span id="span_email_ac" style="color: red;"></span></td>
-			</tr>
-			<tr>
-				<th style="width: 100px" colspan="3"><form:input id="tel" size="30"
-						class="form-control" path="tel" placeholder="휴대폰번호를 입력하세요."
-						onkeyup="tel_keyup();" /></th>
+				<th><span id="span_email_ac" style="color: red;"></span></th>
 			</tr>
 			<tr>
-				<th colspan="3">
-					<span id="span_tel" style="color: red;"></span>
+				<th style="width: 100px" colspan="3"><form:input id="tel"
+						size="30" class="form-control" path="tel"
+						placeholder="휴대폰번호를 입력하세요." onkeyup="tel_keyup();" /></th>
+			</tr>
+			<tr>
+				<th colspan="3"><span id="span_tel" style="color: red;"></span>
 				</th>
 			</tr>
 			<tr>
 				<th colspan="3">
-					<button style="width: 100%; height: 40px" type="submit"
-						class="btn btn-primary">가입</button>
+					<button id="regist_btn" style="width: 100%; height: 40px"
+						type="button" class="btn btn-primary">가입</button>
 				</th>
 			</tr>
-			
+
 
 		</table>
 

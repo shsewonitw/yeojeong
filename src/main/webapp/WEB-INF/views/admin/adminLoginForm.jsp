@@ -35,7 +35,7 @@ th, td {
 				style="color: rgb(52, 152, 219); margin: auto; font-family: sans-serif; font-size: 30px; text-align: center; ">
 				<img
 					style="width: auto; height: auto; max-width: 100px; max-height: 100px;"
-					src="<%=request.getContextPath()%>/resources/images/logo.png"
+					src="<%=request.getContextPath()%>/resources/images/admin_logo.png"
 					alt="logo"> <b>여정 관리자 로그인&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
 		</div>
 	<form class="form-inline" action="<%=request.getContextPath()%>/admin" method="POST">

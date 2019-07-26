@@ -1,31 +1,44 @@
 package com.tje.yeojeong.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.tje.yeojeong.model.Member;
-import com.tje.yeojeong.repository.*;
+import com.tje.yeojeong.model.*;
+import com.tje.yeojeong.service.City_DataSelectAllService;
+import com.tje.yeojeong.service.City_DataSelectCountryService;
 import com.tje.yeojeong.service.MemberLoginService;
+import com.tje.yeojeong.service.MemberSearchService;
 
 @Controller
 public class AdminController {
 	@Autowired
 	private MemberLoginService mlService;
-	
+	@Autowired
+	private MemberSearchService msService;
+	@Autowired
+	private City_DataSelectCountryService cdscService;
 	
 	@Controller
 	public class TravelRegistController {
+		// 관리자 로그인 페이지 호출
 		@GetMapping("/admin")
-		public String adminLoginForm() {
+		public String adminLoginForm(HttpSession session) {
+			Member member = (Member)session.getAttribute("login_admin");
+			if(member != null) {
+				return "admin/adminMain";
+			}
 			return "admin/adminLoginForm";
 		}
 		
-		
+		// 관리자 로그인
 		@PostMapping("/admin")
 		public String adminLoginSubmit(HttpServletRequest request) {
 			String member_id = request.getParameter("member_id");
@@ -35,9 +48,10 @@ public class AdminController {
 			member.setMember_id(member_id);
 			member.setPassword(password);
 			
-			boolean flag = (boolean)mlService.service(member);
+			boolean flag_login = (boolean)mlService.service(member);
+			boolean flag_level = ((Member)msService.service(member)).getLevel() == 2;
 			
-			if(flag) {
+			if(flag_login && flag_level) {
 				// 관리자 로그인 성공
 				HttpSession session = request.getSession();
 				session.setAttribute("login_admin", member);
@@ -49,6 +63,7 @@ public class AdminController {
 			}
 		}
 		
+		// 관리자 로그아웃
 		@GetMapping("/adminLogout")
 		public String adminLogoutForm(HttpServletRequest request) {
 			
@@ -56,6 +71,24 @@ public class AdminController {
 			session.removeAttribute("login_admin");
 			
 			return "admin/adminLoginForm";
+		}
+		
+		// 여행지 업데이트 
+		@GetMapping("/adminCityDateUpdate")
+		public String adminCityDateUpdateForm(Model model,HttpSession session) {
+			// 어드민으로 로그인 되있는지 확인
+			Member member = (Member)session.getAttribute("login_admin");
+			if(member == null) {
+				return "admin/adminLoginForm";
+			}
+			
+			// DB에 저장된 Country 리스트
+			List<String> countryList = (List<String>)cdscService.service();
+			model.addAttribute("countryList",countryList);
+			for(String country : countryList) {
+				
+			}
+			return "admin/adminCityDateUpdateForm";
 		}
 	}
 }

@@ -88,22 +88,59 @@ text-decoration:none;
 clear:left;
 }
 
-.login_link{
+/* 로그인 상태 */
+.message_link{
 	color: white;
 	text-decoration:none;
 	position: absolute;
     top: 10%;
-    right: 4.5%;
-    font-family: 'Jeju Hallasan', cursive;
+    right: 10.2%;
+    font-family: "Arial", "돋움", "dotum", sans-serif;
+}
+/*
+.mypage_link{
+	color: white;
+	text-decoration:none;
+	position: absolute;
+    top: 10%;
+    right: 5.2%;
+    font-family: "Arial", "돋움", "dotum", sans-serif;
+}
+*/
+.logout_link{
+	color: white;
+	text-decoration:none;
+	position: absolute;
+    top: 10%;
+    right: 1%;
+    font-family: "Arial", "돋움", "dotum", sans-serif;
+}
+
+/* 비 로그인 상태 */
+.message_link1{
+	color: #ffffff;
+	text-decoration:none;
+	position: absolute;
+    top: 10%;
+    right: 8.5%;
+    font-family: "Arial", "돋움", "dotum", sans-serif;
+}
+.login_link{
+	color: #ffffff;
+	text-decoration:none;
+	position: absolute;
+    top: 10%;
+    right: 5.2%;
+    font-family: "Arial", "돋움", "dotum", sans-serif;
 }
 
 .regist_link{
-	color: white;
+	color: #ffffff;
 	text-decoration:none;
 	position: absolute;
     top: 10%;
-    right: 0px;
-    font-family: 'Nanum Brush Script', cursive;
+    right: 1%;
+    font-family: "Arial", "돋움", "dotum", sans-serif;
 }
 
 .main_menu{

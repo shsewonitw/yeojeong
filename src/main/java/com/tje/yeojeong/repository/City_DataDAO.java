@@ -42,7 +42,15 @@ public class City_DataDAO {
 		}
 	}
 
-	public List<City_Data> selectAll(int page) {
+
+	public City_Data selectOneWhereCity(City_Data model){
+		String sql = "select * from city_data where city = ?";
+		City_Data result = this.jdbcTemplate.queryForObject(sql, new City_DataRowMapper(),model.getCity());
+		return result;
+	}
+	
+	public List<City_Data> selectAll() {
+
 		List<City_Data> result = this.jdbcTemplate.query("select * from city_data", new City_DataRowMapper());
 
 		return result.isEmpty() ? null : result;
@@ -115,4 +123,33 @@ public class City_DataDAO {
 
 		return keyHolder.getKey().intValue();
 	}
+	
+	// 여행지 국가 리스트 반환
+	public List<String> selectCountryList() {
+		String sql = "select country from city_data group by country";
+		List<String> result = this.jdbcTemplate.query(sql,new RowMapper<String>() {
+			@Override
+			public String mapRow(ResultSet rs, int arg1) throws SQLException {
+				String str = rs.getString(1);
+				return str;
+			}
+		});
+
+		return result;
+	}
+	
+	// 여행지 국가별 도시 리스트 반환
+	public List<String> selectCityListWhereCountry(City_Data model) {
+		String sql = "select city from city_data where country = ?";
+		List<String> result = this.jdbcTemplate.query(sql,new RowMapper<String>() {
+			@Override
+			public String mapRow(ResultSet rs, int arg1) throws SQLException {
+				String str = rs.getString(1);
+				return str;
+			}
+		},model.getCountry());
+
+		return result;
+	}
+	
 }

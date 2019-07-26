@@ -24,7 +24,7 @@ public class TravelRegistController {
 	
 	@GetMapping("/travelRegist")
 	public String travelRegistForm() {
-		
+
 		return "form/travelRegist";
 	}
 	

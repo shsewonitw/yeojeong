@@ -40,6 +40,12 @@
 		</jsp-property-group>
 		
 		<jsp-property-group>
+			<url-pattern>/WEB-INF/views/message/receiveForm.jsp</url-pattern>
+			<include-prelude>/WEB-INF/views/common/prelude.jsp</include-prelude>
+			<include-coda>/WEB-INF/views/common/coda.jsp</include-coda>
+		</jsp-property-group>
+		
+		<jsp-property-group>
 			<url-pattern>/WEB-INF/views/page/*</url-pattern>
 			<include-prelude>/WEB-INF/views/common/prelude.jsp</include-prelude>
 			<include-coda>/WEB-INF/views/common/coda.jsp</include-coda>

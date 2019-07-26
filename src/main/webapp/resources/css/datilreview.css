@@ -35,7 +35,7 @@ input, textarea {
 	border: solid 1px #E5E5E5;
 	outline: 0;
 	font: normal 13px/100% Verdana, Tahoma, sans-serif;
-	width: 200px;
+	width: 10%;
 	background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF),
 		color-stop(4%, #EEEEEE), to(#FFFFFF));
 	background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 25px);
@@ -59,7 +59,6 @@ input:hover, textarea:hover, input:focus, textarea:focus {
 
 label {
 	color: #999999;
-	float:left;
 }
 
 .submit input {
@@ -118,8 +117,4 @@ select {
 	
 }
 
-/*--------------------------------------------*/
-.selectbox { position: relative; width: 200px; height: 40px; line-height: 40px; border: 1px solid #999; z-index: 1; } 
-.selectbox label { position: absolute; top: 0px; left: 5px; height: 40px; line-height: 40px; color: #999; z-index: -1; } 
-.selectbox select { width: 100%; height: 40px; line-height: 40px; font-family: inherit; border: 0; opacity: 0; filter:alpha(opacity=0); -webkit-appearance: none; /* 네이티브 외형 감추기 */ -moz-appearance: none; appearance: none; }
 

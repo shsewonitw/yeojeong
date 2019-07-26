@@ -9,12 +9,18 @@ public class MessageController {
 	@GetMapping("/receive")
 	public String receiveForm(){
 		
-		return "form/receiveForm";
+		return "message/receiveForm";
 	}
 	
 	@GetMapping("/receivecontent")
 	public String receiveMessage(){
 		
-		return "form/receiveMessage";
+		return "message/receiveMessage";
+	}
+	
+	@GetMapping("/transform")
+	public String transform(){
+		
+		return "message/transform";
 	}
 }

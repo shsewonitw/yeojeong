@@ -27,14 +27,12 @@
 
 	<section class="section2">
 		<div class="tophegiht"></div>
-		<div class="monthTravel">이 달의 추천 여행지</div>
-
 
 	</section>
 
-
 	<section class="section3">
 		<div class="tophegiht"></div>
+
         <div class="monthTravel">이 달의 추천 여행지</div>
           <div class="carousel">
         <div class="view">
@@ -65,15 +63,9 @@
         <p class="prev">이<br>전</p>
         <p class="next">다<br>음</p>
     </div>
+
  
       </section>
-		
-		
-		<section class="section3">
-			<div class="tophegiht"></div>
-			
-		</section>
-		
 		
 		<section class="section4">
 			<div class="tophegiht"></div>
@@ -84,23 +76,6 @@
 			<h2>5페이지</h2>
 		</section>
 	</div>
-	
-	</section>
-
-
-	<section class="section4">
-		<div class="tophegiht"></div>
-		<h2>4페이지</h2>
-	</section>
-	<section class="section5">
-		<div class="tophegiht"></div>
-		<h2>5페이지</h2>
-	</section>
-</div>
-
-
-
->>>>>>> origin/ss
 
 <script type="text/javascript">
 	new fullScroll({

@@ -16,14 +16,15 @@ import com.tje.yeojeong.model.*;
 import com.tje.yeojeong.service.City_DataSelectCityService;
 import com.tje.yeojeong.service.City_DataSelectCountryService;
 import com.tje.yeojeong.service.MemberLoginService;
-import com.tje.yeojeong.service.MemberSearchService;
+import com.tje.yeojeong.service.MemberSearchIDService;
+
 
 @Controller
 public class AdminController {
 	@Autowired
 	private MemberLoginService mlService;
 	@Autowired
-	private MemberSearchService msService;
+	private MemberSearchIDService msService;
 	@Autowired
 	private City_DataSelectCountryService cdsCountryService;
 	@Autowired

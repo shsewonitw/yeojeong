@@ -14,7 +14,7 @@
 	
 	
 	alert("게시글이 작성 되었습니다");
-	location.href='<%= request.getContextPath()%>/form/reviewlist';
+	location.href='<%= request.getContextPath()%>/reviewlist';
 	
 </script>
 </c:if>
@@ -24,7 +24,7 @@
 	
 	
 	alert("게시글이 작성에 실패했습니다");
-	location.href='<%= request.getContextPath()%>/form/reviewlist';
+	location.href='<%= request.getContextPath()%>/reviewlist';
 	
 </script>
 </c:if>

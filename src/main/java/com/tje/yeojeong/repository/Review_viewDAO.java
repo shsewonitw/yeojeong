@@ -50,15 +50,14 @@ public class Review_viewDAO {
 	// 리뷰 테이블에 데이터 입력
 	public boolean insert(Review_view obj) {
 		boolean result = false;
-		String sql = "insert into Review_article values (0,?,?,?,?,?,?,?,null,0)";
+		String sql = "insert into Review_article values (0,?,?,?,?,?,?,now(),0)";
 		result = this.jdbcTemplate.update(sql,
 				obj.getMember_id(),
 				obj.getCountry(),
 				obj.getCity(),
 				obj.getContent().replaceAll("\n", "<br>"),
 				obj.getImage_src(),
-				obj.getReview_star(),
-				obj.getWrite_time()) == 0 ? false : true;
+				obj.getReview_star()) == 0 ? false : true;
 		
 		return result;
 	}

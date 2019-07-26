@@ -14,12 +14,12 @@ public class ReviewListService {
 	@Autowired
 	private Review_viewDAO reviewDAO;
 	
-	public Object service(Object args) {
+	public HashMap<String, Object> service() {
+		HashMap<String, Object> result = new HashMap<>();
 		
-	HashMap<String, Object> result = new HashMap<>();
-			
 		result.put("reviewlist", reviewDAO.selectAll());
-
+		
 		return result;
 	}
-}
+	}
+

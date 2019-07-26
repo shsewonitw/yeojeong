@@ -16,9 +16,13 @@ public class City_Data {
 	private String latitude;
 	private String logitude;
 	private int danger_level;
+	private String img_src;
+	
+	public City_Data() {}
 	
 	public City_Data(int city_code, String country, String city, Date local_time, String flight_time,
-			String local_voltage, String visa, String latitude, String logitude, int danger_level) {
+			String local_voltage, String visa, String latitude, String logitude, int danger_level, String img_src) {
+		super();
 		this.city_code = city_code;
 		this.country = country;
 		this.city = city;
@@ -29,7 +33,10 @@ public class City_Data {
 		this.latitude = latitude;
 		this.logitude = logitude;
 		this.danger_level = danger_level;
+		this.img_src = img_src;
 	}
+
+
 
 	public int getCity_code() {
 		return city_code;
@@ -114,5 +121,15 @@ public class City_Data {
 	public void setDanger_level(int danger_level) {
 		this.danger_level = danger_level;
 	}
+
+	public String getImg_src() {
+		return img_src;
+	}
+
+	public void setImg_src(String img_src) {
+		this.img_src = img_src;
+	}
+	
+	
 	
 }

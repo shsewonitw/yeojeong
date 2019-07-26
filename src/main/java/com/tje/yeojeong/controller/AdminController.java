@@ -1,5 +1,6 @@
 package com.tje.yeojeong.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.tje.yeojeong.model.*;
-import com.tje.yeojeong.service.City_DataSelectAllService;
+import com.tje.yeojeong.service.City_DataSelectCityService;
 import com.tje.yeojeong.service.City_DataSelectCountryService;
 import com.tje.yeojeong.service.MemberLoginService;
 import com.tje.yeojeong.service.MemberSearchService;
@@ -24,7 +25,9 @@ public class AdminController {
 	@Autowired
 	private MemberSearchService msService;
 	@Autowired
-	private City_DataSelectCountryService cdscService;
+	private City_DataSelectCountryService cdsCountryService;
+	@Autowired
+	private City_DataSelectCityService cdsCityService;
 	
 	@Controller
 	public class TravelRegistController {
@@ -74,8 +77,8 @@ public class AdminController {
 		}
 		
 		// 여행지 업데이트 
-		@GetMapping("/adminCityDateUpdate")
-		public String adminCityDateUpdateForm(Model model,HttpSession session) {
+		@GetMapping("/adminCityData")
+		public String adminCityDataForm(Model model,HttpSession session) {
 			// 어드민으로 로그인 되있는지 확인
 			Member member = (Member)session.getAttribute("login_admin");
 			if(member == null) {
@@ -83,12 +86,41 @@ public class AdminController {
 			}
 			
 			// DB에 저장된 Country 리스트
-			List<String> countryList = (List<String>)cdscService.service();
+			List<String> countryList = (List<String>)cdsCountryService.service();
 			model.addAttribute("countryList",countryList);
+			HashMap<String,List<String>> map = new HashMap<String, List<String>>();
 			for(String country : countryList) {
-				
+				City_Data city_data = new City_Data();
+				city_data.setCountry(country);
+				List<String> cityList = (List<String>)cdsCityService.service(city_data);
+				map.put(country, cityList);
 			}
-			return "admin/adminCityDateUpdateForm";
+			model.addAttribute("map",map);
+			return "admin/adminCityDataForm";
+		}
+		
+		@GetMapping("/adminCityDataUpdate")
+		public String adminCityDataUpdateForm(Model model,HttpSession session) {
+			// 어드민으로 로그인 되있는지 확인
+			Member member = (Member)session.getAttribute("login_admin");
+			if(member == null) {
+				return "admin/adminLoginForm";
+			}
+			
+			
+			return "admin/adminCityDataUpdateForm";
+		}
+		
+		@GetMapping("/adminCityDataInsert")
+		public String adminCityDataInsertForm(Model model,HttpSession session) {
+			// 어드민으로 로그인 되있는지 확인
+			Member member = (Member)session.getAttribute("login_admin");
+			if(member == null) {
+				return "admin/adminLoginForm";
+			}
+			
+			
+			return "admin/adminCityDataInsertForm";
 		}
 	}
 }

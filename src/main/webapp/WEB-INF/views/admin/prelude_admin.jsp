@@ -66,7 +66,7 @@ function time_format(s) {
 	 <li style="padding-top:30px; margin:auto;"><a href="<%=request.getContextPath()%>/admin"><b class="menu_font">
 	 <span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;관리자메인</b></a></li>
 	 
-	 <li style="padding-top:30px; margin:auto;"><a href="<%=request.getContextPath()%>/adminCityDateUpdate" ><b class="menu_font">
+	 <li style="padding-top:30px; margin:auto;"><a href="<%=request.getContextPath()%>/adminCityData" ><b class="menu_font">
 	 <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;&nbsp;여행지 업데이트</b></a></li>
 	 
 	 <li style="padding-top:30px; margin:auto;"><a href="#" ><b class="menu_font">

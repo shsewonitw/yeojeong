@@ -30,7 +30,7 @@ th, td {
 <body>
 	
 
-	<div style="height: 25%;"></div>
+	<div style="height: 200px;"></div>
 			<div
 				style="color: rgb(52, 152, 219); margin: auto; font-family: sans-serif; font-size: 30px; text-align: center; ">
 				<img

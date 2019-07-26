@@ -26,7 +26,7 @@ nav {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-height: 100vh;
+	min-height: 100px;
 	padding: 0 0;
 	box-sizing: border-box;
 }
@@ -128,7 +128,6 @@ nav ul ul ul {
 </head>
 <body>
 <script type="text/javascript">
-alert(2122);
 </script>
 <jsp:include page="/WEB-INF/views/admin/prelude_admin.jsp"/>
 
@@ -136,18 +135,22 @@ alert(2122);
 <div class="mainDiv">
 
 
-
 <!-- 드롭다운 메뉴 -->
 		<nav class="nav05">
 			<ul>
-				<li><a href="#">국가</a>
+				<li><a href="#" style="text-decoration: none;">수정하기</a>
+				<a href="<%=request.getContextPath()%>/adminCityDataInsert" style="text-decoration: none;">등록하기</a>
 					<ul>
 						<c:forEach items="${countryList }" var="country">
-						<li><a href="#">${country }</a>
+						<li><a href="#" style="text-decoration: none;">${country}</a>
 							<ul>
-								<li><a href="#">child</a></li>
-								<li><a href="#">child</a></li>
-								<li><a href="#">child</a></li>
+								<c:forEach items="${map}" var="map">
+									<c:if test="${map.key eq country}">
+										<c:forEach items="${map.value }" var="city">
+											<li><a href="<%=request.getContextPath()%>/adminCityDataUpdate" style="text-decoration: none;">${city}</a></li>
+										</c:forEach>
+									</c:if>
+								</c:forEach>
 							</ul>
 						</li>
 						</c:forEach>
@@ -155,13 +158,12 @@ alert(2122);
 				</li>
 			</ul>
 		</nav>
+		
+		<h1>업데이트 페이지!</h1>
 		<!--  -->
 </div>
 
 
-
-
-
-
 </body>
 </html>
+

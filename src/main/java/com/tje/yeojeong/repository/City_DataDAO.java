@@ -135,4 +135,19 @@ public class City_DataDAO {
 
 		return result;
 	}
+	
+	// 여행지 국가별 도시 리스트 반환
+	public List<String> selectCityListWhereCountry(City_Data model) {
+		String sql = "select city from city_data where country = ?";
+		List<String> result = this.jdbcTemplate.query(sql,new RowMapper<String>() {
+			@Override
+			public String mapRow(ResultSet rs, int arg1) throws SQLException {
+				String str = rs.getString(1);
+				return str;
+			}
+		},model.getCountry());
+
+		return result;
+	}
+	
 }

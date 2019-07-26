@@ -41,14 +41,28 @@ public class MemberDAO {
 
 	// 로그인
 	public Member selectLogin(Member obj) {
-		return this.jdbcTemplate.queryForObject("select * from member where member_id = ? and password = ?",
-				new MemberRowMapper(), obj.getMember_id(), obj.getPassword());
+		try {
+			return this.jdbcTemplate.queryForObject("select * from member where member_id = ? and password = ?",
+					new MemberRowMapper(), obj.getMember_id(), obj.getPassword());
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	// 아이디 체크
-	public Member selectOne(Member obj) {
+	public Member selectOne_ID(Member obj) {
 		try {
 			return this.jdbcTemplate.queryForObject("select * from member where member_id = ?", new MemberRowMapper(),
+					obj.getMember_id());
+		} catch (Exception e) {
+			return null;
+
+		}
+	}
+
+	public Member selectOne_Email(Member obj) {
+		try {
+			return this.jdbcTemplate.queryForObject("select * from member where email = ?", new MemberRowMapper(),
 					obj.getMember_id());
 		} catch (Exception e) {
 			return null;
@@ -74,6 +88,7 @@ public class MemberDAO {
 		else
 			pstmt.setNull(index, Types.NULL);
 	}
+
 	// 회원가입
 	public boolean insert(Member obj) {
 		boolean result = false;
@@ -82,7 +97,7 @@ public class MemberDAO {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 
-				PreparedStatement pstmt = con.prepareStatement("insert into member values(?,?,?,?,?,?,?,now(),?)");
+				PreparedStatement pstmt = con.prepareStatement("insert into member values(?,?,?,?,?,?,?,now(),1)");
 				pstmt.setString(1, obj.getMember_id());
 				pstmt.setString(2, obj.getPassword());
 				pstmt.setString(3, obj.getName());
@@ -90,7 +105,6 @@ public class MemberDAO {
 				pstmt.setTimestamp(5, new java.sql.Timestamp(obj.getBirth().getTime()));
 				pstmt.setString(6, obj.getTel());
 				setPreparedStatement(7, obj.getEmail(), pstmt);
-				pstmt.setInt(8, obj.getLevel());
 
 				return pstmt;
 			}

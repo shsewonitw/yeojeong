@@ -54,8 +54,8 @@ function winopen() {
 		<th width="10%"><input type="checkbox" name="all_chk"></th>
 		<th width="20%">보낸사람</th>
 		<th width="40%">내용</th>
-		<th width="15%">보낸시각</th>
-		<th width="15%">읽은시각</th>
+		<th width="15%">보낸시간</th>
+		<th width="15%">읽은시간</th>
 	</tr>
 	
 	<c:forEach items="${rList}" var="rmsg">

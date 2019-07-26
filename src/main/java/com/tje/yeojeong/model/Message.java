@@ -9,9 +9,9 @@ public class Message {
 	private String sender_id;
 	private String receiver_id;
 	private String content;
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date send_time;
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date receive_time;
 	
 	public Message() {

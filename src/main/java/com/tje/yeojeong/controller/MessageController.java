@@ -17,4 +17,10 @@ public class MessageController {
 		
 		return "form/receiveMessage";
 	}
+	
+	@GetMapping("/transform")
+	public String transform(){
+		
+		return "form/transform";
+	}
 }

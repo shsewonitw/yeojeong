@@ -63,7 +63,7 @@
             </ul>
         </div>
         <p class="prev">이<br>전</p>
-        <p class="next">이<br>후</p>
+        <p class="next">다<br>음</p>
     </div>
  
       </section>

@@ -5,21 +5,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>쪽지작성 : 여정 쪽지</title>
+<title>받은쪽지 : 여정 쪽지</title>
 <link href="resources/css/jb_bootstrap.min.css?asd=asdda" rel="stylesheet">
 <script src="resources/js/jb_bootstrap.min.js"></script>
 <script type="text/javascript" src="resources/js/jquery.js"></script>
 
 <style type="text/css">
-A:link {color:#3498DB;text-decoration:none;}
-A:visited {color:#3498DB;text-decoration:none;}
-A:active {color:#3498DB;text-decoration:none;}
-A:hover {color:#3498DB;text-decoration:none;}
+.a:link {color:#3498DB;text-decoration:none;}
+.a:visited {color:#3498DB;text-decoration:none;}
+.a:active {color:#3498DB;text-decoration:none;}
+.a:hover {color:#3498DB;text-decoration:none;}
 div {
 	display:block;
 }
 .top {
-	height:170px;
+	height:auto;
 }
 .middle {
 	margin:0 auto;
@@ -31,38 +31,50 @@ div {
     float:center;
     width:auto;
 }
+th, td {
+	text-align:center;
+}
+.align {
+	text-align:left;
+}
 .trcolor {
 	background-color:#F4F4F4;
 }
 .battom {
 	height:auto;
 }
+.message_btn {
+	position:absolute;
+	left:50%;
+	transform:translate(-50%);
+}
 </style>
 
 </head>
 <body>
 <div class="top"></div>
-	<div class="middle" role="main">
+<div class="middle" role="main">
 	<div class="column_center">
 		<table class="table table-bordered">
 			<tr class="trcolor">
-				<td width="20%" align="right"><b>받는사람</b></td>
-				<td width="80%">누구누구</td>
+				<th>보낸사람</th>
+				<th>보낸시간</th>
 			</tr>
 			<tr>
-				<td colspan="2" height="300px"><textarea rows="16" cols="81" style="resize:none;" name="content"></textarea></td>
+				<td>홍길동</td>
+				<td>2019-07-24 15:32</td>
+			</tr>
+			<tr>
+				<td class="align" colspan="2" height="450px">내용없음<br>내용 더 없음<br>더더더 없음</td>
 			</tr>
 		</table>
-		</div>
+	</div>
+</div>
+	<div class="message_btn">
+		<a class="btn btn-primary" href="<%=request.getContextPath()%>/transform" role="button">답장</a>
+		<button type="button" class="btn btn-default" onclick="self.close()">닫기</button>
 	</div>
 <div class="battom">
-	<table align="center">
-		<tr>
-			<td><input class="btn btn-primary" type="submit" value="전송"></td>
-			<td>　</td>
-			<td><button type="button" class="btn btn-default" onclick="self.close()">취소</button></td>
-		</tr>
-	</table>
 </div>
 </body>
 </html>

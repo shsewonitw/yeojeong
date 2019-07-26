@@ -43,9 +43,9 @@ public class City_DataDAO {
 	}
 
 
-	public List<City_Data> selectOneWhereCity(City_Data model){
+	public City_Data selectOneWhereCity(City_Data model){
 		String sql = "select * from city_data where city = ?";
-		List<City_Data> result = this.jdbcTemplate.query(sql,new City_DataRowMapper(),model.getCity());
+		City_Data result = this.jdbcTemplate.queryForObject(sql, new City_DataRowMapper(),model.getCity());
 		return result;
 	}
 	

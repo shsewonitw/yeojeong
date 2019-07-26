@@ -1,5 +1,7 @@
 package com.tje.yeojeong.model;
 
+import java.util.Date;
+
 public class Review_view {
 	private int article_id;
 	private String member_id;
@@ -8,6 +10,7 @@ public class Review_view {
 	private String content;
 	private String image_src;
 	private int review_star;
+	private Date write_time;
 	private int read_count;
 	private String name;
 	private int comment_count;
@@ -16,7 +19,8 @@ public class Review_view {
 	}
 
 	public Review_view(int article_id, String member_id, String country, String city, String content, String image_src,
-			int review_star, int read_count, String name, int comment_count) {
+			int review_star, Date write_time, int read_count, String name, int comment_count) {
+		super();
 		this.article_id = article_id;
 		this.member_id = member_id;
 		this.country = country;
@@ -24,10 +28,13 @@ public class Review_view {
 		this.content = content;
 		this.image_src = image_src;
 		this.review_star = review_star;
+		this.write_time = write_time;
 		this.read_count = read_count;
 		this.name = name;
 		this.comment_count = comment_count;
 	}
+
+
 
 	public int getArticle_id() {
 		return article_id;
@@ -107,6 +114,14 @@ public class Review_view {
 
 	public void setComment_count(int comment_count) {
 		this.comment_count = comment_count;
+	}
+
+	public Date getWrite_time() {
+		return write_time;
+	}
+
+	public void setWrite_time(Date write_time) {
+		this.write_time = write_time;
 	}
 	
 	

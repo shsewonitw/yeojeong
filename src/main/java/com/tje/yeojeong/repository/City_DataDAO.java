@@ -36,7 +36,8 @@ public class City_DataDAO {
 				rs.getString(7),		// visa
 				rs.getString(8),		// latitude
 				rs.getString(9),		// logitude
-				rs.getInt(10));			// danger_level
+				rs.getInt(10),			// danger_level
+				rs.getString(11));		// img_src
 			return city_data;
 		}
 	}
@@ -55,7 +56,7 @@ public class City_DataDAO {
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 
 				PreparedStatement pstmt = con.prepareStatement(
-						"insert into city_data values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?)", new String[] { "city_code" });
+						"insert into city_data values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)", new String[] { "city_code" });
 				pstmt.setString(1, model.getCountry());
 				pstmt.setString(2, model.getCity());
 				pstmt.setString(4, model.getFlight_time());
@@ -64,6 +65,7 @@ public class City_DataDAO {
 				pstmt.setString(7, model.getLatitude());
 				pstmt.setString(8, model.getLogitude());
 				pstmt.setString(9, model.getDanger_levelString());
+				pstmt.setString(10, model.getImg_src());
 				return pstmt;
 			}
 		}, keyHolder);

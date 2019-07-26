@@ -26,8 +26,8 @@
     	<tr>
         	<th scope="col">#</th>
             <th scope="col">사진</th>
-            <th scope="col">작성자</th>
             <th scope="col">내용(제목)</th>
+            <th scope="col">작성자</th>
             <th scope="col">국가</th>
             <th scope="col">도시</th>
             <th scope="col">별점</th>
@@ -50,7 +50,7 @@
         
     </tbody>
 </table>
-		<a href="#" class="button">글쓰기</a>
+		<a href="<%=request.getContextPath()%>/review" class="button">글쓰기</a>
 	</div>
 
 </body>

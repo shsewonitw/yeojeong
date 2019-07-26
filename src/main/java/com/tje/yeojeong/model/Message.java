@@ -14,6 +14,9 @@ public class Message {
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date receive_time;
 	
+	public Message() {
+	}
+	
 	public Message(int message_id, String sender_id, String receiver_id, String content, Date send_time,
 			Date receive_time) {
 		this.message_id = message_id;

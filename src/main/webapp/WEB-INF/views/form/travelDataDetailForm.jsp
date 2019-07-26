@@ -21,7 +21,7 @@
 	
 	#div_con{
 		width: 60%;
-		height: 300px;
+		height: 500px;
 		float: left;
 		background-size: 100%100%;
 		text-align: left;		
@@ -33,23 +33,30 @@
 		float: right;		
 		text-align: left;		
 	}
+		
 </style>	
 	
 <meta charset="UTF-8">
 <title>여행지 상세 정보</title>
 </head>
 <body style="height: 100%; overflow: scroll;">
-
+<!-- test -->
 <div style="height:200px;"></div>
 <div style="height: 100%;">
-
+	<!-- 도시별 정보 -->
+	<div style="height: 400px;">
+		<img alt="test" src="${city_data.image_src}" style="height: 400px; width: 100%;">
+		
+	</div>
+	<!-- 왼쪽 사이드 공백 -->
 	<div id="div_menu"></div>
 
-	<div id="div_con" align="center">
-		<img alt="이미지" src="<%=request.getContextPath()%>/resources/img/traveldetail.png" style="width: 100px; height: 100px;">
+	<div id="div_con" class="city_info">
+		
 	</div>
 
-
+<!-- 오른쪽 사이드 공백 -->
+<div id="div_menu2"></div>
 </div>
 </body>
 </html>

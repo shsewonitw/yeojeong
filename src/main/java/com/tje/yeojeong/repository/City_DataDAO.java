@@ -41,7 +41,7 @@ public class City_DataDAO {
 			return city_data;
 		}
 	}
-
+	
 	public List<City_Data> selectAll(int page) {
 		List<City_Data> result = this.jdbcTemplate.query("select * from city_data", new City_DataRowMapper());
 

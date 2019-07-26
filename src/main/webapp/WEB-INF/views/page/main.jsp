@@ -35,7 +35,6 @@
 
 	<section class="section3">
 		<div class="tophegiht"></div>
-<<<<<<< HEAD
         <div class="monthTravel">이 달의 추천 여행지</div>
           <div class="carousel">
         <div class="view">
@@ -86,10 +85,6 @@
 		</section>
 	</div>
 	
-	
-	
-=======
-
 	</section>
 
 

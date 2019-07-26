@@ -32,7 +32,7 @@
 	</script>
 </head>
 <body>
-<div class="dropmenu" style="z-index:100;position:absolute; background-color:black; width:100%; height:170px; opacity:0; transition:all 0.4s ease-out;" id="menu">
+<div class="dropmenu" style="z-index:100;position:absolute; background-color:black; width:100%; height:170px; opacity:0.2; transition:all 0.4s ease-out;" id="menu">
 <a href="<%= request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/img/test1.png" style="height: 50%;"></a>
 	<a href="#" class="login_link">로그인</a> 
 	<a href="#" class="regist_link">회원가입</a>
@@ -46,7 +46,7 @@
 	    </ul>
 	   </li>
 	 <li><a href="#" ><b class="menu_font">같이갈래?</b></a></li>
-	 <li><a href="<%=request.getContextPath()%>/review"><b class="menu_font">여행자들의 웃음(여행후기)</b></a></li>
+	 <li><a href="<%=request.getContextPath()%>/reviewlist"><b class="menu_font">여행자들의 웃음(여행후기)</b></a></li>
 	 <li><a href="#"><b class="menu_font">자주 묻는 질문</b></a></li>
 	</ul>
 	</div>

@@ -76,7 +76,7 @@
 	<div align="center" class="col-sm-5 col-md-3" id="scale">	
 		<h4>프랑스 파리</h4>
 			<a href="#">
-				<img src="<%=request.getContextPath()%>/resources/img/france.jpg" alt="프랑스" class="img-circle" style="width:180px; height:180px;">
+				<img src="<%=request.getContextPath()%>/resources/cityimg/france.jpg" alt="프랑스" class="img-circle" style="width:180px; height:180px;">
 			</a>
 			<hr size="5" noshade>
 	</div>
@@ -84,7 +84,7 @@
 	<div align="center" class="col-sm-5 col-md-3" id="scale">	
 		<h4>이탈리아 로마</h4>
 			<a href="#">
-				<img src="<%=request.getContextPath()%>/resources/img/itary.jpg" alt="이탈리아" class="img-circle" style="width:180px; height:180px;">
+				<img src="<%=request.getContextPath()%>/resources/cityimg/itary.jpg" alt="이탈리아" class="img-circle" style="width:180px; height:180px;">
 			</a>
 			<hr size="5" noshade>
 	</div>
@@ -92,7 +92,7 @@
 	<div align="center" class="col-sm-5 col-md-3" id="scale">	
 		<h4>스위스 알프스</h4>
 			<a href="#">
-				<img src="<%=request.getContextPath()%>/resources/img/swis.jpg" alt="스위스" class="img-circle" style="width:180px; height:180px;">
+				<img src="<%=request.getContextPath()%>/resources/cityimg/swis.jpg" alt="스위스" class="img-circle" style="width:180px; height:180px;">
 			</a>
 			<hr size="5" noshade>
 	</div>
@@ -100,7 +100,7 @@
 	<div align="center" class="col-sm-5 col-md-3" id="scale">
 		<h4>헝가리 부다페스트</h4>
 			<a href="#">
-				<img src="<%=request.getContextPath()%>/resources/img/hungary.jpg" alt="헝가리" class="img-circle" style="width:180px; height:180px;">
+				<img src="<%=request.getContextPath()%>/resources/cityimg/hungary.jpg" alt="헝가리" class="img-circle" style="width:180px; height:180px;">
 			</a>
 			<hr size="5" noshade>
 	</div>
@@ -108,7 +108,7 @@
 	<div align="center" class="col-sm-5 col-md-3" id="scale">	
 		<h4>스페인 마드리드</h4>
 			<a href="#">
-				<img src="<%=request.getContextPath()%>/resources/img/spain.jpg" alt="스페인" class="img-circle" style="width:180px; height:180px;">
+				<img src="<%=request.getContextPath()%>/resources/cityimg/spain.jpg" alt="스페인" class="img-circle" style="width:180px; height:180px;">
 			</a>
 			<hr size="5" noshade>
 	</div>
@@ -116,7 +116,7 @@
 	<div align="center" class="col-sm-5 col-md-3" id="scale">	
 		<h4>체코 프라하</h4>
 			<a href="#">
-				<img src="<%=request.getContextPath()%>/resources/img/czech.jpg" alt="체코" class="img-circle" style="width:180px; height:180px;">
+				<img src="<%=request.getContextPath()%>/resources/cityimg/czech.jpg" alt="체코" class="img-circle" style="width:180px; height:180px;">
 			</a>
 			<hr size="5" noshade>
 	</div>
@@ -124,7 +124,7 @@
 	<div align="center" class="col-sm-5 col-md-3" id="scale">
 		<h4>오스트리아 빈</h4>
 			<a href="#">
-				<img src="<%=request.getContextPath()%>/resources/img/austria.jpg" alt="오스트리아" class="img-circle" style="width:180px; height:180px;">
+				<img src="<%=request.getContextPath()%>/resources/cityimg/austria.jpg" alt="오스트리아" class="img-circle" style="width:180px; height:180px;">
 			</a>
 			<hr size="5" noshade>
 	</div>
@@ -132,7 +132,7 @@
 	<div align="center" class="col-sm-5 col-md-3" id="scale">	
 		<h4>중국 상하이</h4>
 			<a href="#">
-				<img src="<%=request.getContextPath()%>/resources/img/china.jpg" alt="중국" class="img-circle" style="width:180px; height:180px;">
+				<img src="<%=request.getContextPath()%>/resources/cityimg/china.jpg" alt="중국" class="img-circle" style="width:180px; height:180px;">
 			</a>
 			<hr size="5" noshade>			
 	</div>
@@ -140,7 +140,7 @@
 	<div align="center" class="col-sm-5 col-md-3" id="scale">	
 		<h4>필리핀 보라카이</h4>
 			<a href="#">		
-				<img src="<%=request.getContextPath()%>/resources/img/borakai.jpg" alt="보라카이" class="img-circle" style="width:180px; height:180px;">
+				<img src="<%=request.getContextPath()%>/resources/cityimg/borakai.jpg" alt="보라카이" class="img-circle" style="width:180px; height:180px;">
 			</a>
 			<hr size="5" noshade>
 	</div>
@@ -148,7 +148,7 @@
 	<div align="center" class="col-sm-5 col-md-3" id="scale">	
 		<h4>아이스란드 레이캬비크</h4>
 			<a href="#">
-				<img src="<%=request.getContextPath()%>/resources/img/island.jpg" alt="아이슬란드" class="img-circle" style="width:180px; height:180px;">
+				<img src="<%=request.getContextPath()%>/resources/cityimg/island.jpg" alt="아이슬란드" class="img-circle" style="width:180px; height:180px;">
 			</a>
 			<hr size="5" noshade>
 	</div>
@@ -156,7 +156,7 @@
 	<div align="center" class="col-sm-5 col-md-3" id="scale">	
 		<h4>대한민국 제주도</h4>
 			<a href="#">
-				<img src="<%=request.getContextPath()%>/resources/img/jeju.jpg" alt="제주도" class="img-circle" style="width:180px; height:180px;">
+				<img src="<%=request.getContextPath()%>/resources/cityimg/jeju.jpg" alt="제주도" class="img-circle" style="width:180px; height:180px;">
 			</a>
 			<hr size="5" noshade>
 	</div>
@@ -164,7 +164,7 @@
 	<div align="center" class="col-sm-5 col-md-3" id="scale">	
 		<h4>태국 방콕</h4>
 			<a href="#">
-				<img src="<%=request.getContextPath()%>/resources/img/thai.jpg" alt="태국" class="img-circle" style="width:180px; height:180px;">
+				<img src="<%=request.getContextPath()%>/resources/cityimg/thai.jpg" alt="태국" class="img-circle" style="width:180px; height:180px;">
 			</a>
 			<hr size="5" noshade>
 	</div>

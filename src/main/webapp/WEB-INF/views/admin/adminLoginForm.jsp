@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,11 +26,6 @@ th, td {
 	height: 45%;
 }
 </style>
-
-
-
-
-
 </head>
 <body>
 	
@@ -43,9 +36,9 @@ th, td {
 				<img
 					style="width: auto; height: auto; max-width: 100px; max-height: 100px;"
 					src="<%=request.getContextPath()%>/resources/images/logo.png"
-					alt="logo"> <b>여정 로그인&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+					alt="logo"> <b>여정 관리자 로그인&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
 		</div>
-	<form:form modelAttribute="member" class="form-inline">
+	<form class="form-inline" action="<%=request.getContextPath()%>/admin" method="POST">
 
 		<table style="margin: auto;">
 
@@ -57,8 +50,7 @@ th, td {
 								src="<%=request.getContextPath()%>/resources/images/login_id.png"
 								alt="login_id">
 						</div>
-						<form:input class="form-control" path="member_id"
-							placeholder="아이디" />
+						<input type="text" name="member_id" class="form-control" placeholder="아이디" />
 					</div>
 				</th>
 			</tr>
@@ -70,28 +62,18 @@ th, td {
 								src="<%=request.getContextPath()%>/resources/images/login_password.png"
 								alt="login_password">
 						</div>
-						<form:password class="form-control" path="password"
-							placeholder="비밀번호" />
+						<input type="password" name="password" class="form-control" placeholder="비밀번호" />
 					</div>
 				</th>
 			</tr>
-			<tr>
-				<td><label><input type="checkbox" style=""
-						name="rememberID" /> 아이디 저장</label></td>
-			</tr>
+
 			<tr>
 				<th>
-					<button style="width: 100%" type="button" class="btn btn-primary">로그인</button>
+					<button type="submit" style="width: 100%"  class="btn btn-primary">로그인</button>
 				</th>
 			</tr>
-			<tr>
-				<th>네이버</th>
-			</tr>
-			<tr>
-				<th>카카오</th>
-			</tr>
 		</table>
-	</form:form>
+	</form>
 
 
 </body>

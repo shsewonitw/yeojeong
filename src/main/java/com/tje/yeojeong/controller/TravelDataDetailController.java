@@ -24,7 +24,6 @@ public class TravelDataDetailController {
 		
 		City_Data model = new City_Data();
 		model.setCity(city);
-		
 		City_Data city_data =  (City_Data)cdsoService.service(model);
 		request.setAttribute("city_data", city_data);
 		return "form/travelDataDetailForm";

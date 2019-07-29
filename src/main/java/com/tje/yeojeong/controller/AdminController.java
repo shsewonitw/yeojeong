@@ -18,7 +18,6 @@ import com.tje.yeojeong.service.City_DataSelectCountryService;
 import com.tje.yeojeong.service.MemberLoginService;
 import com.tje.yeojeong.service.MemberSearchIDService;
 
-
 @Controller
 public class AdminController {
 	@Autowired
@@ -122,6 +121,21 @@ public class AdminController {
 			
 			
 			return "admin/adminCityDataInsertForm";
+			
+			/*
+			 * <!-- city_code(int), country(string), city(string), local_time(string), flight_time(string), 
+			 * 	local_voltage(string), visa(string), latitude(string), logitude(string), danger_level(int) -->
+			 	city_code int auto_increment primary key,
+				country varchar(20) not null,
+			    city varchar(20) not null,
+			    local_time timestamp not null,
+			    flight_time varchar(20) not null,
+			    local_voltage varchar(20) not null,
+			    visa varchar(20) not null,
+			    latitude varchar(20) not null,
+			    logitude varchar(20) not null,
+			    danger_level int not null
+			 */
 		}
 	}
 }

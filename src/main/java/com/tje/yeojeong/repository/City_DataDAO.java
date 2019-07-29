@@ -37,7 +37,8 @@ public class City_DataDAO {
 				rs.getString(8),		// latitude
 				rs.getString(9),		// longitude
 				rs.getInt(10),			// danger_level
-				rs.getString(11));		// img_src
+				rs.getString(11),		// image_src (썸네일용)
+				rs.getString(12));		// image_src2 (내부 사진용)
 			return city_data;
 		}
 	}
@@ -64,7 +65,7 @@ public class City_DataDAO {
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 
 				PreparedStatement pstmt = con.prepareStatement(
-						"insert into city_data values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)", new String[] { "city_code" });
+						"insert into city_data values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)", new String[] { "city_code" });
 				pstmt.setString(1, model.getCountry());
 				pstmt.setString(2, model.getCity());
 				pstmt.setString(3, model.getLocal_time());
@@ -74,7 +75,8 @@ public class City_DataDAO {
 				pstmt.setString(7, model.getLatitude());
 				pstmt.setString(8, model.getLongitude());
 				pstmt.setInt(9, model.getDanger_level());
-				pstmt.setString(10, model.getImg_src());
+				pstmt.setString(10, model.getImage_src());
+				pstmt.setString(11, model.getImage_src2());
 				return pstmt;
 			}
 		}, keyHolder);
@@ -91,16 +93,18 @@ public class City_DataDAO {
 
 				PreparedStatement pstmt = con.prepareStatement(
 						"update city_data set country = ?, city = ?, flight_time = ?, local_voltage = ?,"
-						+ "visa = ?, latitude = ?, longitude = ?, danger_level = ? where city_code = ?");
+						+ "visa = ?, latitude = ?, longitude = ?, danger_level = ?, image_src = ? , image_src2 = ? where city_code = ?");
 				pstmt.setString(1, model.getCountry());
 				pstmt.setString(2, model.getCity());
-				pstmt.setString(4, model.getFlight_time());
-				pstmt.setString(5, model.getLocal_voltage());
-				pstmt.setString(6, model.getVisa());
-				pstmt.setString(7, model.getLatitude());
-				pstmt.setString(8, model.getLongitude());
-				pstmt.setInt(9, model.getDanger_level());
-				pstmt.setInt(10, model.getCity_code());
+				pstmt.setString(3, model.getFlight_time());
+				pstmt.setString(4, model.getLocal_voltage());
+				pstmt.setString(5, model.getVisa());
+				pstmt.setString(6, model.getLatitude());
+				pstmt.setString(7, model.getLongitude());
+				pstmt.setInt(8, model.getDanger_level());
+				pstmt.setString(9, model.getImage_src());
+				pstmt.setString(10, model.getImage_src2());
+				pstmt.setInt(11, model.getCity_code());
 				return pstmt;
 			}
 		}, keyHolder);

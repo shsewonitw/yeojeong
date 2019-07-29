@@ -9,177 +9,6 @@
 
 
 
-<style type="text/css">
-.mainDiv {
-	margin: auto;
-	margin-top: 20px;
-	align: center;
-	width: 50%;
-	height: auto;
-}
-
-@import url(https://fonts.googleapis.com/css?family=Lato);
-
-body {
-	margin: 0;
-}
-
-nav {
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	min-height: 100px;
-	padding: 0 0;
-	box-sizing: border-box;
-}
-
-nav::before {
-	position: absolute;
-	top: 5%;
-	left: 0;
-	width: 100%;
-	color: black;
-	font: 400 24px/1 'Lato', sans-serif;
-	text-align: center;
-}
-
-/* common */
-nav ul {
-	position: relative;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-nav ul::after {
-	display: block;
-	clear: both;
-	content: '';
-}
-
-nav ul li {
-	position: relative;
-	float: left;
-	border: 2px solid black;
-}
-
-nav
- 
-ul
- 
-li
-:not
- 
-(
-:first-child
- 
-)
-{
-border-left
-:
- 
-none
-;
-
-
-}
-nav ul li:hover {
-	background-color: rgba(255, 255, 255, .3);
-}
-
-nav ul li a {
-	display: inline-block;
-	padding: 1em 4em;
-	color: black;
-	font: 400 18px/1 'Lato', sans-serif;
-	text-align: center;
-	text-decoration: none;
-	white-space: nowrap;
-}
-
-nav ul ul {
-	position: absolute;
-	top: 100%;
-	left: -2px;
-}
-
-nav ul ul li {
-	float: none;
-	margin: 0;
-}
-
-nav
- 
-ul
- 
-ul
- 
-li
-:not
- 
-(
-:first-child
- 
-)
-{
-border
-:
- 
-2
-px
- 
-solid
- 
-black
-;
-
-	
-border-top
-:
- 
-none
-;
-
-
-}
-nav ul ul ul {
-	position: absolute;
-	top: -2px;
-	left: 100%;
-}
-
-/* DEMO #5 */
-.nav05 ul li {
-	perspective: 300px;
-}
-
-.nav05 ul ul {
-	visibility: hidden;
-	opacity: 0;
-	transition: .3s ease-in-out;
-	transform: rotateX(-90deg) rotateY(0);
-	transform-origin: 0 0;
-}
-
-.nav05 ul ul li {
-	perspective: 1500px;
-}
-
-.nav05 ul ul ul {
-	transform: rotateX(0) rotateY(-90deg);
-}
-
-.nav05 ul li:hover>ul {
-	visibility: visible;
-	opacity: 1;
-	transform: rotateX(0) rotateY(0);
-}
-</style>
-
-
-
-
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/sw_bootstrap.css?wer=121">
 <script src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
@@ -199,36 +28,11 @@ nav ul ul ul {
 	
 	
 	<div class="mainDiv">
-
-	<!-- 드롭다운 메뉴 -->
-		<div style="display:inline-block;">
-			<nav class="nav05">
-				<ul>
-					<li><a href="#" style="text-decoration: none;">리스트</a> 
-						<ul>
-						<li><a>도시 추가</a></li>
-							<c:forEach items="${countryList }" var="country">
-								<li><a href="#" style="text-decoration: none;">${country}</a>
-									<ul>
-										<c:forEach items="${map}" var="map">
-											<c:if test="${map.key eq country}">
-												<c:forEach items="${map.value }" var="city">
-													<li><a
-														href="<%=request.getContextPath()%>/adminCityDataUpdate"
-														style="text-decoration: none;">${city}</a></li>
-												</c:forEach>
-											</c:if>
-										</c:forEach>
-									</ul></li>
-							</c:forEach>
-						</ul></li>
-				</ul>
-			</nav>
-		</div>
+	<jsp:include page="/WEB-INF/views/admin/adminCountryDropdownMenu.jsp" />
 
 
 		<div style="display:inline-block;">
-			<form class="form-horizontal" action="<%=request.getContextPath()%>/adminCityDataInsert" method="POST">
+			<form class="form-horizontal" action="<%=request.getContextPath()%>/adminCityDataInsert" method="POST" enctype="multipart/form-data">
 				
 				<div class="form-group">
 					<label for="country" class="col-sm-2 control-label">국가</label>
@@ -287,10 +91,18 @@ nav ul ul ul {
 				</div>
 				
 				<div class="form-group">
-					<label for="image_src" class="col-sm-2 control-label">사진</label>
+					<label for="image_src" class="col-sm-2 control-label">썸네일</label>
 					<div class="col-sm-10">
 						<input type="file" class="form-control" id="image_src" name="image_src"
-							placeholder="사진등록" required>
+							placeholder="썸네일" required>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="image_src" class="col-sm-2 control-label">내부 사진</label>
+					<div class="col-sm-10">
+						<input type="file" class="form-control" id="image_src2" name="image_src2"
+							placeholder="내부사진등록" required>
 					</div>
 				</div>
 				
@@ -351,7 +163,6 @@ nav ul ul ul {
     </script>
     
     
-    <button id="alertButton">alertButton</button>
 	
 	
 	

@@ -30,8 +30,13 @@
 	<context:component-scan base-package="com.tje.yeojeong.service" />
 	<context:component-scan base-package="com.tje.yeojeong.controller" />
 	<context:component-scan base-package="com.tje.yeojeong.repository" />
+	<context:component-scan base-package="com.tje.yeojeong.setting" />
 	
 	<beans:bean id="pagingInfo" class="com.tje.yeojeong.setting.PagingInfo"
 	p:pagingSize="5" p:pageRange="5" />
+	
+	
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+	p:maxUploadSize="100000000" p:maxInMemorySize="100000000" />
 	
 </beans:beans>

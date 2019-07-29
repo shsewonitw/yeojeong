@@ -1,6 +1,6 @@
 package com.tje.yeojeong.service;
 
-import java.util.HashMap;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,17 +9,17 @@ import com.tje.yeojeong.model.*;
 import com.tje.yeojeong.repository.*;
 
 @Service
-public class Review_CommentInsertService {
+public class Review_CountService {
 	
 	@Autowired
-	private Review_CommentDAO review_CommentDAO;
+	private Review_viewDAO reviewDAO;
 	
 	public Object service(HashMap<String, Object> values) {
 		HashMap<String, Object> result = new HashMap<>();
-		Review_Comment comment = (Review_Comment)values.get("comment");
-		
-		result.put("result", review_CommentDAO.insert(comment));
-		
+		Review_view review = (Review_view)values.get("review");
+
+		result.put("result",reviewDAO.AticleCount(review));
+				
 		return result;
 	}
 }

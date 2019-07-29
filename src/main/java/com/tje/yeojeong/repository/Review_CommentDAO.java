@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.*;
 
 import com.tje.yeojeong.model.*;
+import com.tje.yeojeong.repository.Review_viewDAO.Review_viewRowMapper;
 
 import javax.sound.sampled.ReverbType;
 import javax.sql.DataSource;
@@ -34,6 +35,12 @@ public class Review_CommentDAO {
 					);     
 			return rComment;
 		}
+	}
+	
+	public List<Review_Comment> selectAll(){
+		String sql = "select * from Review_view order by write_time desc";
+		List<Review_Comment> result = this.jdbcTemplate.query(sql,new Review_CommentRowMapper());
+		return result.isEmpty() ? null : result;
 	}
 	
 	// 댓글 갯수

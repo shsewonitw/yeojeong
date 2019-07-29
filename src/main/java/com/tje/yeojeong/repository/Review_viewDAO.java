@@ -65,11 +65,24 @@ public class Review_viewDAO {
 	// 리뷰 테이블에서 데이터 삭제
 	public boolean delete(Review_view obj) {
 		boolean result = false;
-		String sql = "delete from Review_article where article_id_id = ?";
+		String sql = "delete from Review_article where article_id = ?";
 
 		result = this.jdbcTemplate.update(sql,obj.getArticle_id(),obj.getMember_id()) == 0 ? false : true;
 		
 		return result;
+	}
+	
+	// 게시글 상세 확인
+	public Review_view selectAticleId(Review_view obj){
+		String sql = "select * from review_view where article_id = ?";
+		Review_view result = this.jdbcTemplate.queryForObject(sql,new Review_viewRowMapper(),obj.getArticle_id());
+		return result;
+	}
+	
+	// 조회수
+	public int AticleCount(Review_view obj) {
+		String sql = "update Review_article set read_count = read_count + 1 where article_id = ?";
+		return this.jdbcTemplate.update(sql,obj.getArticle_id());
 	}
 	
 }

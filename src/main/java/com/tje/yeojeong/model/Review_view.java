@@ -2,6 +2,8 @@ package com.tje.yeojeong.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Review_view {
 	private int article_id;
 	private String member_id;

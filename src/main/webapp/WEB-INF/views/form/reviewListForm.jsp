@@ -45,9 +45,9 @@
         		<td><img class="not_img" src="<%=request.getContextPath()%>/resources/img/notimg.png"></td>
         	</c:if>
         	<c:if test="${ !img}"> 
-        		<td><img class="imgsize" src="<%=request.getContextPath()%>/resources/img/${r_list.image_src}"></td>
+        		<td><img class="imgsize" src="<%=request.getContextPath()%>/resources/cityimg/${r_list.image_src}"></td>
         	</c:if>
-        	<td><a href="<%=request.getContextPath()%>/datailreview?article_id=${ r_list.article_id }'">
+        	<td><a href="<%=request.getContextPath()%>/datailreview?article_id=${ r_list.article_id }">
         	<!-- 10글자 이상 될 시 ...으로 자르는 코드 -->
         	<c:choose>
 	        <c:when test="${fn:length(r_list.content) gt 10}">

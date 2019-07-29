@@ -228,7 +228,7 @@ nav ul ul ul {
 
 
 		<div style="display:inline-block;">
-			<form class="form-horizontal" action="<%=request.getContextPath()%>/adminCityDataInsert" method="POST">
+			<form class="form-horizontal" action="<%=request.getContextPath()%>/adminCityDataInsert" method="POST" enctype="multipart/form-data">
 				
 				<div class="form-group">
 					<label for="country" class="col-sm-2 control-label">국가</label>
@@ -287,10 +287,18 @@ nav ul ul ul {
 				</div>
 				
 				<div class="form-group">
-					<label for="image_src" class="col-sm-2 control-label">사진</label>
+					<label for="image_src" class="col-sm-2 control-label">썸네일</label>
 					<div class="col-sm-10">
 						<input type="file" class="form-control" id="image_src" name="image_src"
-							placeholder="사진등록" required>
+							placeholder="썸네일" required>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="image_src" class="col-sm-2 control-label">내부 사진</label>
+					<div class="col-sm-10">
+						<input type="file" class="form-control" id="image_src2" name="image_src2"
+							placeholder="내부사진등록" required>
 					</div>
 				</div>
 				

@@ -12,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.tje.yeojeong.model.*;
 import com.tje.yeojeong.service.City_DataInsertService;
@@ -19,6 +22,7 @@ import com.tje.yeojeong.service.City_DataSelectCityService;
 import com.tje.yeojeong.service.City_DataSelectCountryService;
 import com.tje.yeojeong.service.MemberLoginService;
 import com.tje.yeojeong.service.MemberSearchIDService;
+import com.tje.yeojeong.setting.UtilFile;
 
 @Controller
 public class AdminController {
@@ -143,7 +147,7 @@ public class AdminController {
 		}
 		
 		@PostMapping("/adminCityDataInsert")
-		public String adminCityDataInsertSubmit(HttpSession session,HttpServletRequest request) {
+		public String adminCityDataInsertSubmit(@RequestParam("image_src") MultipartFile uploadFile1, @RequestParam("image_src2") MultipartFile uploadFile2,MultipartHttpServletRequest mpRequest, HttpSession session,HttpServletRequest request) {
 			// 어드민으로 로그인 되있는지 확인
 			Member member = (Member)session.getAttribute("login_admin");
 			if(member == null) {
@@ -158,7 +162,6 @@ public class AdminController {
 			String local_voltage = request.getParameter("local_voltage");
 			String visa = request.getParameter("visa");
 			String strDanger_level = request.getParameter("danger_level");
-			String image_src = request.getParameter("image_src");
 			
 			// 위도 경도 가져오는 코드
 			String position = request.getParameter("position");
@@ -177,7 +180,11 @@ public class AdminController {
 			} catch(Exception e) {
 				System.out.println("위험지역레벨 인트값 안들어옴");
 			}
-			City_Data model = new City_Data(city_code,country,city,local_time,flight_time,local_voltage,visa,latitude,longitude,danger_level,image_src);
+			UtilFile utilFile = new UtilFile();
+			String image_src = utilFile.fileUpload(mpRequest, uploadFile1);
+			String image_src2 = utilFile.fileUpload(mpRequest, uploadFile2);
+			
+			City_Data model = new City_Data(city_code,country,city,local_time,flight_time,local_voltage,visa,latitude,longitude,danger_level,image_src,image_src2);
 			
 			cdiService.service(model);
 			

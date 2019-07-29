@@ -12,12 +12,11 @@
 
 <script type="text/javascript">
 $(function() {
-	 $('.form-control').keyup(function (e){
+	 $('#textarea').keyup(function (e){
         var content = $(this).val();
-        $(this).height(((content.split('\n').length + 1) * 1.5) + 'em');
         $('.counter').text(content.length + ' / 1000');
     });
-    $('.form-control').keyup();
+    $('#textarea').keyup();
 });
 </script>
 <style type="text/css">
@@ -74,9 +73,9 @@ div {
 <div class="middle" role="main">
 	<div class="column_center">
 		<input type="hidden" name="sender_id" value="${ login_member.member_id }">
-			<input class="form-control" id="disabledInput" name="receiver_id" type="text" placeholder="${ rList.sender_id }" readonly>
+			<input class="form-control" id="disabledInput" name="receiver_id" type="text" placeholder="받는 사람${ rList.sender_id }" readonly>
 				<div class="textarea">
-					<textarea class="form-control" name="content" maxlength="1000" rows="23" cols="81" placeholder="내용을 입력하세요"></textarea>
+					<textarea class="form-control" id="textarea" name="content" maxlength="1000" rows="23" cols="81" placeholder="내용을 입력하세요"></textarea>
 				</div>
 					<div class="text_byte">
 						<span class="counter">###</span>

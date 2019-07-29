@@ -66,7 +66,8 @@ public class UtilFile {
 			}
 		}
 		
-		return path + fileName;
+		// return path + fileName;
+		return fileName;
 	}
 	
 	

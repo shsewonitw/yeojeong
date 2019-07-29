@@ -12,6 +12,8 @@
 	src="<%=request.getContextPath()%>/resources/js/bootstrap.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/resources/css/bootstrap.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/2796c86652.js"></script>
 <style type="text/css">
 #div_menu {
 	width: 20%;
@@ -26,6 +28,7 @@
 	float: left;
 	background-size: 100% 100%;
 	text-align: left;
+	position: relative;
 }
 
 #div_menu2 {
@@ -54,6 +57,9 @@
 	vertical-align: middle;
 	text-align: center;
 }
+.city_info {
+	position: absolute;
+}
 </style>
 
 
@@ -67,8 +73,8 @@
 
 
 	<div style="height: 100%;">
-		<div id="country" style=""><h2>${city_data.country }</h2></div>
-		<div id="city" style=""><h2>${city_data.city }</h2></div>
+		<div id="country" style="text-align: center;"><h2>${city_data.country }</h2></div>
+		<div id="city" style="text-align: center;"><h2>${city_data.city }</h2></div>
 		<!-- 도시별 정보 -->
 		<div style="height: 400px;">
 			<img alt="도시 사진"
@@ -83,30 +89,30 @@
 			<div class="jb-table">
 				<div class="jb-table-row">
 					<div class="jb-table-cell">
-						<img src="<%=request.getContextPath()%>/resources/cityimg/clock1.png">
+						<span style="color: #3498DB"><i class="fas fa-clock fa-6x"></i></span>
 						<h4>현지시간 : ${city_data.local_time }</h4>
 					</div>
-					<div class="jb-table-cell">
-						<img src="<%=request.getContextPath()%>/resources/cityimg/icon.jpg">
+					<div class="jb-table-cell">						
+						<span style="color: #3498DB"><i class="fas fa-plane-departure fa-6x"></i></span>						
 						<h4>비행시간 : ${city_data.flight_time }</h4>
 					</div>
 					<div class="jb-table-cell">
-						<img src="<%=request.getContextPath()%>/resources/cityimg/gps.jpg">
+						<span style="color: #3498DB"><i class="fas fa-map-marked-alt fa-6x"></i></span>
 						<h4>위도 : ${city_data.latitude }</h4>
 						<h4>경도 : ${city_data.longitude }</h4>
 					</div>
 				</div>
 				<div class="jb-table-row">
 					<div class="jb-table-cell jb-top">
-						<img src="<%=request.getContextPath()%>/resources/cityimg/voltage.png">
+						<span style="color: #3498DB"><i class="fas fa-plug fa-6x"></i></span>
 						<h4>현지 전압 : ${city_data.local_voltage }</h4>
 					</div>
 					<div class="jb-table-cell jb-middle">
-						<img src="<%=request.getContextPath()%>/resources/cityimg/Visa-icon.png">
+						<span style="color: #3498DB"><i class="fab fa-cc-visa fa-6x"></i></span>
 						<h4>비자 : ${city_data.visa}</h4>
 					</div>
 					<div class="jb-table-cell jb-bottom">
-						<img src="<%=request.getContextPath()%>/resources/cityimg/attention.png">
+						<span style="color: red"><i class="fas fa-exclamation-triangle fa-6x"></i></span>
 						<c:if test="${city_data.danger_level eq 0}">
 							<h4>유의 지역 : 경보 없음</h4>
 						</c:if>

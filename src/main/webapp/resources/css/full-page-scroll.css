@@ -77,5 +77,6 @@ body, html {
 }
 
 .dots-left {
+	top: auto;
 	right: 10px;
 }

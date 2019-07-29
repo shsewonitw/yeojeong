@@ -74,9 +74,9 @@ function transform() {
 	<c:forEach items="${rList}" var="rmsg">
 	<c:if test="${ empty rmsg.receive_time }" var="r">
 	<tr>
-		<th width="10%"><input type="checkbox" name="one_chk"></th>
-		<th width="20%"><a href="#" class="a" onclick="transform();">${ rmsg.sender_id }</a></th>
-		<th width="40%"><a href="<%=request.getContextPath()%>/message/receivecontent/${ rmsg.message_id }" class="a">새 메세지 확인</a></th>
+		<th width="10%"><input type="checkbox" name="${rmsg.message_id}"></th>
+		<th width="20%"><a href="#" class="a" onclick="transform();">${rmsg.sender_id}</a></th>
+		<th width="40%"><a href="<%=request.getContextPath()%>/message/receivecontent/${rmsg.message_id}" class="a">새 메세지 확인</a></th>
 		<th width="15%">${ rmsg.send_time }</th>
 		<th width="15%">${ empty rmsg.receive_time ? '읽지않음' : rmsg.receive_time }</th>
 	</tr>
@@ -84,9 +84,9 @@ function transform() {
 	
 	<c:if test="${ not r }">
 	<tr>
-		<td width="10%"><input type="checkbox" name="one_chk"></td>
-		<td width="20%"><a href="#" class="a" onclick="transform();">${ rmsg.sender_id }</a></td>
-		<td width="40%"><a href="<%=request.getContextPath()%>/message/receivecontent/${ rmsg.message_id }" class="a">${ rmsg.content }
+		<td width="10%"><input type="checkbox" name="${rmsg.message_id}"></td>
+		<td width="20%"><a href="#" class="a" onclick="transform();">${rmsg.sender_id}</a></td>
+		<td width="40%"><a href="<%=request.getContextPath()%>/message/receivecontent/${rmsg.message_id}" class="a">${rmsg.content}
 		<!-- 10글자 이상 될 시 ...으로 자르는 코드 -->
            <c:choose>
            <c:when test="${fn:length(rmsg.content) gt 10}">

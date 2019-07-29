@@ -228,7 +228,7 @@ nav ul ul ul {
 
 
 		<div style="display:inline-block;">
-			<form class="form-horizontal">
+			<form class="form-horizontal" action="<%=request.getContextPath()%>/adminCityDataInsert" method="POST">
 				
 				<div class="form-group">
 					<label for="country" class="col-sm-2 control-label">국가</label>

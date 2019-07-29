@@ -1,27 +1,24 @@
 package com.tje.yeojeong.model;
 
-import java.util.*;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 public class City_Data {
 	private int city_code;
 	private String country;
 	private String city;
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
-	private Date local_time;
+	private String local_time;
 	private String flight_time;
 	private String local_voltage;
 	private String visa;
 	private String latitude;
-	private String logitude;
+	private String longitude;
 	private int danger_level;
 	private String img_src;
 	
 	public City_Data() {}
 	
-	public City_Data(int city_code, String country, String city, Date local_time, String flight_time,
-			String local_voltage, String visa, String latitude, String logitude, int danger_level, String img_src) {
+	public City_Data(int city_code, String country, String city, String local_time, String flight_time,
+			String local_voltage, String visa, String latitude, String longitude, int danger_level, String img_src) {
 		super();
 		this.city_code = city_code;
 		this.country = country;
@@ -31,7 +28,7 @@ public class City_Data {
 		this.local_voltage = local_voltage;
 		this.visa = visa;
 		this.latitude = latitude;
-		this.logitude = logitude;
+		this.longitude = longitude;
 		this.danger_level = danger_level;
 		this.img_src = img_src;
 	}
@@ -62,11 +59,11 @@ public class City_Data {
 		this.city = city;
 	}
 
-	public Date getLocal_time() {
+	public String getLocal_time() {
 		return local_time;
 	}
 
-	public void setLocal_time(Date local_time) {
+	public void setLocal_time(String local_time) {
 		this.local_time = local_time;
 	}
 
@@ -103,11 +100,11 @@ public class City_Data {
 	}
 
 	public String getLogitude() {
-		return logitude;
+		return longitude;
 	}
 
 	public void setLogitude(String logitude) {
-		this.logitude = logitude;
+		this.longitude = logitude;
 	}
 	
 	public String getDanger_levelString() {

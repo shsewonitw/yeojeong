@@ -2,6 +2,7 @@ package com.tje.yeojeong.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -136,6 +137,42 @@ public class AdminController {
 			    logitude varchar(20) not null,
 			    danger_level int not null
 			 */
+		}
+		
+		@PostMapping("/adminCityDataInsert")
+		public String adminCityDataInsertSubmit(HttpSession session,HttpServletRequest request) {
+			// 어드민으로 로그인 되있는지 확인
+			Member member = (Member)session.getAttribute("login_admin");
+			if(member == null) {
+				return "admin/adminLoginForm";
+			}
+			
+			// 위도 경도 가져오는 코드
+			String position = request.getParameter("position");
+			position = position.substring(1,position.length()-1);
+			String latitude = null;
+			String longitude = null;
+			StringTokenizer st = new StringTokenizer(position, ", ");
+			if(st.hasMoreTokens()) {
+				latitude = st.nextToken();
+				longitude = st.nextToken();
+			}
+
+			System.out.println(latitude);
+			System.out.println(longitude);
+			
+//			System.out.println(request.getParameter("city"));
+//			System.out.println(request.getParameter("country"));
+//			System.out.println(request.getParameter("flight_time"));
+//			System.out.println(request.getParameter("local_time"));
+//			System.out.println(request.getParameter("local_voltage"));
+//			System.out.println(request.getParameter("visa"));
+//			System.out.println(request.getParameter("position"));
+			
+			
+			return "admin/adminCityDataInsertForm";
+			
+		
 		}
 	}
 }

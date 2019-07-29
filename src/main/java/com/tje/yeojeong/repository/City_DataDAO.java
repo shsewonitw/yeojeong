@@ -30,12 +30,12 @@ public class City_DataDAO {
 				rs.getInt(1), 			// city_code
 				rs.getString(2),		// country
 				rs.getString(3), 		// city
-				rs.getTimestamp(4), 	// local_time
+				rs.getString(4), 	// local_time
 				rs.getString(5), 		// flight_time
 				rs.getString(6),		// local_voltage
 				rs.getString(7),		// visa
 				rs.getString(8),		// latitude
-				rs.getString(9),		// logitude
+				rs.getString(9),		// longitude
 				rs.getInt(10),			// danger_level
 				rs.getString(11));		// img_src
 			return city_data;

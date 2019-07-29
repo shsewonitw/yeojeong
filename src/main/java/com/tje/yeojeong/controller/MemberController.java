@@ -69,17 +69,54 @@ public class MemberController {
 		return "/page/main";
 	}
 
-	@GetMapping("/regist")
-	public String regist_Form(@ModelAttribute(value = "member") Member member) {
+	@GetMapping("/regist_Regular")
+	public String regist_Regular_Form(@ModelAttribute(value = "member") Member member) {
 
-		return "form/registForm";
+		return "form/registForm_Regular";
 	}
 
-	@PostMapping("/regist")
+	@PostMapping("/regist_Regular")
 	@ResponseBody
-	public boolean regist_Submit(HttpServletRequest request, Model model, @RequestBody Member member) {
+	public boolean regist_Regular_Submit(HttpServletRequest request, Model model, @RequestBody Member member) {
 
 		return (Boolean) miService.service(member);
+	}
+
+	@GetMapping("/regist_Kakao")
+	public String regist_Kakao_Form(@ModelAttribute(value = "member") Member member, @RequestParam String kakao_id,
+			@RequestParam String kakao_email, @RequestParam(required = false) String kakao_gender, Model model) {
+		member.setMember_id(kakao_id);
+		member.setEmail(kakao_email);
+		if (kakao_gender != null && kakao_gender.equals("male")) {
+			member.setGender(1);
+		} else if (kakao_gender != null && kakao_gender.equals("female")) {
+			member.setGender(2);
+		}
+
+		System.out.println(member.getMember_id());
+		System.out.println(member.getEmail());
+		System.out.println(member.getGenderString());
+
+		return "form/registForm_Kakao";
+	}
+
+	@PostMapping("/regist_Kakao")
+	@ResponseBody
+	public boolean regist_Kakao_Submit(HttpServletRequest request, Model model, @RequestBody Member member) {
+
+		return (Boolean) miService.service(member);
+	}
+
+	@GetMapping("/auth/mypage")
+	public String mypage_Form(@ModelAttribute(value = "member") Member member, HttpSession session) {
+
+		return "form/mypageForm";
+	}
+
+	@PostMapping("/auth/mypage")
+	public String mypage_Submit(@ModelAttribute(value = "member") Member member, HttpSession session) {
+
+		return "submits/mypageSumit";
 	}
 
 }

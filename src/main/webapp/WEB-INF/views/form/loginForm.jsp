@@ -9,10 +9,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
 
 <title>로그인 화면</title>
 
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <link href="resources/css/kh_bootstrap.min.css?asd=asdda"
 	rel="stylesheet">
 <script type="text/javascript" src="resources/js/jquery.js"></script>
@@ -27,25 +30,29 @@ th, td {
 .img_attr {
 	height: 45%;
 }
-</style>
 
+#kakao-login-btn>img{
+width: 100%;
+}
+</style>
 
 
 
 
 </head>
 <body>
-	
+
 
 	<div style="height: 25%;"></div>
-			<div
-				style="color: rgb(52, 152, 219); margin: auto; font-family: sans-serif; font-size: 30px; text-align: center; ">
-				<img
-					style="width: auto; height: auto; max-width: 100px; max-height: 100px;"
-					src="<%=request.getContextPath()%>/resources/images/logo.png"
-					alt="logo"> <b>여정 로그인&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		</div>
-		
+	<div
+		style="color: rgb(52, 152, 219); margin: auto; font-family: sans-serif; font-size: 30px; text-align: center;">
+		<img
+			style="width: auto; height: auto; max-width: 100px; max-height: 100px;"
+			src="<%=request.getContextPath()%>/resources/images/logo.png"
+			alt="logo"> <b>여정
+			로그인&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+	</div>
+
 	<form:form modelAttribute="member" class="form-inline">
 
 		<table style="margin: auto;">
@@ -78,7 +85,8 @@ th, td {
 			</tr>
 			<tr>
 				<td><label><input type="checkbox" style=""
-						name="rememberID" ${cookie.rememberID.value != null ? "checked" : "" }/> 아이디 저장</label></td>
+						name="rememberID"
+						${cookie.rememberID.value != null ? "checked" : "" } /> 아이디 저장</label></td>
 			</tr>
 			<tr>
 				<th>
@@ -86,14 +94,65 @@ th, td {
 				</th>
 			</tr>
 			<tr>
-				<th>네이버</th>
-			</tr>
-			<tr>
-				<th>카카오</th>
+				
+				<th style="text-align: center; " >
+					<a id="kakao-login-btn" style=""></a>
+				</th>
+				
 			</tr>
 		</table>
 	</form:form>
-
+	
+	
+	
+	<a href="http://developers.kakao.com/logout"></a>
+	<script type='text/javascript'>
+	 //<![CDATA[
+    // 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('9e1736773b70f53443f16edce448d44d');
+    // 카카오 로그인 버튼을 생성합니다.
+    Kakao.Auth.createLoginButton({
+      container: '#kakao-login-btn',
+      success: function(authObj) {
+        
+        Kakao.API.request({
+        	
+        	url: '/v2/user/me',
+            success: function(res) {
+            	
+            	
+             var userID = res.id;      //유저의 카카오톡 고유 id
+             var userEmail = res.kakao_account.email;   //유저의 이메일
+             var usergender  = res.kakao_account.gender; //유저가 등록한 별명
+             
+             $("#kakao_id").val(userID);
+             $("#kakao_email").val(userEmail);
+             $("#kakao_gender").val(usergender);
+             
+             $("#target").submit();
+             
+            },
+            fail: function(error) {
+             alert(JSON.stringify(error));
+            }
+        	
+        });
+        
+       
+      },
+      fail: function(err) {
+         alert(JSON.stringify(err));
+      }
+    });
+		            
+	</script>
+	<form action="<%=request.getContextPath()%>/regist_Kakao" id="target" method="get">
+	<input type="hidden" id="kakao_id" name="kakao_id" value="" >
+	<input type="hidden" id="kakao_email" name="kakao_email" value="" >
+	<input type="hidden" id="kakao_gender" name="kakao_gender" value="" >
+	
+	</form>
+	
 
 </body>
 </html>

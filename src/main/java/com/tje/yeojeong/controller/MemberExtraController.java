@@ -1,5 +1,7 @@
 package com.tje.yeojeong.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,9 +34,12 @@ public class MemberExtraController {
 	@PostMapping("/searchEmail")
 	@ResponseBody
 	public boolean email_search(@RequestParam(value = "email") String email) {
+		System.out.println(email);
 		Member member = new Member();
 		member.setEmail(email);
-		boolean result = (Member) msService.service(member) == null ? true : false;
+		
+		boolean result = (List<Member>) mseService.service(member) == null ? true : false;
+		System.out.println(result);
 		return result;
 	}
 

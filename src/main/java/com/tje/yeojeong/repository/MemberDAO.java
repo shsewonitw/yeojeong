@@ -60,9 +60,9 @@ public class MemberDAO {
 		}
 	}
 
-	public Member selectOne_Email(Member obj) {
+	public List<Member> selectOne_Email(Member obj) {
 		try {
-			return this.jdbcTemplate.queryForObject("select * from member where email = ?", new MemberRowMapper(),
+			return this.jdbcTemplate.query("select * from member where email = ?", new MemberRowMapper(),
 					obj.getMember_id());
 		} catch (Exception e) {
 			return null;

@@ -137,7 +137,7 @@ $("#regist_btn").on("click",function(){
 				
 			if(all_flag){
 				$.ajax({
-					url : "<%=request.getContextPath()%>/regist",
+					url : "<%=request.getContextPath()%>/regist_Regular",
 					type : "post",
 					contentType : "application/json; charset=UTF-8",
 					data : memberJsonObject,

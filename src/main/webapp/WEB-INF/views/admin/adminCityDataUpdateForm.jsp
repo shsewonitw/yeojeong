@@ -25,12 +25,12 @@
 	
 	
 	
-	<div class="mainDiv">
+	
 
 	<jsp:include page="/WEB-INF/views/admin/adminCountryDropdownMenu.jsp" />
 
-
-		<div style="display:inline-block;">
+	<div style="overflow:hidden;">
+		<div style="float:left;">
 			<form class="form-horizontal" action="<%=request.getContextPath()%>/adminCityDataInsert" method="POST" enctype="multipart/form-data">
 				
 				<div class="form-group">

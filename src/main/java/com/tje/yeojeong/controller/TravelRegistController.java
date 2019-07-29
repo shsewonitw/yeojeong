@@ -3,17 +3,23 @@ package com.tje.yeojeong.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.tje.yeojeong.model.City_Data;
 import com.tje.yeojeong.model.Member;
 import com.tje.yeojeong.model.Travel_regist;
+import com.tje.yeojeong.service.City_DataSelectCityService;
+import com.tje.yeojeong.service.City_DataSelectCountryService;
 import com.tje.yeojeong.service.TravelRegistInsertService;
 
 @Controller
@@ -21,16 +27,23 @@ public class TravelRegistController {
 	
 	@Autowired
 	private TravelRegistInsertService triService;
+	@Autowired
+	private City_DataSelectCountryService cdsCountryService;
+	@Autowired
+	private City_DataSelectCityService cdsCityService;
+	
 	
 	@GetMapping("/travelRegist")
-	public String travelRegistForm() {
-
+	public String travelRegistForm(Model model) {
+		
+		CountryList(model);
+		
 		return "form/travelRegist";
 	}
 	
-
 	
-
+	
+	
 	@PostMapping("/travelRegist")
 	public String travelRegistSubmit(HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -77,5 +90,21 @@ public class TravelRegistController {
 		}
 		
 
+	}
+	
+	private void CountryList(Model model) {
+		// DB에 저장된 Country 리스트
+		List<String> countryList = (List<String>) cdsCountryService.service();
+		model.addAttribute("countryList", countryList);
+		HashMap<String, List<String>> map = new HashMap<String, List<String>>();
+		for (String country : countryList) {
+			City_Data city_data = new City_Data();
+			city_data.setCountry(country);
+			List<String> cityList = (List<String>) cdsCityService.service(city_data);
+			map.put(country, cityList);
+		}
+		
+		
+		model.addAttribute("map", map);
 	}
 }

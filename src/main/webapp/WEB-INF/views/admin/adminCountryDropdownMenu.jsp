@@ -169,7 +169,7 @@ nav ul ul ul {
 }
 </style>
 	<!-- 드롭다운 메뉴 -->
-		<div style="display:inline-block;">
+		<div style="float:left;padding-left:5%;padding-right:20%;">
 			<nav class="nav05">
 				<ul>
 					<li><a href="#" style="text-decoration: none;">리스트</a> 

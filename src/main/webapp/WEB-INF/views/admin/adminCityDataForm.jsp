@@ -26,16 +26,14 @@
 	
 	
 	
-	<div class="mainDiv">
+
 
 
 	<jsp:include page="/WEB-INF/views/admin/adminCountryDropdownMenu.jsp" />
 
 
-	</div>
+
 
 
 </body>
 </html>
-
-		

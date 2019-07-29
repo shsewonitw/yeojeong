@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/sw_bootstrap.css?wer=121">
 <link rel="stylesheet"
@@ -103,9 +104,9 @@ function removeAll(e){
 			<select class="form-control" name="country" id="selOne"
 				onchange="doChange(this, 'selTwo')">
 				<option value="default">---국가 선택---</option>
-				<option value="한국">한국</option>
-				<option value="중국">중국</option>
-				<option value="미국">미국</option>
+				<c:forEach items="${countryList}" var="country">
+					<option value="${country}">${country}</option>	
+				</c:forEach>
 			</select> 
 		</th>
 		<th>
@@ -140,63 +141,6 @@ function removeAll(e){
 	</tr>
 </table>
 </form>
-<!--
-<div align="center" class="centerDiv">
-	<h1 style="color:rgb(52,152,219); font-weight:bold;">여행지 등록</h1>
-
-	<form class="form-horizontal" action="<%=request.getContextPath()%>/travelRegist" method="POST">
-		<div class="form-group">
-			<label  for="inputEmail3" class="col-sm-2 control-label">비상 연락처</label>
-			<div class="col-sm-4">
-				<input type="text" name="help_tel" class="form-control" placeholder="번호를 입력해주세요">
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label for="inputPassword3" class="col-sm-2 control-label">국가</label>
-			<div class="col-sm-4">
-
-				<div class="col-sm-6">
-				<select class="form-control" name="country" id="selOne"
-					onchange="doChange(this, 'selTwo')">
-					<option value="default">---국가 선택---</option>
-					<option value="한국">한국</option>
-					<option value="중국">중국</option>
-					<option value="미국">미국</option>
-				</select> 
-				<select class="form-control" name="city" id="selTwo">
-					<option value="default">---도시 선택---</option>
-				</select>
-				</div>
-				
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label for="inputEmail3" class="col-sm-2 control-label">출국 날짜</label>
-			<div class="col-sm-4">
-				<input type="text" name="start_date" class="form-control" id="start_date" placeholder="클릭하여 날짜 선택" autocomplete="off">
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label for="inputEmail3" class="col-sm-2 control-label">입국 날짜</label>
-			<div class="col-sm-4">
-				<input type="text"  name="end_date" class="form-control" id="end_date" placeholder="클릭하여 날짜 선택" autocomplete="off">
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-10">
-				<button type="submit" class="btn btn-default" >등록</button>
-			</div>
-		</div>
-	</form>
-</div>
-
--->
-
-
 
 
 

@@ -55,7 +55,7 @@ function time_format(s) {
 </script>
 </head>
 <body>
-<div class="dropmenu" style="z-index:100;position:absolute; background-color:white; width:100%; height:170px; opacity:1; transition:all 0.4s ease-out;" id="menu">
+<div class="dropmenu" style="z-index:100;position:absolute; background-color:white; width:1850px; height:170px; opacity:1; transition:all 0.4s ease-out;" id="menu">
 
 	<div class="main_menu">
 
@@ -72,8 +72,6 @@ function time_format(s) {
 	 <li style="padding-top:30px; margin:auto;"><a href="#" ><b class="menu_font">
 	 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;회원정보 조회</b></a></li>
 	 
-	 <li style="padding-top:30px; margin:auto;"><a href="#"><b class="menu_font">
-	 <span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;자주 묻는 질문</b></a></li>
 	 
 	 <li style="padding-top:60px; margin:auto; float:right;">
 	 <span id="counter"> </span> <b>후 자동로그아웃 </b><input type="button" class="btn btn-primary" value="연장" onclick="counter_reset()">

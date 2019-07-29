@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.tje.yeojeong.model.*;
+import com.tje.yeojeong.service.City_DataInsertService;
 import com.tje.yeojeong.service.City_DataSelectCityService;
 import com.tje.yeojeong.service.City_DataSelectCountryService;
 import com.tje.yeojeong.service.MemberLoginService;
@@ -29,6 +30,8 @@ public class AdminController {
 	private City_DataSelectCountryService cdsCountryService;
 	@Autowired
 	private City_DataSelectCityService cdsCityService;
+	@Autowired
+	private City_DataInsertService cdiService;
 	
 	@Controller
 	public class TravelRegistController {
@@ -147,6 +150,16 @@ public class AdminController {
 				return "admin/adminLoginForm";
 			}
 			
+			int city_code = 0;
+			String country = request.getParameter("country");
+			String city = request.getParameter("city");
+			String local_time = request.getParameter("local_time");
+			String flight_time = request.getParameter("flight_time");
+			String local_voltage = request.getParameter("local_voltage");
+			String visa = request.getParameter("visa");
+			String strDanger_level = request.getParameter("danger_level");
+			String image_src = request.getParameter("image_src");
+			
 			// 위도 경도 가져오는 코드
 			String position = request.getParameter("position");
 			position = position.substring(1,position.length()-1);
@@ -157,18 +170,16 @@ public class AdminController {
 				latitude = st.nextToken();
 				longitude = st.nextToken();
 			}
-
-			System.out.println(latitude);
-			System.out.println(longitude);
 			
-//			System.out.println(request.getParameter("city"));
-//			System.out.println(request.getParameter("country"));
-//			System.out.println(request.getParameter("flight_time"));
-//			System.out.println(request.getParameter("local_time"));
-//			System.out.println(request.getParameter("local_voltage"));
-//			System.out.println(request.getParameter("visa"));
-//			System.out.println(request.getParameter("position"));
+			int danger_level=0;
+			try{
+				danger_level = Integer.parseInt(strDanger_level);
+			} catch(Exception e) {
+				System.out.println("위험지역레벨 인트값 안들어옴");
+			}
+			City_Data model = new City_Data(city_code,country,city,local_time,flight_time,local_voltage,visa,latitude,longitude,danger_level,image_src);
 			
+			cdiService.service(model);
 			
 			return "admin/adminCityDataInsertForm";
 			

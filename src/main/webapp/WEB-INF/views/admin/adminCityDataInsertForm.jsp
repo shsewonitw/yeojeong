@@ -234,7 +234,7 @@ nav ul ul ul {
 					<label for="country" class="col-sm-2 control-label">국가</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="country" name="country"
-							placeholder="국가를 입력해주세요">
+							placeholder="국가를 입력해주세요" required>
 					</div>
 				</div>
 				
@@ -242,7 +242,7 @@ nav ul ul ul {
 					<label for="city" class="col-sm-2 control-label">도시</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="city" name="city"
-							placeholder="도시를 입력해주세요">
+							placeholder="도시를 입력해주세요" required>
 					</div>
 				</div>
 				
@@ -250,7 +250,7 @@ nav ul ul ul {
 					<label for="local_time" class="col-sm-2 control-label">시차</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="local_time" name="local_time"
-							placeholder="시차를 입력해주세요">
+							placeholder="시차를 입력해주세요" required>
 					</div>
 				</div>
 				
@@ -258,7 +258,7 @@ nav ul ul ul {
 					<label for="flight_time" class="col-sm-2 control-label">비행시간</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="flight_time" name="flight_time"
-							placeholder="비행시간을 입력해주세요">
+							placeholder="비행시간을 입력해주세요" required>
 					</div>
 				</div>
 				
@@ -266,7 +266,7 @@ nav ul ul ul {
 					<label for="local_voltage" class="col-sm-2 control-label">사용전압</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="local_voltage" name="local_voltage"
-							placeholder="사용전압을 입력해주세요">
+							placeholder="사용전압을 입력해주세요" required>
 					</div>
 				</div>
 				
@@ -274,7 +274,7 @@ nav ul ul ul {
 					<label for="visa" class="col-sm-2 control-label">비자</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="visa" name="visa"
-							placeholder="비자정보를 입력해주세요">
+							placeholder="비자정보를 입력해주세요" required>
 					</div>
 				</div>
 				
@@ -282,10 +282,17 @@ nav ul ul ul {
 					<label for="danger_level" class="col-sm-2 control-label">위험지역 레벨</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="danger_level" name="danger_level"
-							placeholder="위험지역 레벨을 입력해주세요">
+							placeholder="위험지역 레벨을 입력해주세요" required>
 					</div>
 				</div>
 				
+				<div class="form-group">
+					<label for="image_src" class="col-sm-2 control-label">사진</label>
+					<div class="col-sm-10">
+						<input type="file" class="form-control" id="image_src" name="image_src"
+							placeholder="사진등록" required>
+					</div>
+				</div>
 				
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">

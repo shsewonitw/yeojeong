@@ -99,17 +99,14 @@ public class City_Data {
 		this.latitude = latitude;
 	}
 
-	public String getLogitude() {
+	public String getLongitude() {
 		return longitude;
 	}
 
-	public void setLogitude(String logitude) {
-		this.longitude = logitude;
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 	
-	public String getDanger_levelString() {
-		return danger_level == 1 ? "안전" : "유의";
-	}
 
 	public int getDanger_level() {
 		return danger_level;

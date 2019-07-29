@@ -67,12 +67,13 @@ public class City_DataDAO {
 						"insert into city_data values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)", new String[] { "city_code" });
 				pstmt.setString(1, model.getCountry());
 				pstmt.setString(2, model.getCity());
+				pstmt.setString(3, model.getLocal_time());
 				pstmt.setString(4, model.getFlight_time());
 				pstmt.setString(5, model.getLocal_voltage());
 				pstmt.setString(6, model.getVisa());
 				pstmt.setString(7, model.getLatitude());
-				pstmt.setString(8, model.getLogitude());
-				pstmt.setString(9, model.getDanger_levelString());
+				pstmt.setString(8, model.getLongitude());
+				pstmt.setInt(9, model.getDanger_level());
 				pstmt.setString(10, model.getImg_src());
 				return pstmt;
 			}
@@ -90,15 +91,15 @@ public class City_DataDAO {
 
 				PreparedStatement pstmt = con.prepareStatement(
 						"update city_data set country = ?, city = ?, flight_time = ?, local_voltage = ?,"
-						+ "visa = ?, latitude = ?, logitude = ?, danger_level = ? where city_code = ?");
+						+ "visa = ?, latitude = ?, longitude = ?, danger_level = ? where city_code = ?");
 				pstmt.setString(1, model.getCountry());
 				pstmt.setString(2, model.getCity());
 				pstmt.setString(4, model.getFlight_time());
 				pstmt.setString(5, model.getLocal_voltage());
 				pstmt.setString(6, model.getVisa());
 				pstmt.setString(7, model.getLatitude());
-				pstmt.setString(8, model.getLogitude());
-				pstmt.setString(9, model.getDanger_levelString());
+				pstmt.setString(8, model.getLongitude());
+				pstmt.setInt(9, model.getDanger_level());
 				pstmt.setInt(10, model.getCity_code());
 				return pstmt;
 			}

@@ -1,10 +1,13 @@
 package com.tje.yeojeong.controller;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,10 @@ public class ReviewController {
 	private Review_CountService rcService;
 	@Autowired
 	private Review_CommentInsertService rciService;
+	@Autowired
+	private Review_CommentAllService rcaService;
+	@Autowired
+	private Review_CommentCountService rccservice;
 	
 	@GetMapping("/review")
 	public String reviewForm(){
@@ -52,6 +59,20 @@ public class ReviewController {
 		return "form/reviewSubmit";
 	}
 	
+	// 게시판 수정
+	@GetMapping("/reviewchange")
+	public String reviewchangeForm() {
+		
+		return "form/reviewchangeForm";
+	}
+	
+	@PostMapping("/reviewchange")
+	public String reviewchangeSubmit() {
+		
+		
+		return "form/reviewchangeSubmit";
+	}
+	
 	// 게시판 리스트
 	@GetMapping("/reviewlist")
 	public String reviewListForm(Model model) {
@@ -62,10 +83,10 @@ public class ReviewController {
 		return "form/reviewListForm";
 	}
 	
-	// 게시판 상세페이지, 댓글
+	// 게시판 상세페이지
 	@GetMapping("/datailreview")
-	public String datailview(@RequestParam("article_id") Integer arID,Model model,HttpServletRequest request) {
-		
+	public String datailview(@RequestParam("article_id") Integer arID,Model model,HttpServletRequest request, Review_Comment comment) {
+        
 		Review_view review = new Review_view();
 		review.setArticle_id(arID);
 		
@@ -90,22 +111,52 @@ public class ReviewController {
 			return "error/reviewError";
 		}
 		
+		
 		model.addAttribute("detailreview",resultMap.get("detailreview"));
+		
+		// 댓글 리스트
+		Review_Comment review_comment = new Review_Comment();
+		review_comment.setArticle_id(arID);
+		values.put("model", comment);
+		
+		resultMap = (HashMap<String, Object>) rccservice.service(values);
+		model.addAttribute("commentSize", resultMap.get("commentSize"));
+		resultMap = (HashMap<String, Object>) rcaService.service(values);
+		model.addAttribute("commentList",resultMap.get("commentList"));
+		
 		
 		return "form/detailreviewForm";
 	}
 	
-	@PostMapping("comment")
+	// 댓글
+	@PostMapping("/comment")
 	@ResponseBody
-	public String comment(Model model,Review_Comment comment) {
-		
+	public String comment(Model model,Review_Comment comment,HttpServletResponse response) throws IOException {
+		boolean result = false;
 		HashMap<String, Object> values = new HashMap<>();
 		values.put("comment", comment);
 		
+		Review_Comment reviewcomment = new Review_Comment();
+		reviewcomment.setArticle_id(comment.getArticle_id());
+		
 		HashMap<String, Object> resultMap = (HashMap<String, Object>) rciService.service(values);
+		result = (boolean)resultMap.get("result");
 		
-		model.addAttribute("result", resultMap.get("result"));
+		response.setContentType("application/json; charset=utf-8");
+		PrintWriter out = response.getWriter();
 		
-		return "succec";
+		SimpleDateFormat timeinfo = new SimpleDateFormat ( "yyyy:MM:dd HH:mm:ss");
+		Calendar time = Calendar.getInstance();
+		String format_time2 = timeinfo.format(time.getTime());
+		
+		String output = 
+				String.format("{ \"result\" : \"%b\", \"article_id\" : \"%d\", \"member_id\" : \"%s\", \"comment_id\" : \"%d\", \"content\" : \"%s\", \"write_time\" : \"%s\" }", 
+						result, comment.getArticle_id(), comment.getMember_id(),reviewcomment.getArticle_id(), comment.getContent(), format_time2 );
+			out.println(output);
+			out.flush();
+			out.close();
+			
+			return null;		
+		
 	}
 }

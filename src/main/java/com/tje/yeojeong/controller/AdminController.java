@@ -136,7 +136,7 @@ public class AdminController {
 
 	@PostMapping("/adminCityDataInsert")
 	public String adminCityDataInsertSubmit(@RequestParam("image_src") MultipartFile uploadFile1,
-			@RequestParam("image_src2") MultipartFile uploadFile2, MultipartHttpServletRequest mpRequest,
+			@RequestParam("image_src2") MultipartFile uploadFile2, @RequestParam("image_src3") MultipartFile uploadFile3,  MultipartHttpServletRequest mpRequest,
 			HttpSession session, HttpServletRequest request, Model model) {
 		// 어드민으로 로그인 되있는지 확인
 		Member member = (Member) session.getAttribute("login_admin");
@@ -173,9 +173,10 @@ public class AdminController {
 		UtilFile utilFile = new UtilFile();
 		String image_src = utilFile.fileUpload(mpRequest, uploadFile1);
 		String image_src2 = utilFile.fileUpload(mpRequest, uploadFile2);
+		String image_src3 = utilFile.fileUpload(mpRequest, uploadFile3);
 
 		City_Data city_data = new City_Data(city_code, country, city, local_time, flight_time, local_voltage, visa,
-				latitude, longitude, danger_level, image_src, image_src2);
+				latitude, longitude, danger_level, image_src, image_src2, image_src3);
 
 		cdiService.service(city_data);
 

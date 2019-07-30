@@ -39,9 +39,9 @@ public class HomeController {
 
 	}
 	
-	@RequestMapping(value = "/qaarticleForm")
+	@RequestMapping(value = "/qaarticle")
 	public String qaarticleForm() {
-		return "form/main";
+		return "form/qaarticleForm";
 	}
 
 }

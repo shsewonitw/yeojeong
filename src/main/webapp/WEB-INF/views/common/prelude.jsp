@@ -18,6 +18,15 @@
 	<script type="text/javascript">
 	
 	
+	$(function(){
+		var url = window.location.href;
+		$("#logouturl").attr("href","${ pageContext.request.contextPath }/auth/logout?myurl="+url );
+	});
+	$(function(){
+		var url = window.location.href;
+		$("#loginurl").attr("href","${ pageContext.request.contextPath }/login.do?myurl="+url );
+	});
+	
 	
 	$(function(){
 		$("#menu").on("mouseenter",function(){
@@ -26,7 +35,7 @@
 		$("#menu").on("mouseleave",function(){
 			$("#menu").css("opacity","0.1");
 		})	
-	})
+	});
 	
 	
 
@@ -37,8 +46,8 @@
 <a href="<%= request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/img/test1.png" style="height: 50%;"></a>
 	<c:if test="${ empty sessionScope.login_member }" var="r">
 	<a href="<%= request.getContextPath()%>/receive" class="message_link1">새쪽지(0)</a>
-	<a href="<%= request.getContextPath()%>/login" class="login_link">로그인</a>
-	<a href="<%= request.getContextPath()%>/regist" class="regist_link">회원가입</a>
+	<a id="loginurl" href="<%= request.getContextPath()%>/login" class="login_link">로그인</a>
+	<a href="<%= request.getContextPath()%>/regist_Regular" class="regist_link">회원가입</a>
 	</c:if>
 	<c:if test="${ not r }">
 	<c:if test="${ readCount > 0 }" var="n">
@@ -47,8 +56,8 @@
 	<c:if test="${ not n }">
 	<a href="<%= request.getContextPath()%>/receive" class="message_link">새쪽지({readCount})</a>
 	</c:if>
-	<a href="#" class="mypage_link">마이페이지</a>
-	<a href="#" class="logout_link">로그아웃</a>
+	<a href="<%= request.getContextPath()%>/auth/mypage" class="mypage_link">마이페이지</a>
+	<a id="logouturl" href="#" class="logout_link">로그아웃</a>
 	</c:if>
 	<div class="main_menu">
 	<ul>

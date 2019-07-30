@@ -60,10 +60,18 @@ public class MemberDAO {
 		}
 	}
 
+	public boolean changeTel(Member obj) {
+		int member_flag = this.jdbcTemplate.update("update member set tel = ? where member_id = ?", obj.getTel(),
+				obj.getMember_id());
+		boolean result = member_flag == 1 ? true : false;
+
+		return result;
+	}
+
 	public List<Member> selectOne_Email(Member obj) {
 		try {
 			return this.jdbcTemplate.query("select * from member where email = ?", new MemberRowMapper(),
-					obj.getMember_id());
+					obj.getEmail());
 		} catch (Exception e) {
 			return null;
 

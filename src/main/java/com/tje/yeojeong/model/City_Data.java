@@ -137,11 +137,9 @@ public class City_Data {
 		this.image_src2 = image_src2;
 	}
 
-
 	public String getImage_src3() {
 		return image_src3;
 	}
-
 
 	public void setImage_src3(String image_src3) {
 		this.image_src3 = image_src3;

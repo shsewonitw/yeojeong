@@ -15,51 +15,58 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://kit.fontawesome.com/2796c86652.js"></script>
 <style type="text/css">
-#div_menu {
-	width: 20%;
-	height: 300px;
-	float: left;
-	text-align: left;
-}
-
-#div_con {
-	width: 60%;
-	height: 550px;
-	float: left;
-	background-size: 100% 100%;
-	text-align: left;
-	position: relative;
-}
-
-#div_menu2 {
-	width: 20%;
-	height: 300px;
-	float: right;
-	text-align: left;
-}
-
 .jb-table {
 	display: table;
-	border : 1px solid #bcbcbc;
+	border : 0px solid rgba(255, 255, 255, 0.1);
+	background-color: rgba(0, 0, 0, 0.2);
 	width: 100%;
+	opacity : 50%;	
 }
 
 .jb-table-row {
 	display: table-row;
-	border : 1px solid #bcbcbc;
+	border : 0px solid rgba(255, 255, 255, 0.1);
+	background-color: rgba(0, 0, 0, 0.2);
+	
 }
 
 .jb-table-cell {
 	display: table-cell;
-	border : 1px solid #bcbcbc;
+	border : 0px solid rgba(255, 255, 255, 0.1);
+	background-color: rgba(0, 0, 0, 0.2);
+	opacity : 50%;
 	padding: 0px 20px;
 	height: 150px;
 	vertical-align: middle;
-	text-align: center;
+	text-align: center;	
 }
-.city_info {
-	position: absolute;
+
+.img{
+    position: relative;
+    background-image: url("<%=request.getContextPath()%>/resources/cityimg/${city_data.image_src2}");                                                               
+    height: 100vh;
+    background-size: cover;
 }
+
+.img-cover{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);                                                                 
+    z-index:1;
+}
+
+.img .content{
+   position: absolute;
+   top:30%;
+   left:50%;
+   transform: translate(-50%, -50%);                                                                   
+   font-size:5rem;
+   color: white;
+   z-index: 2;
+   text-align: center;
+}
+
 </style>
 
 
@@ -67,52 +74,48 @@
 <title>여행지 상세 정보</title>
 </head>
 <body style="height: 100%; overflow: scroll;">
-
-	<!-- test -->
-	<div style="height: 200px;"></div>
-
-
-	<div style="height: 100%;">
-		<div id="country" style="text-align: center;"><h2>${city_data.country }</h2></div>
-		<div id="city" style="text-align: center;"><h2>${city_data.city }</h2></div>
-		<!-- 도시별 정보 -->
-		<div style="height: 400px;">
-			<img alt="도시 사진"
-				src="<%=request.getContextPath()%>/resources/cityimg/${city_data.image_src2}"
-				style="width: 100%; height: 95%;">
-		</div>
-
-		<!-- 왼쪽 사이드 공백 -->
-		<div id="div_menu"></div>
-
-		<div id="div_con" class="city_info">
-			<div class="jb-table">
-				<div class="jb-table-row">
-					<div class="jb-table-cell">
-						<span style="color: #3498DB"><i class="fas fa-clock fa-6x"></i></span>
-						<h4>현지시간 : ${city_data.local_time }</h4>
+<script type="text/javascript">
+alert(112123);</script>
+	<div class="img">
+    	<div class="content" style="height: 80px;">
+    	
+    		 <table>
+			 	<tr>
+			 		<th><font size="x-large">${city_data.country }</font></th>
+			 		<th style="vertical-align:bottom;"><h3>${city_data.city }</h3></th>
+			 	</tr>
+			 </table>
+			 	    		    		
+            	<div class="city_info">
+					<div class="jb-table">
+						<div class="jb-table-row">
+							<div class="jb-table-cell">
+								<img alt="국기" src="<%=request.getContextPath()%>/resources/cityimg/hunflag.jpg" style="height: 60%">	
 					</div>
+					
 					<div class="jb-table-cell">						
-						<span style="color: #3498DB"><i class="fas fa-plane-departure fa-6x"></i></span>						
+						<span style="color: white"><i class="fas fa-clock fa-1x"></i></span>
+							<h4>시차 : ${city_data.local_time }</h4>
+					</div>
+					
+					<div class="jb-table-cell">						
+						<span style="color: white"><i class="fas fa-plane-departure fa-1x"></i></span>						
 						<h4>비행시간 : ${city_data.flight_time }</h4>
-					</div>
-					<div class="jb-table-cell">
-						<span style="color: #3498DB"><i class="fas fa-map-marked-alt fa-6x"></i></span>
-						<h4>위도 : ${city_data.latitude }</h4>
-						<h4>경도 : ${city_data.longitude }</h4>
-					</div>
+					</div>					
 				</div>
+				
 				<div class="jb-table-row">
-					<div class="jb-table-cell jb-top">
-						<span style="color: #3498DB"><i class="fas fa-plug fa-6x"></i></span>
+					<div class="jb-table-cell">
+						<span style="color: white"><i class="fas fa-plug fa-1x"></i></span>
 						<h4>현지 전압 : ${city_data.local_voltage }</h4>
 					</div>
-					<div class="jb-table-cell jb-middle">
-						<span style="color: #3498DB"><i class="fab fa-cc-visa fa-6x"></i></span>
+					<div class="jb-table-cell">
+						<span style="color: white"><i class="fab fa-cc-visa fa-1x"></i></span>
 						<h4>비자 : ${city_data.visa}</h4>
 					</div>
-					<div class="jb-table-cell jb-bottom">
-						<span style="color: red"><i class="fas fa-exclamation-triangle fa-6x"></i></span>
+					
+					<div class="jb-table-cell">
+						<span style="color: red"><i class="fas fa-exclamation-triangle fa-1x"></i></span>
 						<c:if test="${city_data.danger_level eq 0}">
 							<h4>유의 지역 : 경보 없음</h4>
 						</c:if>
@@ -132,9 +135,16 @@
 				</div>
 			</div>			
 		</div>
+        </div>
+        
+        <div class="img-cover"></div>
+    </div>
 
-		<!-- 오른쪽 사이드 공백 -->
-		<div id="div_menu2"></div>
-	</div>
+	
+			
+
+
+		
+	
 </body>
 </html>

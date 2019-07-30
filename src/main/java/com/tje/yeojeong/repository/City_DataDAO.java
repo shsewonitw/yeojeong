@@ -6,6 +6,7 @@ import java.util.*;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -48,7 +49,12 @@ public class City_DataDAO {
 
 	public City_Data selectOneWhereCity(City_Data model){
 		String sql = "select * from city_data where city = ?";
-		City_Data result = this.jdbcTemplate.queryForObject(sql, new City_DataRowMapper(),model.getCity());
+		City_Data result = null;
+		try {
+		result = this.jdbcTemplate.queryForObject(sql, new City_DataRowMapper(),model.getCity());
+		} catch (EmptyResultDataAccessException e){
+			;			
+		}
 		return result;
 	}
 	
@@ -88,7 +94,7 @@ public class City_DataDAO {
 	}
 	
 	// 여행지 데이터 수정
-	public int update(City_Data model) {
+	public int updatetemp(City_Data model) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 
 		this.jdbcTemplate.update(new PreparedStatementCreator() {
@@ -114,6 +120,36 @@ public class City_DataDAO {
 		}, keyHolder);
 
 		return keyHolder.getKey().intValue();
+	}
+	
+	
+	// 정보수정
+	public boolean update(City_Data model) {
+		boolean result = false;
+		int city_data_flag = this.jdbcTemplate.update(new PreparedStatementCreator() {
+
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement pstmt = con
+						.prepareStatement("update city_data set country = ? , city = ? , flight_time = ? , local_voltage = ? , visa = ? , latitude = ? , longitude = ? , danger_level = ? , image_src = ? , image_src2 = ? , image_src3 = ? where city_code = ?");
+				pstmt.setString(1, model.getCountry());
+				pstmt.setString(2, model.getCity());
+				pstmt.setString(3, model.getFlight_time());
+				pstmt.setString(4, model.getLocal_voltage());
+				pstmt.setString(5, model.getVisa());
+				pstmt.setString(6, model.getLatitude());
+				pstmt.setString(7, model.getLongitude());
+				pstmt.setInt(8, model.getDanger_level());
+				pstmt.setString(9, model.getImage_src());
+				pstmt.setString(10, model.getImage_src2());
+				pstmt.setString(11, model.getImage_src3());
+				pstmt.setInt(12, model.getCity_code());
+				return pstmt;
+			}
+		});
+
+		result = city_data_flag == 1 ? true : false;
+
+		return result;
 	}
 	
 	// 여행지 데이터 삭제

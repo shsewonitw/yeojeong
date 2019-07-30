@@ -165,9 +165,21 @@ public class AdminController {
 		String image_src = utilFile.fileUpload(mpRequest, uploadFile1);
 		String image_src2 = utilFile.fileUpload(mpRequest, uploadFile2);
 		String image_src3 = utilFile.fileUpload(mpRequest, uploadFile2);
+		
+		// 사용자가 이미지는 업로드 안했을 경우 원래 이미지로 대체
+		if(image_src.length()<=14) {
+			image_src = request.getParameter("image_src_hidden");
+		}
+		if(image_src2.length()<=14) {
+			image_src2 = request.getParameter("image_src2_hidden");
+		}
+		if(image_src3.length()<=14) {
+			image_src3 = request.getParameter("image_src3_hidden");
+		}
+		
+		System.out.println("으아아아아아악~~!~!~!~!~!:" +image_src.length());
 		City_Data city_data = new City_Data(city_code, country, city, local_time, flight_time, local_voltage, visa,
 				latitude, longitude, danger_level, image_src, image_src2, image_src3);
-
 		cduService.service(city_data);
 
 		// DB에 저장된 Country 리스트
@@ -235,8 +247,12 @@ public class AdminController {
 		City_Data city_data = new City_Data(city_code, country, city, local_time, flight_time, local_voltage, visa,
 				latitude, longitude, danger_level, image_src, image_src2, image_src3);
 
-		cdiService.service(city_data);
-
+		if( (City_Data)cdsoService.service(city_data) == null ) {
+			cdiService.service(city_data);
+		}
+		else {
+			return "admin/errorPage";
+		}
 		// DB에 저장된 Country 리스트
 		CountryList(model);
 

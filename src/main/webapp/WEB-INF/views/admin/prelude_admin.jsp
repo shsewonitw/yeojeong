@@ -73,10 +73,10 @@ function time_format(s) {
 	 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;회원정보 조회</b></a></li>
 	 
 	 
-	 <li style="padding-top:60px; margin:auto; float:right;">
+	 <li style="line-height:135.5px; margin:auto; float:right;">
 	 <span id="counter"> </span> <b>후 자동로그아웃 </b><input type="button" class="btn btn-primary" value="연장" onclick="counter_reset()">
-	 <form action="<%=request.getContextPath()%>/adminLogout" method="GET">
-	 <input type="submit" class="btn btn-primary" value="로그아웃">
+	 <form style="display:inline-block;" action="<%=request.getContextPath()%>/adminLogout" method="GET">
+	 <input style="display:inline-block;" type="submit" class="btn btn-primary" value="로그아웃">
 	 </form>
 	 </li>
 	</ul>

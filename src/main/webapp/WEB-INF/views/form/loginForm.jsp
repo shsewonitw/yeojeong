@@ -41,7 +41,12 @@ width: 100%;
 
 </head>
 <body>
+<c:if test="${not empty login_message }">
+<script type="text/javascript">
+alert("${login_message }");
+</script>
 
+</c:if>
 
 	<div style="height: 25%;"></div>
 	<div

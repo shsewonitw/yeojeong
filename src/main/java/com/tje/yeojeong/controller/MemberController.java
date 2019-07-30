@@ -32,8 +32,18 @@ public class MemberController {
 	private MemberSearchIDService msiService;
 
 	@GetMapping("/login")
-	public String login_Form(@ModelAttribute(value = "member") Member member,
+	public String login_Form(@RequestParam(value = "myurl",required = false) String myurl,
+			@ModelAttribute(value = "member") Member member,
 			@CookieValue(value = "rememberID", required = false) Cookie rCookie, HttpSession session) {
+		if (session != null && session.getAttribute("login_member") != null) {
+			// 접속 여부 검사
+			if(myurl != null) {
+				return "redirect:" + myurl;
+			}else {
+				return "page/main";	
+			}
+			
+		}
 		if (rCookie != null) {
 			// 쿠키가 있을때
 			member.setMember_id(rCookie.getValue());
@@ -45,28 +55,42 @@ public class MemberController {
 	public String login_sumit(@ModelAttribute(value = "member") Member member, HttpSession session, Model model,
 			@RequestParam(value = "rememberID", required = false) String rememberID,
 			@CookieValue(value = "rememberID", required = false) Cookie rCookie, HttpServletResponse response) {
-
+		// 아이디 검사
 		Member search_ID = (Member) msiService.service(member);
-		// 세션 저장
-		session.setAttribute("login_member", search_ID);
-
-		if (!(Boolean) mlservice.service(member)) {
-			// 로그인 실패
+		if (search_ID == null) {
+			// 없는 아이디
+			model.addAttribute("login_message", "존재하지 않는 아이디 입니다.");
 			return "form/loginForm";
-		}
-
-		// 로그인 성공
-
-		if (rememberID != null && rememberID.equals("on")) {
-			// 아이디저장
-			rCookie = new Cookie("rememberID", member.getMember_id());
 		} else {
-			rCookie = new Cookie("rememberID", member.getMember_id());
-			rCookie.setMaxAge(0);
+			// 아이디 체크 성공
+			// 비밀번호 검사
+			if (!(Boolean) mlservice.service(member)) {
+				// 로그인 실패(비밀번호)
+				model.addAttribute("login_message", "비밀번호가 틀렸습니다.");
+				return "form/loginForm";
+			}
+			// 세션 저장
+			session.setAttribute("login_member", search_ID);
+			// 로그인 성공
+			if (rememberID != null && rememberID.equals("on")) {
+				// 아이디저장
+				rCookie = new Cookie("rememberID", member.getMember_id());
+			} else {
+				rCookie = new Cookie("rememberID", member.getMember_id());
+				rCookie.setMaxAge(0);
+			}
+			response.addCookie(rCookie);
+			return "/page/main";
 		}
-		response.addCookie(rCookie);
+	}
 
-		return "/page/main";
+	@GetMapping("/auth/logout")
+	public String login_Form(HttpSession session, @RequestParam(value = "myurl") String myurl) {
+		if (session != null) {
+			session.removeAttribute("login_member");
+		}
+
+		return "redirect:" + myurl;
 	}
 
 	@GetMapping("/regist_Regular")

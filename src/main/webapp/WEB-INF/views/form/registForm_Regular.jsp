@@ -143,11 +143,10 @@ $("#regist_btn").on("click",function(){
 					data : memberJsonObject,
 					dataType : "text",
 					success : function(data) {
-						alert(data);
 						alert(member.name +"님 회원가입 성공. 로그인 페이지로 이동합니다.");
 						
 						if(eval(data)){
-							window.location.href = 'http://localhost:8080/yeojeong/login';
+							window.location.href = 'http://localhost:8080/yeojeong/form/login';
 						}else{
 							alert("회원가입 실패(관리자에게 문의하세요.)");
 						}
@@ -183,12 +182,12 @@ $("#regist_btn").on("click",function(){
 		$("#email_ac").on("focusout",function(){
 			
 			var email_ac = $("#email_ac").val();
-			if(email_ac==""){
-				$("#span_email_ac").text("코드를 입력하세요.");
-				   $("#span_email_ac").css("color","red")
-					flag_email_Certified = false;
-				   return;
-			}
+// 			if(email_ac==""){
+// 				$("#span_email_ac").text("코드를 입력하세요.");
+// 				   $("#span_email_ac").css("color","red")
+// 					flag_email_Certified = false;
+// 				   return;
+// 			}
 			
 			
 			if(email_ac== send_email_code){
@@ -307,6 +306,7 @@ $("#regist_btn").on("click",function(){
 						$("#span_member_id").css("color", "blue");
 						$("#span_member_id").text("사용 가능한 아이디입니다.");
 					} else {
+						$("#span_member_id").css("color", "red");
 						$("#span_member_id").text("이미 사용중인 아이디 입니다.");
 					}
 				},
@@ -455,6 +455,7 @@ $("#regist_btn").on("click",function(){
 						$("#span_email").text("사용 가능한 이메일입니다.");
 					} else {
 						flag_email = false;
+						$("#span_email").css("color", "red");
 						$("#span_email").text("이미 사용중인 이메일 입니다.");
 					}
 				},
@@ -499,7 +500,6 @@ $("#regist_btn").on("click",function(){
 </script>
 </head>
 <body>
-
 
 
 	<div style="height: 25%;"></div>

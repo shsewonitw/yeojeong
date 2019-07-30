@@ -58,35 +58,6 @@
 	
 	var send_email_code = "";
 	$(function() {
-// 		````````````````````가입된 회원 거르기//
-// 	email_ck();
-	
-// 	function email_ck(){
-// 		var kakao_email = "${member.email}";
-// 		alert(kakao_email);
-// 		$.ajax({
-<%-- 			url : "<%=request.getContextPath()%>/searchEmail", --%>
-// 			type : "post",
-// 			data : "email=" + kakao_email,
-// 			dataType : "text",
-// 			success : function(data) {
-// 				if (eval(data)) {
-// 				} else {
-// 					alert("이미 여정에 같은 이메일로 가입되어있습니다. 아이디를 찾기 페이지로 이동합니다.");
-// 	// 				url 넣기
-// 				}
-// 			},
-// 			error : function(data) {
-// 				alert("통신오류(관리자에게 문의하세요.)");
-// 			}
-			
-// 		});
-// 	};
-	
-     
-
-
-//    	`````````````````````````````````//
 		
 		
 // 		````````````````````이메일 인증 관련//
@@ -168,10 +139,9 @@ $("#regist_btn").on("click",function(){
 					data : memberJsonObject,
 					dataType : "text",
 					success : function(data) {
-						alert(data);
 						alert(member.name +"님 회원가입 성공. 로그인 페이지로 이동합니다.");
 						
-						if(eval(data)){
+						if(eval(date)){
 							window.location.href = 'http://localhost:8080/yeojeong/login';
 						}else{
 							alert("회원가입 실패(관리자에게 문의하세요.)");

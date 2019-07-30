@@ -34,7 +34,6 @@
 	margin: 4px;
 }
 
-
 .myInformationHeader {
 	border-radius: 4px 4px 4px 4px;
 	padding-left: 20px;
@@ -128,6 +127,14 @@
 // 				 $(this).css("background-color","rgb(52, 152, 219)").css("color", "white");
 // 			 }
 // 		});
+			function display_change(data){
+				$("#haveBeen").css("display","none");
+				$("#write").css("display","none");
+				$("#withMe").css("display","none");
+				$("#trip").css("display","none");
+				$("#myInformation").css("display","none");
+				$("#" + data).css("display","block");
+			}
 		
 			$(".list").hover(function(){
 								var s =$(this).css("background-color");
@@ -147,14 +154,32 @@
 							$(".direction").parent().css("background-color","white").css("color", "black");
 							$(this).parent().css("background-color","rgb(52, 152, 219)").css("color", "white");
 							
-// 							다른목록 클릭시 제어
-// 							$(".direction").parent().css("display","none");
+// 							`````````````````다른목록 클릭시 제어//
+							var me = $(this).attr("onclick");
 							
-							
-							
+							var haveBeen ="location.href ='#haveBeen'";
+							var write =	"location.href ='#write'";
+							var withMe ="location.href ='#withMe'";
+							var trip ="location.href ='#trip'";
+							var myInformation ="location.href ='#myInformation'";
+							if(me == haveBeen){
+								display_change("haveBeen");
+							}else if(me == write){
+								display_change("write");
+							}else if(me == withMe){
+								display_change("withMe");
+							}else if(me == trip){
+								display_change("trip");
+							}else if(me == myInformation){
+								display_change("myInformation");
+							}
+// 							`````````````````````````````//
 							
 						});
+				
 			});
+	
+	
 	function tel_change() {
 		
 			if(!flag_tel){
@@ -234,7 +259,7 @@
 
 
 		<div class="col-md-9">
-
+<!-- 		``````````````````	내가쓴글 페이지 -->
 			<div id="myInformation"
 				style="border: solid thin #ddd; border-radius: 4px; text-align: left;">
 				<div class="myInformationHeader" style="line-height: 60px">내
@@ -261,6 +286,36 @@
 					</div>
 				</div>
 			</div>
+<!-- 			``````````````````````` -->
+
+<!-- 		``````````````````	내정보 페이지 -->
+			<div id="myInformation"
+				style="border: solid thin #ddd; border-radius: 4px; text-align: left;">
+				<div class="myInformationHeader" style="line-height: 60px">내
+					정보</div>
+				<div class="myInformationBody">
+					${sessionScope.login_member.member_id }</div>
+				<div class="myInformationBody">
+					${sessionScope.login_member.name }</div>
+				<div class="myInformationBody">
+					${sessionScope.login_member.birthString }</div>
+				<div class="myInformationBody">
+					${sessionScope.login_member.email }</div>
+				<div class="myInformationBody"
+					style="padding-right: 30px; width: 100%">
+					<div class="tel_box">
+						<input class="form-control" id="tel_input" required
+							value="${sessionScope.login_member.tel }"
+							style="width: 70%; float: left;" onkeyup="tel_keyup();">
+						<button id="tel_btn" type="button" class="btn btn-primary"
+							onclick="tel_change();" style="float: left;">번호변경</button>
+					</div>
+					<div>
+						<span id="span_tel" style="color: red;"></span>
+					</div>
+				</div>
+			</div>
+<!-- 			``````````````````````` -->
 		</div>
 
 	</div>

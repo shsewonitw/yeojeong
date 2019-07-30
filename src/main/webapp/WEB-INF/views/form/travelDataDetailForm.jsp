@@ -74,8 +74,6 @@
 <title>여행지 상세 정보</title>
 </head>
 <body style="height: 100%; overflow: scroll;">
-<script type="text/javascript">
-alert(112123);</script>
 	<div class="img">
     	<div class="content" style="height: 80px;">
     	
@@ -90,7 +88,7 @@ alert(112123);</script>
 					<div class="jb-table">
 						<div class="jb-table-row">
 							<div class="jb-table-cell">
-								<img alt="국기" src="<%=request.getContextPath()%>/resources/cityimg/hunflag.jpg" style="height: 60%">	
+								<img alt="국기" src="<%=request.getContextPath()%>/resources/cityimg/${city_data.image_src3}" style="height: 60%">	
 					</div>
 					
 					<div class="jb-table-cell">						
@@ -113,32 +111,47 @@ alert(112123);</script>
 						<span style="color: white"><i class="fab fa-cc-visa fa-1x"></i></span>
 						<h4>비자 : ${city_data.visa}</h4>
 					</div>
-					
-					<div class="jb-table-cell">
-						<span style="color: red"><i class="fas fa-exclamation-triangle fa-1x"></i></span>
+										
+					<div class="jb-table-cell">						
 						<c:if test="${city_data.danger_level eq 0}">
+							<span style="color: white"><i class="fas fa-exclamation-triangle fa-1x"></i></span>
 							<h4>유의 지역 : 경보 없음</h4>
 						</c:if>
 						<c:if test="${city_data.danger_level eq 1}">
+							<span style="color: #08088A"><i class="fas fa-exclamation-triangle fa-1x"></i></span>
 							<h4>유의 지역 : 남색경보 ( 여행유의 )</h4>
 						</c:if>
 						<c:if test="${city_data.danger_level eq 2}">
+							<span style="color: #D7DF01"><i class="fas fa-exclamation-triangle fa-1x"></i></span>
 							<h4>유의 지역 : 황색경보 ( 여행자제 )</h4>
 						</c:if>
 						<c:if test="${city_data.danger_level eq 3}">
+							<span style="color: red"><i class="fas fa-exclamation-triangle fa-1x"></i></span>
 							<h4>유의 지역 : 적색경보 ( 철수권고)</h4>
 						</c:if>
 						<c:if test="${city_data.danger_level eq 4}">
+							<span style="color: #424242"><i class="fas fa-exclamation-triangle fa-1x"></i></span>
 							<h4>유의 지역 : 흑색경보 ( 여행금지)</h4>
 						</c:if>
-					</div>
+						
+					</div>						
 				</div>
+						<table>
+    						<tr>
+    							<th><a href="http://0404.go.kr/dev/main.mofa"><font style="font-size: 20px;">유의지역 자세히 보기</font></a></th>
+    							<th><a href="http://0404.go.kr/dev/main.mofa"><font style="font-size: 20px;">유의지역 자세히 보기</font></a></th>    							
+    						</tr>	
+    					</table>
 			</div>			
 		</div>
         </div>
-        
+			
+			        
         <div class="img-cover"></div>
     </div>
+    
+    
+    
 
 	
 			

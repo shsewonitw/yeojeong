@@ -14,7 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.tje.yeojeong.model.City_Data;
 import com.tje.yeojeong.model.Member;
 import com.tje.yeojeong.model.Travel_regist;
@@ -36,7 +42,9 @@ public class TravelRegistController {
 	@GetMapping("/travelRegist")
 	public String travelRegistForm(Model model) {
 		
-		CountryList(model);
+		// DB에 저장된 Country 리스트
+		List<String> countryList = (List<String>) cdsCountryService.service();
+		model.addAttribute("countryList", countryList);
 		
 		return "form/travelRegist";
 	}
@@ -71,7 +79,8 @@ public class TravelRegistController {
 		String country = request.getParameter("country");
 		String city = request.getParameter("city");
 		
-		
+		System.out.println("나라: "+country);
+		System.out.println("도시: "+city);
 		
 		Travel_regist travel_regist = new Travel_regist(0,member_id,help_tel,start_date,end_date,country,city);
 		
@@ -92,19 +101,19 @@ public class TravelRegistController {
 
 	}
 	
-	private void CountryList(Model model) {
-		// DB에 저장된 Country 리스트
-		List<String> countryList = (List<String>) cdsCountryService.service();
-		model.addAttribute("countryList", countryList);
-		HashMap<String, List<String>> map = new HashMap<String, List<String>>();
-		for (String country : countryList) {
-			City_Data city_data = new City_Data();
-			city_data.setCountry(country);
-			List<String> cityList = (List<String>) cdsCityService.service(city_data);
-			map.put(country, cityList);
-		}
+	@RequestMapping(value="/cityAjax",method=RequestMethod.POST,produces="application/jason;charset=utf8")
+	@ResponseBody
+	public String cityAjax(@RequestParam(value = "country") String country) {
+		System.out.println(country);
+		City_Data city_data = new City_Data();
+		city_data.setCountry(country);
 		
-		
-		model.addAttribute("map", map);
+		List<City_Data> city_data_list = (List<City_Data>)cdsCityService.service(city_data);
+		Gson gson = new Gson();
+		String jsonPlace = gson.toJson(city_data_list);
+		System.out.println(jsonPlace);
+		return jsonPlace;
 	}
+	
+	
 }

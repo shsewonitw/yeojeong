@@ -104,10 +104,13 @@
 							placeholder="내부사진등록" value="${city_data.image_src2}" required>
 					</div>
 				</div>
-				
+						<input type="hidden" name="city_code" value="${city_data.city_code}">
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-default">등록</button>
+						<button type="submit" class="btn btn-default">수정</button>
+					</div>
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-default">삭제</button>
 					</div>
 				</div>
 				
@@ -118,6 +121,49 @@
 		<!--  -->
 	</div>
 
+
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 8,
+          center: {lat: -34.397, lng: 150.644}
+        });
+        var geocoder = new google.maps.Geocoder();
+
+        $("#city").on("focusout",function(){
+        	geocodeAddress(geocoder, map);
+        	
+        })
+      }
+
+      function geocodeAddress(geocoder, resultsMap) {
+
+		var address = $("#city").val();
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+            });
+            $("#position").val(marker.position);
+          } else {
+            // 위도경도 정보 못가져왔을때 
+          }
+        });
+      }
+    
+      $(function(){
+    	  $("#alertButton").on("click",function(){
+    	    	alert(marker.position);
+    	   })
+      })
+    
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPpdIjRpRNIAeRsh3PZkN_XlxtAhSpfE&callback=initMap">
+    </script>
 
 </body>
 </html>

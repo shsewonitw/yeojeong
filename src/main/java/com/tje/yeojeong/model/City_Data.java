@@ -15,12 +15,14 @@ public class City_Data {
 	private int danger_level;
 	private String image_src; // 썸네일용
 	private String image_src2; // 내부 사진용
+	private String image_src3; // 국기 사진용
 	
 	public City_Data() {}
 
+
 	public City_Data(int city_code, String country, String city, String local_time, String flight_time,
 			String local_voltage, String visa, String latitude, String longitude, int danger_level, String image_src,
-			String image_src2) {
+			String image_src2, String image_src3) {
 		super();
 		this.city_code = city_code;
 		this.country = country;
@@ -34,7 +36,10 @@ public class City_Data {
 		this.danger_level = danger_level;
 		this.image_src = image_src;
 		this.image_src2 = image_src2;
+		this.image_src3 = image_src3;
 	}
+
+
 
 	public int getCity_code() {
 		return city_code;
@@ -130,6 +135,16 @@ public class City_Data {
 
 	public void setImage_src2(String image_src2) {
 		this.image_src2 = image_src2;
+	}
+
+
+	public String getImage_src3() {
+		return image_src3;
+	}
+
+
+	public void setImage_src3(String image_src3) {
+		this.image_src3 = image_src3;
 	}
 
 

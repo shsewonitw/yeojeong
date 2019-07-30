@@ -37,21 +37,29 @@ function doChange(srcE, targetId){
     var targetE = document.getElementById(targetId);
     removeAll(targetE);
 
-    if(val == '한국'){
-        addOption('전주', targetE);
-        addOption('대구', targetE);
-        addOption('제주', targetE);
-    }
-    else if(val == '중국'){
-        addOption('북경', targetE);
-        addOption('상해', targetE);
-        addOption('장가계', targetE);
-    }
-    else if(val == '미국'){
-        addOption('워싱턴', targetE);
-        addOption('로스엔젤레스', targetE);
-        addOption('하와이', targetE);
-    }
+    
+    $.ajax({
+		url : "<%=request.getContextPath()%>/cityAjax",
+		type : "post",
+		data : "country=" + val,
+		dataType : "text",
+		success : function(data) {
+			if (eval(data)) {
+				var str = data.substr(2,data.length-4);
+				var str = str.split('","');
+				str.forEach(function(element){
+					addOption(element, targetE);
+				})
+			} else {
+				alert("false");
+			}
+		},
+		error : function(data) {
+			alert("통신오류(관리자에게 문의하세요.)");
+		}
+	});
+    
+    
 }
 
 function addOption(value, e){

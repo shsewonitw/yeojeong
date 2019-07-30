@@ -28,21 +28,21 @@ function validate(){
 	
 </script>
 
-<title>여행자들의 웃음</title>
+<title>여행자들의 웃음 수정</title>
 
 
 </head>
 <body>
 
 	<div class="top"></div>
-	<div class="titleDIV">여행자들의 웃음</div>
+	<div class="titleDIV">여행자들의 웃음(수정)</div>
 	
 	<div class="formDIV">
 		
-		<form action="<%=request.getContextPath()%>/review" method="post" onSubmit="return validate();">
+		<form action="<%=request.getContextPath()%>/reviewchange" method="post" onSubmit="return validate();">
 			<hr>
 			<p class="name">
-				<label>작성자</label>&nbsp;&nbsp;&nbsp;<input class="input" type="text" name="member_id"> 
+				<label>작성자</label>&nbsp;&nbsp;&nbsp;<input class="input" type="text" name="member_id" readonly> 
 			</p>
 			<hr>
 				<label>여행지</label> &nbsp;&nbsp;&nbsp;

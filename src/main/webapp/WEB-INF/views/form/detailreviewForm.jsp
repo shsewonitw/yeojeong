@@ -11,7 +11,39 @@
 <script type="text/javascript">
 
 function insert_comment() {
-	alert("댓글할꺼")
+	var comment_data = $("#comment_form").serialize();
+	
+	$.ajax({
+		url:'<%=request.getContextPath()%>/comment',
+		type:"post",		
+		contentType: 
+			"application/x-www-form-urlencoded; charset=utf-8",
+		data: comment_data,
+		dataType:"json",
+		success:function(result){			
+			if( eval(result.result) )  {
+				var commentTag = "<b id='comment_" + result.comment_id + "''></b>";
+				commentTag += "<b>";
+				commentTag += result.member_id;
+				commentTag += "</b>";
+				commentTag += "&nbsp";
+				commentTag += "&nbsp";
+				commentTag += "&nbsp";
+				commentTag += result.write_time + "<br>";
+				commentTag += result.content;
+				commentTag += "<button class='btn-red' onclick='delete_comment(" + result.comment_id + ");'>삭제</button>";
+				commentTag += "<hr>";
+				$("#comment_div").append(commentTag);
+			} else {
+				alert('댓글 작성에서 문제 발생1');	
+			}
+			
+		},
+		// ajax 호출이 실패한 경우 실행되는 함수
+		error: function(result) {
+			alert('댓글 작성에서 문제 발생2');					
+		}
+	});
 }
 	
 	
@@ -57,17 +89,28 @@ function insert_comment() {
 			<br><br>
 			<hr>
 			<label>후기 내용</label><br><br>
-			<textarea>${detailreview.content }</textarea>
+			<textarea readonly>${detailreview.content }</textarea>
 			<hr>
 			<div class="buttonmargin">
-			<a href="<%=request.getContextPath()%>" class="button">수정</a>
+			<a href="<%=request.getContextPath()%>/reviewchange" class="button">수정</a>
 			<a href="<%=request.getContextPath()%>" class="button">삭제</a>
 			</div>
-		<!-- 댓글 -->		
+		<!-- 댓글 -->
 		<form id="comment_form" action="<%= request.getContextPath() %>/comment" method="post">
-		<label>댓글</label>
+		<label>댓글(${commentSize})</label><br>
+		<input type="hidden" name="article_id" value="${ detailreview.article_id }">
+		<c:forEach items="${ commentList }" var="comment">
+		<b id="comment_${comment.comment_id}"></b>
+			<b>${ comment.member_id }</b>&nbsp;&nbsp;&nbsp;${ comment.write_time }<br>
+			${ comment.content }
+			<button class="btn-red" onclick="delete_comment(${comment.comment_id});">삭제</button>
+			
+		<br>
 		<hr>
-			<textarea name="content" style="height: 20%;" placeholder="댓글을 입력하세요"></textarea>
+	</c:forEach>
+		<div id="comment_div"></div>
+			<input type="text" name="member_id">
+			<textarea id="testest" name="content" style="height: 20%;" placeholder="댓글을 입력하세요"></textarea>
 			<div class="buttoncomment">
 			<input type="button" value="등록" class="button" onclick="insert_comment();">
 			</div>

@@ -12,11 +12,15 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.tje.yeojeong.model.*;
+import com.tje.yeojeong.setting.PagingInfo;
 
 @Repository
 public class Review_viewDAO {
 	private JdbcTemplate jdbcTemplate;
-
+	
+	@Autowired
+	private PagingInfo pagingInfo;
+	
 	@Autowired
 	public Review_viewDAO(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
@@ -71,6 +75,8 @@ public class Review_viewDAO {
 		
 		return result;
 	}
+	
+	
 	
 	// 게시글 상세 확인
 	public Review_view selectAticleId(Review_view obj){

@@ -21,6 +21,7 @@ import com.tje.yeojeong.service.City_DataInsertService;
 import com.tje.yeojeong.service.City_DataSelectCityService;
 import com.tje.yeojeong.service.City_DataSelectCountryService;
 import com.tje.yeojeong.service.City_DataSelectOneService;
+import com.tje.yeojeong.service.City_DataUpdateService;
 import com.tje.yeojeong.service.MemberLoginService;
 import com.tje.yeojeong.service.MemberSearchIDService;
 import com.tje.yeojeong.setting.UtilFile;
@@ -39,6 +40,8 @@ public class AdminController {
 	private City_DataInsertService cdiService;
 	@Autowired
 	private City_DataSelectOneService cdsoService;
+	@Autowired
+	private City_DataUpdateService cduService;
 	
 	// 관리자 로그인 페이지 호출
 	@GetMapping("/admin")
@@ -114,12 +117,66 @@ public class AdminController {
 		City_Data city_data = new City_Data();
 		city_data.setCity(city);
 		city_data = (City_Data)cdsoService.service(city_data);
-		
 		model.addAttribute("city_data",city_data);
 		
 		return "admin/adminCityDataUpdateForm";
 	}
 
+	
+	@PostMapping("/adminCityDataUpdate")
+	public String adminCityDataUpdateSubmit(@RequestParam("image_src") MultipartFile uploadFile1,
+			@RequestParam("image_src2") MultipartFile uploadFile2,@RequestParam("image_src3") MultipartFile uploadFile3, MultipartHttpServletRequest mpRequest,
+			HttpSession session, HttpServletRequest request, Model model) {
+		// 어드민으로 로그인 되있는지 확인
+		Member member = (Member) session.getAttribute("login_admin");
+		if (member == null) {
+			return "admin/adminLoginForm";
+		}
+
+		
+		String country = request.getParameter("country");
+		String city = request.getParameter("city");
+		String local_time = request.getParameter("local_time");
+		String flight_time = request.getParameter("flight_time");
+		String local_voltage = request.getParameter("local_voltage");
+		String visa = request.getParameter("visa");
+		String strDanger_level = request.getParameter("danger_level");
+		String strCity_code = request.getParameter("city_code");
+		// 위도 경도 가져오는 코드
+		String position = request.getParameter("position");
+		position = position.substring(1, position.length() - 1);
+		String latitude = null;
+		String longitude = null;
+		StringTokenizer st = new StringTokenizer(position, ", ");
+		if (st.hasMoreTokens()) {
+			latitude = st.nextToken();
+			longitude = st.nextToken();
+		}
+
+		int danger_level = 0;
+		int city_code = 0;
+		try {
+			danger_level = Integer.parseInt(strDanger_level);
+			city_code = Integer.parseInt(strCity_code);
+		} catch (Exception e) {
+			System.out.println("parseInt 에러");
+		}
+		UtilFile utilFile = new UtilFile();
+		String image_src = utilFile.fileUpload(mpRequest, uploadFile1);
+		String image_src2 = utilFile.fileUpload(mpRequest, uploadFile2);
+		String image_src3 = utilFile.fileUpload(mpRequest, uploadFile2);
+		City_Data city_data = new City_Data(city_code, country, city, local_time, flight_time, local_voltage, visa,
+				latitude, longitude, danger_level, image_src, image_src2, image_src3);
+
+		cduService.service(city_data);
+
+		// DB에 저장된 Country 리스트
+		CountryList(model);
+
+		return "admin/adminCityDataUpdateForm";
+
+	}
+	
 	@GetMapping("/adminCityDataInsert")
 	public String adminCityDataInsertForm(Model model, HttpSession session) {
 		// 어드민으로 로그인 되있는지 확인

@@ -19,6 +19,7 @@ public class City_Data {
 	
 	public City_Data() {}
 
+
 	public City_Data(int city_code, String country, String city, String local_time, String flight_time,
 			String local_voltage, String visa, String latitude, String longitude, int danger_level, String image_src,
 			String image_src2, String image_src3) {
@@ -144,7 +145,7 @@ public class City_Data {
 		this.image_src3 = image_src3;
 	}
 
-	
+
 
 
 

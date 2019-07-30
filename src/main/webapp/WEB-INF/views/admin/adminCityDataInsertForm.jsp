@@ -99,7 +99,7 @@
 				</div>
 				
 				<div class="form-group">
-					<label for="image_src" class="col-sm-2 control-label">내부 사진</label>
+					<label for="image_src2" class="col-sm-2 control-label">내부 사진</label>
 					<div class="col-sm-10">
 						<input type="file" class="form-control" id="image_src2" name="image_src2"
 							placeholder="내부사진등록" required>
@@ -107,6 +107,14 @@
 				</div>
 				
 			
+				
+				<div class="form-group">
+					<label for="image_src3" class="col-sm-2 control-label">국기 사진</label>
+					<div class="col-sm-10">
+						<input type="file" class="form-control" id="image_src3" name="image_src3"
+							placeholder="국기사진등록" required>
+					</div>
+				</div>
 				
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">

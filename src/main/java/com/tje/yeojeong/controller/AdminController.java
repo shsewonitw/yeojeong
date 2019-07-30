@@ -17,11 +17,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.tje.yeojeong.model.*;
+import com.tje.yeojeong.service.City_DataDeleteService;
 import com.tje.yeojeong.service.City_DataInsertService;
 import com.tje.yeojeong.service.City_DataSelectCityService;
 import com.tje.yeojeong.service.City_DataSelectCountryService;
 import com.tje.yeojeong.service.City_DataSelectOneService;
 import com.tje.yeojeong.service.City_DataUpdateService;
+import com.tje.yeojeong.service.MemberAllService;
 import com.tje.yeojeong.service.MemberLoginService;
 import com.tje.yeojeong.service.MemberSearchIDService;
 import com.tje.yeojeong.setting.UtilFile;
@@ -42,6 +44,11 @@ public class AdminController {
 	private City_DataSelectOneService cdsoService;
 	@Autowired
 	private City_DataUpdateService cduService;
+	@Autowired
+	private City_DataDeleteService cddService;
+	@Autowired
+	private MemberAllService maService;
+	
 	
 	// 관리자 로그인 페이지 호출
 	@GetMapping("/admin")
@@ -109,23 +116,23 @@ public class AdminController {
 		if (member == null) {
 			return "admin/adminLoginForm";
 		}
-		
+
 		// DB에 저장된 Country 리스트
 		CountryList(model);
 
 		String city = request.getParameter("city");
 		City_Data city_data = new City_Data();
 		city_data.setCity(city);
-		city_data = (City_Data)cdsoService.service(city_data);
-		model.addAttribute("city_data",city_data);
-		
+		city_data = (City_Data) cdsoService.service(city_data);
+		model.addAttribute("city_data", city_data);
+
 		return "admin/adminCityDataUpdateForm";
 	}
 
-	
 	@PostMapping("/adminCityDataUpdate")
 	public String adminCityDataUpdateSubmit(@RequestParam("image_src") MultipartFile uploadFile1,
-			@RequestParam("image_src2") MultipartFile uploadFile2,@RequestParam("image_src3") MultipartFile uploadFile3, MultipartHttpServletRequest mpRequest,
+			@RequestParam("image_src2") MultipartFile uploadFile2,
+			@RequestParam("image_src3") MultipartFile uploadFile3, MultipartHttpServletRequest mpRequest,
 			HttpSession session, HttpServletRequest request, Model model) {
 		// 어드민으로 로그인 되있는지 확인
 		Member member = (Member) session.getAttribute("login_admin");
@@ -133,7 +140,6 @@ public class AdminController {
 			return "admin/adminLoginForm";
 		}
 
-		
 		String country = request.getParameter("country");
 		String city = request.getParameter("city");
 		String local_time = request.getParameter("local_time");
@@ -165,19 +171,19 @@ public class AdminController {
 		String image_src = utilFile.fileUpload(mpRequest, uploadFile1);
 		String image_src2 = utilFile.fileUpload(mpRequest, uploadFile2);
 		String image_src3 = utilFile.fileUpload(mpRequest, uploadFile2);
-		
+
 		// 사용자가 이미지는 업로드 안했을 경우 원래 이미지로 대체
-		if(image_src.length()<=14) {
+		if (image_src.length() <= 14) {
 			image_src = request.getParameter("image_src_hidden");
 		}
-		if(image_src2.length()<=14) {
+		if (image_src2.length() <= 14) {
 			image_src2 = request.getParameter("image_src2_hidden");
 		}
-		if(image_src3.length()<=14) {
+		if (image_src3.length() <= 14) {
 			image_src3 = request.getParameter("image_src3_hidden");
 		}
-		
-		System.out.println("으아아아아아악~~!~!~!~!~!:" +image_src.length());
+
+		System.out.println("으아아아아아악~~!~!~!~!~!:" + image_src.length());
 		City_Data city_data = new City_Data(city_code, country, city, local_time, flight_time, local_voltage, visa,
 				latitude, longitude, danger_level, image_src, image_src2, image_src3);
 		cduService.service(city_data);
@@ -188,7 +194,7 @@ public class AdminController {
 		return "admin/adminCityDataUpdateForm";
 
 	}
-	
+
 	@GetMapping("/adminCityDataInsert")
 	public String adminCityDataInsertForm(Model model, HttpSession session) {
 		// 어드민으로 로그인 되있는지 확인
@@ -205,7 +211,8 @@ public class AdminController {
 
 	@PostMapping("/adminCityDataInsert")
 	public String adminCityDataInsertSubmit(@RequestParam("image_src") MultipartFile uploadFile1,
-			@RequestParam("image_src2") MultipartFile uploadFile2, @RequestParam("image_src3") MultipartFile uploadFile3,  MultipartHttpServletRequest mpRequest,
+			@RequestParam("image_src2") MultipartFile uploadFile2,
+			@RequestParam("image_src3") MultipartFile uploadFile3, MultipartHttpServletRequest mpRequest,
 			HttpSession session, HttpServletRequest request, Model model) {
 		// 어드민으로 로그인 되있는지 확인
 		Member member = (Member) session.getAttribute("login_admin");
@@ -247,10 +254,9 @@ public class AdminController {
 		City_Data city_data = new City_Data(city_code, country, city, local_time, flight_time, local_voltage, visa,
 				latitude, longitude, danger_level, image_src, image_src2, image_src3);
 
-		if( (City_Data)cdsoService.service(city_data) == null ) {
+		if ((City_Data) cdsoService.service(city_data) == null) {
 			cdiService.service(city_data);
-		}
-		else {
+		} else {
 			return "admin/errorPage";
 		}
 		// DB에 저장된 Country 리스트
@@ -258,6 +264,40 @@ public class AdminController {
 
 		return "admin/adminCityDataInsertForm";
 
+	}
+
+	@GetMapping("/adminCityDataDelete")
+	public String adminCityDataDeleteForm(Model model, HttpSession session, HttpServletRequest request) {
+		// 어드민으로 로그인 되있는지 확인
+		Member member = (Member) session.getAttribute("login_admin");
+		if (member == null) {
+			return "admin/adminLoginForm";
+		}
+		String strCity_code = request.getParameter("city_code");
+		int city_code = Integer.parseInt(strCity_code);
+		City_Data city_data = new City_Data();
+		city_data.setCity_code(city_code);
+		cddService.service(city_data);
+
+		// DB에 저장된 Country 리스트
+		CountryList(model);
+
+		return "admin/adminCityDataInsertForm";
+	}
+
+	@GetMapping("/adminMemberManage")
+	public String adminMemberManageForm(HttpSession session,Model model) {
+		// 어드민으로 로그인 되있는지 확인
+		Member member = (Member) session.getAttribute("login_admin");
+		if (member == null) {
+			return "admin/adminLoginForm";
+		}
+		
+		List<Member> member_list = (List<Member>)maService.service();
+		model.addAttribute("member_list",member_list);
+		
+		
+		return "admin/adminMemberManage";
 	}
 
 	private void CountryList(Model model) {

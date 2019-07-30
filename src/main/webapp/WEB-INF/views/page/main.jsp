@@ -87,6 +87,7 @@
 						</div>
 					</div>
 				</div>
+				
 				<!-- 추천여행지 구간 -->
 			<div class="monthTravel"><h2>이 달의 추천 여행지</h2> <!-- 버튼 원본값 width:980px;height:380px; -->
 			<div class="month_product">

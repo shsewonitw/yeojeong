@@ -23,7 +23,7 @@
 	
 	
 	
-	
+
 
 	<jsp:include page="/WEB-INF/views/admin/adminCountryDropdownMenu.jsp" />
 
@@ -128,14 +128,16 @@
 			</form>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
-						<button onclick="document.getElementById('updateForm').submit();" class="btn btn-default">수정</button>
+						<button onclick="submitButton();" class="btn btn-default">수정</button>
 					</div>
 					<div class="col-sm-offset-2 col-sm-10">
-						<button onclick="deleteButton('${city_data.city_code}');" class="btn btn-default">삭제</button>
+						<!-- <button onclick="deleteButton('${city_data.city_code}');" class="btn btn-default">삭제</button> -->
+						<button class="btn btn-default" type="button" onclick="location.href='<%=request.getContextPath()%>/adminCityDataDelete?city_code=${city_data.city_code}'">삭제</button>
 					</div>
 				</div>
 				
 				
+			
 
 		</div>
 		<!--  -->
@@ -174,9 +176,15 @@
         });
       }
     
-      
-	function deleteButton(city_code){
-		alert(city_code+" - 삭제버튼!!");
+
+	
+	function submitButton(){
+		$("input[name=city]").blur();
+		
+		setTimeout(function() {
+			document.getElementById('updateForm').submit();
+			}, 1000);
+		
 	}
     </script>
     <script async defer

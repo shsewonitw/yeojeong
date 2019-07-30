@@ -152,22 +152,15 @@ public class City_DataDAO {
 		return result;
 	}
 	
-	// 여행지 데이터 삭제
-	public int delete(City_Data model) {
-		KeyHolder keyHolder = new GeneratedKeyHolder();
-
-		this.jdbcTemplate.update(new PreparedStatementCreator() {
-			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-
-				PreparedStatement pstmt = con.prepareStatement(
-						"delete from city_data where city_code = ?");
-				pstmt.setInt(1, model.getCity_code());
-				return pstmt;
-			}
-		}, keyHolder);
-
-		return keyHolder.getKey().intValue();
+	// 여행 데이터 삭제
+	public boolean delete(City_Data model) {
+		boolean result = false;
+		String sql = "delete from city_data where city_code = ?";
+		result = this.jdbcTemplate.update(sql,model.getCity_code()) == 0 ? false : true;
+		return result;
 	}
+	
+
 	
 	// 여행지 국가 리스트 반환
 	public List<String> selectCountryList() {

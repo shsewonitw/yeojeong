@@ -90,7 +90,7 @@ alert(112123);</script>
 					<div class="jb-table">
 						<div class="jb-table-row">
 							<div class="jb-table-cell">
-								<img alt="국기" src="<%=request.getContextPath()%>/resources/cityimg/hunflag.jpg" style="height: 60%">	
+								<img alt="국기" src="<%=request.getContextPath()%>/resources/cityimg/${city_data.image_src3}" style="height: 60%">	
 					</div>
 					
 					<div class="jb-table-cell">						

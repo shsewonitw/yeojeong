@@ -12,9 +12,9 @@
 	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/sky_slide.js?var=1"></script>
 	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jssor.slider-27.5.0.min.js"></script>
 	
+		
 	
-	
-	<!-- 1페이지 시작 -->
+	<!-- 1페이지 시작 -->	
 	<div id="main" class="scroll-container">
 		<section class="section1">
 			<div class="box hi">

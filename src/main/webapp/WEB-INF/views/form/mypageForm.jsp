@@ -266,39 +266,41 @@
 		<div class="col-md-9">
 			<!-- 		``````````````````	내가쓴글 페이지 -->
 
-			<div id="write" class="info_box"
-				style="border: solid thin #ddd; border-radius: 4px; text-align: left;overflow: hidden;">
 
+			<div id="write" class="info_box">
 				<c:forEach items="${rList}" var="rmsg">
+					<div
+						style="border: solid thin #ddd;margin: 10px; border-radius: 4px; text-align: left; overflow: hidden;">
+						<div style="padding: 20px">
 
-					<div style="padding: 20px">
-						
-						<div style="float: left;line-height: 40px">
-							<div style="float: left;">
-								<span>${ rmsg.name }</span>
-								<span>${ rmsg.write_time }</span>
+							<div style="float: left; line-height: 40px">
+								<div style="float: left;">
+									<span>${ rmsg.name }</span> 
+									<span>${ rmsg.write_time }</span>
+								</div>
+								<div style="float: right;">
+									<span>${ rmsg.country }</span> 
+									<span>${ rmsg.city }</span>
+								</div>
+
+								<div style="display: inline-block; width: 75%">${ rmsg.content }</div>
+								<div>
+									<span>${ rmsg.review_star }</span> 
+									<span>${ rmsg.comment_count }</span>
+								</div>
 							</div>
+
 							<div style="float: right;">
-								<span>${ rmsg.country }</span>
-								<span>${ rmsg.city }</span>
+								<img class="img-thumbnail"
+									style="max-width: 100px; max-height: 100px; width: 100%; height: 100%;"
+									src="<%=request.getContextPath()%>/resources/img/${ rmsg.image_src }">
 							</div>
-							
-							<div style="display: inline-block;width: 75%">${ rmsg.content }</div>
-							<div>
-								<span >${ rmsg.review_star }</span>
-								<span>${ rmsg.comment_count }</span>
-							</div>
-						</div>
-						
-						<div style="float: right;">
-							<img class="img-thumbnail" style="max-width: 100px;max-height: 100px;width: 100%;height: 100%;"
-								src="<%=request.getContextPath()%>/resources/img/${ rmsg.image_src }">
-						</div>
 
-						
+
+
+						</div>
 					</div>
 				</c:forEach>
-
 			</div>
 			<!-- 			``````````````````````` -->
 

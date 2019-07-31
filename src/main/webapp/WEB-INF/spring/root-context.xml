@@ -27,7 +27,7 @@
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" />
 		<property name="username" value="dkdjadkemf@gmail.com" />
-		<property name="password" value="AA*jgh158247" />
+		<property name="password" value="AA*jkh158247" />
 
 		<property name="javaMailProperties">
 			<props>

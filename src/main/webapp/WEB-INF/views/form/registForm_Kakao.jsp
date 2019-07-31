@@ -27,7 +27,7 @@
 </style>
 <script type="text/javascript">
 	var flag_id = true;
-	var flag_password = false;
+// 	var flag_password = false;
 	var flag_name = false;
 	var flag_year = false;
 	var flag_month = false;
@@ -73,12 +73,7 @@ $("#regist_btn").on("click",function(){
 						$("#member_id").focus();
 						all_flag = false;
 						return;
-					}else if(!flag_password){
-						alert("패스워드를  확인하세요.");
-						$("#password").focus();
-						all_flag = false;
-						return;
-					}else if(!flag_name){
+					} else if(!flag_name){
 						alert("이름을  확인하세요.");
 						$("#name").focus();
 						all_flag = false;
@@ -139,9 +134,9 @@ $("#regist_btn").on("click",function(){
 					data : memberJsonObject,
 					dataType : "text",
 					success : function(data) {
-						alert(member.name +"님 회원가입 성공. 로그인 페이지로 이동합니다.");
 						
-						if(eval(date)){
+						if(eval(data)){
+							alert(member.name +"님 회원가입 성공. 로그인 페이지로 이동합니다.");
 							window.location.href = 'http://localhost:8080/yeojeong/login';
 						}else{
 							alert("회원가입 실패(관리자에게 문의하세요.)");
@@ -178,35 +173,6 @@ $("#regist_btn").on("click",function(){
 		
 		
 	});
-// ````````````````````//
-	function password_keyup() {
-		if ($("#password").val() == "") {
-			$("#span_password").text("영문 대 소문자, 특수문자, 숫자를 사용하세요.(8~16자)");
-			$("#span_password").css("color", "red")
-			flag_password = false;
-			return;
-		} else if (passwordCheck_1.test($("#password").val())) {
-			$("#span_password").text("공백을 포함하지 않습니다.");
-			$("#span_password").css("color", "red")
-			flag_password = false;
-			return;
-		} else if (!passwordCheck_2.test($("#password").val())) {
-			$("#span_password").text("특수문자를 포함해야 합니다.");
-			$("#span_password").css("color", "red")
-			flag_password = false;
-			return;
-		} else if (!passwordCheck_3.test($("#password").val())) {
-			$("#span_password").text("영문 대 소문자, 숫자를 사용하세요.(8~16자)");
-			$("#span_password").css("color", "red")
-			flag_password = false;
-			return;
-		} else {
-			flag_password = true;
-			$("#span_password").css("color", "blue")
-			$("#span_password").text("사용 가능한 패스워드입니다.");
-		}
-
-	};
 	function name_keyup() {
 		if ($("#name").val() == "") {
 			$("#span_name").text("이름을 입력하세요.");
@@ -329,12 +295,6 @@ $("#regist_btn").on("click",function(){
 				<th colspan="3"><form:hidden id="member_id" size="30"
 						class="form-control" path="member_id" placeholder="아이디"
 						onkeyup="id_keyup();" /> </th>
-			<tr>
-				<th colspan="3"><form:password id="password" size="30"
-						class="form-control" path="password" placeholder="비밀번호"
-						onkeyup="password_keyup();" /><span id="span_password"
-					style="color: red;"></span></th>
-			</tr>
 			<tr>
 				<th colspan="3"><form:input id="name" size="30"
 						class="form-control" path="name" placeholder="이름"

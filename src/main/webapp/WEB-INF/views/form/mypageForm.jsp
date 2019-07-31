@@ -267,13 +267,13 @@
 			<!-- 		``````````````````	내가쓴글 페이지 -->
 
 			<div id="write" class="info_box"
-				style="border: solid thin #ddd; border-radius: 4px; text-align: left;">
+				style="border: solid thin #ddd; border-radius: 4px; text-align: left;overflow: hidden;">
 
 				<c:forEach items="${rList}" var="rmsg">
 
 					<div style="padding: 20px">
 						
-						<div style="float: left;">
+						<div style="float: left;line-height: 40px">
 							<div style="float: left;">
 								<span>${ rmsg.name }</span>
 								<span>${ rmsg.write_time }</span>

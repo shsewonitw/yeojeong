@@ -126,6 +126,29 @@ public class MemberDAO {
 		return result;
 
 	}
+	public boolean insert_Kakao(Member obj) {
+		boolean result = false;
+		int member_flag = this.jdbcTemplate.update(new PreparedStatementCreator() {
+			
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				
+				PreparedStatement pstmt = con.prepareStatement("insert into member values(?,null,?,?,?,?,?,now(),1)");
+				pstmt.setString(1, obj.getMember_id());
+				pstmt.setString(2, obj.getName());
+				pstmt.setInt(3, obj.getGender());
+				pstmt.setTimestamp(4, new java.sql.Timestamp(obj.getBirth().getTime()));
+				pstmt.setString(5, obj.getTel());
+				setPreparedStatement(6, obj.getEmail(), pstmt);
+				
+				return pstmt;
+			}
+		});
+		
+		result = member_flag == 1 ? true : false;
+		return result;
+		
+	}
 
 	// 정보수정
 	public boolean update(Member obj) {

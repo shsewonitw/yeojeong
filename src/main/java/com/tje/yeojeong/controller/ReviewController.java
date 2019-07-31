@@ -70,6 +70,9 @@ public class ReviewController {
 		reviewview.setCity(city);
 		reviewview.setImage_src(img_src);
 		
+		Member member = (Member)session.getAttribute("login_member");
+		reviewview.setMember_id(member.getMember_id());
+		
 		if(content.isEmpty()) {
 			request.setAttribute("errorMsg", "내용은 필수 사항 입니다");
 			return "/error/reviewError";

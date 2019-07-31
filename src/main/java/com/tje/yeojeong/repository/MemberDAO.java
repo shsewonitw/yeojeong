@@ -18,9 +18,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 
 import com.tje.yeojeong.model.Member;
+import com.tje.yeojeong.setting.PagingInfo;
 
 @Repository
 public class MemberDAO {
+	@Autowired
+	private PagingInfo pagingInfo;
+	
 	private JdbcTemplate jdbcTemplate;
 
 	@Autowired
@@ -142,5 +146,17 @@ public class MemberDAO {
 
 		return result;
 	}
+	
+	// 멤버전체 조회(페이징)
+	public List<Member> selectAllWithPaging(int page) {
+		String sql = "select * from member order by regist_date desc limit ?,?";
+		List<Member> result = this.jdbcTemplate.query(sql,new MemberRowMapper(),
+				(page-1)*this.pagingInfo.getPagingSize(), this.pagingInfo.getPagingSize());
+		return result.isEmpty() ? null : result;
+	}
 
+	public Integer selectMemberCount() {
+		String sql = "select count(*) from member";
+		return this.jdbcTemplate.queryForObject(sql, Integer.class);
+	}
 }

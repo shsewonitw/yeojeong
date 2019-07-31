@@ -32,22 +32,51 @@
 	<nav style="margin:auto; text-align:center;">
 	  <ul class="pagination">
 	    <li>
-	      <a href="#" aria-label="Previous">
-	        <span aria-hidden="true">&laquo;</span>
-	      </a>
+	      <c:if test="${beforePageNo ne -1}">
+		      <a href="<%=request.getContextPath()%>/adminMemberManage/${beforePageNo}" aria-label="Previous">
+		        <span aria-hidden="true">&laquo;</span>
+		      </a>
+	      </c:if>
 	    </li>
-	    <li><a href="#">1</a></li>
-	    <li><a href="#">2</a></li>
-	    <li><a href="#">3</a></li>
-	    <li><a href="#">4</a></li>
-	    <li><a href="#">5</a></li>
+	    
+	    
+		<c:forEach var="pageNo" begin="${startPageNo}" end="${endPageNo}">
+			<c:if test="${ curPage eq pageNo }" var="r">
+				<li><a href="#">${pageNo }</a></li>
+			</c:if>
+			<c:if test="${not r }">
+				<li><a href="<%=request.getContextPath()%>/adminMemberManage/${pageNo}">${pageNo}</a></li>
+			</c:if>
+		</c:forEach>	    
+	    
 	    <li>
-	      <a href="#" aria-label="Next">
+	      <c:if test="${afterPageNo ne -1}">
+	      <a href="<%=request.getContextPath()%>/adminMemberManage/${afterPageNo}" aria-label="Next">
 	        <span aria-hidden="true">&raquo;</span>
 	      </a>
+	      </c:if>
 	    </li>
 	  </ul>
 	</nav>
+	
+	<!-- 
+		<c:if test="${beforePageNo ne -1}">
+			<a href="<%=request.getContextPath()%>/message/receive/${beforePageNo}">이전</a>
+		</c:if>
+		
+		<c:forEach var="pageNo" begin="${startPageNo}" end="${endPageNo}">
+			<c:if test="${ curPage eq pageNo }" var="r">
+				[${pageNo }]
+			</c:if>
+			<c:if test="${not r }">
+				<a href="<%=request.getContextPath()%>/message/receive/${pageNo}">${pageNo}</a>
+			</c:if>
+		</c:forEach>
+		
+		<c:if test="${afterPageNo ne -1}">
+			<a href="<%=request.getContextPath()%>/message/receive/${afterPageNo}">다음</a>
+		</c:if>
+	 -->
 </div>
 
 

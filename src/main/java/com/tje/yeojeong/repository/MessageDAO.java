@@ -47,7 +47,7 @@ public class MessageDAO {
 	
 	// 답장 보낼때, 받는 사람 ID 자동 갱신
 	public Message searchbySenderID(Message model) {
-		return this.jdbcTemplate.queryForObject("select * from message where sender_id = ?", new MessageRowMapper(),
+		return this.jdbcTemplate.queryForObject("select * from message where sender_id = ? limit 1", new MessageRowMapper(),
 				model.getSender_id());
 	}
 	

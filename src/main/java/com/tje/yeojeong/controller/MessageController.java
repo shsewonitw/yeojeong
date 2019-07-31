@@ -62,7 +62,7 @@ public class MessageController {
 		return "message/transform";
 	}
 	
-	@PostMapping("/transform")
+	@PostMapping("/transform/{sender_id}")
 	public String transformSubmit(Message message, Model model) {
 		int message_id = (Integer)miService.service(message);
 		model.addAttribute("message_id", message_id);

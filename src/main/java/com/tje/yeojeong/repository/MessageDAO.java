@@ -45,6 +45,12 @@ public class MessageDAO {
 				model.getMessage_id());
 	}
 	
+	// 답장 보낼때, 받는 사람 ID 자동 갱신
+	public Message searchbySenderID(Message model) {
+		return this.jdbcTemplate.queryForObject("select * from message where sender_id = ? limit 1", new MessageRowMapper(),
+				model.getSender_id());
+	}
+	
 	// 각 사용자 별, 보낸 메세지의 개수를 반환하는 메소드
 	public Integer selectBySenderCount(Message model) {
 		return this.jdbcTemplate.queryForObject(
@@ -137,20 +143,13 @@ public class MessageDAO {
 	}
 	
 	// 메세지 삭제
-	public int delete(Message model) {
-		KeyHolder keyHolder = new GeneratedKeyHolder();
+	public boolean delete(Message model) {
+		boolean result = false;
+		String sql = "delete from message where message_id = ?";
+		result = this.jdbcTemplate.update(
+				sql,model.getMessage_id()) == 0 ? false : true;
 
-		this.jdbcTemplate.update(new PreparedStatementCreator() {
-			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-
-				PreparedStatement pstmt = con.prepareStatement(
-						"delete from message where message_id = ?");
-				pstmt.setInt(1, model.getMessage_id());
-				return pstmt;
-			}
-		}, keyHolder);
-
-		return keyHolder.getKey().intValue();
+		return result;
 	}
 	
 	// 메세지 수신확인 표시

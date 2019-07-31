@@ -1,3 +1,4 @@
+
 <!-- 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -9,7 +10,7 @@
 <script src="https://kit.fontawesome.com/2796c86652.js"></script>
 <style type="text/css">
 #footer {
-    background: black !important;         
+    background: black;         
 }
 #footer h5{
 	padding-left: 10px;
@@ -21,7 +22,7 @@
 }
 #footer a {
     color: #ffffff;
-    text-decoration: none !important;
+    text-decoration: none;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
 }
@@ -107,4 +108,7 @@
 
 </body>
 </html>
+<<<<<<< HEAD
+
  -->
+

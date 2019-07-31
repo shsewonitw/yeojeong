@@ -11,15 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.tje.yeojeong.model.*;
 import com.tje.yeojeong.service.*;
+import com.tje.yeojeong.setting.UtilFile;
 @Controller
 public class ReviewController {
 	
@@ -37,6 +41,11 @@ public class ReviewController {
 	private Review_CommentAllService rcaService;
 	@Autowired
 	private Review_CommentCountService rccservice;
+	@Autowired
+	private Review_CommentDeleteService rcdService;
+	@Autowired
+	private UtilFile utilFile;
+
 	
 	@GetMapping("/review")
 	public String reviewForm(){
@@ -46,16 +55,48 @@ public class ReviewController {
 	
 	// 게시판 작성
 	@PostMapping("/review")
-	public String reviewSubmit(Review_view reviewview,Model model, HttpSession session){
+	public String reviewSubmit(Model model, HttpSession session, HttpServletRequest request,
+			@RequestParam("country") String country,@RequestParam("city") String city,
+			@RequestParam("content") String content,@RequestParam("image_src") MultipartFile uploadFile1, MultipartHttpServletRequest mpRequest){
+
+		// 파일이름가져오기
+		UtilFile utilFile = new UtilFile();
+		String img_src = utilFile.fileUpload(mpRequest, uploadFile1);
 		
-		//Member member = (Member)session.getAttribute("login_member");
-		//reviewview.setMember_id(member.getMember_id());
+		Review_view reviewview = new Review_view();
+		reviewview.setContent(content);
+		reviewview.setCountry(country);
+		reviewview.setCity(city);
+		reviewview.setImage_src(img_src);
+		Member member = (Member)session.getAttribute("login_member");
+		reviewview.setMember_id(member.getMember_id());
+		
+		if(content.isEmpty()) {
+			request.setAttribute("errorMsg", "내용은 필수 사항 입니다");
+			return "/error/reviewError";
+		}
+		
+		if(country.length() == 0) {
+			request.setAttribute("errorMsg", "국가를 선택해주세요");
+			return "/error/reviewError";
+		}
+		
+		if(city.length() == 0) {
+			request.setAttribute("errorMsg", "도시를 선택해주세요");
+			return "/error/reviewError";
+		}
+		
+		System.out.println(img_src);
 		
 		HashMap<String, Object> values = new HashMap<>();
 		values.put("reviewview", reviewview);
 		HashMap<String, Object> resultMap = (HashMap<String, Object>) riService.service(values);
 		
 		model.addAttribute("result", resultMap.get("result"));
+		
+		
+		
+		
 		return "form/reviewSubmit";
 	}
 	
@@ -75,10 +116,11 @@ public class ReviewController {
 	
 	// 게시판 리스트
 	@GetMapping("/reviewlist")
-	public String reviewListForm(Model model) {
+	public String reviewListForm(Model model, HttpSession session, Review_view reviewview) {
 		
 		HashMap<String, Object> resultMap = (HashMap<String, Object>) rlService.service();
 		model.addAttribute("reviewlist", resultMap.get("reviewlist"));
+		
 		
 		return "form/reviewListForm";
 	}
@@ -128,10 +170,13 @@ public class ReviewController {
 		return "form/detailreviewForm";
 	}
 	
-	// 댓글
-	@PostMapping("/comment")
+	// 댓글 등록
+	@PostMapping("/commentinsert")
 	@ResponseBody
-	public String comment(Model model,Review_Comment comment,HttpServletResponse response) throws IOException {
+	public String comment(Model model,Review_Comment comment,HttpServletResponse response,HttpSession session,HttpServletRequest request) throws IOException {
+		
+		Member member = (Member)session.getAttribute("login_member");
+		
 		boolean result = false;
 		HashMap<String, Object> values = new HashMap<>();
 		values.put("comment", comment);
@@ -149,6 +194,7 @@ public class ReviewController {
 		Calendar time = Calendar.getInstance();
 		String format_time2 = timeinfo.format(time.getTime());
 		
+		
 		String output = 
 				String.format("{ \"result\" : \"%b\", \"article_id\" : \"%d\", \"member_id\" : \"%s\", \"comment_id\" : \"%d\", \"content\" : \"%s\", \"write_time\" : \"%s\" }", 
 						result, comment.getArticle_id(), comment.getMember_id(),reviewcomment.getArticle_id(), comment.getContent(), format_time2 );
@@ -157,5 +203,33 @@ public class ReviewController {
 			out.close();
 			
 			return null;
+	}
+	
+	// 댓글삭제
+	@PostMapping("/commentdelete")
+	@ResponseBody
+	public String commentdelete(@RequestParam("comment_id") int comment_id,HttpServletResponse response, HttpSession session) {
+		Member member = (Member)session.getAttribute("login_member");
+		boolean result = false;
+		
+		Review_Comment reviewcomment = new Review_Comment();
+		reviewcomment.setComment_id(comment_id);
+		
+		HashMap<String, Object> values = new HashMap<>();
+		values.put("reviewcommnet", reviewcomment);
+		
+		HashMap<String, Object> resultMap = (HashMap<String, Object>) rcdService.service(values);
+		result = (Boolean)resultMap.get("result");
+		
+		response.setContentType("text/plane;charset=utf-8");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.println(result);
+			out.flush();
+		} catch (IOException e) {			
+			e.printStackTrace();
+		}		
+		return null;
 	}
 }

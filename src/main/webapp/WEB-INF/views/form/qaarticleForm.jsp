@@ -66,7 +66,7 @@
            </h4>           
         </div>
 		<!-- panel body -->
-        <div id="accordionOne" class="panel-collapse collapse in">
+        <div id="accordionOne" class="panel-collapse collapse">
           <div class="panel-body">
            	A. 가까운 경찰서에 분실신고를 해주세요.<br> 
 			이 후 가까운 대사관 혹은 총영사관에 여권 분실 신고를 하고 여행 증명서나 단수여권을 발급 받으셔야 합니다.<br>

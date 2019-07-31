@@ -27,9 +27,6 @@ public class UtilFile {
 			fileName = uploadFile.getOriginalFilename();
 			byte[] bytes = uploadFile.getBytes();
 			path = getSaveLocation(request);
-			System.out.println("으아아아아아아~!~!~!~!!:" + request.getContextPath());
-			System.out.println("UtilFile fileUpload fileName : " + fileName);
-            System.out.println("UtilFile fileUpload uploadPath : " + path);
 
             File file = new File(path);
             
@@ -44,11 +41,8 @@ public class UtilFile {
             	
             }
             
-            System.out.println("UtilFile fileUpload final fileName : " + fileName);
-            System.out.println("UtilFile fileUpload file : " + file);
 
             out = new FileOutputStream(file);
-            System.out.println("UtilFile fileUpload out : " + out);
             
             out.write(bytes);
 		} catch(Exception e) {
@@ -67,7 +61,6 @@ public class UtilFile {
 		}
 		
 		// return path + fileName;
-		System.out.println("sddsdfsdfsdfsdfsdfsdf: "+fileName);
 		return fileName;
 	}
 	
@@ -77,7 +70,6 @@ public class UtilFile {
 	        
 	        String uploadPath = request.getSession().getServletContext().getRealPath("/");
 	        String attachPath = "resources/cityimg/";
-	        System.out.println("UtilFile getSaveLocation path : " + uploadPath + attachPath);
 	        
 	        return uploadPath + attachPath;
 	    }

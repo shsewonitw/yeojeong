@@ -51,8 +51,6 @@ public class AdminController {
 	@Autowired
 	private City_DataDeleteService cddService;
 	@Autowired
-	private MemberAllService maService;
-	@Autowired
 	private PagingInfo pagingInfo;
 	@Autowired
 	private MemberAllWithPagingService mawpService;
@@ -182,6 +180,7 @@ public class AdminController {
 		String image_src3 = utilFile.fileUpload(mpRequest, uploadFile2);
 
 		// 사용자가 이미지는 업로드 안했을 경우 원래 이미지로 대체
+		
 		if (image_src.length() <= 14) {
 			image_src = request.getParameter("image_src_hidden");
 		}
@@ -363,22 +362,7 @@ public class AdminController {
 		return adminMemberManageForm(1, model, session);
 	}
 	
-	
-//	@GetMapping("/adminMemberManage")
-//	public String adminMemberManageForm(HttpSession session,Model model) {
-//		// 어드민으로 로그인 되있는지 확인
-//		Member member = (Member) session.getAttribute("login_admin");
-//		if (member == null) {
-//			return "admin/adminLoginForm";
-//		}
-//		
-//		List<Member> member_list = (List<Member>)maService.service();
-//		model.addAttribute("member_list",member_list);
-//		
-//		
-//		return "admin/adminMemberManage";
-//	}
-	
+
 
 
 	private void CountryList(Model model) {

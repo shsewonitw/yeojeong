@@ -124,7 +124,6 @@ $("#regist_btn").on("click",function(){
 					member.tel = $("#tel").val();
 					
 					var memberJsonObject = JSON.stringify(member);
-					alert(memberJsonObject);
 				
 			if(all_flag){
 				$.ajax({
@@ -276,7 +275,7 @@ $("#regist_btn").on("click",function(){
 	};
 </script>
 </head>
-<body>
+<body style="overflow: scroll;">
 
 
 

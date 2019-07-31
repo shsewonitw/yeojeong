@@ -20,7 +20,7 @@
 	
 	$(function(){
 		var url = window.location.href;
-		$("#logouturl").attr("href","${ pageContext.request.contextPath }/auth/logout?myurl="+url );
+		$("#logouturl").attr("href","${ pageContext.request.contextPath }/auth/logout?myurl=http://localhost:8080/yeojeong/");
 	});
 	$(function(){
 		var url = window.location.href;

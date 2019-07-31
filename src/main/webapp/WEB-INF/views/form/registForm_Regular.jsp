@@ -499,7 +499,7 @@ $("#regist_btn").on("click",function(){
 	};
 </script>
 </head>
-<body>
+<body style="overflow: scroll;">
 
 
 	<div style="height: 25%;"></div>

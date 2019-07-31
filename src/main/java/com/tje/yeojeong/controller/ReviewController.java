@@ -57,8 +57,7 @@ public class ReviewController {
 	@PostMapping("/review")
 	public String reviewSubmit(Model model, HttpSession session, HttpServletRequest request,
 			@RequestParam("country") String country,@RequestParam("city") String city,
-			@RequestParam("content") String content,@RequestParam("image_src")
-			MultipartFile uploadFile1, MultipartHttpServletRequest mpRequest){
+			@RequestParam("content") String content,@RequestParam("image_src") MultipartFile uploadFile1, MultipartHttpServletRequest mpRequest){
 
 		// 파일이름가져오기
 		UtilFile utilFile = new UtilFile();
@@ -69,7 +68,6 @@ public class ReviewController {
 		reviewview.setCountry(country);
 		reviewview.setCity(city);
 		reviewview.setImage_src(img_src);
-		
 		Member member = (Member)session.getAttribute("login_member");
 		reviewview.setMember_id(member.getMember_id());
 		
@@ -177,6 +175,8 @@ public class ReviewController {
 	@ResponseBody
 	public String comment(Model model,Review_Comment comment,HttpServletResponse response,HttpSession session,HttpServletRequest request) throws IOException {
 		
+		Member member = (Member)session.getAttribute("login_member");
+		
 		boolean result = false;
 		HashMap<String, Object> values = new HashMap<>();
 		values.put("comment", comment);
@@ -208,8 +208,8 @@ public class ReviewController {
 	// 댓글삭제
 	@PostMapping("/commentdelete")
 	@ResponseBody
-	public String commentdelete(@RequestParam("comment_id") int comment_id,HttpServletResponse response) {
-		
+	public String commentdelete(@RequestParam("comment_id") int comment_id,HttpServletResponse response, HttpSession session) {
+		Member member = (Member)session.getAttribute("login_member");
 		boolean result = false;
 		
 		Review_Comment reviewcomment = new Review_Comment();

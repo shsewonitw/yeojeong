@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,8 +25,11 @@ import com.tje.yeojeong.service.City_DataSelectCountryService;
 import com.tje.yeojeong.service.City_DataSelectOneService;
 import com.tje.yeojeong.service.City_DataUpdateService;
 import com.tje.yeojeong.service.MemberAllService;
+import com.tje.yeojeong.service.MemberAllWithPagingService;
+import com.tje.yeojeong.service.MemberCountService;
 import com.tje.yeojeong.service.MemberLoginService;
 import com.tje.yeojeong.service.MemberSearchIDService;
+import com.tje.yeojeong.setting.PagingInfo;
 import com.tje.yeojeong.setting.UtilFile;
 
 @Controller
@@ -48,7 +52,12 @@ public class AdminController {
 	private City_DataDeleteService cddService;
 	@Autowired
 	private MemberAllService maService;
-	
+	@Autowired
+	private PagingInfo pagingInfo;
+	@Autowired
+	private MemberAllWithPagingService mawpService;
+	@Autowired
+	private MemberCountService mcService;
 	
 	// 관리자 로그인 페이지 호출
 	@GetMapping("/admin")
@@ -285,20 +294,92 @@ public class AdminController {
 		return "admin/adminCityDataInsertForm";
 	}
 
-	@GetMapping("/adminMemberManage")
-	public String adminMemberManageForm(HttpSession session,Model model) {
+	
+	// 멤버관리 
+	private String adminMemberManageForm(
+			Integer page, Model model, HttpSession session) {
+		
 		// 어드민으로 로그인 되있는지 확인
 		Member member = (Member) session.getAttribute("login_admin");
 		if (member == null) {
 			return "admin/adminLoginForm";
 		}
 		
-		List<Member> member_list = (List<Member>)maService.service();
-		model.addAttribute("member_list",member_list);
 		
+		HashMap<String, Object> args = 
+				new HashMap<String, Object>();		
 		
+		args.put("curPageNo", page);		
+	
+		
+		model.addAttribute("member_list", mawpService.service(args));
+		
+		HashMap<String, Integer> result = 
+			(HashMap<String, Integer>)mcService.service();
+		model.addAttribute(
+				"member_count", result.get("totalCount"));
+		
+		int totalPageCount = (int)result.get("totalPageCount");
+		// 시작페이지와 종료페이지 처리
+		// 현재 페이지가 3인경우 한 화면에 보여줄 범위는 5
+		// 시작은 1, 종료는 5
+		// 시작 -> 현재페이지 / 페이지범위 + 1
+		// 종료 -> 시작 + 범위 - 1
+		int startPageNo =
+			(page % pagingInfo.getPageRange() == 0 ? page-1 : page) 
+			/ pagingInfo.getPageRange() * pagingInfo.getPageRange() + 1;
+		
+		int endPageNo = startPageNo + pagingInfo.getPageRange() - 1;
+		if( endPageNo > totalPageCount )
+			endPageNo = totalPageCount;
+		
+		// 이전, 다음
+		// 이전을 만드는 경우 시작이 1이 아닐 때
+		// 이전페이지의 값은 시작 - 페이지점위
+		// 다음을 만드는 경우 종료가 마지막 페이지가 아닐 때
+		// 다음페이지의 값은 다음 + 1
+		int beforePageNo = startPageNo != 1 ? startPageNo - pagingInfo.getPageRange() : -1;
+		int afterPageNo = endPageNo != totalPageCount ? endPageNo + 1 : -1;
+		
+		model.addAttribute("totalPageCount", totalPageCount);
+		model.addAttribute("startPageNo", startPageNo);
+		model.addAttribute("endPageNo", endPageNo);
+		model.addAttribute("beforePageNo", beforePageNo);
+		model.addAttribute("afterPageNo", afterPageNo);
+		model.addAttribute("curPage", page);
 		return "admin/adminMemberManage";
 	}
+	
+	@GetMapping("/adminMemberManage/{pageNo}")
+	public String adminMemberManageFormWithPageNo(
+			@PathVariable("pageNo") Integer page,
+			Model model, HttpSession session) {
+		return adminMemberManageForm(page, model, session);
+	}
+		
+	@GetMapping("/adminMemberManage")
+	public String adminMemberManageFormWithNoPageNo(			
+			Model model, HttpSession session) {
+		return adminMemberManageForm(1, model, session);
+	}
+	
+	
+//	@GetMapping("/adminMemberManage")
+//	public String adminMemberManageForm(HttpSession session,Model model) {
+//		// 어드민으로 로그인 되있는지 확인
+//		Member member = (Member) session.getAttribute("login_admin");
+//		if (member == null) {
+//			return "admin/adminLoginForm";
+//		}
+//		
+//		List<Member> member_list = (List<Member>)maService.service();
+//		model.addAttribute("member_list",member_list);
+//		
+//		
+//		return "admin/adminMemberManage";
+//	}
+	
+
 
 	private void CountryList(Model model) {
 		// DB에 저장된 Country 리스트

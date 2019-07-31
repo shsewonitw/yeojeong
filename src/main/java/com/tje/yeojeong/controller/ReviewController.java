@@ -208,7 +208,7 @@ public class ReviewController {
 	// 댓글삭제
 	@PostMapping("/commentdelete")
 	@ResponseBody
-	public String commentdelete(@RequestParam("comment_id") int comment_id,HttpServletResponse response) {
+	public String commentdelete(@RequestParam("comment_id") int comment_id,HttpServletResponse response, HttpSession session) {
 		Member member = (Member)session.getAttribute("login_member");
 		boolean result = false;
 		

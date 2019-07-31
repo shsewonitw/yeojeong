@@ -4,15 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/resources/css/main.css?asd=1231">
-<script type="text/javascript"
-	src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
-<script type="text/javascript"
-	src="<%=request.getContextPath()%>/resources/js/bootstrap.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/resources/css/bootstrap.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://kit.fontawesome.com/2796c86652.js"></script>
 <style type="text/css">

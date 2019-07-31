@@ -1,5 +1,7 @@
 package com.tje.yeojeong.controller;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tje.yeojeong.model.Member;
+import com.tje.yeojeong.model.Review_view;
 import com.tje.yeojeong.service.MemberInsertService;
 import com.tje.yeojeong.service.MemberLoginService;
 import com.tje.yeojeong.service.MemberSearchIDService;
+import com.tje.yeojeong.service.ReviewSelectWhereIdService;
 
 @Controller
 public class MemberController {
@@ -30,6 +34,8 @@ public class MemberController {
 	private MemberLoginService mlservice;
 	@Autowired
 	private MemberSearchIDService msiService;
+	@Autowired
+	private ReviewSelectWhereIdService rswiService;
 
 	@GetMapping("/login")
 	public String login_Form(@RequestParam(value = "myurl", required = false) String myurl,
@@ -137,13 +143,17 @@ public class MemberController {
 	}
 
 	@GetMapping("/auth/mypage")
-	public String mypage_Form(@ModelAttribute(value = "member") Member member, HttpSession session) {
-
+	public String mypage_Form(HttpSession session, Model model) {
+		Review_view review_view = new Review_view();
+		Member member =(Member)session.getAttribute("login_member");
+		review_view.setMember_id(member.getMember_id());
+		model.addAttribute("rList",rswiService.service(review_view));
+		List<Review_view> re = (List<Review_view>)rswiService.service(review_view);
 		return "form/mypageForm";
 	}
 
 	@PostMapping("/auth/mypage")
-	public String mypage_Submit(@ModelAttribute(value = "member") Member member, HttpSession session) {
+	public String mypage_Submit(HttpSession session) {
 
 		return "submits/mypageSumit";
 	}

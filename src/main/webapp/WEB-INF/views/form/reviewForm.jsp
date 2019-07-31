@@ -9,6 +9,7 @@
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 <script type="text/javascript">
 
+/*
 function validate(){
 	var extensions = new Array("jpg","jpeg","gif","png","bmp");  //이곳에 업로드 가능한 확장자 기재
 	var image_file = document.form.image_file.value;
@@ -25,7 +26,7 @@ function validate(){
 	return false;
 	}
 	
-	
+	*/
 </script>
 
 <title>여행자들의 웃음</title>
@@ -39,10 +40,10 @@ function validate(){
 	
 	<div class="formDIV">
 		
-		<form action="<%=request.getContextPath()%>/review" method="post" onSubmit="return validate();">
+		<form action="<%=request.getContextPath()%>/review" method="post" enctype="multipart/form-data">
 			<hr>
 			<p class="name">
-				<label>작성자</label>&nbsp;&nbsp;&nbsp;<input class="input" type="text" name="member_id"> 
+				<label>작성자</label>&nbsp;&nbsp;&nbsp;${login_member.name }
 			</p>
 			<hr>
 				<label>여행지</label> &nbsp;&nbsp;&nbsp;
@@ -78,7 +79,9 @@ function validate(){
 			이미지 업로드 : <input type="file" name="image_src">
 			별점 개발 안되서 테스트<input type="text" name="review_star">
 			<hr>
+			
 			<input type="submit" value="글 작성" class="submitmagin">
+			
 		</form>
 	</div>
 
@@ -87,13 +90,7 @@ function validate(){
 
 <script type="text/javascript">
 
-$(function(){
-	$('select').selectlist({
-		zIndex: 10,
-		width: 200,
-		height: 30
-	});		
-})
+
 
 window.onload = function() {
 	document.getElementById("b_class").onchange = function() { getClass(this.form.b_class.options.selectedIndex) };

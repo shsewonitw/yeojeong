@@ -5,11 +5,12 @@
 <head>
 <meta charset="UTF-8">
 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/datilreview.css?var=33">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/datilreview.css?var=22">
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 
 <script type="text/javascript">
 
+// 댓글 등록 
 function insert_comment() {
 	var comment_data = $("#comment_form").serialize();
 	
@@ -39,13 +40,13 @@ function insert_comment() {
 			}
 			
 		},
-		// ajax 호출이 실패한 경우 실행되는 함수
 		error: function(result) {
 			alert('댓글 작성에서 문제 발생2');					
 		}
 	});
 }
-	
+
+
 	
 </script>
 
@@ -90,11 +91,13 @@ function insert_comment() {
 			<hr>
 			<label>후기 내용</label><br><br>
 			<textarea readonly>${detailreview.content }</textarea>
-			<hr>
+			
 			<div class="buttonmargin">
 			<a href="<%=request.getContextPath()%>/reviewchange" class="button">수정</a>
 			<a href="<%=request.getContextPath()%>" class="button">삭제</a>
 			</div>
+			<hr>
+			<br>
 		<!-- 댓글 -->
 		<form id="comment_form" action="<%= request.getContextPath() %>/comment" method="post">
 		<label>댓글(${commentSize})</label><br>

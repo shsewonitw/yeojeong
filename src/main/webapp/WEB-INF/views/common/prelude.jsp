@@ -24,7 +24,7 @@
 	});
 	$(function(){
 		var url = window.location.href;
-		$("#loginurl").attr("href","${ pageContext.request.contextPath }/login.do?myurl="+url );
+		$("#loginurl").attr("href","${ pageContext.request.contextPath }/login?myurl="+url );
 	});
 	
 	

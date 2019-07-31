@@ -50,8 +50,8 @@ th, td {
 	};
 	
 	/* 메세지 답장(아이디 클릭) 부분 */
-	function transform() {
-		window.open("<%=request.getContextPath()%>/message/transform","receivecontentOpen",
+	function transform(sender) {
+		window.open("<%=request.getContextPath()%>/message/transform/"+sender,"receivecontentOpen",
 			"width=740,height=620,left=150,top=150,resizable=no,location=no,menubar=no,toolbar=no,scrollbars=no");
 	};
 	
@@ -63,16 +63,15 @@ th, td {
 		});
 	/* 메세지 삭제 */
 		$('#delete').click(function() {
-			$('input[type=checkbox]:checked').remove();
+			$('input[type=checkbox]:checked').parent().parent().remove();
 		});
 	});
 	
 </script>
-
 <div class="top"></div>
 <div class="message_bar">
-<h3><a href="<%=request.getContextPath()%>/message/receive/" class="a">　받은쪽지</a>(${readCount}/${r_count}) | <a href="<%=request.getContextPath()%>/receive" class="a">보낸쪽지</a>
-<button type="button" class="btn btn-default" id="delete">삭제</button></h3>
+<h3><a href="<%=request.getContextPath()%>/message/receive/" class="a">&nbsp;&nbsp;&nbsp;&nbsp;받은쪽지</a>(${readCount}/${r_count}) | <a href="<%=request.getContextPath()%>/receive" class="a">보낸쪽지</a>
+<button type="button" class="btn btn-default" id="delete" name="${delete}">삭제</button></h3>
 </div>
 <div class="middle">
 <table class="table">
@@ -84,17 +83,18 @@ th, td {
 		<th width="15%">읽은시간</th>
 	</tr>
 	
-	<c:forEach items="${rList}" var="rmsg">
-	<c:if test="${ empty rmsg.content }">
+	<c:if test="${ empty rList }">
 	<tr>
-		<td colspan="5">${ empty rmsg.content ? '쪽지가 없습니다.' : rmsg.content }</td>
+		<td colspan="5">쪽지가 없습니다.</td>
 	</tr>
 	</c:if>
+	
+	<c:forEach items="${rList}" var="rmsg">
 	<c:if test="${ empty rmsg.receive_time }" var="r">
 	<tr>
-		<th width="10%"><input type="checkbox" class="chk" value="${rmsg.message_id}"></th>
-		<th width="20%"><a href="#" class="a" onclick="transform();">${rmsg.sender_id}</a></th>
-		<th width="40%"><a href="#" class="a" onclick="winopen('${rmsg.message_id}');">새 메세지 확인</a></th>
+		<th width="10%"><input type="checkbox" class="chk" name="chk_mid" value="${rmsg.message_id}"></th>
+		<th width="20%"><a href="#" class="a" onclick="transform('${rmsg.sender_id}');">${rmsg.sender_id}</a></th>
+		<th width="40%"><a href="#" class="a" onclick="winopen('${rmsg.message_id}');">새 쪽지 확인</a></th>
 		<th width="15%">${ rmsg.send_time }</th>
 		<th width="15%">${ empty rmsg.receive_time ? '읽지않음' : rmsg.receive_time }</th>
 	</tr>
@@ -102,17 +102,13 @@ th, td {
 	
 	<c:if test="${ not r }">
 	<tr>
-		<td width="10%"><input type="checkbox" class="chk" value="${rmsg.message_id}"></td>
-		<td width="20%"><a href="#" class="a" onclick="transform();">${rmsg.sender_id}</a></td>
-		
+		<td width="10%"><input type="checkbox" class="chk" name="chk_mid" value="${rmsg.message_id}"></td>
+		<td width="20%"><a href="#" class="a" onclick="transform('${rmsg.sender_id}');">${rmsg.sender_id}</a></td>
 		<td width="40%"><a href="#" class="a" onclick="winopen('${rmsg.message_id}');">
-		
-		
-		
-		<!-- 10글자 이상 될 시 ...으로 자르는 코드 -->
+		<!-- 20글자 이상일 경우 ...으로 자르는 코드 -->
            <c:choose>
-           <c:when test="${fn:length(rmsg.content) gt 10}">
-           <c:out value="${fn:substring(rmsg.content, 0, 10)}....">
+           <c:when test="${fn:length(rmsg.content) gt 20}">
+           <c:out value="${fn:substring(rmsg.content, 0, 20)}....">
 		</c:out></c:when>
            <c:otherwise>
            <c:out value="${rmsg.content}">

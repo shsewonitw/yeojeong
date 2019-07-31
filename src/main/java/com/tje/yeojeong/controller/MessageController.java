@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 
@@ -42,19 +43,22 @@ public class MessageController {
 	@Autowired
 	private MessageSearchBySenderDateService msbsdService;
 	@Autowired
+	private MessageSearchSenderService mssService;
+	@Autowired
+	private MessageDeleteService mdService;
+	@Autowired
 	private PagingInfo pagingInfo;
 	
 	// 메세지 답장 부분
-	@GetMapping("/transform")
-	public String transformForm(Message message, Model model, HttpSession session) {
+	@GetMapping("/transform/{sender_id}")
+	public String transformForm(Message message, Model model, HttpSession session,
+			@PathVariable("sender_id") String sender_id) {
 		Member loginMember = 
 				(Member)session.getAttribute("login_member");
-		HashMap<String, Object> args =
-				new HashMap<String, Object>();
+		message.setSender_id(sender_id);
 		
-		message.setReceiver_id(loginMember.getMember_id());
-		args.put("message", message);
-		model.addAttribute("sender", model);
+		model.addAttribute("receiver_id", mssService.service(message));
+		System.out.println(message.getSender_id());
 		return "message/transform";
 	}
 	
@@ -159,4 +163,14 @@ public class MessageController {
 		return "message/receiveMessage";
 	}
 	
+	// 메세지 삭제
+	@GetMapping(value="/message/receive/")
+	public String deleteMessage(
+			@RequestParam(value="chk_mid")String[] chk_mid, Model model) {
+		HashMap<String, Object> args =
+				new HashMap<String, Object>();
+		Message message_id = (Message)mdService.service(args);
+		model.addAttribute("delete", message_id);
+		return "redirect:/message/receive/";
+	}
 }

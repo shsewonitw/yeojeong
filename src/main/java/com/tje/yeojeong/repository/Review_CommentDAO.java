@@ -64,9 +64,11 @@ public class Review_CommentDAO{
 	}
 	
 	// 댓글 삭제
-	public int delete(Review_Comment model) {
-		return this.jdbcTemplate.update("delete from review_comment where comment_id = ?",
-				new Review_CommentRowMapper(), model.getComment_id());				
+	public boolean delete(Review_Comment model) {
+		boolean result = false;
+		result =  this.jdbcTemplate.update("delete from review_comment where comment_id = ?",model.getComment_id()) == 0 ? false : true;
+		
+		return result;
 	}
 	
 }

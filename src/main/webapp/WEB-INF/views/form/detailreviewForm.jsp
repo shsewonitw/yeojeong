@@ -15,7 +15,7 @@ function insert_comment() {
 	var comment_data = $("#comment_form").serialize();
 	
 	$.ajax({
-		url:'<%=request.getContextPath()%>/comment',
+		url:'<%=request.getContextPath()%>/commentinsert',
 		type:"post",		
 		contentType: 
 			"application/x-www-form-urlencoded; charset=utf-8",
@@ -46,6 +46,36 @@ function insert_comment() {
 	});
 }
 
+var comment_count = ${commentSize};
+function delete_comment(comment_id) {
+	$.ajax({
+		url:'<%=request.getContextPath()%>/commentdelete',
+		type:"post",
+		contentType: "application/x-www-form-urlencoded; charset=utf-8",
+		data:"comment_id=" + comment_id,
+		dataType:"text",
+		success:function(result){			
+			if( eval(result) ) {						
+				var selector = "#comment_" + comment_id;
+				$(selector).remove();
+				alert("삭제 되었습니다")
+				comment_count -= 1;
+				$("#comment_count").text("댓글("+ comment_count+")");
+				
+				if( comment_count == 0 ) {
+					$("#comment_table").remove();
+					$("#comment_area").append("<h4>댓글이 존재하지 않습니다.</h4>");
+				}
+			} else {
+				alert('댓글 삭제과정에서 문제 발생1');		
+			}
+				
+		},
+		error:function(result){
+			alert('댓글 삭제과정에서 문제 발생2');	
+		}
+	});
+}
 
 	
 </script>
@@ -93,46 +123,44 @@ function insert_comment() {
 			<textarea readonly>${detailreview.content }</textarea>
 			
 			<div class="buttonmargin">
+			<c:if test="${ login_member.member_id eq detailreview.member_id}">
 			<a href="<%=request.getContextPath()%>/reviewchange" class="button">수정</a>
 			<a href="<%=request.getContextPath()%>" class="button">삭제</a>
+			</c:if>
 			</div>
 			<hr>
 			<br>
-		<!-- 댓글 -->
-		<form id="comment_form" action="<%= request.getContextPath() %>/comment" method="post">
-		<label>댓글(${commentSize})</label><br>
-		<input type="hidden" name="article_id" value="${ detailreview.article_id }">
+		<!-- 댓글 삭제 -->
+		<div id="comment_area">
+		<label><span id="comment_count">댓글(${commentSize})</span></label><br>
+		<div id="comment_table">
 		<c:forEach items="${ commentList }" var="comment">
-		<b id="comment_${comment.comment_id}"></b>
+		<div id="comment_${comment.comment_id}">
 			<b>${ comment.member_id }</b>&nbsp;&nbsp;&nbsp;${ comment.write_time }<br>
 			${ comment.content }
-			<button class="btn-red" onclick="delete_comment(${comment.comment_id});">삭제</button>
 			
+			<c:if test="${ login_member.member_id eq detailreview.member_id}">
+			<button class="btn-red" onclick="delete_comment(${comment.comment_id});">삭제</button>
+			</c:if>
 		<br>
 		<hr>
-	</c:forEach>
+		</div>
+		</c:forEach>
+		</div>
+		</div>
+		
+		<!-- 댓글 입력 -->
+	<form id="comment_form" action="<%= request.getContextPath() %>/commentinsert" method="post">
+		<input type="hidden" name="article_id" value="${ detailreview.article_id }">
 		<div id="comment_div"></div>
-			<input type="text" name="member_id">
+			<input type="hidden" name="member_id" value="${ login_member.name }">
 			<textarea id="testest" name="content" style="height: 20%;" placeholder="댓글을 입력하세요"></textarea>
 			<div class="buttoncomment">
 			<input type="button" value="등록" class="button" onclick="insert_comment();">
 			</div>
 		</form>
-	</div>
-
+	
+</div>
 </body>
-
-
-<script type="text/javascript">
-
-
-// 별점 처리 
-	var s1 = $("#s1").text();
-	$('.starRev b').click(function() {
-		$(this).parent().children('b').removeClass('on');
-		$(this).addClass('on').prevAll('b').addClass('on');
-		return false;
-	});
-</script>
 
 </html>

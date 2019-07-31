@@ -11,7 +11,7 @@
 	<script type="text/javascript">
 
 	alert("${ errorMsg }");
-	location.href='<%= request.getContextPath()%>/datailreview';
+	location.href='<%= request.getContextPath()%>/review';
 	
 	
 </script>

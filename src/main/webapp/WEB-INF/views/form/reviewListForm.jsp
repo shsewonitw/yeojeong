@@ -41,7 +41,7 @@
      <c:forEach items="${ reviewlist }" var="r_list">
     	<tr>
         	<td>${ r_list.article_id }</td>
-        	<c:if test="${ empty r_list.image_src }" var="img"> 
+        	<c:if test="${ fn:length(r_list.image_src) < 15 }" var="img"> 
         		<td><img class="not_img" src="<%=request.getContextPath()%>/resources/img/notimg.png"></td>
         	</c:if>
         	<c:if test="${ !img}"> 
@@ -72,7 +72,11 @@
         </c:forEach>
     </tbody>
 </table>
+		<c:if test="${ empty login_member }" var="rrrrr">
+		</c:if>
+		<c:if test="${ !rrrrr }">
 		<a href="<%=request.getContextPath()%>/review" class="button">글쓰기</a>
+		</c:if>
 	</div>
 
 </body>

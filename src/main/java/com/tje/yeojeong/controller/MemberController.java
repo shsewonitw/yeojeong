@@ -1,5 +1,7 @@
 package com.tje.yeojeong.controller;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tje.yeojeong.model.Member;
+import com.tje.yeojeong.model.Review_view;
 import com.tje.yeojeong.service.MemberInsertService;
 import com.tje.yeojeong.service.MemberLoginService;
 import com.tje.yeojeong.service.MemberSearchIDService;
+import com.tje.yeojeong.service.ReviewSelectWhereIdService;
 
 @Controller
 public class MemberController {
@@ -30,19 +34,21 @@ public class MemberController {
 	private MemberLoginService mlservice;
 	@Autowired
 	private MemberSearchIDService msiService;
+	@Autowired
+	private ReviewSelectWhereIdService rswiService;
 
 	@GetMapping("/login")
-	public String login_Form(@RequestParam(value = "myurl",required = false) String myurl,
+	public String login_Form(@RequestParam(value = "myurl", required = false) String myurl,
 			@ModelAttribute(value = "member") Member member,
 			@CookieValue(value = "rememberID", required = false) Cookie rCookie, HttpSession session) {
 		if (session != null && session.getAttribute("login_member") != null) {
 			// 접속 여부 검사
-			if(myurl != null) {
+			if (myurl != null) {
 				return "redirect:" + myurl;
-			}else {
-				return "page/main";	
+			} else {
+				return "page/main";
 			}
-			
+
 		}
 		if (rCookie != null) {
 			// 쿠키가 있을때
@@ -108,18 +114,23 @@ public class MemberController {
 
 	@GetMapping("/regist_Kakao")
 	public String regist_Kakao_Form(@ModelAttribute(value = "member") Member member, @RequestParam String kakao_id,
-			@RequestParam String kakao_email, @RequestParam(required = false) String kakao_gender, Model model) {
+			@RequestParam String kakao_email, @RequestParam(required = false) String kakao_gender, Model model,
+			HttpSession session) {
+
 		member.setMember_id(kakao_id);
 		member.setEmail(kakao_email);
+
+		Member searched_Member = (Member) msiService.service(member);
+		if (session.getAttribute("login_member") == null && searched_Member != null) {
+			session.setAttribute("login_member", searched_Member);
+			return "page/main";
+		}
+
 		if (kakao_gender != null && kakao_gender.equals("male")) {
 			member.setGender(1);
 		} else if (kakao_gender != null && kakao_gender.equals("female")) {
 			member.setGender(2);
 		}
-
-		System.out.println(member.getMember_id());
-		System.out.println(member.getEmail());
-		System.out.println(member.getGenderString());
 
 		return "form/registForm_Kakao";
 	}
@@ -127,18 +138,22 @@ public class MemberController {
 	@PostMapping("/regist_Kakao")
 	@ResponseBody
 	public boolean regist_Kakao_Submit(HttpServletRequest request, Model model, @RequestBody Member member) {
-
 		return (Boolean) miService.service(member);
+
 	}
 
 	@GetMapping("/auth/mypage")
-	public String mypage_Form(@ModelAttribute(value = "member") Member member, HttpSession session) {
-
+	public String mypage_Form(HttpSession session, Model model) {
+		Review_view review_view = new Review_view();
+		Member member =(Member)session.getAttribute("login_member");
+		review_view.setMember_id(member.getMember_id());
+		model.addAttribute("rList",rswiService.service(review_view));
+		List<Review_view> re = (List<Review_view>)rswiService.service(review_view);
 		return "form/mypageForm";
 	}
 
 	@PostMapping("/auth/mypage")
-	public String mypage_Submit(@ModelAttribute(value = "member") Member member, HttpSession session) {
+	public String mypage_Submit(HttpSession session) {
 
 		return "submits/mypageSumit";
 	}

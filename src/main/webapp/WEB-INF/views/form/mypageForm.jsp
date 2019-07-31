@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,6 +33,11 @@
 	padding-left: 30px;
 	height: 40px;
 	margin: 4px;
+	list-style: none;
+}
+
+.info_box {
+	display: none;
 }
 
 .myInformationHeader {
@@ -223,8 +229,7 @@
 
 
 </head>
-<body style="overflow: scroll;">
-
+<body style="overflow: auto;">
 	<div style="height: 200px;"></div>
 
 
@@ -259,38 +264,47 @@
 
 
 		<div class="col-md-9">
-<!-- 		``````````````````	내가쓴글 페이지 -->
-			<div id="myInformation"
-				style="border: solid thin #ddd; border-radius: 4px; text-align: left;">
-				<div class="myInformationHeader" style="line-height: 60px">내
-					정보</div>
-				<div class="myInformationBody">
-					${sessionScope.login_member.member_id }</div>
-				<div class="myInformationBody">
-					${sessionScope.login_member.name }</div>
-				<div class="myInformationBody">
-					${sessionScope.login_member.birthString }</div>
-				<div class="myInformationBody">
-					${sessionScope.login_member.email }</div>
-				<div class="myInformationBody"
-					style="padding-right: 30px; width: 100%">
-					<div class="tel_box">
-						<input class="form-control" id="tel_input" required
-							value="${sessionScope.login_member.tel }"
-							style="width: 70%; float: left;" onkeyup="tel_keyup();">
-						<button id="tel_btn" type="button" class="btn btn-primary"
-							onclick="tel_change();" style="float: left;">번호변경</button>
-					</div>
-					<div>
-						<span id="span_tel" style="color: red;"></span>
-					</div>
-				</div>
-			</div>
-<!-- 			``````````````````````` -->
+			<!-- 		``````````````````	내가쓴글 페이지 -->
 
-<!-- 		``````````````````	내정보 페이지 -->
-			<div id="myInformation"
-				style="border: solid thin #ddd; border-radius: 4px; text-align: left;">
+			<div id="write" class="info_box"
+				style="border: solid thin #ddd; border-radius: 4px; text-align: left;overflow: hidden;">
+
+				<c:forEach items="${rList}" var="rmsg">
+
+					<div style="padding: 20px">
+						
+						<div style="float: left;line-height: 40px">
+							<div style="float: left;">
+								<span>${ rmsg.name }</span>
+								<span>${ rmsg.write_time }</span>
+							</div>
+							<div style="float: right;">
+								<span>${ rmsg.country }</span>
+								<span>${ rmsg.city }</span>
+							</div>
+							
+							<div style="display: inline-block;width: 75%">${ rmsg.content }</div>
+							<div>
+								<span >${ rmsg.review_star }</span>
+								<span>${ rmsg.comment_count }</span>
+							</div>
+						</div>
+						
+						<div style="float: right;">
+							<img class="img-thumbnail" style="max-width: 100px;max-height: 100px;width: 100%;height: 100%;"
+								src="<%=request.getContextPath()%>/resources/img/${ rmsg.image_src }">
+						</div>
+
+						
+					</div>
+				</c:forEach>
+
+			</div>
+			<!-- 			``````````````````````` -->
+
+			<!-- 		``````````````````	내정보 페이지 -->
+			<div id="myInformation" class="info_box"
+				style="border: solid thin #ddd; border-radius: 4px; text-align: left; display: block;">
 				<div class="myInformationHeader" style="line-height: 60px">내
 					정보</div>
 				<div class="myInformationBody">
@@ -315,13 +329,11 @@
 					</div>
 				</div>
 			</div>
-<!-- 			``````````````````````` -->
+			<!-- 			``````````````````````` -->
 		</div>
 
 	</div>
 
-
-	<div id="myInformation"></div>
 
 
 

@@ -84,7 +84,7 @@ function member_click(member_id){
 	  <ul class="pagination">
 	    
 	      <c:if test="${beforePageNo ne -1}">
-		      <li><a href="<%=request.getContextPath()%>/adminMemberManage/${beforePageNo}" aria-label="Previous">
+		      <li><a href="<%=request.getContextPath()%>/adminMemberManageSearch/${beforePageNo}" aria-label="Previous">
 		        <span aria-hidden="true">&laquo;</span>
 		      </a></li>
 	      </c:if>
@@ -96,13 +96,13 @@ function member_click(member_id){
 				<li><span  style="background-color:rgb(52, 152, 219);color:white;user-select:none;">${pageNo }</span></li>
 			</c:if>
 			<c:if test="${not r }">
-				<li><a href="<%=request.getContextPath()%>/adminMemberManage/${pageNo}">${pageNo}</a></li>
+				<li><a href="<%=request.getContextPath()%>/adminMemberManageSearch/${pageNo}?searchValue=${searchValue}">${pageNo}</a></li>
 			</c:if>
 		</c:forEach>	    
 	    
 	    
 	      <c:if test="${afterPageNo ne -1}">
-	      <li><a href="<%=request.getContextPath()%>/adminMemberManage/${afterPageNo}" aria-label="Next">
+	      <li><a href="<%=request.getContextPath()%>/adminMemberManageSearch/${afterPageNo}" aria-label="Next">
 	        <span aria-hidden="true">&raquo;</span>
 	      </a> </li>
 	      </c:if>
@@ -110,8 +110,8 @@ function member_click(member_id){
 	  </ul>
 	</nav>
 	
+	
 	<jsp:include page="/WEB-INF/views/admin/adminMemberDetail.jsp"/>
-
 </div>
 
 

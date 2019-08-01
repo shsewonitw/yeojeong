@@ -37,7 +37,7 @@ public class MemberDAO {
 		public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Member member = new Member(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4),
 
-					rs.getTimestamp(5), rs.getString(6), rs.getString(7), rs.getTimestamp(8), rs.getInt(9));
+					rs.getDate(5), rs.getString(6), rs.getString(7), rs.getTimestamp(8), rs.getInt(9));
 			return member;
 		}
 
@@ -172,7 +172,7 @@ public class MemberDAO {
 	
 	// 멤버전체 조회(페이징)
 	public List<Member> selectAllWithPaging(int page) {
-		String sql = "select * from member order by regist_date desc limit ?,?";
+		String sql = "select * from member where level = 1 order by regist_date desc limit ?,?";
 		List<Member> result = this.jdbcTemplate.query(sql,new MemberRowMapper(),
 				(page-1)*this.pagingInfo.getPagingSize(), this.pagingInfo.getPagingSize());
 		return result.isEmpty() ? null : result;
@@ -181,5 +181,28 @@ public class MemberDAO {
 	public Integer selectMemberCount() {
 		String sql = "select count(*) from member";
 		return this.jdbcTemplate.queryForObject(sql, Integer.class);
+	}
+	
+	// 검색된 멤버들 조회(페이징)
+	public List<Member> selectSearchedMemberWithPaging(int page, String searchValue) {
+		String sql = "select * from member where level = 1 and member_id like ? or name like ? order by regist_date desc limit ?,?";
+		List<Member> result = this.jdbcTemplate.query(sql,new MemberRowMapper(),
+				"%"+searchValue+"%",
+				"%"+searchValue+"%",
+				(page-1)*this.pagingInfo.getPagingSize(),
+				this.pagingInfo.getPagingSize());
+		return result.isEmpty() ? null : result;
+	}
+	
+	public Integer selectSearchedMemberCount(String searchValue) {
+		String sql = "select count(*) from member where level = 1 and member_id like ? or name like ? ";
+		return this.jdbcTemplate.queryForObject(sql, Integer.class,
+				"%"+searchValue+"%",
+				"%"+searchValue+"%");
+	}
+	
+	public boolean updateTelBirthEmail(Member obj) {
+		String sql = "update member set tel = ?, birth = ?, email = ? where member_id = ?";
+		return this.jdbcTemplate.update(sql, obj.getTel(), obj.getBirth(), obj.getEmail(), obj.getMember_id()) == 1 ? true : false;
 	}
 }

@@ -1,6 +1,6 @@
 package com.tje.yeojeong.controller;
 
-import java.util.List;
+import java.util.HashMap;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +24,10 @@ import com.tje.yeojeong.model.Review_view;
 import com.tje.yeojeong.service.MemberInsertService;
 import com.tje.yeojeong.service.MemberLoginService;
 import com.tje.yeojeong.service.MemberSearchIDService;
+import com.tje.yeojeong.service.ReviewCountByMemberService;
+import com.tje.yeojeong.service.ReviewSearchByMemberService;
 import com.tje.yeojeong.service.ReviewSelectWhereIdService;
+import com.tje.yeojeong.setting.PagingInfo;
 
 @Controller
 public class MemberController {
@@ -36,6 +40,13 @@ public class MemberController {
 	private MemberSearchIDService msiService;
 	@Autowired
 	private ReviewSelectWhereIdService rswiService;
+	@Autowired
+	private ReviewSearchByMemberService rsbimervice;
+	@Autowired
+	private ReviewCountByMemberService rcbmService;
+
+	@Autowired
+	private PagingInfo pagingInfo;
 
 	@GetMapping("/login")
 	public String login_Form(@RequestParam(value = "myurl", required = false) String myurl,
@@ -144,11 +155,59 @@ public class MemberController {
 
 	@GetMapping("/auth/mypage")
 	public String mypage_Form(HttpSession session, Model model) {
+
+		return mypageForm(1, model, session);
+	}
+
+	@GetMapping("/auth/mypage/{pageNo}")
+	public String mypage_Form(@PathVariable(value = "pageNo") Integer page, HttpSession session, Model model) {
+		model.addAttribute("mypagelistname", "write");
+
+		return mypageForm(page, model, session);
+	}
+
+	private String mypageForm(Integer page, Model model, HttpSession session) {
+
 		Review_view review_view = new Review_view();
-		Member member =(Member)session.getAttribute("login_member");
+		Member member = (Member) session.getAttribute("login_member");
+
+		HashMap<String, Object> args = new HashMap<String, Object>();
+		args.put("curPageNo", page);
 		review_view.setMember_id(member.getMember_id());
-		model.addAttribute("rList",rswiService.service(review_view));
-		List<Review_view> re = (List<Review_view>)rswiService.service(review_view);
+		args.put("review_view", review_view);
+
+		model.addAttribute("rList", rsbimervice.service(args));
+
+		HashMap<String, Integer> result = (HashMap<String, Integer>) rcbmService.service(review_view);
+		model.addAttribute("r_count", result.get("totalCount"));
+		int totalPageCount = (int) result.get("totalPageCount");
+		// 시작페이지와 종료페이지 처리
+		// 현재 페이지가 3인경우 한 화면에 보여줄 범위는 5
+		// 시작은 1, 종료는 5
+		// 시작 -> 현재페이지 / 페이지범위 + 1
+		// 종료 -> 시작 + 범위 - 1
+		int startPageNo = (page % pagingInfo.getPageRange() == 0 ? page - 1 : page) / pagingInfo.getPageRange()
+				* pagingInfo.getPageRange() + 1;
+
+		int endPageNo = startPageNo + pagingInfo.getPageRange() - 1;
+		if (endPageNo > totalPageCount)
+			endPageNo = totalPageCount;
+
+		// 이전, 다음
+		// 이전을 만드는 경우 시작이 1이 아닐 때
+		// 이전페이지의 값은 시작 - 페이지점위
+		// 다음을 만드는 경우 종료가 마지막 페이지가 아닐 때
+		// 다음페이지의 값은 다음 + 1
+		int beforePageNo = startPageNo != 1 ? startPageNo - pagingInfo.getPageRange() : -1;
+		int afterPageNo = endPageNo != totalPageCount ? endPageNo + 1 : -1;
+
+		model.addAttribute("totalPageCount", totalPageCount);
+		model.addAttribute("startPageNo", startPageNo);
+		model.addAttribute("endPageNo", endPageNo);
+		model.addAttribute("beforePageNo", beforePageNo);
+		model.addAttribute("afterPageNo", afterPageNo);
+		model.addAttribute("curPage", page);
+
 		return "form/mypageForm";
 	}
 

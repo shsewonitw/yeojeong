@@ -20,7 +20,7 @@
 	
 	$(function(){
 		var url = window.location.href;
-		$("#logouturl").attr("href","${ pageContext.request.contextPath }/auth/logout?myurl=http://192.168.0.30:8080/yeojeong/");
+		$("#logouturl").attr("href","${ pageContext.request.contextPath }/auth/logout?myurl=http://localhost:8080/yeojeong/");
 	});
 	$(function(){
 		var url = window.location.href;

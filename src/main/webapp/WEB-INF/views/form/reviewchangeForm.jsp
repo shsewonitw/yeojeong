@@ -5,10 +5,11 @@
 <head>
 <meta charset="UTF-8">
 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/review.css?var=2">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/reviewchange.css?var=2">
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 <script type="text/javascript">
 
+/*
 function validate(){
 	var extensions = new Array("jpg","jpeg","gif","png","bmp");  //이곳에 업로드 가능한 확장자 기재
 	var image_file = document.form.image_file.value;
@@ -25,7 +26,7 @@ function validate(){
 	return false;
 	}
 	
-	
+	*/
 </script>
 
 <title>여행자들의 웃음 수정</title>
@@ -35,14 +36,15 @@ function validate(){
 <body>
 
 	<div class="top"></div>
-	<div class="titleDIV">여행자들의 웃음(수정)</div>
+	<div class="titleDIV">여행자들의 웃음 수정</div>
 	
 	<div class="formDIV">
 		
-		<form action="<%=request.getContextPath()%>/reviewchange" method="post" onSubmit="return validate();">
+		<form action="<%=request.getContextPath()%>/reviewchange" method="post" enctype="multipart/form-data">
 			<hr>
+			<input type="hidden" name="article_id" value="${ articleNo.article_id }">
 			<p class="name">
-				<label>작성자</label>&nbsp;&nbsp;&nbsp;<input class="input" type="text" name="member_id" readonly> 
+				<label>작성자</label>&nbsp;&nbsp;&nbsp;${login_member.name }
 			</p>
 			<hr>
 				<label>여행지</label> &nbsp;&nbsp;&nbsp;
@@ -58,27 +60,31 @@ function validate(){
 		
 		<hr>
 		<label>평점</label>
-			<span class="starRev">
-			  <b class="starR1 on" id="s1">0.5</b>
-			  <b class="starR2" id="s2">1</b>
-			  <b class="starR1" id="s3">1.5</b>
-			  <b class="starR2" id="s4">2</b>
-			  <b class="starR1" id="s5">2.5</b>
-			  <b class="starR2" id="s6">3</b>
-			  <b class="starR1" id="s7">3.5</b>
-			  <b class="starR2" id="s8">4</b>
-			  <b class="starR1" id="s9">4.5</b>
-			  <b class="starR2" id="s10">5</b>
-			</span>
+			<span class="star-input">
+		  <span class="input">
+		    <input type="radio" name="review_star" id="p1" value="1"><label for="p1">1</label>
+		    <input type="radio" name="review_star" id="p2" value="2"><label for="p2">2</label>
+		    <input type="radio" name="review_star" id="p3" value="3"><label for="p3">3</label>
+		    <input type="radio" name="review_star" id="p4" value="4"><label for="p4">4</label>
+		    <input type="radio" name="review_star" id="p5" value="5"><label for="p5">5</label>
+		    <input type="radio" name="review_star" id="p6" value="6"><label for="p6">6</label>
+		    <input type="radio" name="review_star" id="p7" value="7"><label for="p7">7</label>
+		    <input type="radio" name="review_star" id="p8" value="8"><label for="p8">8</label>
+		    <input type="radio" name="review_star" id="p9" value="9"><label for="p9">9</label>
+		    <input type="radio" name="review_star" id="p10" value="10"><label for="p10">10</label>
+		  </span>
+		  <output for="star-input"><b>0</b>점</output>
+		</span>
 			<br><br>
 			<hr>
 			<label>후기 내용</label><br><br>
 			<textarea name="content"></textarea>
 			<hr>
 			이미지 업로드 : <input type="file" name="image_src">
-			별점 개발 안되서 테스트<input type="text" name="review_star">
 			<hr>
+			
 			<input type="submit" value="글 작성" class="submitmagin">
+			
 		</form>
 	</div>
 
@@ -87,13 +93,7 @@ function validate(){
 
 <script type="text/javascript">
 
-$(function(){
-	$('select').selectlist({
-		zIndex: 10,
-		width: 200,
-		height: 30
-	});		
-})
+
 
 window.onload = function() {
 	document.getElementById("b_class").onchange = function() { getClass(this.form.b_class.options.selectedIndex) };
@@ -116,13 +116,38 @@ subCnt = temp.options.length;
 		}
 }
 
-// 별점 처리 
-	var s1 = $("#s1").text();
-	$('.starRev b').click(function() {
-		$(this).parent().children('b').removeClass('on');
-		$(this).addClass('on').prevAll('b').addClass('on');
-		return false;
-	});
+//별점 처리 
+var starRating = function(){
+var $star = $(".star-input"),
+  $result = $star.find("output>b");
+$(document)
+.on("focusin", ".star-input>.input", function(){
+$(this).addClass("focus");
+})
+.on("focusout", ".star-input>.input", function(){
+var $this = $(this);
+setTimeout(function(){
+  if($this.find(":focus").length === 0){
+    $this.removeClass("focus");
+  }
+}, 100);
+})
+.on("change", ".star-input :radio", function(){
+$result.text($(this).next().text());
+})
+.on("mouseover", ".star-input label", function(){
+$result.text($(this).text());
+})
+.on("mouseleave", ".star-input>.input", function(){
+var $checked = $star.find(":checked");
+if($checked.length === 0){
+  $result.text("0");
+} else {
+  $result.text($checked.next().text());
+}
+});
+};
+starRating();
 </script>
 
 </html>

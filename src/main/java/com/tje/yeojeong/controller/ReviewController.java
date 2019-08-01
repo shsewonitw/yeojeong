@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.mysql.cj.Session;
 import com.tje.yeojeong.model.*;
 import com.tje.yeojeong.service.*;
 import com.tje.yeojeong.setting.UtilFile;
@@ -45,6 +46,10 @@ public class ReviewController {
 	private Review_CommentDeleteService rcdService;
 	@Autowired
 	private UtilFile utilFile;
+	@Autowired 
+	private Review_UpdateService ruservice;
+	@Autowired
+	private Review_DeleteService rdeservice;
 
 	
 	@GetMapping("/review")
@@ -57,17 +62,20 @@ public class ReviewController {
 	@PostMapping("/review")
 	public String reviewSubmit(Model model, HttpSession session, HttpServletRequest request,
 			@RequestParam("country") String country,@RequestParam("city") String city,
-			@RequestParam("content") String content,@RequestParam("image_src") MultipartFile uploadFile1, MultipartHttpServletRequest mpRequest){
+			@RequestParam("content") String content,@RequestParam("image_src") MultipartFile uploadFile1, MultipartHttpServletRequest mpRequest,
+			@RequestParam("review_star") int review_star){
 
 		// 파일이름가져오기
 		UtilFile utilFile = new UtilFile();
 		String img_src = utilFile.fileUpload(mpRequest, uploadFile1);
+		
 		
 		Review_view reviewview = new Review_view();
 		reviewview.setContent(content);
 		reviewview.setCountry(country);
 		reviewview.setCity(city);
 		reviewview.setImage_src(img_src);
+		reviewview.setReview_star(review_star);
 		Member member = (Member)session.getAttribute("login_member");
 		reviewview.setMember_id(member.getMember_id());
 		
@@ -86,7 +94,11 @@ public class ReviewController {
 			return "/error/reviewError";
 		}
 		
-		System.out.println(img_src);
+		if(review_star == 0) {
+			request.setAttribute("errorMsg", "별점은 필수입니다");
+			return "/error/reviewError";
+		}
+		
 		
 		HashMap<String, Object> values = new HashMap<>();
 		values.put("reviewview", reviewview);
@@ -94,24 +106,89 @@ public class ReviewController {
 		
 		model.addAttribute("result", resultMap.get("result"));
 		
-		
-		
+		request.setAttribute("reviewchange", reviewview);
 		
 		return "form/reviewSubmit";
 	}
 	
 	// 게시판 수정
 	@GetMapping("/reviewchange")
-	public String reviewchangeForm() {
+	public String reviewchangeSubmit(HttpSession session) {
+		
+		session.getAttribute("articleNo");
 		
 		return "form/reviewchangeForm";
 	}
 	
 	@PostMapping("/reviewchange")
-	public String reviewchangeSubmit() {
+	public String reviewchangeForm(HttpServletRequest request,
+			@RequestParam("country") String country,@RequestParam("city") String city,
+			@RequestParam("content") String content,@RequestParam("review_star") int review_star,@RequestParam("article_id") int article_id,
+			@RequestParam("image_src") MultipartFile uploadFile1, MultipartHttpServletRequest mpRequest,HttpSession session,Model model) {
+		
+		UtilFile utilFile = new UtilFile();
+		String img_src = utilFile.fileUpload(mpRequest, uploadFile1);
+		
+		Review_view reviewview = new Review_view();
+		reviewview.setArticle_id(article_id);
+		reviewview.setContent(content);
+		reviewview.setCountry(country);
+		reviewview.setCity(city);
+		reviewview.setImage_src(img_src);
+		reviewview.setReview_star(review_star);
+		Member member = (Member)session.getAttribute("login_member");
+		reviewview.setMember_id(member.getMember_id());
+		
+		if(content.isEmpty()) {
+			request.setAttribute("errorMsg", "내용은 필수 사항 입니다");
+			return "/error/reviewUpdateError";
+		}
+		
+		if(country.length() == 0) {
+			request.setAttribute("errorMsg", "국가를 선택해주세요");
+			return "/error/reviewUpdateError";
+		}
+		
+		if(city.length() == 0) {
+			request.setAttribute("errorMsg", "도시를 선택해주세요");
+			return "/error/reviewUpdateError";
+		}
+		
+		HashMap<String, Object> values = new HashMap<>();
+		values.put("review", reviewview);
+		
+		HashMap<String, Object> resultMap = (HashMap<String, Object>) ruservice.service(values);
+		
+		model.addAttribute("result", resultMap.get("result"));
 		
 		
 		return "form/reviewchangeSubmit";
+	}
+	
+	// 게시판 삭제
+	@GetMapping("/reviewdelete")
+	public String reviewdeleteForm(HttpSession session) {
+		
+		session.getAttribute("articleNo");
+		
+		return "form/reviewdeleteForm";
+	}
+	
+	@PostMapping("/reviewdelete")
+	public String reviewdeleteSubmit(@RequestParam("article_id") int article_id,HttpServletRequest request,
+			Model model) {
+		
+		Review_view review = new Review_view();
+		review.setArticle_id(article_id);
+		
+		HashMap<String, Object> values = new HashMap<>();
+		values.put("review", review);
+
+		HashMap<String, Object> resultMap = (HashMap<String, Object>) rdeservice.service(values);
+
+		model.addAttribute("result", resultMap.get("result"));
+		
+		return "form/reviewdeleteSubmit";
 	}
 	
 	// 게시판 리스트
@@ -127,9 +204,9 @@ public class ReviewController {
 	
 	// 게시판 상세페이지
 	@GetMapping("/datailreview")
-	public String datailview(@RequestParam("article_id") Integer arID,Model model,HttpServletRequest request, Review_Comment comment) {
+	public String datailview(@RequestParam("article_id") Integer arID,Model model,HttpServletRequest request, Review_Comment comment,
+			HttpSession session,Review_view review) {
         
-		Review_view review = new Review_view();
 		review.setArticle_id(arID);
 		
 		HashMap<String, Object> values = new HashMap<>();
@@ -148,13 +225,9 @@ public class ReviewController {
 		
 		resultMap = (HashMap<String, Object>) rdService.service(values);
 		
-		if( !(Boolean)resultMap.get("result") ) {
-			request.setAttribute("errorMsg", "게시글을 찾을 수 없습니다.");
-			return "error/reviewError";
-		}
-		
 		
 		model.addAttribute("detailreview",resultMap.get("detailreview"));
+		session.setAttribute("articleNo", review);
 		
 		// 댓글 리스트
 		Review_Comment review_comment = new Review_Comment();

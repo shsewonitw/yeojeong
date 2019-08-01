@@ -27,7 +27,7 @@
 	
 	<!-- 2페이지 시작 -->
 	<section class="section2" style="background-color:#f2f2f2;">
-		<div class="tophegiht"></div>
+	<div class="tophegiht"></div>
 		<!-- 리뷰랭킹 구간 -->
 		<div id="part2">
 			<div class="ranking_list">

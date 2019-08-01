@@ -1,4 +1,3 @@
-
 <!-- 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -64,12 +63,10 @@
 #footer ul.quick-links li:hover a i {
     font-weight: 700;
 }
-
 </style>
 </head>
 <body>
 <script type="text/javascript">alert(13);</script>
-
 <section id="footer">
 		<div class="container">
 			<div class="row text-center text-xs-center text-sm-left text-md-left">
@@ -105,10 +102,7 @@
 			</div>	
 		</div>
 	</section>
-
 </body>
 </html>
 <<<<<<< HEAD
-
  -->
-

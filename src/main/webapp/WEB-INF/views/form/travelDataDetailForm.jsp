@@ -162,12 +162,12 @@ a:hover {
 					<div class="jb-table-row">
 						<div class="jb-table-cell">
 							<span style="color: white"><i class="fas fa-plane"></i></span>
-							<h4><a href="https://travel.hotelscombined.co.kr/flights" target="_blank"></a>최저가 항공 검색</h4>
+							<h4><a href="https://travel.hotelscombined.co.kr/flights" target="_blank">최저가 항공 검색</a></h4>
 						</div>
 
 						<div class="jb-table-cell">
 							<span style="color: white"><i class="fas fa-hotel"></i></span>
-							<h4><a href="https://www.hotelscombined.co.kr" target="_blank"></a>최저가 호텔 검색</h4>
+							<h4><a href="https://www.hotelscombined.co.kr" target="_blank">최저가 호텔 검색</a></h4>
 						</div>
 
 						<div class="jb-table-cell">

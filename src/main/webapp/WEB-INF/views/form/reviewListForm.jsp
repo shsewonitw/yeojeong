@@ -8,8 +8,9 @@
 <meta charset="UTF-8">
 
 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/reviewlist.css?var=2">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/reviewlist.css?var=22">
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
+
 
 
 <title>여행자들의 웃음 리스트</title>
@@ -65,7 +66,12 @@
         	<td>${ r_list.name }</td>
         	<td>${ r_list.country }</td>
         	<td>${ r_list.city }</td>
-        	<td>${ r_list.review_star }</td>
+        	<td><span class="star-input">
+		  	<span class="input">
+		  	 <input type="radio" name="review_star" id="p1" value="${r_list.review_star }" readonly><label for="p1">1</label>
+		  	</span>
+		  	<output for="star-input"><b>${r_list.review_star }</b>점</output>
+			</span></td>
         	<td>${ r_list.read_count }</td>
         	<td>${ r_list.comment_count }</td>
         	<td>${ r_list.write_time }</td>
@@ -73,9 +79,8 @@
         </c:forEach>
     </tbody>
 </table>
-		<c:if test="${ empty login_member }" var="rrrrr">
-		</c:if>
-		<c:if test="${ !rrrrr }">
+		
+		<c:if test="${ login_member != null }">
 		<a href="<%=request.getContextPath()%>/review" class="button">글쓰기</a>
 		</c:if>
 	</div>

@@ -62,15 +62,24 @@ public class Review_viewDAO {
 		return result;
 	}
 
-	// 리뷰 테이블에서 데이터 삭제
+
+	
+	// 게시판 수정
+	public boolean update(Review_view obj) {
+		return this.jdbcTemplate.update("update Review_article set country = ?, city = ?, content = ?, image_src = ?, review_star = ? where article_id = ?",
+				obj.getCountry(),obj.getCity(),obj.getContent(),obj.getImage_src(),obj.getReview_star(),obj.getArticle_id()) == 1 ? true : false;
+	}
+	
+	 //리뷰 테이블에서 데이터 삭제
 	public boolean delete(Review_view obj) {
 		boolean result = false;
 		String sql = "delete from Review_article where article_id = ?";
-
-		result = this.jdbcTemplate.update(sql, obj.getArticle_id(), obj.getMember_id()) == 0 ? false : true;
-
+		result = this.jdbcTemplate.update(sql,obj.getArticle_id()) == 0 ? false : true;
+		
 		return result;
 	}
+	
+	
 
 	// 게시글 상세 확인
 	public Review_view selectAticleId(Review_view obj) {

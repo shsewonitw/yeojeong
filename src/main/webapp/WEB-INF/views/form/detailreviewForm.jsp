@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/datilreview.css?var=22">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/datilreview.css?var=33">
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 
 <script type="text/javascript">
@@ -103,20 +103,14 @@ function delete_comment(comment_id) {
 				${detailreview.country } / 
 				${detailreview.city } 
 		<hr>
-		<label></label>
-			<span class="starRev">
-			  <b class="starR1 on" id="s1">0.5</b>
-			  <b class="starR2" id="s2">1</b>
-			  <b class="starR1" id="s3">1.5</b>
-			  <b class="starR2" id="s4">2</b>
-			  <b class="starR1" id="s5">2.5</b>
-			  <b class="starR2" id="s6">3</b>
-			  <b class="starR1" id="s7">3.5</b>
-			  <b class="starR2" id="s8">4</b>
-			  <b class="starR1" id="s9">4.5</b>
-			  <b class="starR2" id="s10">5</b>
+		<label>평점</label>
+		
+			<span class="star-input">
+		  	<span class="input">
+		  	 <input type="radio" name="review_star" id="p1" value="${detailreview.review_star }" readonly><label for="p1">${detailreview.review_star }</label>
+		  	</span>
+		  	<output for="star-input"><b>${detailreview.review_star }</b>점</output>
 			</span>
-			별점 개발 안되서 테스트${detailreview.review_star }
 			<br><br>
 			<hr>
 			<label>후기 내용</label><br><br>
@@ -125,7 +119,7 @@ function delete_comment(comment_id) {
 			<div class="buttonmargin">
 			<c:if test="${ login_member.member_id eq detailreview.member_id}">
 			<a href="<%=request.getContextPath()%>/reviewchange" class="button">수정</a>
-			<a href="<%=request.getContextPath()%>" class="button">삭제</a>
+			<a href="<%=request.getContextPath()%>/reviewdelete" class="button">삭제</a>
 			</c:if>
 			</div>
 			<hr>
@@ -154,7 +148,8 @@ function delete_comment(comment_id) {
 		<input type="hidden" name="article_id" value="${ detailreview.article_id }">
 		<div id="comment_div"></div>
 			<input type="hidden" name="member_id" value="${ login_member.name }">
-			<textarea id="testest" name="content" style="height: 20%;" placeholder="댓글을 입력하세요"></textarea>
+			<textarea id="testest" name="content" style="height: 20%;" placeholder="${ login_member != null ? '댓글을 입력하세요' : '로그인 해야 작성할 수 있습니다'}"
+			${ login_member != null ? '' : 'readonly'  }></textarea>
 			<div class="buttoncomment">
 			<input type="button" value="등록" class="button" onclick="insert_comment();">
 			</div>
@@ -162,5 +157,40 @@ function delete_comment(comment_id) {
 	
 </div>
 </body>
+
+<script type="text/javascript">
+//별점 처리 
+var starRating = function(){
+var $star = $(".star-input"),
+  $result = $star.find("output>b");
+$(document)
+.on("focusin", ".star-input>.input", function(){
+$(this).addClass("focus");
+})
+.on("focusout", ".star-input>.input", function(){
+var $this = $(this);
+setTimeout(function(){
+  if($this.find(":focus").length === 0){
+    $this.removeClass("focus");
+  }
+}, 100);
+})
+.on("change", ".star-input :radio", function(){
+$result.text($(this).next().text());
+})
+.on("mouseover", ".star-input label", function(){
+$result.text($(this).text());
+})
+.on("mouseleave", ".star-input>.input", function(){
+var $checked = $star.find(":checked");
+if($checked.length === 0){
+  $result.text("0");
+} else {
+  $result.text($checked.next().text());
+}
+});
+};
+starRating();
+</script>
 
 </html>

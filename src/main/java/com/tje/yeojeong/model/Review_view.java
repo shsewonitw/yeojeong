@@ -12,6 +12,7 @@ public class Review_view {
 	private String content;
 	private String image_src;
 	private int review_star;
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date write_time;
 	private int read_count;
 	private String name;

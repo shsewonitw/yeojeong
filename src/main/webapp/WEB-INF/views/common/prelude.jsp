@@ -20,9 +20,13 @@
 	
 	$(function(){
 		var url = window.location.href;
+<<<<<<< HEAD
 
 		$("#logouturl").attr("href","${ pageContext.request.contextPath }/auth/logout?myurl=http://localhost:8080/yeojeong/");
 
+=======
+		$("#logouturl").attr("href","${ pageContext.request.contextPath }/auth/logout?myurl=http://localhost:8080/yeojeong/");
+>>>>>>> origin/jb
 	});
 	$(function(){
 		var url = window.location.href;

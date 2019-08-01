@@ -58,11 +58,11 @@ public class MessageController {
 		message.setSender_id(sender_id);
 		
 		model.addAttribute("receiver_id", mssService.service(message));
-		System.out.println(message.getSender_id());
+		// System.out.println(message.getSender_id());
 		return "message/transform";
 	}
 	
-	@PostMapping("/transform/{sender_id}")
+	@PostMapping("/transformsubmit")
 	public String transformSubmit(Message message, Model model) {
 		int message_id = (Integer)miService.service(message);
 		model.addAttribute("message_id", message_id);
@@ -164,13 +164,13 @@ public class MessageController {
 	}
 	
 	// 메세지 삭제
-	@GetMapping(value="/message/receive/")
+	@GetMapping(value="/message/receive")
 	public String deleteMessage(
-			@RequestParam(value="chk_mid")String[] chk_mid, Model model) {
+			@RequestParam(value="chk_no")String[] chk_no, Model model) {
 		HashMap<String, Object> args =
 				new HashMap<String, Object>();
 		Message message_id = (Message)mdService.service(args);
 		model.addAttribute("delete", message_id);
-		return "redirect:/message/receive/";
+		return "message/receiveForm";
 	}
 }

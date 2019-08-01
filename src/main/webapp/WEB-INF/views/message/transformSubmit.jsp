@@ -69,7 +69,7 @@ div {
 
 </head>
 <body>
-<form action="<%=request.getContextPath()%>/message/transform/{sender_id}" method="post">
+<form action="<%=request.getContextPath()%>/message/transform/{message.sender_id}" method="post">
 <div class="top"></div>
 <div class="middle" role="main">
 	<div class="column_center">

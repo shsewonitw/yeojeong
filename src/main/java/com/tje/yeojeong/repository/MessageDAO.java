@@ -129,12 +129,11 @@ public class MessageDAO {
 
 		this.jdbcTemplate.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-
 				PreparedStatement pstmt = con.prepareStatement(
 						"insert into message values (null, ?, ?, ?, now(), null)", new String[] { "message_id" });
 				pstmt.setString(1, model.getSender_id());
 				pstmt.setString(2, model.getReceiver_id());
-				pstmt.setString(3, model.getContent());
+				pstmt.setString(3, model.getContent().replaceAll("\r\n", "<br>"));
 				return pstmt;
 			}
 		}, keyHolder);

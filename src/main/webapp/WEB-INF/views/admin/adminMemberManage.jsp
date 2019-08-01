@@ -36,6 +36,9 @@ $(function(){
 
 
 function member_click(member_id){
+	var select_div = '#div_'+member_id;
+	$(".div_member_all").css("display","none");
+	$(select_div).css("display","block");
 	var select_a = '#a_'+member_id;
 	$('.list-group-item').css("background-color","white");
 	$('.list-group-item').css("color","black");

@@ -41,11 +41,14 @@
 	p:maxUploadSize="100000000" p:maxInMemorySize="100000000" />
 	
 	<websocket:handlers>
-		<websocket:mapping handler="echocontroller" path="/yeojeong/echo"/>		
+		<websocket:mapping handler="echohandler" path="/chat"/>
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>		
 		<websocket:sockjs />
 	</websocket:handlers>
 	
-	<beans:bean id="echocontroller" class="com.tje.yeojeong.websocket.EchoHandler"/>	
+	<beans:bean id="echohandler" class="com.tje.yeojeong.websocket.EchoHandler"/>	
 	
 		
 </beans:beans>

@@ -5,11 +5,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>받은쪽지 : 여정 쪽지</title>
-<link href="<%=request.getContextPath() %>/resources/css/jb_bootstrap.min.css?asd=2" rel="stylesheet">
+<title>쪽지작성 : 여정 쪽지</title>
+<link href="<%=request.getContextPath() %>/resources/css/jb_bootstrap.min.css?asd=asdda" rel="stylesheet">
 <script src="<%=request.getContextPath() %>/resources/js/jb_bootstrap.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 
+<script type="text/javascript">
+$(function() {
+	 $('#textarea').keyup(function (e){
+        var content = $(this).val();
+        $('.counter').text(content.length + ' / 1000');
+    });
+    $('#textarea').keyup();
+});
+</script>
 <style type="text/css">
 .a:link {color:#3498DB;text-decoration:none;}
 .a:visited {color:#3498DB;text-decoration:none;}
@@ -23,28 +32,36 @@ div {
 }
 .middle {
 	margin:0 auto;
-	padding:2% 10% 0;
+	padding:30% 10% 0;
 	height:auto;
 }
 .column_center {
 	position:relative;
+	text-align:center;
     float:center;
     width:auto;
 }
-th, td {
-	text-align:center;
+.textarea {
+	margin:0 auto;
+	padding:2% 0 0;
+	height:auto;
 }
-.align {
-	text-align:left;
+.form-control {
+	resize:none;
 }
-.trcolor {
-	background-color:#F4F4F4;
+.text_byte {
+	position:absolute;
+	margin:0 auto;
+	padding:1% 0 0;
+	right:0;
+	height:auto;
 }
 .battom {
 	height:auto;
 }
 .message_btn {
 	position:absolute;
+	padding: 3% 0 0;
 	left:50%;
 	transform:translate(-50%);
 }
@@ -52,29 +69,19 @@ th, td {
 
 </head>
 <body>
+<form action="<%=request.getContextPath()%>/message/retransform/{message.sender_id}" method="post">
 <div class="top"></div>
 <div class="middle" role="main">
 	<div class="column_center">
-		<table class="table table-bordered">
-			<tr class="trcolor">
-				<th>보낸사람</th>
-				<th>보낸시간</th>
-			</tr>
-			<tr>
-				<td>${ message.sender_id }</td>
-				<td>${ message.send_time }</td>
-			</tr>
-			<tr>
-				<td class="align" colspan="2" height="450px">${ message.content }</td>
-			</tr>
-		</table>
+		<b>${ message.receiver_id }</b> 님께 쪽지를 발송하였습니다.
 	</div>
 </div>
 	<div class="message_btn">
-		<a class="btn btn-primary" href="<%=request.getContextPath()%>/message/retransform/${message.sender_id}" role="button">답장</a>
 		<button type="button" class="btn btn-default" onclick="self.close()">닫기</button>
 	</div>
+</form>
 <div class="battom">
 </div>
+
 </body>
 </html>

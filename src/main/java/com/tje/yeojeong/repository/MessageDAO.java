@@ -45,11 +45,17 @@ public class MessageDAO {
 				model.getMessage_id());
 	}
 	
-	// 답장 보낼때, 받는 사람 ID 자동 갱신
+	// 받은 쪽지함에서 쪽지 작성 시, 받는 사람 ID 자동 갱신
 	public Message searchbySenderID(Message model) {
 		return this.jdbcTemplate.queryForObject("select * from message where sender_id = ? limit 1", new MessageRowMapper(),
 				model.getSender_id());
 	}
+	
+	// 보낸 쪽지함에서 쪽지 작성 시, 받는 사람 ID 자동 갱신
+		public Message searchbyReceiverID(Message model) {
+			return this.jdbcTemplate.queryForObject("select * from message where receiver_id = ? limit 1", new MessageRowMapper(),
+					model.getReceiver_id());
+		}
 	
 	// 각 사용자 별, 보낸 메세지의 개수를 반환하는 메소드
 	public Integer selectBySenderCount(Message model) {
@@ -116,7 +122,8 @@ public class MessageDAO {
 
 		return result.isEmpty() ? null : result;
 	}
-
+	
+	// 메세지 전체 리스트
 	public List<Message> selectAll(int page) {
 		List<Message> result = this.jdbcTemplate.query("select * from message", new MessageRowMapper());
 

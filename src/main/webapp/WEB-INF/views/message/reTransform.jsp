@@ -32,12 +32,11 @@ div {
 }
 .middle {
 	margin:0 auto;
-	padding:30% 10% 0;
+	padding:2% 10% 0;
 	height:auto;
 }
 .column_center {
 	position:relative;
-	text-align:center;
     float:center;
     width:auto;
 }
@@ -69,15 +68,24 @@ div {
 
 </head>
 <body>
-<form action="<%=request.getContextPath()%>/message/transform/{message.receiver_id}" method="post">
+<form action="<%=request.getContextPath()%>/message/retransformsubmit" method="post">
 <div class="top"></div>
 <div class="middle" role="main">
 	<div class="column_center">
-		<b>${ message.receiver_id }</b> 님께 쪽지를 발송하였습니다.
+		<input type="hidden" name="sender_id" value="${ login_member.member_id }">
+			<input class="form-control" id="disabledInput" name="receiver_id" type="text" value="${ message.sender_id }" readonly>
+				<div class="textarea">
+					<textarea class="form-control" id="textarea" name="content" maxlength="1000" rows="23" cols="81" placeholder="내용을 입력하세요" autofocus required></textarea>
+					<p id="text"></p>
+				</div>
+					<div class="text_byte">
+						<span class="counter">###</span>
+					</div>
 	</div>
 </div>
 	<div class="message_btn">
-		<button type="button" class="btn btn-default" onclick="self.close()">닫기</button>
+		<input class="btn btn-primary" type="submit" value="전송">
+		<button type="button" class="btn btn-default" onclick="self.close()">취소</button>
 	</div>
 </form>
 <div class="battom">

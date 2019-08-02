@@ -44,7 +44,6 @@ br {
 
 </head>
 <body>
-<form action="<%=request.getContextPath()%>/message/receive">
 <script type="text/javascript">
 	// 페이지 새로고침
 	$(document).ready(function() {
@@ -52,41 +51,62 @@ br {
 			setTimeout("history.go(0);",1000)
 		});
 	});
-	/* 메세지 수신 부분 */
+	// 메세지 수신 부분 
 	function winopen(num) {
 		window.open("<%=request.getContextPath()%>/message/receivecontent/"+num,"receivecontentOpen",
 			"width=740,height=620,left=150,top=150,resizable=no,location=no,menubar=no,toolbar=no,scrollbars=no");
 	};
 	
-	/* 메세지 답장(아이디 클릭) 부분 */
+	// 메세지 답장(아이디 클릭) 부분 
 	function transform(sender) {
-		window.open("<%=request.getContextPath()%>/message/transform/"+sender,"receivecontentOpen",
+		window.open("<%=request.getContextPath()%>/message/retransform/"+sender,"receivecontentOpen",
 			"width=740,height=620,left=150,top=150,resizable=no,location=no,menubar=no,toolbar=no,scrollbars=no");
 	};
 	
-	/* 메세지 삭제 부분 */
-	/* 체크박스 전체 선택 */
+	// 메세지 삭제 부분 
+	// 체크박스 전체 선택 
 	$(document).ready(function() {
-		$('.all_chk').click(function() {
-			$('input[type=checkbox]').prop('checked', this.checked);
+		$('#chk_all').click(function() {
+			var chk = $('#chk_all').prop('checked');
+			if(chk) {
+				$('.chk_row').prop('checked', true);
+			} else {
+				$('.chk_row').prop('checked', false);
+			}
 		});
-	/* 메세지 삭제 */
-	/*
-		$('#delete').click(function() {
-			$('input[type=checkbox]:checked').parent().parent().remove();
+	});
+	
+	// 메세지 삭제
+	$("#delete_btn").click(function(){ 
+		var confirm_val = confirm("정말 삭제하시겠습니까?");
+
+		if(confirm_val) {
+		var checkArr = new Array();
+
+		$("input[class='chk_row']:checked").each(function(){
+		checkArr.push($(this).attr("data-message_id"));
 		});
-	*/
+
+			$.ajax({
+				url : "<%=request.getContextPath()%>/message/receive/",
+				type : "post",
+				data : { chk_row : checkArr },
+				success : function(){
+				location.href = "<%=request.getContextPath()%>/message/receive/";
+				}
+			});
+		}
 	});
 </script>
 <div class="top"></div>
 <div class="message_bar">
 <h3><a href="<%=request.getContextPath()%>/message/receive/" class="a">&nbsp;&nbsp;&nbsp;&nbsp;받은쪽지</a>(${readCount}/${r_count}) | <a href="<%=request.getContextPath()%>/message/send/" class="a">보낸쪽지</a>
-<input class="btn btn-default" type="submit" id="delete" name="delete" value="삭제"></h3>
+<button class="btn btn-default" id="delete_btn" type="button" data-message_id="${rmsg.message_id}">삭제</button></h3>
 </div>
 <div class="middle">
 <table class="table">
 	<tr class="trcolor">
-		<th width="10%"><input type="checkbox" class="all_chk"></th>
+		<th width="10%"><input type="checkbox" id="chk_all"></th>
 		<th width="20%">보낸사람</th>
 		<th width="40%">내용</th>
 		<th width="15%">보낸시간</th>
@@ -102,9 +122,9 @@ br {
 	<c:forEach items="${rList}" var="rmsg">
 	<c:if test="${ empty rmsg.receive_time }" var="r">
 	<tr>
-		<th width="10%"><input type="checkbox" class="chk" name="chk_no" value="${rmsg.message_id}"></th>
+		<th width="10%"><input type="checkbox" class="chk_row" name="chk_row" data-message_id="${rmsg.message_id}"></th>
 		<th width="20%"><a href="#" class="a" onclick="transform('${rmsg.sender_id}');">${rmsg.sender_id}</a></th>
-		<th width="40%"><a href="" class="a" onclick="winopen('${rmsg.message_id}');">새 쪽지 확인</a></th>
+		<th style="text-align:left" width="40%"><a href="" class="a" onclick="winopen('${rmsg.message_id}');">새 쪽지 확인</a></th>
 		<th width="15%">${ rmsg.send_time }</th>
 		<th width="15%">${ empty rmsg.receive_time ? '읽지않음' : rmsg.receive_time }</th>
 	</tr>
@@ -112,10 +132,10 @@ br {
 	
 	<c:if test="${ not r }">
 	<tr>
-		<td width="10%"><input type="checkbox" class="chk" name="chk_mid[]" value="${rmsg.message_id}"></td>
+		<td width="10%"><input type="checkbox" class="chk_row" name="chk_row" data-message_id="${rmsg.message_id}"></td>
 		<td width="20%"><a href="#" class="a" onclick="transform('${rmsg.sender_id}');">${rmsg.sender_id}</a></td>
-		<td width="40%"><a href="" class="a" onclick="winopen('${rmsg.message_id}');">
-		<!-- 200글자 이상일 경우 ...으로 자르는 코드 -->
+		<td style="text-align:left" width="40%"><a href="" class="a" onclick="winopen('${rmsg.message_id}');">
+		<!-- ...으로 자르는 코드 -->
            <c:choose>
            <c:when test="${fn:length(rmsg.content) gt 200}">
            <c:out value="${fn:substring(rmsg.content, 0, 200)}...." escapeXml="false">
@@ -157,6 +177,5 @@ br {
    </ul>
 </nav>
 </div>
-</form>
 </body>
 </html>

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/sw_bootstrap.css?wer=121">
 <style type="text/css">
 .mainDiv {
 	margin: auto;
@@ -168,13 +170,15 @@ nav ul ul ul {
 	transform: rotateX(0) rotateY(0);
 }
 </style>
+
+	
 	<!-- 드롭다운 메뉴 -->
 		<div style="float:left;padding-left:5%;padding-right:20%;">
 			<nav class="nav05">
 				<ul>
-					<li><a href="#" style="text-decoration: none;">리스트</a> 
+					<li style="min-width:220px;text-align:center;"><a href="#" style="text-decoration: none;"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a> 
 						<ul>
-						<li><a href="<%=request.getContextPath()%>/adminCityDataInsert">도시 추가</a></li>
+						<li><a href="<%=request.getContextPath()%>/adminCityDataInsert" style="text-decoration: none;">　<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>　</a></li>
 							<c:forEach items="${countryList }" var="country">
 								<li><a href="#" style="text-decoration: none;">${country}</a>
 									<ul>

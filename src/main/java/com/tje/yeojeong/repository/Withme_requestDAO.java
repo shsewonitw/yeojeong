@@ -117,4 +117,9 @@ public class Withme_requestDAO {
 //		return result;
 //	}
 
+	// Count
+	public int Withme_RequestCount() {
+		String sql = "select count(*) from withme_request";
+		return this.jdbcTemplate.queryForObject(sql, Integer.class);
+	}
 }

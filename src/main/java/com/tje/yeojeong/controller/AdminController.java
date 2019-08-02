@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.tje.yeojeong.model.*;
+import com.tje.yeojeong.service.City_DataCountService;
 import com.tje.yeojeong.service.City_DataDeleteService;
 import com.tje.yeojeong.service.City_DataInsertService;
 import com.tje.yeojeong.service.City_DataSelectCityService;
@@ -35,6 +36,10 @@ import com.tje.yeojeong.service.MemberSearchCountService;
 import com.tje.yeojeong.service.MemberSearchIDService;
 import com.tje.yeojeong.service.MemberSearchWithPagingService;
 import com.tje.yeojeong.service.MemberUpdateByAdminService;
+import com.tje.yeojeong.service.Review_viewCountService;
+import com.tje.yeojeong.service.TravelRegistCountService;
+import com.tje.yeojeong.service.Withme_viewCountService;
+import com.tje.yeojeong.service.withme_requestCountService;
 import com.tje.yeojeong.setting.PagingInfo;
 import com.tje.yeojeong.setting.UtilFile;
 
@@ -68,12 +73,36 @@ public class AdminController {
 	private MemberSearchCountService mscService;
 	@Autowired
 	private MemberUpdateByAdminService mubaService;
-	
+	@Autowired
+	private TravelRegistCountService trcService;
+	@Autowired
+	private City_DataCountService cdcService;
+	@Autowired
+	private withme_requestCountService wmrcService;
+	@Autowired
+	private Withme_viewCountService wmvcService;
+	@Autowired
+	private Review_viewCountService rvcService;
 	// 관리자 로그인 페이지 호출
 	@GetMapping("/admin")
-	public String adminLoginForm(HttpSession session) {
+	public String adminLoginForm(HttpSession session,HttpServletRequest request) {
 		Member member = (Member) session.getAttribute("login_admin");
 		if (member != null) {
+			
+			// 여정 통계자료 
+			HashMap<String, Object> result = (HashMap<String, Object>)mcService.service();
+			int member_total_count = (int)result.get("totalCount");
+			int travel_regist_count = (int)trcService.service();
+			int city_data_count = (int)cdcService.service();
+			int withme_request_count = (int)wmrcService.service();
+			int withme_view_count = (int)wmvcService.service();
+			int review_view_count = (int)rvcService.service();
+			request.setAttribute("member_total_count", member_total_count);
+			request.setAttribute("travel_regist_count", travel_regist_count);
+			request.setAttribute("city_data_count", city_data_count);
+			request.setAttribute("withme_request_count", withme_request_count);
+			request.setAttribute("withme_view_count", withme_view_count);
+			request.setAttribute("review_view_count", review_view_count);
 			return "admin/adminMain";
 		}
 		return "admin/adminLoginForm";
@@ -96,6 +125,21 @@ public class AdminController {
 			// 관리자 로그인 성공
 			HttpSession session = request.getSession();
 			session.setAttribute("login_admin", member);
+			
+			// 여정 통계자료 
+			HashMap<String, Object> result = (HashMap<String, Object>)mcService.service();
+			int member_total_count = (int)result.get("totalCount");
+			int travel_regist_count = (int)trcService.service();
+			int city_data_count = (int)cdcService.service();
+			int withme_request_count = (int)wmrcService.service();
+			int withme_view_count = (int)wmvcService.service();
+			int review_view_count = (int)rvcService.service();
+			request.setAttribute("member_total_count", member_total_count);
+			request.setAttribute("travel_regist_count", travel_regist_count);
+			request.setAttribute("city_data_count", city_data_count);
+			request.setAttribute("withme_request_count", withme_request_count);
+			request.setAttribute("withme_view_count", withme_view_count);
+			request.setAttribute("review_view_count", review_view_count);
 			return "admin/adminMain";
 		} else {
 			// 관리자 로그인 실패
@@ -210,8 +254,9 @@ public class AdminController {
 
 		// DB에 저장된 Country 리스트
 		CountryList(model);
-
-		return "admin/adminCityDataUpdateForm";
+		
+		request.setAttribute("adminCityDataResult", "updateOk");
+		return "admin/adminCityDataForm";
 
 	}
 
@@ -282,7 +327,9 @@ public class AdminController {
 		// DB에 저장된 Country 리스트
 		CountryList(model);
 
-		return "admin/adminCityDataInsertForm";
+		
+		request.setAttribute("adminCityDataResult", "insertOk");
+		return "admin/adminCityDataForm";
 
 	}
 
@@ -302,7 +349,8 @@ public class AdminController {
 		// DB에 저장된 Country 리스트
 		CountryList(model);
 
-		return "admin/adminCityDataInsertForm";
+		request.setAttribute("adminCityDataResult", "deleteOk");
+		return "admin/adminCityDataForm";
 	}
 
 	
@@ -469,6 +517,28 @@ public class AdminController {
 		return result;
 	}
 
+	
+	// 도시명 중복 검사 AJAX
+	@RequestMapping(value="/adminCityDupleCheck",method=RequestMethod.GET,produces="application/jason;charset=utf8")
+	@ResponseBody
+	public String adminCityDupleCheck(@RequestParam(value="city") String city) {
+		City_Data city_data = new City_Data();
+		city_data.setCity(city);
+//		String result = (boolean)mubaService.service(member) == true ? "true" : "false";
+		City_Data searchedCity = null;
+		searchedCity = (City_Data) cdsoService.service(city_data);
+		
+
+		if(searchedCity == null) {
+			// DB에 검색된 도시 없음
+			return "true";
+		} else {
+			// DB에 검색된 도시 있음
+			return "false";
+		}
+	}
+	
+	
 	private void CountryList(Model model) {
 		// DB에 저장된 Country 리스트
 		List<String> countryList = (List<String>) cdsCountryService.service();

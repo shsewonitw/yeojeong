@@ -35,7 +35,7 @@
 					<label for="country" class="col-sm-2 control-label">국가</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="country" name="country"
-							placeholder="국가를 입력해주세요" value="${city_data.country}" required>
+							placeholder="국가를 입력해주세요" value="${city_data.country}" required readOnly>
 					</div>
 				</div>
 				
@@ -43,7 +43,8 @@
 					<label for="city" class="col-sm-2 control-label">도시</label>
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="city" name="city"
-							placeholder="도시를 입력해주세요" value="${city_data.city}" required>
+							placeholder="도시를 입력해주세요" value="${city_data.city}" required readOnly>
+						<span id="positionInfo">　</span>
 					</div>
 				</div>
 				
@@ -153,11 +154,10 @@
         });
         var geocoder = new google.maps.Geocoder();
 
-        $("#city").on("focusout",function(){
         	geocodeAddress(geocoder, map);
         	
-        })
-      }
+        }
+      
 
       function geocodeAddress(geocoder, resultsMap) {
 

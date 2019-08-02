@@ -109,5 +109,11 @@ public class Review_viewDAO {
 		return this.jdbcTemplate.queryForObject("select count(*) from Review_view where member_id = ?",
 				Integer.class, obj.getMember_id());
 	}
+	
+	// Count
+	public int review_viewCount() {
+		String sql = "select count(*) from review_view";
+		return this.jdbcTemplate.queryForObject(sql, Integer.class);
+	}
 
 }

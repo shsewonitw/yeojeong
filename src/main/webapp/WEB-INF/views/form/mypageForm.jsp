@@ -1,3 +1,4 @@
+<%@page import="com.tje.yeojeong.model.Travel_regist"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.tje.yeojeong.model.Review_view"%>
@@ -37,6 +38,42 @@
 // 		  });
 // 	});
 // });
+
+// $(function(){
+	
+	
+<%-- 	<% --%>
+// 	List<Travel_regist> TravelRegistList = (List<Travel_regist>) request.getAttribute("TravelRegistList");
+// 	List<Integer> array = new ArrayList<Integer>();
+// 	int subint;
+// 	int asd =0;
+
+// 	for (int i = 0; i < TravelRegistList.size(); i++) {
+// 		try {
+// 			subint =TravelRegistList.get(i).getTravel_id();
+// 		} catch (Exception e) {
+// 			subint =TravelRegistList.get(i).getTravel_id();
+// 		}
+// 		array.add(subint);
+// 	}
+// 	request.setAttribute("array", array);
+<%-- 	%> --%>
+<%-- 	for(<%=asd%>;<%=asd%> <"${TravelRegistList.size()}"-1;<%=asd++%>){ --%>
+		
+<%-- 		$("#"+<%=array.get(asd)%>+"_start_date").datepicker({ --%>
+// 		    dateFormat: 'yy-mm-dd'
+// 		  });
+<%-- 		$("#"+<%=array.get(asd)%>+"_end_date").datepicker({ --%>
+// 		    dateFormat: 'yy-mm-dd'
+// 		  });
+// 		}
+// 	});
+
+
+
+
+
+
 function temp(travel_id){
 	
 	$("#"+travel_id+"_start_date").datepicker({

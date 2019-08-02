@@ -1,6 +1,7 @@
 package com.tje.yeojeong.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -19,14 +20,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tje.yeojeong.model.City_Data;
 import com.tje.yeojeong.model.Member;
 import com.tje.yeojeong.model.Review_view;
+import com.tje.yeojeong.model.Travel_regist;
+import com.tje.yeojeong.service.City_DataSelectCountryService;
 import com.tje.yeojeong.service.MemberInsertService;
 import com.tje.yeojeong.service.MemberLoginService;
 import com.tje.yeojeong.service.MemberSearchIDService;
 import com.tje.yeojeong.service.ReviewCountByMemberService;
 import com.tje.yeojeong.service.ReviewSearchByMemberService;
 import com.tje.yeojeong.service.ReviewSelectWhereIdService;
+import com.tje.yeojeong.service.TravelRegistDeleteService;
+import com.tje.yeojeong.service.TravelRegistUpdateService;
+import com.tje.yeojeong.service.TravelSearchedTravelListService;
 import com.tje.yeojeong.setting.PagingInfo;
 
 @Controller
@@ -44,7 +51,14 @@ public class MemberController {
 	private ReviewSearchByMemberService rsbimervice;
 	@Autowired
 	private ReviewCountByMemberService rcbmService;
-
+	@Autowired
+	private City_DataSelectCountryService cdsCountryService;
+	@Autowired
+	private TravelSearchedTravelListService tstlService;
+	@Autowired
+	private TravelRegistDeleteService trdService;
+	@Autowired
+	private TravelRegistUpdateService truService;
 	@Autowired
 	private PagingInfo pagingInfo;
 
@@ -167,9 +181,16 @@ public class MemberController {
 	}
 
 	private String mypageForm(Integer page, Model model, HttpSession session) {
-
 		Review_view review_view = new Review_view();
 		Member member = (Member) session.getAttribute("login_member");
+
+		Travel_regist travelRegist = new Travel_regist();
+		travelRegist.setMember_id(member.getMember_id());
+		List<Travel_regist> TravelRegistList = (List<Travel_regist>) tstlService.service(travelRegist);
+		model.addAttribute("TravelRegistList", TravelRegistList);
+
+		List<String> countryList = (List<String>) cdsCountryService.service();
+		model.addAttribute("countryList", countryList);
 
 		HashMap<String, Object> args = new HashMap<String, Object>();
 		args.put("curPageNo", page);
@@ -215,6 +236,23 @@ public class MemberController {
 	public String mypage_Submit(HttpSession session) {
 
 		return "submits/mypageSumit";
+	}
+
+	@PostMapping("/auth/mypageTravelRegistDelete")
+	@ResponseBody
+	public boolean mypageTravelRegistDelete_Submit(HttpSession session, @RequestBody Travel_regist travelRegist) {
+
+		boolean result = (Boolean) trdService.service(travelRegist);
+		return result;
+	}
+
+	@PostMapping("/auth/mypageTravelRegistUpdate")
+	@ResponseBody
+	public boolean mypageTravelRegistUpdate_Submit(HttpSession session, @RequestBody Travel_regist travelRegist) {
+System.out.println(1);
+		boolean result = (Boolean)truService.service(travelRegist);
+		
+		return result;
 	}
 
 }

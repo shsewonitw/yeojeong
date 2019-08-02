@@ -33,6 +33,15 @@ a:hover { text-decoration: underline;}
 	margin-left: 20%;
 	
 }
+
+.imgsize1{
+	width: 150px;
+	height: 30px;
+	margin-left: 2%;
+	
+}
+
+
 /*------------------------------------------------------------------------------------------*/
 input, textarea {
 	padding: 9px;

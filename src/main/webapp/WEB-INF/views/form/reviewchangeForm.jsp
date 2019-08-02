@@ -78,7 +78,7 @@ function validate(){
 			<br><br>
 			<hr>
 			<label>후기 내용</label><br><br>
-			<textarea name="content"></textarea>
+			<textarea name="content">${detail.content }</textarea>
 			<hr>
 			이미지 업로드 : <input type="file" name="image_src">
 			<hr>

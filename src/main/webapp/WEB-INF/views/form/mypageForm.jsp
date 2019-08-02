@@ -12,85 +12,89 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>마이페이지</title>
-<link href="<%=request.getContextPath()%>/resources/css/kh_bootstrap.min.css"
-	rel="stylesheet">
+<link href="<%=request.getContextPath()%>/resources/css/kh_bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/resources/css/kh_mypage.css" rel="stylesheet">
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/kh_bootstrap.min.js"></script>
 
-<style type="text/css">
-a {
-	text-decoration:none;
-	cursor: pointer;
-	color: black;
-}
- a:link { color: black; text-decoration: none;}
- a:visited { color: black; text-decoration: none;}
- a:hover { color: black; text-decoration: underline;font-size: 18px}
-
-#myInformation {
-	border: solid thin #ddd;
-	border-radius: 4px;
-	text-align: left;
-}
-
-.direction {
-	cursor: pointer;
-	line-height: 40px
-}
-
-.list {
-	list-style: none;
-	text-align: left;
-	border-radius: 2px 2px 2px 2px/2px 2px 2px 2px;
-	padding-left: 30px;
-	height: 40px;
-	margin: 4px;
-	list-style: none;
-}
-
-.info_box {
-	display: none;
+<!-- 달력기능 -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<!-- <script src="//code.jquery.com/jquery.min.js"></script> -->
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<!--  -->
+<script>
+// $(function(){
+// 	$(".start_date").on("click",function(){
+// 		var a = $(this).attr("id");
+// 		$("#"+a).datepicker({
+// 		    dateFormat: 'yy-mm-dd'
+// 		  });
+// 	});
+// 	$(".end_date").on("click",function(){
+// 		var b = $(this).attr("id");
+// 		$("#"+b).datepicker({
+// 		    dateFormat: 'yy-mm-dd'
+// 		  });
+// 	});
+// });
+function temp(travel_id){
+	
+	$("#"+travel_id+"_start_date").datepicker({
+	    dateFormat: 'yy-mm-dd'
+	  });
+	  
+	  $("#"+travel_id+"_end_date").datepicker({
+	    dateFormat: 'yy-mm-dd'
+	  });
 }
 
-.myInformationHeader {
-	border-radius: 4px 4px 4px 4px;
-	padding-left: 20px;
-	height: 60px;
-	background-color: #f5f5f5;
-	font-size: 20px;
-	vertical-align: bottom;
+
+function doChange(srcE, targetId){
+    var val = srcE.options[srcE.selectedIndex].value;
+    var targetE = document.getElementById(targetId);
+    removeAll(targetE);
+
+    
+    $.ajax({
+		url : "<%=request.getContextPath()%>/cityAjax",
+		type : "post",
+		data : "country=" + val,
+		dataType : "text",
+		success : function(data) {
+			if (eval(data)) {
+				var str = data.substr(2,data.length-4);
+				var str = str.split('","');
+				str.forEach(function(element){
+					
+					addOption(element, targetE);
+				})
+			} else {
+				alert("false");
+			}
+		},
+		error : function(data) {
+			alert("통신오류(관리자에게 문의하세요.)");
+		}
+	});
+    
+    
+}function addOption(value, e){
+    var o = new Option(value);
+    try{
+        e.add(o);
+    }catch(ee){
+        e.add(o, null);
+    }
 }
 
-#tel_btn {
-	border-radius: 0px 4px 4px 0px/0px 4px 4px 0px;
-}
 
-#tel_input {
-	border-radius: 4px 0px 0px 4px/4px 0px 0px 4px;
-	border-left-color: #ddd;
+function removeAll(e){
+    for(var i = 0, limit = e.options.length; i < limit - 1; ++i){
+        e.remove(1);
+    }
 }
+</script>
 
-.myInformationBody {
-	box-sizing: border-box;
-	line-height: 40px;
-	padding-left: 30px;
-	height: 40px;
-	margin: 4px;
-}
-
-.tel_box input {
-	vertical-align: top;
-}
-
-.tel_box button {
-	vertical-align: top;
-}
-
-.hover {
-	color: black;
-	background-color: #dcdcdc;
-}
-</style>
 
 <script type="text/javascript">
 
@@ -131,20 +135,134 @@ a {
 	$(document).ready(function() {
 		
 		
-// 		$(".direction").parent().on("mouseover",function(){
-// 			 var s =$(this).css("background-color");
-// 			 $(this).css("background-color","#dcdcdc").css("color", "black");
-// 			 if(s=="rgb(52, 152, 219)"){
-// 				 $(this).css("background-color","rgb(52, 152, 219)").css("color", "white");
-// 			 }
-// 		});
-// 		$(".direction").parent().on("mouseout",function(){
-// 			 var s =$(this).css("background-color");
-// 			 $(this).css("background-color","white").css("color", "black");
-// 			 if(s=="rgb(52, 152, 219)"){
-// 				 $(this).css("background-color","rgb(52, 152, 219)").css("color", "white");
-// 			 }
-// 		});
+
+		
+		
+		$(".trip_delete_btn").on("click",function(){
+			if (confirm("정말 삭제하시겠습니까??") == true){    
+				// 내여행 정보 삭제
+			
+			var travelRegist = new Object();
+			travelRegist.travel_id = $(this).parents("div.trip_div").find(".travel_id").val();
+			travelRegist.member_id = "${sessionScope.login_member.member_id}";
+			travelRegist.help_tel = $(this).parents("div.trip_div").find(".help_tel").val();
+			travelRegist.start_date = $(this).parents("div.trip_div").find(".start_date").val();
+			travelRegist.end_date = $(this).parents("div.trip_div").find(".end_date").val();
+			travelRegist.country = $(this).parents("div.trip_div").find(".country").val();
+			travelRegist.city = $(this).parents("div.trip_div").find(".city").val();
+			var travelRegistJsonObject = JSON.stringify(travelRegist);
+			
+			$.ajax({
+				url : "<%=request.getContextPath()%>/auth/mypageTravelRegistDelete",
+				type : "post",
+				contentType : "application/json; charset=UTF-8",
+				data : travelRegistJsonObject,
+				dataType : "text",
+				success : function(data) {
+					if (eval(data)) {
+						alert("삭제가 완료 되었습니다.");
+					} else {
+						alert("삭제에 실패하였습니다.(관리자에게 문의하세요.)");
+					}
+
+				},
+				error : function(data) {
+					alert("통신오류(관리자에게 문의하세요.)");
+				}
+			});
+			} else {   
+				// 내여행 정보 삭제 취소
+			    return;
+			}
+		});
+		
+		$(".trip_update_btn").on("click",function(){
+//	 		```````````````````내여행 변경버튼 툴렀을때 입력창 검사//
+			
+
+			var help_tel = $(this).parents("div.trip_div").find(".help_tel").val();
+			var countrySelect = $(this).parents("div.trip_div").find(".country").val();
+			var citySelect = $(this).parents("div.trip_div").find(".city").val();
+			var start_dateSelect = $(this).parents("div.trip_div").find(".start_date").val();
+			var end_dateSelect = $(this).parents("div.trip_div").find(".end_date").val();
+			var startDate = start_dateSelect;
+	        var startDateArr = startDate.split('-');
+	          
+	        var endDate = end_dateSelect;
+	        var endDateArr = endDate.split('-');
+	                  
+	        var startDateCompare = new Date(startDateArr[0], startDateArr[1], startDateArr[2]);
+	        var endDateCompare = new Date(endDateArr[0], endDateArr[1], endDateArr[2]);
+	        
+			var telCheck_1 = /\s/g;
+			var telCheck_2 = /^[0-9]{11,11}$/;
+			
+			// 번호 검사
+			if (help_tel == "") {
+				alert("전화번호를 입력하세요.");
+				help_tel.focus();
+				return;
+			} else if (telCheck_1.test(help_tel)) {
+				alert("전화번호는 공백을 포함하지 않습니다.");
+				help_tel.focus();
+				return;
+			} else if (!telCheck_2.test(help_tel)) {
+				alert("전화번호 11자리를 확인하세요.");
+				help_tel.focus();
+				return;
+			// 나라 검사
+			} else if (countrySelect==""||countrySelect=="default") {
+				alert("나라를 선택하세요.");
+				return;
+			// 도시 검사
+			}else if (citySelect==""||citySelect=="default"){
+				alert("도시를 선택하세요.");
+				return;
+			// 날짜 검사
+			}else if (startDateCompare.getTime() > endDateCompare.getTime()){
+				alert("입국날짜가 출국 날짜 보다 빠를 수 없습니다.");
+				return;
+//			 	```````````````````````````````````````````````//	
+			}else{
+				if (confirm("정말 변경하시겠습니까??") == true){   
+					// 내여행 정보 변경
+					var travelRegist = new Object();
+					travelRegist.travel_id = $(this).parents("div.trip_div").find(".travel_id").val();
+					travelRegist.member_id = "${sessionScope.login_member.member_id}";
+					travelRegist.help_tel = $(this).parents("div.trip_div").find(".help_tel").val();
+					travelRegist.start_date = $(this).parents("div.trip_div").find(".start_date").val();
+					travelRegist.end_date = $(this).parents("div.trip_div").find(".end_date").val();
+					travelRegist.country = $(this).parents("div.trip_div").find(".country").val();
+					travelRegist.city = $(this).parents("div.trip_div").find(".city").val();
+					var travelRegistJsonObject = JSON.stringify(travelRegist);
+					
+					$.ajax({
+						url : "<%=request.getContextPath()%>/auth/mypageTravelRegistUpdate",
+						type : "post",
+						contentType : "application/json; charset=UTF-8",
+						data : travelRegistJsonObject,
+						dataType : "text",
+						success : function(data) {
+							if (eval(data)) {
+								alert("일정이 변경되었습니다.");
+							} else {
+								alert("일정 변경에 실패하였습니다.(관리자에게 문의하세요.)");
+							}
+		
+						},
+						error : function(data) {
+							alert("통신오류(관리자에게 문의하세요.)");
+						}
+					});
+				}else{   
+					// 내여행 정보 변경 취소
+				    return;
+				}
+
+			}
+		});
+		
+		
 			function display_change(data){
 				$("#haveBeen").css("display","none");
 				$("#write").css("display","none");
@@ -153,32 +271,39 @@ a {
 				$("#myInformation").css("display","none");
 				$("#" + data).css("display","block");
 			}
-		
+		function hoverColor(selector,css,color){
+			selector.css(css,color);
+		}
 			$(".list").hover(function(){
 								var s =$(this).css("background-color");
-								$(this).css("color", "black").css("background-color", "#dcdcdc");
+								hoverColor($(this),"color","black");
+								hoverColor($(this),"background-color", "#dcdcdc");
 								if(s=="rgb(52, 152, 219)"){
-					 				 $(this).css("background-color","rgb(52, 152, 219)").css("color", "white");
+					 				hoverColor($(this),"background-color", "rgb(52, 152, 219)");
+					 				hoverColor($(this),"color", "white");
 								}
 							},function(){
 								var s =$(this).css("background-color");
-								$(this).css("color", "black").css("background-color", "white");
+								hoverColor($(this),"color", "black");
+								hoverColor($(this),"background-color", "white");
 								 if(s=="rgb(52, 152, 219)"){
-									 $(this).css("background-color","rgb(52, 152, 219)").css("color", "white");
+										hoverColor($(this),"background-color", "rgb(52, 152, 219)");
+										hoverColor($(this),"color", "white");
 								}
 							});
 				$(".direction").on("click",function() {
-							$(".direction").parent().css("background-color","white").css("color", "black");
-							$(this).parent().css("background-color","rgb(52, 152, 219)").css("color", "white");
-							
+							hoverColor($(".direction").parent(),"background-color", "white");
+							hoverColor($(".direction").parent(),"color", "black");
+							hoverColor($(this).parent(),"background-color", "rgb(52, 152, 219)");
+							hoverColor($(this).parent(),"color", "white");
 // 							`````````````````다른목록 클릭시 제어//
 							var me = $(this).attr("onclick");
 							
-							var haveBeen ="location.href ='#haveBeen'";
-							var write =	"location.href ='#write'";
-							var withMe ="location.href ='#withMe'";
-							var trip ="location.href ='#trip'";
-							var myInformation ="location.href ='#myInformation'";
+							var haveBeen ="location.href ='#haveBeenPa'";
+							var write =	"location.href ='#writePa'";
+							var withMe ="location.href ='#withMePa'";
+							var trip ="location.href ='#tripPa'";
+							var myInformation ="location.href ='#myInformationPa'";
 							if(me == haveBeen){
 								display_change("haveBeen");
 							}else if(me == write){
@@ -252,16 +377,18 @@ a {
 
 		}
 	}
+	
+	
+	
 </script>
 
 
 </head>
-<body style="overflow: auto;">
+<body>
 	<div style="height: 200px;"></div>
 
 
-	<div class="row"
-		style="text-align: center; margin-left: 10%; margin-right: 10%;">
+	<div class="row" id="list_div">
 		<div class="col-md-3">
 			<ul>
 
@@ -271,19 +398,19 @@ a {
 				</li>
 
 				<li class="list">
-					<div id="write2" class="direction" onclick="location.href ='#write'">내가
+					<div id="write2" class="direction" onclick="location.href ='#writePa'">내가
 						쓴글</div>
 				</li>
 				<li class="list">
-					<div id="withMe2" class="direction" onclick="location.href ='#withMe'">동행
+					<div id="withMe2" class="direction" onclick="location.href ='#withMePa'">동행
 						요청 리스트</div>
 				</li>
 				<li  class="list">
-					<div id="trip2" class="direction" onclick="location.href ='#trip'">내여행</div>
+					<div id="trip2" class="direction" onclick="location.href ='#tripPa'">내여행</div>
 				</li>
 				<li  class="list"
 					>
-					<div id="myInformation2" class="direction" onclick="location.href ='#myInformation'">내정보</div>
+					<div id="myInformation2" class="direction" onclick="location.href ='#myInformationPa'">내정보</div>
 				</li>
 			</ul>
 		</div>
@@ -360,11 +487,10 @@ a {
 
 			<div id="write" class="info_box">
 				<c:forEach begin="0" end="${rList.size()-1}" var="i">
-					<div
-						style="border: solid thin #ddd; margin: 10px; border-radius: 4px; text-align: left; overflow: hidden;">
+					<div class="write_body_div">
 						<div style="padding: 20px">
 
-							<div style="float: left; line-height: 40px;width: 70%">
+							<div class="write_head_div">
 								<div style="float: left;">
 									<span>${ rList[i].name }</span>
 									<span>${ date[i] }</span>
@@ -374,16 +500,14 @@ a {
 									<span>${ rList[i].city }</span>
 								</div>
 
-								<div style="display: inline-block; width: 75%"><a><b>${subcontent[i]}</b></a></div>
+								<div class="write_bottom_div"><a href=""><b>${subcontent[i]}</b></a></div>
 								<div>
 									<span>평점 ${ rList[i].review_star }&nbsp;&nbsp;</span>
 									<span>댓글${ rList[i].comment_count }</span>
 								</div>
 							</div>
-							<div OnClick="#" style="float: right;cursor: pointer;">
-								<img class="img-thumbnail"
-									style="max-width: 100px; max-height: 100px; width: 100%; height: 100%;"
-									src="<%=request.getContextPath()%>/resources/img/${ rList[i].image_src }">
+							<div id="write_img_div" OnClick="">
+								<img id="write_img" class="img-thumbnail" src="<%=request.getContextPath()%>/resources/cityimg/${ rList[i].image_src }">
 							</div>
 
 
@@ -400,7 +524,7 @@ a {
 					<c:forEach var="pageNo" begin="${startPageNo}" end="${endPageNo}">
 						<c:if test="${ curPage eq pageNo }" var="r">
 							<li>
-								<a href="#" style="background-color:rgb(52, 152, 219);color:white;" >${pageNo}</a>
+								<a id="page_num_a" href="#">${pageNo}</a>
 							</li>
 						</c:if>
 						<c:if test="${ not r }">
@@ -420,9 +544,8 @@ a {
 			<!-- 			``````````````````````` -->
 
 			<!-- 		``````````````````	내정보 페이지 -->
-			<div id="myInformation" class="info_box"
-				style="border: solid thin #ddd; border-radius: 4px; text-align: left;">
-				<div class="myInformationHeader" style="line-height: 60px">내
+			<div id="myInformation" class="info_box">
+				<div class="myInformationHeader">내
 					정보</div>
 				<div class="myInformationBody">
 					${sessionScope.login_member.member_id }</div>
@@ -436,13 +559,12 @@ a {
 					style="padding-right: 30px; width: 100%">
 					<div class="tel_box">
 						<input class="form-control" id="tel_input" required
-							value="${sessionScope.login_member.tel }"
-							style="width: 70%; float: left;" onkeyup="tel_keyup();">
+							value="${sessionScope.login_member.tel }" onkeyup="tel_keyup();">
 						<button id="tel_btn" type="button" class="btn btn-primary"
-							onclick="tel_change();" style="float: left;">번호변경</button>
+							onclick="tel_change();">번호변경</button>
 					</div>
 					<div>
-						<span id="span_tel" style="color: red;"></span>
+						<span id="span_tel"></span>
 					</div>
 				</div>
 			</div>
@@ -450,30 +572,56 @@ a {
 			
 			
 			<!-- 		``````````````````	내여행 페이지 -->
-			<div id="trip" class="info_box"
-				style="border: solid thin #ddd; border-radius: 4px; text-align: left;overflow: hidden;">
-				<div class="myInformationHeader" style="line-height: 60px">내 여행</div>
-				<div style="line-height: 40px;padding-left: 30px;height: 40px;margin: 4px;">
-					<span><label for="help_tel" style="display: inline-block;"><b>비상연락처&nbsp;&nbsp;&nbsp;</b></label></span>
-					<span><input id="help_tel" name="help_tel" size="20" class="form-control" style="width: 50%;display: inline-block;border-radius: 4px 4px 4px 4px;border-left-color: #ddd;"></span>
-				</div>
-				<div style="line-height: 40px;padding-left: 30px;height: 40px;margin: 4px;">
-					<span><label for="help_tel" style="display: inline-block;"><b>출국날짜&nbsp;&nbsp;&nbsp;</b></label></span>
-					<span><input id="help_tel" name="help_tel" size="20" class="form-control" style="width: 50%;display: inline-block;border-radius: 4px 4px 4px 4px;border-left-color: #ddd;"></span>
-				</div>
-				<div style="line-height: 40px;padding-left: 30px;height: 40px;margin: 4px;">
-					<span><label for="help_tel" style="display: inline-block;"><b>입국날짜&nbsp;&nbsp;&nbsp;</b></label></span>
-					<span><input id="help_tel" name="help_tel" size="20" class="form-control" style="width: 50%;display: inline-block;border-radius: 4px 4px 4px 4px;border-left-color: #ddd;"></span>
-				</div>
-				<div style="padding-left: 30px;">
-					<button type="button" class="btn btn-primary">변경</button>
-					<button type="button" class="btn btn-primary">삭제</button>
-				</div>
-				여행 정보 
-				여행삭제
-			   	 member_id를 통해 정보 꺼내로기
-			  	 country 
-		  	 	 city 
+			<div id="trip" class="info_box" >
+				<c:forEach items="${TravelRegistList }" var="travelList" varStatus="status">
+					<form>
+						<div class="trip_div">
+							<div class="tripHeader">${travelList.country} ${travelList.city} 일정</div>
+							<div class="trip_tel_div" >
+								<span><label for="help_tel" style="display: inline-block;"><b>비상연락처&nbsp;&nbsp;&nbsp;</b></label></span>
+								<span><input id="help_tel" name="help_tel" class="form-control help_tel" value="${travelList.help_tel }" placeholder="번호를 입력해주세요"></span>
+								<span><input type="hidden" id="travel_id" class="travel_id" name="travel_id" value="${travelList.travel_id }"></span>
+							</div>
+							
+							<div id="trip_form_div">
+								<span>
+									<b>국가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+								</span>
+								<span>
+									<select class="date_selcet country" name="country" id="selOne" onchange="doChange(this, 'selTwo${status.index}')">
+										<option value="default">---국가 선택---</option>
+											<c:forEach items="${countryList}" var="country">
+												<c:if test="${travelList.country == country }" var="r">
+													<option value="${country}" selected>${country}</option>
+												</c:if>	
+												<c:if test="${!r}" >
+													<option value="${country}">${country}</option>
+												</c:if>	
+											</c:forEach>
+									</select >
+									<select class="date_selcet city" name="city" id="selTwo${status.index}">
+										<option value="default">---도시 선택---</option>
+											<option value="${travelList.city}" selected>${travelList.city}</option>
+									</select>
+								</span>
+							
+							</div>
+							
+							<div class="date_div">
+								<span><label for="start_date" style="display: inline-block;"><b>출국날짜&nbsp;&nbsp;&nbsp;</b></label></span>
+								<span><input onclick="temp('${travelList.travel_id}');" id="${travelList.travel_id}_start_date" name="start_date" value="${travelList.start_date }" class="form-control start_date" placeholder="클릭하여 날짜 선택"  autocomplete="off"></span>
+							</div>
+							<div class="date_div">
+								<span><label for="end_date" style="display: inline-block;"><b>입국날짜&nbsp;&nbsp;&nbsp;</b></label></span>
+								<span><input onclick="temp('${travelList.travel_id}');" id="${travelList.travel_id}_end_date" name="end_date" value="${travelList.end_date }" class="form-control end_date"  placeholder="클릭하여 날짜 선택"  autocomplete="off" ></span>
+							</div>
+							<div style="padding-left: 30px;">
+								<button type="button" class="btn btn-primary trip_update_btn">변경</button>
+								<button id="trip_delete_btn" type="button" class="btn btn-primary trip_delete_btn">삭제</button>
+							</div>
+						</div>
+					</form>
+				</c:forEach>
 			</div>
 			<!-- 			``````````````````````` -->
 		</div>

@@ -491,7 +491,6 @@ $("#regist_btn").on("click",function(){
 			flag_tel = false;
 			return;
 		} else {
-			var year = $("#tel").val();
 			flag_tel = true;
 			$("#span_tel").css("color", "blue")
 			$("#span_tel").text("사용 가능한 전화번호입니다.");

@@ -48,6 +48,7 @@
 		<websocket:mapping handler="echoController" path="/echo"/>
 		<websocket:mapping handler="broadCastController" path="/bc"/>
 	</websocket:handlers>
+
 		
 </beans:beans>
 

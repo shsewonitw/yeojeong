@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>받은쪽지 : 여정 쪽지</title>
+<title>보낸쪽지 : 여정 쪽지</title>
 <link href="<%=request.getContextPath() %>/resources/css/jb_bootstrap.min.css?asd=2" rel="stylesheet">
 <script src="<%=request.getContextPath() %>/resources/js/jb_bootstrap.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
@@ -57,11 +57,11 @@ th, td {
 	<div class="column_center">
 		<table class="table table-bordered">
 			<tr class="trcolor">
-				<th>보낸사람</th>
+				<th>받는사람</th>
 				<th>보낸시간</th>
 			</tr>
 			<tr>
-				<td>${ message.sender_id }</td>
+				<td>${ message.receiver_id }</td>
 				<td>${ message.send_time }</td>
 			</tr>
 			<tr>
@@ -71,7 +71,7 @@ th, td {
 	</div>
 </div>
 	<div class="message_btn">
-		<a class="btn btn-primary" href="<%=request.getContextPath()%>/message/retransform/${message.sender_id}" role="button">답장</a>
+		<a class="btn btn-primary" href="<%=request.getContextPath()%>/message/transform/${message.receiver_id}" role="button">작성</a>
 		<button type="button" class="btn btn-default" onclick="self.close()">닫기</button>
 	</div>
 <div class="battom">

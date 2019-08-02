@@ -73,7 +73,7 @@ div {
 <div class="middle" role="main">
 	<div class="column_center">
 		<input type="hidden" name="sender_id" value="${ login_member.member_id }">
-			<input class="form-control" id="disabledInput" name="receiver_id" type="text" value="${ message.sender_id }" readonly>
+			<input class="form-control" id="disabledInput" name="receiver_id" type="text" value="${ message.receiver_id }" readonly>
 				<div class="textarea">
 					<textarea class="form-control" id="textarea" name="content" maxlength="1000" rows="23" cols="81" placeholder="내용을 입력하세요" autofocus required></textarea>
 					<p id="text"></p>

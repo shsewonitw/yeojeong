@@ -37,10 +37,16 @@ public class Review_viewDAO {
 		}
 	}
 
+	// 리뷰 전체 개수 
+	public Integer reviewCount() {
+		return this.jdbcTemplate.queryForObject("select count(*) from Review_view", Integer.class);
+	}
+	
 	// 리뷰 뷰 전체 리스트 검색
-	public List<Review_view> selectAll() {
-		String sql = "select * from Review_view order by write_time desc";
-		List<Review_view> result = this.jdbcTemplate.query(sql, new Review_viewRowMapper());
+	public List<Review_view> selectAll(int page) {
+		String sql = "select * from Review_view order by write_time desc limit ?, ?";
+		List<Review_view> result = this.jdbcTemplate.query(sql, new Review_viewRowMapper(),
+				(page-1)*this.pagingInfo.getPagingSize(),this.pagingInfo.getPagingSize());
 		return result.isEmpty() ? null : result;
 	}
 
@@ -108,6 +114,27 @@ public class Review_viewDAO {
 	public Integer selectByMemberCount(Review_view obj) {
 		return this.jdbcTemplate.queryForObject("select count(*) from Review_view where member_id = ?",
 				Integer.class, obj.getMember_id());
+	}
+	
+	// 카테고리 아이디 검색
+	public List<Review_view> selectId(Review_view obj) {
+		List<Review_view> result = this.jdbcTemplate.query("select * from review_article where member_id like ?);",
+				new Review_viewRowMapper(), "%" + obj.getMember_id() + "%");
+		return result.isEmpty() ? null : result;
+	}
+	
+	// 카테고리 국가 검색
+	public List<Review_view> selectcountry(Review_view obj) {
+		List<Review_view> result = this.jdbcTemplate.query("select * from review_article where country like ?);",
+				new Review_viewRowMapper(), "%" + obj.getCountry()+ "%");
+		return result.isEmpty() ? null : result;
+	}
+
+	// 카테고리 도시 검색
+	public List<Review_view> selectcity(Review_view obj) {
+		List<Review_view> result = this.jdbcTemplate.query("select * from review_article where city like ?);",
+				new Review_viewRowMapper(), "%" + obj.getCity() + "%");
+		return result.isEmpty() ? null : result;
 	}
 
 }

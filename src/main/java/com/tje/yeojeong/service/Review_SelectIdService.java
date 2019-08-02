@@ -9,17 +9,13 @@ import com.tje.yeojeong.model.*;
 import com.tje.yeojeong.repository.*;
 
 @Service
-public class ReviewListService {
+public class Review_SelectIdService {
 	
 	@Autowired
 	private Review_viewDAO reviewDAO;
 	
-	public HashMap<String, Object> service(int page) {
-		HashMap<String, Object> result = new HashMap<>();
-		
-		result.put("reviewlist", reviewDAO.selectAll(page));
-		
-		return result;
+	public Object service(Object args) {
+				
+		return 	(List<Review_view>)reviewDAO.selectId((Review_view)args);
 	}
-	}
-
+}

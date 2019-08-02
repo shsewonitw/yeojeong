@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/datilreview.css?var=33">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/datilreview.css?var=11">
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 
 <script type="text/javascript">
@@ -32,7 +32,7 @@ function insert_comment() {
 				commentTag += "&nbsp";
 				commentTag += result.write_time + "<br>";
 				commentTag += result.content;
-				commentTag += "<button class='btn-red' onclick='delete_comment(" + result.comment_id + ");'>삭제</button>";
+				//commentTag += "<button type='button' class='btn-red' onclick='delete_comment(" + result.comment_id + ");'>삭제</button>";
 				commentTag += "<hr>";
 				$("#comment_div").append(commentTag);
 			} else {
@@ -104,26 +104,49 @@ function delete_comment(comment_id) {
 				${detailreview.city } 
 		<hr>
 		<label>평점</label>
-		
-			<span class="star-input">
-		  	<span class="input">
-		  	 <input type="radio" name="review_star" id="p1" value="${detailreview.review_star }" readonly><label for="p1">${detailreview.review_star }</label>
-		  	</span>
-		  	<output for="star-input"><b>${detailreview.review_star }</b>점</output>
-			</span>
-			<br><br>
+		<c:if test="${detailreview.review_star == 1}">
+        			<img class="imgsize1" src="<%= request.getContextPath()%>/resources/img/star_1.png" >
+        		</c:if>
+        		<c:if test="${detailreview.review_star == 2}">
+        			<img class="imgsize1" src="<%= request.getContextPath()%>/resources/img/star_2.png">
+        		</c:if>
+        		<c:if test="${detailreview.review_star == 3}">
+        			<img class="imgsize1" src="<%= request.getContextPath()%>/resources/img/star_3.png" >
+        		</c:if>
+        		<c:if test="${detailreview.review_star == 4}">
+        			<img class="imgsize1" src="<%= request.getContextPath()%>/resources/img/star_4.png">
+        		</c:if>
+        		<c:if test="${detailreview.review_star == 5}">
+        			<img class="imgsize1" src="<%= request.getContextPath()%>/resources/img/star_5.png" >
+        		</c:if>
+        		<c:if test="${detailreview.review_star == 6}">
+        			<img class="imgsize1" src="<%= request.getContextPath()%>/resources/img/star_6.png" >
+        		</c:if>
+        		<c:if test="${detailreview.review_star == 7}">
+        			<img class="imgsize1" src="<%= request.getContextPath()%>/resources/img/star_7.png" >
+        		</c:if>
+        		<c:if test="${detailreview.review_star == 8}">
+    			<img class="imgsize1" src="<%= request.getContextPath()%>/resources/img/star_8.png" >
+        		</c:if>
+        		<c:if test="${detailreview.review_star == 9}">
+        			<img class="imgsize1" src="<%= request.getContextPath()%>/resources/img/star_9.png" >
+        		</c:if>
+        		<c:if test="${detailreview.review_star == 10}">
+        			<img class="imgsize1" src="<%= request.getContextPath()%>/resources/img/star_10.png" >
+        		</c:if>
 			<hr>
 			<label>후기 내용</label><br><br>
 			<textarea readonly>${detailreview.content }</textarea>
 			
 			<div class="buttonmargin">
 			<c:if test="${ login_member.member_id eq detailreview.member_id}">
-			<a href="<%=request.getContextPath()%>/reviewchange" class="button">수정</a>
+			<a href="<%=request.getContextPath()%>/reviewchange?" class="button">수정</a>
 			<a href="<%=request.getContextPath()%>/reviewdelete" class="button">삭제</a>
 			</c:if>
 			</div>
 			<hr>
 			<br>
+			
 		<!-- 댓글 삭제 -->
 		<div id="comment_area">
 		<label><span id="comment_count">댓글(${commentSize})</span></label><br>
@@ -134,7 +157,7 @@ function delete_comment(comment_id) {
 			${ comment.content }
 			
 			<c:if test="${ login_member.member_id eq detailreview.member_id}">
-			<button class="btn-red" onclick="delete_comment(${comment.comment_id});">삭제</button>
+			<button class="btn-red" type='button' onclick="delete_comment(${comment.comment_id});">삭제</button>
 			</c:if>
 		<br>
 		<hr>
@@ -158,39 +181,6 @@ function delete_comment(comment_id) {
 </div>
 </body>
 
-<script type="text/javascript">
-//별점 처리 
-var starRating = function(){
-var $star = $(".star-input"),
-  $result = $star.find("output>b");
-$(document)
-.on("focusin", ".star-input>.input", function(){
-$(this).addClass("focus");
-})
-.on("focusout", ".star-input>.input", function(){
-var $this = $(this);
-setTimeout(function(){
-  if($this.find(":focus").length === 0){
-    $this.removeClass("focus");
-  }
-}, 100);
-})
-.on("change", ".star-input :radio", function(){
-$result.text($(this).next().text());
-})
-.on("mouseover", ".star-input label", function(){
-$result.text($(this).text());
-})
-.on("mouseleave", ".star-input>.input", function(){
-var $checked = $star.find(":checked");
-if($checked.length === 0){
-  $result.text("0");
-} else {
-  $result.text($checked.next().text());
-}
-});
-};
-starRating();
-</script>
+
 
 </html>

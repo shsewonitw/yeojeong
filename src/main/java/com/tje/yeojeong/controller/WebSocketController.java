@@ -1,26 +1,32 @@
 package com.tje.yeojeong.controller;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.socket.WebSocketSession;
 
-import com.tje.yeojeong.model.Member;
+import com.tje.yeojeong.websocket.ChatInfo;
+
 
 @Controller
 public class WebSocketController {
+	@Autowired
+	ChatInfo chatInfo;
 	
 	@GetMapping("/wsClient")
 	public String wsClient() {
 		return "page/WebSocket_Client";
 	}
 	
-	@GetMapping("/wsServer")
-	public String wsServer() {
-		return "page/WebSocket_Server";
+	@GetMapping("/wsAdmin")
+	public String wsServer(Model model) {
+		for(WebSocketSession session : chatInfo.getChatMap().keySet()) {
+			System.out.println(chatInfo.getChatMap().get(session));
+		}
+		
+		model.addAttribute("chatMap",chatInfo.getChatMap());
+		return "page/WebSocket_Admin";
 	}
 }

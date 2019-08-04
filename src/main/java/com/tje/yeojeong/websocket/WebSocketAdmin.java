@@ -1,4 +1,4 @@
-package com.tje.yeojeong.controller;
+package com.tje.yeojeong.websocket;
 
 import java.util.Hashtable;
 import java.util.StringTokenizer;
@@ -10,7 +10,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 
 
-public class BroadCastController extends TextWebSocketHandler {
+public class WebSocketAdmin extends TextWebSocketHandler {
 	class WebSocketClientInfo{
 		private WebSocketSession session;
 		private String alias;
@@ -134,4 +134,5 @@ public class BroadCastController extends TextWebSocketHandler {
 						new TextMessage(strClosedClient));
 			}
 		}
+		
 }

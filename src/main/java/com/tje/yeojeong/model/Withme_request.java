@@ -10,7 +10,7 @@ public class Withme_request {
 	private int request_id;
 	private String sender_id;
 	private String receiver_id;
-	@DateTimeFormat
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date write_time;
 
 	public Withme_request() {

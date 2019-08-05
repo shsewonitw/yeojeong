@@ -19,22 +19,25 @@
 .top {
 	height:170px;
 }
+.div_body {
+	width:80%;
+	margin:0 auto;
+}
 .message_bar {
 	height:auto;
 }
 .middle {
-	height:auto;
-}
-th, td {
-	text-align:center;
+	height:534px;
 }
 .trcolor {
 	background-color:#F4F4F4;
 }
-.battom {
-	position:absolute;
-	left:50%;
-	transform:translate(-50%);
+th, td {
+	text-align:center;
+}
+.bottom {
+	position:relative;
+	left:44%;
 	height:auto;
 }
 br {
@@ -99,9 +102,10 @@ br {
 	});
 </script>
 <div class="top"></div>
+<div class="div_body">
 <div class="message_bar">
 <h3><a href="<%=request.getContextPath()%>/message/receive/" class="a">&nbsp;&nbsp;&nbsp;&nbsp;받은쪽지</a>(${readCount}/${r_count}) | <a href="<%=request.getContextPath()%>/message/send/" class="a">보낸쪽지</a>
-<button class="btn btn-default" id="delete_btn" type="button" data-message_id="${rmsg.message_id}">삭제</button></h3>
+<input class="btn btn-default" id="delete_btn" type="submit" value="삭제"></h3>
 </div>
 <div class="middle">
 <table class="table">
@@ -122,7 +126,7 @@ br {
 	<c:forEach items="${rList}" var="rmsg">
 	<c:if test="${ empty rmsg.receive_time }" var="r">
 	<tr>
-		<th width="10%"><input type="checkbox" class="chk_row" name="chk_row" data-message_id="${rmsg.message_id}"></th>
+		<th width="10%"><input type="checkbox" class="chk_row" name="${rmsg.message_id}"></th>
 		<th width="20%"><a href="#" class="a" onclick="transform('${rmsg.sender_id}');">${rmsg.sender_id}</a></th>
 		<th style="text-align:left" width="40%"><a href="" class="a" onclick="winopen('${rmsg.message_id}');">새 쪽지 확인</a></th>
 		<th width="15%">${ rmsg.send_time }</th>
@@ -132,7 +136,7 @@ br {
 	
 	<c:if test="${ not r }">
 	<tr>
-		<td width="10%"><input type="checkbox" class="chk_row" name="chk_row" data-message_id="${rmsg.message_id}"></td>
+		<td width="10%"><input type="checkbox" class="chk_row" name="${rmsg.message_id}"></td>
 		<td width="20%"><a href="#" class="a" onclick="transform('${rmsg.sender_id}');">${rmsg.sender_id}</a></td>
 		<td style="text-align:left" width="40%"><a href="" class="a" onclick="winopen('${rmsg.message_id}');">
 		<!-- ...으로 자르는 코드 -->
@@ -153,7 +157,7 @@ br {
 	</c:forEach>
 </table>
 </div>
-<div class="battom">
+<div class="bottom">
 <nav>
   <ul class="pagination">
   
@@ -176,6 +180,7 @@ br {
 	
    </ul>
 </nav>
+</div>
 </div>
 </body>
 </html>

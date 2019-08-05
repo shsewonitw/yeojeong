@@ -4,16 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpSession;
 
@@ -40,10 +35,6 @@ public class MessageController {
 	private MessageCountBySenderService mcbsService;
 	@Autowired
 	private MessageCountByReadService mcbReadService;
-	@Autowired
-	private MessageSearchByReceiverDateService msbrdService;
-	@Autowired
-	private MessageSearchBySenderDateService msbsdService;
 	@Autowired
 	private MessageSearchReceiverService msrService;
 	@Autowired
@@ -114,26 +105,6 @@ public class MessageController {
 		return receiveForm(1, model, session);
 	}
 	
-	@PostMapping("/receiveSearch")
-	public String receiveSubmit(
-			Model model,
-			@ModelAttribute("command") MessageSearchCommand command,
-			HttpSession session) {
-		HashMap<String, Object> args = new HashMap<>();
-		args.put("command", command);
-		String receiver = 
-				((Member)session.getAttribute("login_member")).getMember_id();
-		args.put("receiver_id", receiver);
-		
-		List<Message> searched = 
-				(List<Message>)msbrdService.service(args);
-		
-		model.addAttribute("searched", searched);
-		model.addAttribute("searchedCount", searched == null ? 0 : searched.size());
-		
-		return "message/receiveSearchMessage";
-	}
-	
 	// 메세지 수신 파트 답장 부분
 	@GetMapping("/retransform/{sender_id}")
 	public String transReceiveForm(Message message, Model model, HttpSession session,
@@ -168,10 +139,14 @@ public class MessageController {
 	}
 	
 	// 수신 메세지 삭제
-	@ResponseBody
-	@RequestMapping(value="/message/receive", method = RequestMethod.POST)
-	public String deleteReceiveMessage(HttpSession session,
-			@RequestParam(value="chk_row[]") Model model) throws Exception {
+	@GetMapping("/message/receive")
+	public String deleteReceiveMessage(HttpSession session, Message message, Model model,
+			@PathVariable("message_id") int message_id) throws Exception {
+		Member loginMember = 
+				(Member)session.getAttribute("login_member");
+		message.setMessage_id(message_id);
+		
+		model.addAttribute("message_id", mdService.service(message));
 		
 		return "message/receiveForm";
 	}
@@ -237,26 +212,6 @@ public class MessageController {
 		return sendForm(1, model, session);
 	}
 	
-	@PostMapping("/sendSearch")
-	public String sendSubmit(
-			Model model,
-			@ModelAttribute("command") MessageSearchCommand command,
-			HttpSession session) {
-		HashMap<String, Object> args = new HashMap<>();
-		args.put("command", command);
-		String sender = 
-				((Member)session.getAttribute("login_member")).getMember_id();
-		args.put("sender_id", sender);
-		
-		List<Message> searched = 
-				(List<Message>)msbsdService.service(args);
-		
-		model.addAttribute("searched", searched);
-		model.addAttribute("searchedCount", searched == null ? 0 : searched.size());
-		
-		return "message/sendSearchMessage";
-	}
-	
 	// 메세지 송신 본문
 	@GetMapping("/sendcontent/{message_id}")
 	public String sendContent(
@@ -290,16 +245,4 @@ public class MessageController {
 		return "message/transformSubmit";
 	}
 	
-	// 송신 메세지 삭제
-	@GetMapping("/message/send")
-	public String deleteSendMessage(
-			Message message, Model model, 
-			@RequestParam("message_id") int message_id, String[] chk_row) {
-		HashMap<String, Object> args =
-				new HashMap<String, Object>();
-		message.setChkVals(chk_row);
-		
-		model.addAttribute("chk_row",mdService.service(chk_row));
-		return "message/sendForm";
-	}
 }

@@ -9,7 +9,7 @@ import com.tje.yeojeong.repository.Travel_registDAO;
 import com.tje.yeojeong.repository.Withme_requestDAO;
 
 @Service
-public class withme_requestCountService {
+public class Withme_requestCountService {
 	@Autowired
 	private Withme_requestDAO withme_requestDAO;
 	

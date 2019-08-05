@@ -57,7 +57,7 @@ public class MessageDAO {
 					model.getReceiver_id());
 		}
 	
-	// 각 사용자 별, 보낸 메세지의 개수를 반환하는 메소드
+	// 각 사용자 별, 보낸 메세지의 갯수를 반환하는 메소드
 	public Integer selectBySenderCount(Message model) {
 		return this.jdbcTemplate.queryForObject(
 				"select count(*) from message where sender_id = ?",
@@ -75,18 +75,7 @@ public class MessageDAO {
 		return result.isEmpty() ? null : result;
 	}
 	
-	// 작성 날짜를 기준으로 보낸 메세지를 검색하는 메소드(오름차순)
-	public List<Message> selectBySender_Date(
-			MessageSearchCommand command, String sender) {
-		List<Message> result = this.jdbcTemplate.query(
-						"select * from message where sender_id = ? and send_time between ? and ? order by message_id desc",
-				new MessageRowMapper(), 
-				sender, command.getFrom(), command.getTo());
-		
-		return result.isEmpty() ? null : result;
-	}
-	
-	// 각 사용자 별, 읽지 않은 메세지의 개수를 반환하는 메소드
+	// 각 사용자 별, 읽지 않은 메세지의 갯수를 반환하는 메소드
 	public Integer selectByReadCount(Message model) {
 		return this.jdbcTemplate.queryForObject(
 				"select count(*) from message where receiver_id = ? and receive_time is null",
@@ -108,17 +97,6 @@ public class MessageDAO {
 		List<Message> result = this.jdbcTemplate.query("select * from message where receiver_id = ? order by message_id desc limit ?, ?",
 				new MessageRowMapper(), 
 				model.getReceiver_id(), (page - 1) * this.pagingInfo.getPagingSize(), this.pagingInfo.getPagingSize());
-
-		return result.isEmpty() ? null : result;
-	}
-	
-	// 작성 날짜를 기준으로 받은 메세지를 검색하는 메소드(오름차순)
-	public List<Message> selectByReceiver_Date(
-			MessageSearchCommand command, String receiver) {
-		List<Message> result = this.jdbcTemplate.query(
-						"select * from message where receiver_id = ? and send_time between ? and ? order by message_id desc",
-				new MessageRowMapper(), 
-				receiver, command.getFrom(), command.getTo());
 
 		return result.isEmpty() ? null : result;
 	}

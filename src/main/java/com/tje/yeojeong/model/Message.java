@@ -13,7 +13,7 @@ public class Message {
 	private Date send_time;
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date receive_time;
-	private String[] chkVals;
+	private String[] chk_row;
 	
 	public Message() {
 	}
@@ -76,12 +76,12 @@ public class Message {
 		this.receive_time = receive_time;
 	}
 
-	public String[] getChkVals() {
-		return chkVals;
+	public String[] getChk_row() {
+		return chk_row;
 	}
 
-	public void setChkVals(String[] chkVals) {
-		this.chkVals = chkVals;
+	public void setChk_row(String[] chk_row) {
+		this.chk_row = chk_row;
 	}
 	
 }

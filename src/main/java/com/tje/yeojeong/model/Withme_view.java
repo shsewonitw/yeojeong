@@ -2,11 +2,14 @@ package com.tje.yeojeong.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Withme_view {
 	private int article_id;
 	private String member_id;
 	private int category_gender;
 	private int category_style;
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date write_time;
 	private int read_count;
 	private String name;

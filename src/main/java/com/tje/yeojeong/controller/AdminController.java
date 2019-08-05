@@ -39,7 +39,7 @@ import com.tje.yeojeong.service.MemberUpdateByAdminService;
 import com.tje.yeojeong.service.Review_viewCountService;
 import com.tje.yeojeong.service.TravelRegistCountService;
 import com.tje.yeojeong.service.Withme_viewCountService;
-import com.tje.yeojeong.service.withme_requestCountService;
+import com.tje.yeojeong.service.Withme_requestCountService;
 import com.tje.yeojeong.setting.PagingInfo;
 import com.tje.yeojeong.setting.UtilFile;
 
@@ -78,7 +78,7 @@ public class AdminController {
 	@Autowired
 	private City_DataCountService cdcService;
 	@Autowired
-	private withme_requestCountService wmrcService;
+	private Withme_requestCountService wmrcService;
 	@Autowired
 	private Withme_viewCountService wmvcService;
 	@Autowired

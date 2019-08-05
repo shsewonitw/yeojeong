@@ -7,19 +7,22 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/full-page-scroll.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/full-page-scroll.min.css?var=2">
 	
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/image.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+	 
+	
 	<!-- JS -->
 	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/sky_slide.js?var=1"></script>
 	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jssor.slider-27.5.0.min.js"></script>
-	
-		
+			
 	
 	<!-- 1페이지 시작 -->	
 	<div id="main" class="scroll-container">
 		<section class="section1">
 			<div class="box hi">
 				<video preload="auto" autoplay loop="loop" muted="muted">
-				<source src="<%=request.getContextPath() %>/resources/video/test123.mp4" type="video/mp4">
+				<source src="<%=request.getContextPath() %>/resources/video/test1234.mp4" type="video/mp4">
 			</video>
 		</div>
 	</section>
@@ -146,17 +149,28 @@
       <!-- 2페이지 끝 -->
       
       <!-- 3페이지 시작 -->
-	      <section class="section3" style="background-color:#DAD9FF;">
-			<div class="tophegiht"></div>
-			<h2>3페이지</h2>
+	      <section class="section3" style="background-color:#DAD9FF;">	      	
+			<div class="img" style="background-image: url('<%=request.getContextPath()%>/resources/cityimg/IMG_1847.JPG');">
+				<div class="content">
+					<h3 class="animated fadeInUp delay-1s">여행자들의 정보</h3>
+				</div>
+				<div class="img-cover"></div>
+			</div>			
 		</section>
 		<!-- 3페이지 끝 -->
 		
 		<!-- 4페이지 시작 -->
+		
 		<section class="section4" style="background-color:wheat;">
-			<div class="tophegiht"></div>
-			<h2>4페이지</h2>
+			<div class="img" style="background-image: url('<%=request.getContextPath()%>/resources/cityimg/IMG_E2255.JPG');">
+				<div class="content">
+					<h3 class="animated fadeInUp delay-1s">여행자들의 정보</h3>
+				</div>
+				<div class="img-cover"></div>
+			</div>						
+									
 		</section>
+				
 		<!-- 4페이지 끝 -->
 		
 		<!-- 5페이지 시작 -->

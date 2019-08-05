@@ -27,7 +27,7 @@
 </style>
 </head>
 <body>
-<script type="text/javascript">alert(1123);</script>
+<script type="text/javascript"></script>
 	<footer id="footer">
 		<div class="copyright">
 			<ul class="icons">

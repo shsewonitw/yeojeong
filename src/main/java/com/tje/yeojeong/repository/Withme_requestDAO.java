@@ -20,6 +20,7 @@ import org.springframework.stereotype.Repository;
 
 import com.tje.yeojeong.model.Member;
 import com.tje.yeojeong.model.Withme_request;
+import com.tje.yeojeong.model.Withme_requestForReSe;
 
 @Repository
 public class Withme_requestDAO {
@@ -33,9 +34,8 @@ public class Withme_requestDAO {
 	class Withme_requestRowMapper implements RowMapper<Withme_request> {
 		@Override
 		public Withme_request mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Withme_request withme_request = new Withme_request(rs.getInt(1), 
-					rs.getString(2), rs.getString(3), rs.getTimestamp(4)
-			);
+			Withme_request withme_request = new Withme_request(rs.getInt(1), rs.getString(2), rs.getString(3),
+					rs.getString(4),rs.getTimestamp(5),rs.getTimestamp(6),rs.getTimestamp(7));
 			return withme_request;
 		}
 
@@ -59,7 +59,40 @@ public class Withme_requestDAO {
 //	}
 
 	public List<Withme_request> selectAll() {
-		List<Withme_request> result = this.jdbcTemplate.query("select * from withme_request", new Withme_requestRowMapper());
+		List<Withme_request> result = this.jdbcTemplate.query("select * from withme_request",
+				new Withme_requestRowMapper());
+		return result;
+	}
+
+	public List<Withme_requestForReSe> selectReceiveRequest(Withme_request obj) {
+		List<Withme_requestForReSe> result = this.jdbcTemplate.query(
+				"select wr.request_id, wr.sender_id, wr.receiver_id, wr.statue, wr.start_date, wr.end_date, wr.write_time, m.gender, m.name from withme_request wr inner join member m on wr.sender_id = m.member_id where wr.receiver_id = ?",
+				new RowMapper<Withme_requestForReSe>() {
+
+					@Override
+					public Withme_requestForReSe mapRow(ResultSet rs, int rowNum) throws SQLException {
+						Withme_requestForReSe wr = new Withme_requestForReSe(rs.getInt(1), rs.getString(2),
+								rs.getString(3),rs.getString(4), rs.getTimestamp(5),rs.getTimestamp(6),rs.getTimestamp(7), rs.getInt(8), rs.getString(9));
+						return wr;
+					}
+
+				}, obj.getReceiver_id());
+		return result;
+	}
+
+	public List<Withme_requestForReSe> selectSendRequest(Withme_request obj) {
+		List<Withme_requestForReSe> result = this.jdbcTemplate.query(
+				"select wr.request_id, wr.sender_id, wr.receiver_id, wr.statue, wr.start_date, wr.end_date, wr.write_time, m.gender, m.name from withme_request wr inner join member m on wr.receiver_id = m.member_id where wr.sender_id = ?",
+				new RowMapper<Withme_requestForReSe>() {
+
+					@Override
+					public Withme_requestForReSe mapRow(ResultSet rs, int rowNum) throws SQLException {
+						Withme_requestForReSe wr = new Withme_requestForReSe(rs.getInt(1), rs.getString(2),
+								rs.getString(3),rs.getString(4), rs.getTimestamp(5),rs.getTimestamp(6),rs.getTimestamp(7), rs.getInt(8), rs.getString(9));
+						return wr;
+					}
+
+				}, obj.getSender_id());
 		return result;
 	}
 

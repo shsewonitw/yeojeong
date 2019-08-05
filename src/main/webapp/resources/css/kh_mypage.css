@@ -31,6 +31,15 @@ a:hover {
 	text-align: left;
 }
 
+.request_btn {
+	display: inline-block;
+	cursor: pointer;
+	padding: 2px;
+	border-radius: 4px;
+	border: solid thin #ddd;
+	margin: 2px;
+}
+
 .direction {
 	cursor: pointer;
 	line-height: 40px
@@ -48,6 +57,10 @@ a:hover {
 
 .info_box {
 	display: none;
+}
+
+.col-md-9 {
+	margin-bottom: 100px
 }
 
 .myInformationHeader {
@@ -172,6 +185,12 @@ a:hover {
 	color: white;
 }
 
+$
+write_sub_div {
+	width: 100%;
+	overflow: hidden;
+}
+
 #write_img {
 	max-width: 100px;
 	max-height: 100px;
@@ -186,13 +205,13 @@ a:hover {
 
 .write_bottom_div {
 	display: inline-block;
-	width: 75%;
+	width: 100%;
 }
 
 .write_head_div {
 	float: left;
 	line-height: 40px;
-	width: 70%;
+	width: 80%;
 }
 
 #tel_btn {
@@ -207,6 +226,15 @@ a:hover {
 	text-align: center;
 	margin-left: 10%;
 	margin-right: 10%;
+}
+
+.withme__body_div {
+	display: inline-block;
+	margin: 20px;
+	border: solid thin #ddd;
+	padding: 10px;
+	border-radius: 4px;
+	width: 170px;
 }
 
 body {

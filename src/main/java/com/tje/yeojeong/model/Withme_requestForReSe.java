@@ -1,4 +1,4 @@
-﻿package com.tje.yeojeong.model;
+package com.tje.yeojeong.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,7 +6,7 @@ import java.util.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class Withme_request {
+public class Withme_requestForReSe {
 	private int request_id;
 	private String sender_id;
 	private String receiver_id;
@@ -17,12 +17,14 @@ public class Withme_request {
 	private Date end_date;
 	@DateTimeFormat
 	private Date write_time;
+	private int gender;
+	private String name;
 
-	public Withme_request() {
+	public Withme_requestForReSe() {
 	}
 
-	public Withme_request(int request_id, String sender_id, String receiver_id, String statue, Date start_date,
-			Date end_date, Date write_time) {
+	public Withme_requestForReSe(int request_id, String sender_id, String receiver_id, String statue, Date start_date,
+			Date end_date, Date write_time, int gender, String name) {
 		super();
 		this.request_id = request_id;
 		this.sender_id = sender_id;
@@ -31,14 +33,16 @@ public class Withme_request {
 		this.start_date = start_date;
 		this.end_date = end_date;
 		this.write_time = write_time;
+		this.gender = gender;
+		this.name = name;
 	}
 
-	public final String getStatue() {
-		return statue;
-	}
+	public String getStart_dateString() {
+		if (start_date == null)
+			return "입력된 날짜 오류 관리자에게 문의하세요";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(this.start_date);
 
-	public final void setStatue(String statue) {
-		this.statue = statue;
 	}
 
 	public final Date getStart_date() {
@@ -49,12 +53,44 @@ public class Withme_request {
 		this.start_date = start_date;
 	}
 
+	public String getEnd_dateString() {
+		if (end_date == null)
+			return "입력된 날짜 오류 관리자에게 문의하세요";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(this.end_date);
+
+	}
+
 	public final Date getEnd_date() {
 		return end_date;
 	}
 
 	public final void setEnd_date(Date end_date) {
 		this.end_date = end_date;
+	}
+
+	public final String getStatue() {
+		return statue;
+	}
+
+	public final void setStatue(String statue) {
+		this.statue = statue;
+	}
+
+	public final int getGender() {
+		return gender;
+	}
+
+	public final void setGender(int gender) {
+		this.gender = gender;
+	}
+
+	public final String getName() {
+		return name;
+	}
+
+	public final void setName(String name) {
+		this.name = name;
 	}
 
 	public final int getRequest_id() {
@@ -79,6 +115,10 @@ public class Withme_request {
 
 	public final void setReceiver_id(String receiver_id) {
 		this.receiver_id = receiver_id;
+	}
+
+	public String getGenderString() {
+		return gender == 1 ? "남성" : "여성";
 	}
 
 	public String getWrite_timeString() {

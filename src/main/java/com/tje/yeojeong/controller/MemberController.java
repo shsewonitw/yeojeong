@@ -24,6 +24,7 @@ import com.tje.yeojeong.model.City_Data;
 import com.tje.yeojeong.model.Member;
 import com.tje.yeojeong.model.Review_view;
 import com.tje.yeojeong.model.Travel_regist;
+import com.tje.yeojeong.model.Withme_request;
 import com.tje.yeojeong.service.City_DataSelectCountryService;
 import com.tje.yeojeong.service.MemberInsertService;
 import com.tje.yeojeong.service.MemberLoginService;
@@ -34,6 +35,8 @@ import com.tje.yeojeong.service.ReviewSelectWhereIdService;
 import com.tje.yeojeong.service.TravelRegistDeleteService;
 import com.tje.yeojeong.service.TravelRegistUpdateService;
 import com.tje.yeojeong.service.TravelSearchedTravelListService;
+import com.tje.yeojeong.service.WithmeRequestReceiveService;
+import com.tje.yeojeong.service.WithmeRequestSendService;
 import com.tje.yeojeong.setting.PagingInfo;
 
 @Controller
@@ -59,6 +62,10 @@ public class MemberController {
 	private TravelRegistDeleteService trdService;
 	@Autowired
 	private TravelRegistUpdateService truService;
+	@Autowired
+	private WithmeRequestReceiveService wrrService;
+	@Autowired
+	private WithmeRequestSendService wrsService;
 	@Autowired
 	private PagingInfo pagingInfo;
 
@@ -183,13 +190,24 @@ public class MemberController {
 	private String mypageForm(Integer page, Model model, HttpSession session) {
 		Review_view review_view = new Review_view();
 		Member member = (Member) session.getAttribute("login_member");
+		Withme_request Withme_request = new Withme_request();
+		
+		// 동행 요청 받는 관련
+		Withme_request.setReceiver_id(member.getMember_id());
+		model.addAttribute("withmeRequestReceive",(List<Withme_request>)wrrService.service(Withme_request));
+		
+		//동행 요청 보낸 관련
+		Withme_request.setSender_id(member.getMember_id());
+		model.addAttribute("withmeRequestSend",(List<Withme_request>)wrsService.service(Withme_request));
 
 		Travel_regist travelRegist = new Travel_regist();
 		travelRegist.setMember_id(member.getMember_id());
 		List<Travel_regist> TravelRegistList = (List<Travel_regist>) tstlService.service(travelRegist);
+		// 내여행 관련
 		model.addAttribute("TravelRegistList", TravelRegistList);
 
 		List<String> countryList = (List<String>) cdsCountryService.service();
+		// 내여행 관련
 		model.addAttribute("countryList", countryList);
 
 		HashMap<String, Object> args = new HashMap<String, Object>();
@@ -197,8 +215,10 @@ public class MemberController {
 		review_view.setMember_id(member.getMember_id());
 		args.put("review_view", review_view);
 
+		// 내가 쓴글 관련
 		model.addAttribute("rList", rsbimervice.service(args));
 
+		// 내가쓴글 페이징 관련
 		HashMap<String, Integer> result = (HashMap<String, Integer>) rcbmService.service(review_view);
 		model.addAttribute("r_count", result.get("totalCount"));
 		int totalPageCount = (int) result.get("totalPageCount");
@@ -249,9 +269,9 @@ public class MemberController {
 	@PostMapping("/auth/mypageTravelRegistUpdate")
 	@ResponseBody
 	public boolean mypageTravelRegistUpdate_Submit(HttpSession session, @RequestBody Travel_regist travelRegist) {
-System.out.println(1);
-		boolean result = (Boolean)truService.service(travelRegist);
-		
+		System.out.println(1);
+		boolean result = (Boolean) truService.service(travelRegist);
+
 		return result;
 	}
 

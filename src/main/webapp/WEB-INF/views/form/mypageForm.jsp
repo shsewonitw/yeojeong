@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>마이페이지</title>
 <link href="<%=request.getContextPath()%>/resources/css/kh_bootstrap.min.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/resources/css/kh_mypage.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/resources/css/kh_mypage.css?asd=sd" rel="stylesheet">
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/kh_bootstrap.min.js"></script>
 
@@ -24,66 +24,18 @@
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <!--  -->
 <script>
-// $(function(){
-// 	$(".start_date").on("click",function(){
-// 		var a = $(this).attr("id");
-// 		$("#"+a).datepicker({
-// 		    dateFormat: 'yy-mm-dd'
-// 		  });
-// 	});
-// 	$(".end_date").on("click",function(){
-// 		var b = $(this).attr("id");
-// 		$("#"+b).datepicker({
-// 		    dateFormat: 'yy-mm-dd'
-// 		  });
-// 	});
-// });
-
-// $(function(){
-	
-	
-<%-- 	<% --%>
-// 	List<Travel_regist> TravelRegistList = (List<Travel_regist>) request.getAttribute("TravelRegistList");
-// 	List<Integer> array = new ArrayList<Integer>();
-// 	int subint;
-// 	int asd =0;
-
-// 	for (int i = 0; i < TravelRegistList.size(); i++) {
-// 		try {
-// 			subint =TravelRegistList.get(i).getTravel_id();
-// 		} catch (Exception e) {
-// 			subint =TravelRegistList.get(i).getTravel_id();
-// 		}
-// 		array.add(subint);
-// 	}
-// 	request.setAttribute("array", array);
-<%-- 	%> --%>
-<%-- 	for(<%=asd%>;<%=asd%> <"${TravelRegistList.size()}"-1;<%=asd++%>){ --%>
-		
-<%-- 		$("#"+<%=array.get(asd)%>+"_start_date").datepicker({ --%>
-// 		    dateFormat: 'yy-mm-dd'
-// 		  });
-<%-- 		$("#"+<%=array.get(asd)%>+"_end_date").datepicker({ --%>
-// 		    dateFormat: 'yy-mm-dd'
-// 		  });
-// 		}
-// 	});
-
-
-
-
-
-
-function temp(travel_id){
-	
-	$("#"+travel_id+"_start_date").datepicker({
+$(function(){
+	// id 값 지정할시 작동안함
+	$(".start_date").datepicker({
 	    dateFormat: 'yy-mm-dd'
 	  });
-	  
-	  $("#"+travel_id+"_end_date").datepicker({
+	$(".end_date").datepicker({
 	    dateFormat: 'yy-mm-dd'
 	  });
-}
+	
+	
+});
+
 
 
 function doChange(srcE, targetId){
@@ -298,8 +250,78 @@ function removeAll(e){
 
 			}
 		});
+// 		```````````````````````````````````동행 요청 리스트 수락 및 css 적용//
+	function hoverColor_withme(selector,css,color){
+		selector.css(css,color);
+	}
+
+		$(".request_btn").hover(function(){
+							var s =$(this).css("background-color");
+							hoverColor_withme($(this),"color","black");
+							hoverColor_withme($(this),"background-color", "#dcdcdc");
+							if(s=="rgb(52, 152, 219)"){
+								hoverColor_withme($(this),"background-color", "rgb(52, 152, 219)");
+								hoverColor_withme($(this),"color", "white");
+							}
+						},function(){
+							var s =$(this).css("background-color");
+							hoverColor_withme($(this),"color", "black");
+							hoverColor_withme($(this),"background-color", "white");
+							 if(s=="rgb(52, 152, 219)"){
+								 hoverColor_withme($(this),"background-color", "rgb(52, 152, 219)");
+								 hoverColor_withme($(this),"color", "white");
+							}
+						});
 		
+		$(".request_btn").on("click",function() {
+			
+			var id_check = $(this).attr("id");
+			
+			var ac = $(this).parent().find(".request_btn").eq(0);
+			var ref = $(this).parent().find(".request_btn").eq(1);
+			var hol = $(this).parent().find(".request_btn").eq(2);
+			
+			if(id_check==ac){
+				// 수락 눌렀을시
+				$.ajax({
+					url : "<%=request.getContextPath()%>/auth/mypageTravelRegistUpdate",
+					type : "post",
+					contentType : "application/json; charset=UTF-8",
+					data : travelRegistJsonObject,
+					dataType : "text",
+					success : function(data) {
+						if (eval(data)) {
+							alert("수락요청이 완료되었습니다.");
+						} else {
+							alert("일정 변경에 실패하였습니다.(관리자에게 문의하세요.)");
+						}
+	
+					},
+					error : function(data) {
+						alert("통신오류(관리자에게 문의하세요.)");
+					}
+				});
+			} else if(id_check==ref){
+				// 거절 눌렀을시
+				
+			} else if(id_check==hol){
+				// 보류 눌렀을시
+				
+			}
+			
+			
+			
+			
+			for(var i = 0 ; i <= 2;i++){
+				hoverColor_withme($(this).parent().find(".request_btn").eq(i),"background-color", "white");
+				hoverColor_withme($(this).parent().find(".request_btn").eq(i),"color", "black");
+			}
+			hoverColor_withme($(this),"background-color", "rgb(52, 152, 219)");
+			hoverColor_withme($(this),"color", "white");
+		});
+// 		```````````````````````````````````//
 		
+		// 리스트 클릭시 색변경
 			function display_change(data){
 				$("#haveBeen").css("display","none");
 				$("#write").css("display","none");
@@ -311,6 +333,7 @@ function removeAll(e){
 		function hoverColor(selector,css,color){
 			selector.css(css,color);
 		}
+	
 			$(".list").hover(function(){
 								var s =$(this).css("background-color");
 								hoverColor($(this),"color","black");
@@ -359,7 +382,7 @@ function removeAll(e){
 // 		 		```````````````이 바뀌면서 내가 보고 있던 목록을 유지 시켜줌)
 
 				// 시작페이지
-				var dis = "trip";
+				var dis = "withMe";
 				
 				if("${mypagelistname}"||!("${mypagelistname}"== "")){
 				list_click("${mypagelistname}");
@@ -372,6 +395,33 @@ function removeAll(e){
 						$("#" + name + "2").click();
 				}
 // 				```````````````````````````````````````````````
+
+//					`````````````````````````동행요청리스트 수락 거정 버튼시 css조정//
+// 				function cha(data, one, two, three){
+// 					$(one).css("visibility","visible");
+// 					$(two).css("visibility","visible");
+// 					$(three).css("visibility","visible");
+					
+// 					$("#" + data).css("visibility","hidden");
+// 				}
+				
+// 					$("#withme_btn button").on("click",function(){
+// 						var id_check = $(this).attr("id");
+						
+// 						var ac = $(this).parent().find("button").eq(0);
+// 						var ref = $(this).parent().find("button").eq(1);
+// 						var hol = $(this).parent().find("button").eq(2);
+						
+// 							cha(id_check, ac, ref, hol);
+							
+							
+// 						var request_id_val = $(this).parents("div#seperate_div").find(".receive_request_id").val();
+// 						var statue_val = $(this).parents("div#seperate_div").find(".receive_statue").val();
+// 							alert(request_id_val);
+// 							alert(statue_val);
+							
+// 					});
+//						``````````````````````````````````//
 			});
 				
 	
@@ -430,7 +480,7 @@ function removeAll(e){
 			<ul>
 
 				<li class="list">
-					<div id="haveBeen2" class="direction" onclick="location.href ='#haveBeen'">내가
+					<div id="haveBeen2" class="direction" onclick="location.href ='#haveBeenPa'">내가
 						다녀온 곳</div>
 				</li>
 
@@ -526,27 +576,28 @@ function removeAll(e){
 				<c:forEach begin="0" end="${rList.size()-1}" var="i">
 					<div class="write_body_div">
 						<div style="padding: 20px">
-
-							<div class="write_head_div">
-								<div style="float: left;">
-									<span>${ rList[i].name }</span>
-									<span>${ date[i] }</span>
+							<div id="write_sub_div">
+								<div class="write_head_div" >
+									<div style="float: left;">
+										<span>${ rList[i].name }</span>
+										<span>${ date[i] }</span>
+									</div>
+									<div style="float: right;">
+										<span>${ rList[i].country }</span>
+										<span>${ rList[i].city }</span>
+									</div>
+	
+									<div class="write_bottom_div"><a href=""><b>${subcontent[i]}</b></a></div>
+									<div>
+										<span>평점 ${ rList[i].review_star }&nbsp;&nbsp;</span>
+										<span>댓글${ rList[i].comment_count }</span>
+									</div>
 								</div>
-								<div style="float: right;">
-									<span>${ rList[i].country }</span>
-									<span>${ rList[i].city }</span>
-								</div>
-
-								<div class="write_bottom_div"><a href=""><b>${subcontent[i]}</b></a></div>
-								<div>
-									<span>평점 ${ rList[i].review_star }&nbsp;&nbsp;</span>
-									<span>댓글${ rList[i].comment_count }</span>
+								
+								<div id="write_img_div" OnClick="" >
+									<img id="write_img" class="img-thumbnail" src="<%=request.getContextPath()%>/resources/cityimg/${ rList[i].image_src }">
 								</div>
 							</div>
-							<div id="write_img_div" OnClick="">
-								<img id="write_img" class="img-thumbnail" src="<%=request.getContextPath()%>/resources/cityimg/${ rList[i].image_src }">
-							</div>
-
 
 						</div>
 					</div>
@@ -646,11 +697,11 @@ function removeAll(e){
 							
 							<div class="date_div">
 								<span><label for="start_date" style="display: inline-block;"><b>출국날짜&nbsp;&nbsp;&nbsp;</b></label></span>
-								<span><input onclick="temp('${travelList.travel_id}');" id="${travelList.travel_id}_start_date" name="start_date" value="${travelList.start_date }" class="form-control start_date" placeholder="클릭하여 날짜 선택"  autocomplete="off"></span>
+								<span><input name="start_date" value="${travelList.start_date }" class="form-control start_date" placeholder="클릭하여 날짜 선택"  autocomplete="off"></span>
 							</div>
 							<div class="date_div">
 								<span><label for="end_date" style="display: inline-block;"><b>입국날짜&nbsp;&nbsp;&nbsp;</b></label></span>
-								<span><input onclick="temp('${travelList.travel_id}');" id="${travelList.travel_id}_end_date" name="end_date" value="${travelList.end_date }" class="form-control end_date"  placeholder="클릭하여 날짜 선택"  autocomplete="off" ></span>
+								<span><input name="end_date" value="${travelList.end_date }" class="form-control end_date"  placeholder="클릭하여 날짜 선택"  autocomplete="off" ></span>
 							</div>
 							<div style="padding-left: 30px;">
 								<button type="button" class="btn btn-primary trip_update_btn">변경</button>
@@ -661,6 +712,103 @@ function removeAll(e){
 				</c:forEach>
 			</div>
 			<!-- 			``````````````````````` -->
+			
+			<!-- 		``````````````````	동행 요청리스트 -->
+			<div id="withMe" class="info_box">
+			
+				<ul class="nav nav-tabs" role="tablist" id="myTab">
+				  <li role="presentation" class="active"><a href="#requestReceive" aria-controls="requestReceive" role="tab" data-toggle="tab">요청 받은 리스트</a></li>
+				  <li role="presentation"><a href="#requestSend" aria-controls="requestSend" role="tab" data-toggle="tab">요청 보낸 리스트</a></li>
+				</ul>
+	
+				<div class="tab-content">
+				<!-- 요청 받은 리스트 -->
+				  <div role="tabpanel" class="tab-pane fade in active" id="requestReceive">
+					<c:forEach items="${withmeRequestReceive }" var="Receive" varStatus="statu">
+						<div class="withme__body_div" id="seperate_div">
+							<input type="hidden" class="receive_request_id" name="request_id" value="${Receive.request_id }"/>
+							<input type="hidden" class="receive_statue" name="statue" value="${Receive.statue }"/>
+								<div style="padding: 5px;">
+									보낸사람 : ${Receive.name }
+								</div>
+								<div style="padding: 5px;">
+									보낸사람성별 : ${Receive.genderString }
+								</div>
+								<div style="padding: 5px;">
+									출국날짜<br>${Receive.start_dateString }
+								</div>
+								<div style="padding: 5px;">
+									입국날짜<br>${Receive.end_dateString }
+								</div>
+								<div id="withme_btn" >
+								
+									<div class="request_btn" id="ac${statu.index }" ><div id="ac${statu.index }" onclick="">수락</div></div>
+									<div class="request_btn" id="ref${statu.index }" ><div id="ref${statu.index }" onclick="">거절</div></div>
+									<div class="request_btn" id="hol${statu.index }"><div id="hol${statu.index }" onclick="">보류</div></div>
+									<script type="text/javascript">
+ 										var status = "${Receive.statue }";
+ 										var index = "${statu.index }";
+										if(status == '수락'){ 
+											$('#ac'+index).css("background-color","rgb(52, 152, 219)"); 
+											$('#ac'+index).css("color","white"); 
+										} 
+ 										if(status == '거절'){ 
+											$('#ref'+index).css("background-color","rgb(52, 152, 219)"); 
+											$('#ref'+index).css("color","white"); 
+										} 
+										if(status == '요청대기중'){ 
+											$('#hol'+index).css("background-color","rgb(52, 152, 219)"); 
+											$('#hol'+index).css("color","white"); 
+										} 
+									</script> 
+
+								</div>
+								
+						</div>
+					
+					
+					</c:forEach>
+
+
+				  </div>
+				<!-- ------------------ -->
+				
+				<!-- 요청 보낸 리스트 -->
+				  <div role="tabpanel" class="tab-pane fade in" id=requestSend>
+					<c:forEach items="${withmeRequestSend }" var="Send" varStatus="statu">
+						<div class="withme__body_div">
+							<input type="hidden" name="request_id" value="${Send.request_id }"/>
+								
+								<div style="padding: 5px;">
+									받는사람 : ${Send.name }
+								</div>
+								<div style="padding: 5px;">
+									받는사람성별 : ${Send.genderString }
+								</div>
+								<div style="padding: 5px;">
+									출국날짜<br>${Send.start_dateString }
+								</div>
+								<div style="padding: 5px;">
+									입국날짜<br> ${Send.end_dateString }
+								</div>
+								<div style="padding: 5px;">
+									상태 : ${Send.statue }
+								</div>
+								삭제	쪽지보내기
+								
+								
+						</div>
+					
+					</c:forEach>
+				  
+				  
+				  </div>
+				<!-- ------------------ -->
+				</div>
+
+			</div>
+			<!-- 			``````````````````````` -->
+			
 		</div>
 
 	</div>

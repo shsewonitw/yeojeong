@@ -16,14 +16,11 @@ import com.tje.yeojeong.model.*;
 import com.tje.yeojeong.service.City_DataSelectCityService;
 import com.tje.yeojeong.service.City_DataSelectCountryService;
 import com.tje.yeojeong.service.MemberLoginService;
-import com.tje.yeojeong.service.MemberSearchService;
 
 @Controller
 public class AdminController {
 	@Autowired
 	private MemberLoginService mlService;
-	@Autowired
-	private MemberSearchService msService;
 	@Autowired
 	private City_DataSelectCountryService cdsCountryService;
 	@Autowired
@@ -52,9 +49,8 @@ public class AdminController {
 			member.setPassword(password);
 			
 			boolean flag_login = (boolean)mlService.service(member);
-			boolean flag_level = ((Member)msService.service(member)).getLevel() == 2;
 			
-			if(flag_login && flag_level) {
+			if(flag_login ) {
 				// 관리자 로그인 성공
 				HttpSession session = request.getSession();
 				session.setAttribute("login_admin", member);

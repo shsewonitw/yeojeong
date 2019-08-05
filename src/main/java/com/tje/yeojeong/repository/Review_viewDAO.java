@@ -3,6 +3,7 @@ package com.tje.yeojeong.repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -122,26 +123,17 @@ public class Review_viewDAO {
 		String sql = "select count(*) from review_view";
 		return this.jdbcTemplate.queryForObject(sql, Integer.class);
 	}
-	// 카테고리 아이디 검색
-	public List<Review_view> selectId(Review_view obj) {
-		List<Review_view> result = this.jdbcTemplate.query("select * from review_article where member_id like ?);",
-				new Review_viewRowMapper(), "%" + obj.getMember_id() + "%");
+	// 카테고리  검색
+	public List<Review_view> selectSerach(String searchItem, String searchValue,int page) {
+		String sql = String.format("select * from Review_view where %s like ? limit ?, ?", searchItem);
+		List<Review_view> result = this.jdbcTemplate.query(sql,new Review_viewRowMapper(), "%" + searchValue  + "%",
+				(page-1)*this.pagingInfo.getPagingSize(),this.pagingInfo.getPagingSize());
 		return result.isEmpty() ? null : result;
 	}
 	
-	// 카테고리 국가 검색
-	public List<Review_view> selectcountry(Review_view obj) {
-		List<Review_view> result = this.jdbcTemplate.query("select * from review_article where country like ?);",
-				new Review_viewRowMapper(), "%" + obj.getCountry()+ "%");
-		return result.isEmpty() ? null : result;
+	// 카테고리 검색 카운트
+	public Integer review_SerachCount(String searchItem, String searchValue) {
+		String sql = String.format("select count(*) from Review_view where %s like %s", searchItem, "'" + searchValue + "'");
+		return this.jdbcTemplate.queryForObject(sql, Integer.class);
 	}
-
-	// 카테고리 도시 검색
-	public List<Review_view> selectcity(Review_view obj) {
-		List<Review_view> result = this.jdbcTemplate.query("select * from review_article where city like ?);",
-				new Review_viewRowMapper(), "%" + obj.getCity() + "%");
-		return result.isEmpty() ? null : result;
-
-	}
-
 }

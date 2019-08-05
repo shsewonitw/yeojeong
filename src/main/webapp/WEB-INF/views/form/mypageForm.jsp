@@ -284,7 +284,7 @@ function removeAll(e){
 			if(id_check==ac){
 				// 수락 눌렀을시
 				$.ajax({
-					url : "<%=request.getContextPath()%>/auth/mypageTravelRegistUpdate",
+					url : "<%=request.getContextPath()%>/auth/mypageWithMe",
 					type : "post",
 					contentType : "application/json; charset=UTF-8",
 					data : travelRegistJsonObject,
@@ -735,6 +735,12 @@ function removeAll(e){
 									보낸사람성별 : ${Receive.genderString }
 								</div>
 								<div style="padding: 5px;">
+									나라<br>${Receive.country }
+								</div>
+								<div style="padding: 5px;">
+									시티<br>${Receive.city }
+								</div>
+								<div style="padding: 5px;">
 									출국날짜<br>${Receive.start_dateString }
 								</div>
 								<div style="padding: 5px;">
@@ -784,6 +790,12 @@ function removeAll(e){
 								</div>
 								<div style="padding: 5px;">
 									받는사람성별 : ${Send.genderString }
+								</div>
+								<div style="padding: 5px;">
+									나라<br>${Send.country }
+								</div>
+								<div style="padding: 5px;">
+									시티<br> ${Send.city }
 								</div>
 								<div style="padding: 5px;">
 									출국날짜<br>${Send.start_dateString }

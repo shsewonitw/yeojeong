@@ -11,6 +11,8 @@ public class Withme_requestForReSe {
 	private String sender_id;
 	private String receiver_id;
 	private String statue;
+	private String country;
+	private String city;
 	@DateTimeFormat
 	private Date start_date;
 	@DateTimeFormat
@@ -23,18 +25,36 @@ public class Withme_requestForReSe {
 	public Withme_requestForReSe() {
 	}
 
-	public Withme_requestForReSe(int request_id, String sender_id, String receiver_id, String statue, Date start_date,
-			Date end_date, Date write_time, int gender, String name) {
+	public Withme_requestForReSe(int request_id, String sender_id, String receiver_id, String statue, String country,
+			String city, Date start_date, Date end_date, Date write_time, int gender, String name) {
 		super();
 		this.request_id = request_id;
 		this.sender_id = sender_id;
 		this.receiver_id = receiver_id;
 		this.statue = statue;
+		this.country = country;
+		this.city = city;
 		this.start_date = start_date;
 		this.end_date = end_date;
 		this.write_time = write_time;
 		this.gender = gender;
 		this.name = name;
+	}
+
+	public final String getCountry() {
+		return country;
+	}
+
+	public final void setCountry(String country) {
+		this.country = country;
+	}
+
+	public final String getCity() {
+		return city;
+	}
+
+	public final void setCity(String city) {
+		this.city = city;
 	}
 
 	public String getStart_dateString() {

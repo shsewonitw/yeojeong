@@ -7,9 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>받은쪽지 : 여정 쪽지</title>
-<link href="resources/css/jb_bootstrap.min.css?asd=asdda" rel="stylesheet">
-<script src="resources/js/jb_bootstrap.min.js"></script>
-<script type="text/javascript" src="resources/js/jquery.js"></script>
+<link href="<%=request.getContextPath() %>/resources/css/jb_bootstrap.min.css?asd=1" rel="stylesheet">
+<script src="<%=request.getContextPath() %>/resources/js/jb_bootstrap.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 
 <style type="text/css">
 .a:link {color:#3498DB;text-decoration:none;}
@@ -37,46 +37,94 @@ th, td {
 	transform:translate(-50%);
 	height:auto;
 }
+br {
+	display:none;
+}
 </style>
 
 </head>
 <body>
-
 <script type="text/javascript">
-/* 메세지 수신 부분 */
-function winopen() {
-	window.open("<%=request.getContextPath()%>/receivecontent","receivecontentOpen",
-		"width=740,height=620,left=150,top=150,resizable=no,location=no,menubar=no,toolbar=no,scrollbars=no");
-};
+	// 페이지 새로고침
+	$(document).ready(function() {
+		$('a').click(function() {
+			setTimeout("history.go(0);",1000)
+		});
+	});
+	// 메세지 수신 부분 
+	function winopen(num) {
+		window.open("<%=request.getContextPath()%>/message/receivecontent/"+num,"receivecontentOpen",
+			"width=740,height=620,left=150,top=150,resizable=no,location=no,menubar=no,toolbar=no,scrollbars=no");
+	};
+	
+	// 메세지 답장(아이디 클릭) 부분 
+	function transform(sender) {
+		window.open("<%=request.getContextPath()%>/message/retransform/"+sender,"receivecontentOpen",
+			"width=740,height=620,left=150,top=150,resizable=no,location=no,menubar=no,toolbar=no,scrollbars=no");
+	};
+	
+	// 메세지 삭제 부분 
+	// 체크박스 전체 선택 
+	$(document).ready(function() {
+		$('#chk_all').click(function() {
+			var chk = $('#chk_all').prop('checked');
+			if(chk) {
+				$('.chk_row').prop('checked', true);
+			} else {
+				$('.chk_row').prop('checked', false);
+			}
+		});
+	});
+	
+	// 메세지 삭제
+	$("#delete_btn").click(function(){ 
+		var confirm_val = confirm("정말 삭제하시겠습니까?");
 
-/* 메세지 답장(아이디 클릭) 부분 */
-function transform() {
-	window.open("<%=request.getContextPath()%>/transform","receivecontentOpen",
-		"width=740,height=620,left=150,top=150,resizable=no,location=no,menubar=no,toolbar=no,scrollbars=no");
-};
+		if(confirm_val) {
+		var checkArr = new Array();
+
+		$("input[class='chk_row']:checked").each(function(){
+		checkArr.push($(this).attr("data-message_id"));
+		});
+
+			$.ajax({
+				url : "<%=request.getContextPath()%>/message/receive/",
+				type : "post",
+				data : { chk_row : checkArr },
+				success : function(){
+				location.href = "<%=request.getContextPath()%>/message/receive/";
+				}
+			});
+		}
+	});
 </script>
-
 <div class="top"></div>
 <div class="message_bar">
-<h3><a href="<%=request.getContextPath()%>/receive" class="a">　받은쪽지</a>(${readCount}/${r_count}) | <a href="<%=request.getContextPath()%>/receive" class="a">보낸쪽지</a>
-<button type="button" class="btn btn-default">삭제</button></h3>
+<h3><a href="<%=request.getContextPath()%>/message/receive/" class="a">&nbsp;&nbsp;&nbsp;&nbsp;받은쪽지</a>(${readCount}/${r_count}) | <a href="<%=request.getContextPath()%>/message/send/" class="a">보낸쪽지</a>
+<button class="btn btn-default" id="delete_btn" type="button" data-message_id="${rmsg.message_id}">삭제</button></h3>
 </div>
 <div class="middle">
 <table class="table">
 	<tr class="trcolor">
-		<th width="10%"><input type="checkbox" name="all_chk"></th>
+		<th width="10%"><input type="checkbox" id="chk_all"></th>
 		<th width="20%">보낸사람</th>
 		<th width="40%">내용</th>
 		<th width="15%">보낸시간</th>
 		<th width="15%">읽은시간</th>
 	</tr>
 	
+	<c:if test="${ empty rList }">
+	<tr>
+		<td colspan="5">쪽지가 없습니다.</td>
+	</tr>
+	</c:if>
+	 
 	<c:forEach items="${rList}" var="rmsg">
 	<c:if test="${ empty rmsg.receive_time }" var="r">
 	<tr>
-		<th width="10%"><input type="checkbox" name="one_chk"></th>
-		<th width="20%"><a href="#" class="a" onclick="transform();">${ rmsg.sender_id }</a></th>
-		<th width="40%"><a href="<%=request.getContextPath()%>/message/receivecontent/${ rmsg.message_id }" class="a">새 메세지 확인</a></th>
+		<th width="10%"><input type="checkbox" class="chk_row" name="chk_row" data-message_id="${rmsg.message_id}"></th>
+		<th width="20%"><a href="#" class="a" onclick="transform('${rmsg.sender_id}');">${rmsg.sender_id}</a></th>
+		<th style="text-align:left" width="40%"><a href="" class="a" onclick="winopen('${rmsg.message_id}');">새 쪽지 확인</a></th>
 		<th width="15%">${ rmsg.send_time }</th>
 		<th width="15%">${ empty rmsg.receive_time ? '읽지않음' : rmsg.receive_time }</th>
 	</tr>
@@ -84,16 +132,16 @@ function transform() {
 	
 	<c:if test="${ not r }">
 	<tr>
-		<td width="10%"><input type="checkbox" name="one_chk"></td>
-		<td width="20%"><a href="#" class="a" onclick="transform();">${ rmsg.sender_id }</a></td>
-		<td width="40%"><a href="<%=request.getContextPath()%>/message/receivecontent/${ rmsg.message_id }" class="a">${ rmsg.content }
-		<!-- 10글자 이상 될 시 ...으로 자르는 코드 -->
+		<td width="10%"><input type="checkbox" class="chk_row" name="chk_row" data-message_id="${rmsg.message_id}"></td>
+		<td width="20%"><a href="#" class="a" onclick="transform('${rmsg.sender_id}');">${rmsg.sender_id}</a></td>
+		<td style="text-align:left" width="40%"><a href="" class="a" onclick="winopen('${rmsg.message_id}');">
+		<!-- ...으로 자르는 코드 -->
            <c:choose>
-           <c:when test="${fn:length(rmsg.content) gt 10}">
-           <c:out value="${fn:substring(rmsg.content, 0, 10)}....">
+           <c:when test="${fn:length(rmsg.content) gt 200}">
+           <c:out value="${fn:substring(rmsg.content, 0, 200)}...." escapeXml="false">
 		</c:out></c:when>
-           <c:otherwise>
-           <c:out value="${rmsg.content}">
+		<c:otherwise>
+           <c:out value="${rmsg.content}" escapeXml="false">
              </c:out></c:otherwise>
          </c:choose>
          <!----------------------------------->
@@ -103,11 +151,6 @@ function transform() {
 	</tr>
 	</c:if>
 	</c:forEach>
-	<c:if test="${ not message_id }">
-	<tr>
-		<td colspan="5"><a href="#" class="a" onclick="winopen();">쪽지가 없습니다.</a></td>
-	</tr>
-	</c:if>
 </table>
 </div>
 <div class="battom">
@@ -115,15 +158,15 @@ function transform() {
   <ul class="pagination">
   
   <c:if test="${ beforePageNo ne -1 }">
-    <li class="active"><a href="<%=request.getContextPath()%>/message/receive/${ beforePageNo }" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+    <li><a href="<%=request.getContextPath()%>/message/receive/${ beforePageNo }" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
     </c:if>
     
   <c:forEach var="pageNo" begin="${ startPageNo }" end="${ endPageNo }">
 	<c:if test="${ curPage eq pageNo }" var="r">
-    <li class="active">${ pageNo }<span class="sr-only">(current)</span></li>
+    <li class="active"><a href="#">${ pageNo }</a></li>
     </c:if>
     <c:if test="${ not r }">
-    <li class="active"><a href="<%=request.getContextPath()%>/message/receive/${ pageNo }">${ pageNo }<span class="sr-only">(current)</span></a></li>
+    <li><a href="<%=request.getContextPath()%>/message/receive/${ pageNo }">${ pageNo }</a></li>
     </c:if>
   </c:forEach>
   

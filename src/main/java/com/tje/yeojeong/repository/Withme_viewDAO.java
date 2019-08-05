@@ -31,5 +31,10 @@ public class Withme_viewDAO {
 		}
 	}
 	
-	
+
+	// Count
+	public int withme_viewCount() {
+		String sql = "select count(*) from withme_view";
+		return this.jdbcTemplate.queryForObject(sql, Integer.class);
+	}
 }

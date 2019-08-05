@@ -23,7 +23,7 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
-		<load-on-startup>1</load-on-startup>
+		<load-on-startup>1</load-on-startup>		
 	</servlet>
 		
 	<servlet-mapping>
@@ -41,6 +41,12 @@
 		
 		<jsp-property-group>
 			<url-pattern>/WEB-INF/views/message/receiveForm.jsp</url-pattern>
+			<include-prelude>/WEB-INF/views/common/prelude.jsp</include-prelude>
+			<include-coda>/WEB-INF/views/common/coda.jsp</include-coda>
+		</jsp-property-group>
+		
+		<jsp-property-group>
+			<url-pattern>/WEB-INF/views/message/sendForm.jsp</url-pattern>
 			<include-prelude>/WEB-INF/views/common/prelude.jsp</include-prelude>
 			<include-coda>/WEB-INF/views/common/coda.jsp</include-coda>
 		</jsp-property-group>

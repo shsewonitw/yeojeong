@@ -5,6 +5,10 @@ body{
 	overflow: scroll;
 }
 
+a:link { text-decoration: none;}
+a:visited { text-decoration: none;}
+a:hover { text-decoration: underline;}
+
 .top{
 	height: 170px;
 	background-color: black;
@@ -29,6 +33,15 @@ body{
 	margin-left: 20%;
 	
 }
+
+.imgsize1{
+	width: 150px;
+	height: 30px;
+	margin-left: 2%;
+	
+}
+
+
 /*------------------------------------------------------------------------------------------*/
 input, textarea {
 	padding: 9px;
@@ -90,31 +103,219 @@ select {
 	font-size:12px;
 }
 
-/*----------------별점-----------------------*/
-.starR1{
-    background: url('../img/start.png') no-repeat -52px 0;
-    background-size: auto 100%;
-    width: 15px;
-    height: 30px;
-    float:left;
-    text-indent: -9999px;
-    cursor: pointer;
-}
-.starR2{
-    background: url('../img/start.png') no-repeat right 0;
-    background-size: auto 100%;
-    width: 15px;
-    height: 30px;
-    float:left;
-    text-indent: -9999px;
-    cursor: pointer;
-}
-.starR1.on{background-position:0 0;}
-.starR2.on{background-position:-15px 0;}
+
 
 .submitmagin{
 	margin-left: 40%;
 	
 }
 
+.buttonmargin{
+	margin-left: 40%;
+}
 
+.button {
+  display: inline-block;
+  margin-top : 1%;
+  vertical-align: top;
+  position: relative;
+  overflow: hidden;
+  min-width: 43px;
+  line-height: 30px;
+  padding: 0 24px;
+  font-size: 14px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 0 1px #154c86;
+  background-color: #247edd;
+  background-clip: padding-box;
+  border: 1px solid;
+  border-color: #1c65b2 #18589c #18589c;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));
+  background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));
+  background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));
+}
+.button:before {
+  content: '';
+  position: absolute;
+  top: -25%;
+  bottom: -25%;
+  left: -20%;
+  right: -20%;
+  border-radius: 50%;
+  background: transparent;
+  -webkit-box-shadow: inset 0 0 38px rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 0 38px rgba(255, 255, 255, 0.5);
+}
+.button:hover {
+  background-color: #1a74d3;
+}
+.button:active {
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 -1px #154c86;
+  background: #1f71c8;
+  border-color: #113f70 #154c86 #1c65b2;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px rgba(255, 255, 255, 0.4);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px rgba(255, 255, 255, 0.4);
+  background-image: -webkit-linear-gradient(top, #1a5da5, #3a8be0);
+  background-image: -moz-linear-gradient(top, #1a5da5, #3a8be0);
+  background-image: -o-linear-gradient(top, #1a5da5, #3a8be0);
+  background-image: linear-gradient(to bottom, #1a5da5, #3a8be0);
+}
+.button:active:before {
+  top: -50%;
+  bottom: -125%;
+  left: -15%;
+  right: -15%;
+  -webkit-box-shadow: inset 0 0 96px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 96px rgba(0, 0, 0, 0.2);
+}
+
+.buttontype{
+	border: 0%;
+}
+
+[class*='btn-'] {
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px
+		rgba(0, 0, 0, 0.08);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px
+		rgba(0, 0, 0, 0.08);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px
+		rgba(0, 0, 0, 0.08);
+	color: #fff;
+	display: inline-block;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	text-decoration: none;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+	float: right;
+	-webkit-transition: background-color 0.1s linear;
+	-moz-transition: background-color 0.1s linear;
+	-o-transition: background-color 0.1s linear;
+	transition: background-color 0.1s linear;
+}
+
+[class*='btn-']:hover {
+	cursor: pointer;
+}
+
+.btn-red {
+	background-color: rgb(207, 56, 91);
+	border: 1px solid rgb(187, 40, 74);
+}
+
+.btn-red:hover {
+	background-color: rgb(227, 77, 130);
+}
+
+.btn-red:active {
+	background-color: rgb(187, 40, 74);
+}
+
+
+<!--------->
+
+.star-input>.input,
+.star-input>.input>label:hover,
+.star-input>.input>input:focus+label,
+.star-input>.input>input:checked+label{
+    display: inline-block;
+    vertical-align: top;
+    background: url('../img/restar.png') no-repeat;
+}
+.star-input{
+    white-space: nowrap;
+}
+.star-input>.input{
+    display:inline-block;
+    width: 100px;
+    background-size: 100px;
+    height: 19px;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+}
+.star-input>.input>input{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+.star-input>.input.focus{
+    outline: 1px dotted #ddd;
+}
+.star-input>.input>label{
+    width: 10px;
+    height: 0;
+    padding: 19px 0 0 0;
+    overflow: hidden;
+    float: left;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.star-input>.input>label:hover,
+.star-input>.input>input:focus+label,
+.star-input>.input>input:checked+label{
+    background-size: 100px;
+    background-position: 0 bottom;
+}
+.star-input>.input>label:hover~label{
+    background-image: none;
+}
+.star-input>.input>label[for="p1"]{ 
+    width: 10px;
+    z-index: 10;
+}
+.star-input>.input>label[for="p2"]{ 
+    width: 20px;
+    z-index: 9;
+}
+.star-input>.input>label[for="p3"]{ 
+    width: 30px;
+    z-index: 8;
+}
+.star-input>.input>label[for="p4"]{ 
+    width: 40px;
+    z-index: 7;
+}
+.star-input>.input>label[for="p5"]{ 
+    width: 50px;
+    z-index: 6;
+}
+.star-input>.input>label[for="p6"]{ 
+    width: 60px;
+    z-index: 5;
+}
+.star-input>.input>label[for="p7"]{ 
+    width: 70px;
+    z-index: 4;
+}
+.star-input>.input>label[for="p8"]{ 
+    width: 80px;
+    z-index: 3;
+}
+.star-input>.input>label[for="p9"]{ 
+    width: 90px;
+    z-index: 2;
+}
+.star-input>.input>label[for="p10"]{ 
+    width: 100px;
+    z-index: 1;
+}
+.star-input>output{
+    display: inline-block;
+    width: 36px;
+    text-align: right;
+}
+.star-input>output>b{
+    font:bold 18px Helvetica, Arial, sans-serif;
+    vertical-align: middle;
+}

@@ -1,27 +1,28 @@
 package com.tje.yeojeong.model;
 
-import java.util.*;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 public class City_Data {
 	private int city_code;
 	private String country;
 	private String city;
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
-	private Date local_time;
+	private String local_time;
 	private String flight_time;
 	private String local_voltage;
 	private String visa;
 	private String latitude;
-	private String logitude;
+	private String longitude;
 	private int danger_level;
-	private String img_src;
+	private String image_src; // 썸네일용
+	private String image_src2; // 내부 사진용
+	private String image_src3; // 국기 사진용
 	
 	public City_Data() {}
-	
-	public City_Data(int city_code, String country, String city, Date local_time, String flight_time,
-			String local_voltage, String visa, String latitude, String logitude, int danger_level, String img_src) {
+
+
+	public City_Data(int city_code, String country, String city, String local_time, String flight_time,
+			String local_voltage, String visa, String latitude, String longitude, int danger_level, String image_src,
+			String image_src2, String image_src3) {
 		super();
 		this.city_code = city_code;
 		this.country = country;
@@ -31,9 +32,11 @@ public class City_Data {
 		this.local_voltage = local_voltage;
 		this.visa = visa;
 		this.latitude = latitude;
-		this.logitude = logitude;
+		this.longitude = longitude;
 		this.danger_level = danger_level;
-		this.img_src = img_src;
+		this.image_src = image_src;
+		this.image_src2 = image_src2;
+		this.image_src3 = image_src3;
 	}
 
 
@@ -62,11 +65,11 @@ public class City_Data {
 		this.city = city;
 	}
 
-	public Date getLocal_time() {
+	public String getLocal_time() {
 		return local_time;
 	}
 
-	public void setLocal_time(Date local_time) {
+	public void setLocal_time(String local_time) {
 		this.local_time = local_time;
 	}
 
@@ -102,16 +105,12 @@ public class City_Data {
 		this.latitude = latitude;
 	}
 
-	public String getLogitude() {
-		return logitude;
+	public String getLongitude() {
+		return longitude;
 	}
 
-	public void setLogitude(String logitude) {
-		this.logitude = logitude;
-	}
-	
-	public String getDanger_levelString() {
-		return danger_level == 1 ? "안전" : "유의";
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 
 	public int getDanger_level() {
@@ -122,14 +121,33 @@ public class City_Data {
 		this.danger_level = danger_level;
 	}
 
-	public String getImg_src() {
-		return img_src;
+	public String getImage_src() {
+		return image_src;
 	}
 
-	public void setImg_src(String img_src) {
-		this.img_src = img_src;
+	public void setImage_src(String image_src) {
+		this.image_src = image_src;
 	}
-	
-	
+
+	public String getImage_src2() {
+		return image_src2;
+	}
+
+	public void setImage_src2(String image_src2) {
+		this.image_src2 = image_src2;
+	}
+
+	public String getImage_src3() {
+		return image_src3;
+	}
+
+	public void setImage_src3(String image_src3) {
+		this.image_src3 = image_src3;
+	}
+
+
+
+
+
 	
 }

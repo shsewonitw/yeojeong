@@ -6,9 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>받은쪽지 : 여정 쪽지</title>
-<link href="resources/css/jb_bootstrap.min.css?asd=asdda" rel="stylesheet">
-<script src="resources/js/jb_bootstrap.min.js"></script>
-<script type="text/javascript" src="resources/js/jquery.js"></script>
+<link href="<%=request.getContextPath() %>/resources/css/jb_bootstrap.min.css?asd=2" rel="stylesheet">
+<script src="<%=request.getContextPath() %>/resources/js/jb_bootstrap.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 
 <style type="text/css">
 .a:link {color:#3498DB;text-decoration:none;}
@@ -61,17 +61,17 @@ th, td {
 				<th>보낸시간</th>
 			</tr>
 			<tr>
-				<td>홍길동</td>
-				<td>2019-07-24 15:32</td>
+				<td>${ message.sender_id }</td>
+				<td>${ message.send_time }</td>
 			</tr>
 			<tr>
-				<td class="align" colspan="2" height="450px">내용없음<br>내용 더 없음<br>더더더 없음</td>
+				<td class="align" colspan="2" height="450px">${ message.content }</td>
 			</tr>
 		</table>
 	</div>
 </div>
 	<div class="message_btn">
-		<a class="btn btn-primary" href="<%=request.getContextPath()%>/transform" role="button">답장</a>
+		<a class="btn btn-primary" href="<%=request.getContextPath()%>/message/retransform/${message.sender_id}" role="button">답장</a>
 		<button type="button" class="btn btn-default" onclick="self.close()">닫기</button>
 	</div>
 <div class="battom">

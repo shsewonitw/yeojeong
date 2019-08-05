@@ -13,7 +13,7 @@ public class MemberAllService {
 	@Autowired
 	private MemberDAO memberDAO;
 
-	public Object service(Object args) {
+	public Object service() {
 		 
 
 		return memberDAO.selectAll();

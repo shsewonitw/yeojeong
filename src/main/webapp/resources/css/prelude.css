@@ -97,7 +97,6 @@ clear:left;
     right: 10.2%;
     font-family: "Arial", "돋움", "dotum", sans-serif;
 }
-/*
 .mypage_link{
 	color: white;
 	text-decoration:none;
@@ -106,7 +105,6 @@ clear:left;
     right: 5.2%;
     font-family: "Arial", "돋움", "dotum", sans-serif;
 }
-*/
 .logout_link{
 	color: white;
 	text-decoration:none;
@@ -117,14 +115,6 @@ clear:left;
 }
 
 /* 비 로그인 상태 */
-.message_link1{
-	color: #ffffff;
-	text-decoration:none;
-	position: absolute;
-    top: 10%;
-    right: 8.5%;
-    font-family: "Arial", "돋움", "dotum", sans-serif;
-}
 .login_link{
 	color: #ffffff;
 	text-decoration:none;

@@ -1,11 +1,12 @@
 package com.tje.yeojeong.repository;
 
+import java.io.Serializable;
 import java.sql.*;
 import java.util.*;
 
+import com.fasterxml.jackson.databind.ser.std.SerializableSerializer;
 import com.tje.yeojeong.model.*;
 
-import javax.sound.sampled.ReverbType;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class Review_CommentDAO {
+public class Review_CommentDAO{
 	private JdbcTemplate jdbcTemplate;
 	
 	@Autowired
@@ -22,8 +23,11 @@ public class Review_CommentDAO {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	
+	
 	// RowMap 사용
-	class Review_CommentRowMapper implements RowMapper<Review_Comment> {
+	class Review_CommentRowMapper implements RowMapper<Review_Comment>{
+		private static final long serialVersionUID = 1L;
+
 		public Review_Comment mapRow(ResultSet rs, int rowNum) throws SQLException{
 			Review_Comment rComment = new Review_Comment(
 					rs.getInt(1),      // comment_id
@@ -36,24 +40,35 @@ public class Review_CommentDAO {
 		}
 	}
 	
-	// 댓글 갯수
-	public List<Review_Comment> commentCount(Review_Comment model) {
-		List<Review_Comment> result = this.jdbcTemplate.query("select count(*) review_comment where comment_id = ? ",
-				new Review_CommentRowMapper(), model.getComment_id());
-		
+	public List<Review_Comment> selectAll(Review_Comment model){
+		String sql = "select * from review_comment where article_id = ? order by write_time desc";
+		List<Review_Comment> result = this.jdbcTemplate.query(sql,new Review_CommentRowMapper(),model.getArticle_id());
 		return result.isEmpty() ? null : result;
+	}
+	
+	// 댓글 갯수
+	public Integer commentCount(Review_Comment model) {
+		String sql = "select count(*) from review_Comment where article_id = ?";
+		return this.jdbcTemplate.queryForObject(sql,Integer.class,model.getArticle_id());
+		
 	}
 			
 	// 댓글 등록
-	public int insert(Review_Comment model) {
-		return this.jdbcTemplate.update("insert into review_comment values (0, ?, null, ?, now())",
-				new Review_CommentRowMapper(), model.getMember_id(), model.getContent() );				
+	public boolean insert(Review_Comment model) {
+		boolean result = false;
+		String sql = "insert into review_comment values (0, ?, ?, ?, now())";
+		result = this.jdbcTemplate.update(sql,
+				model.getMember_id(),model.getArticle_id(),model.getContent()) == 0 ? false : true;
+		
+		return result;		
 	}
 	
 	// 댓글 삭제
-	public int delete(Review_Comment model) {
-		return this.jdbcTemplate.update("delete from review_comment where comment_id = ?",
-				new Review_CommentRowMapper(), model.getComment_id());				
+	public boolean delete(Review_Comment model) {
+		boolean result = false;
+		result =  this.jdbcTemplate.update("delete from review_comment where comment_id = ?",model.getComment_id()) == 0 ? false : true;
+		
+		return result;
 	}
 	
 }

@@ -5,11 +5,6 @@ body{
 	overflow: scroll;
 }
 
-a:link { text-decoration: none;}
-a:visited { text-decoration: none;}
-a:hover { text-decoration: underline;}
-
-
 .top{
 	height: 170px;
 	background-color: black;
@@ -62,7 +57,7 @@ a:hover { text-decoration: underline;}
 }
 
 .button {
-  margin-top : 5%;
+  margin-top : 2%;
   display: inline-block;
   vertical-align: top;
   position: relative;
@@ -133,4 +128,38 @@ a:hover { text-decoration: underline;}
 	width: 50px;
 	height: 50px;
 	
+}
+.imgsize1{
+	width: 150px;
+	height: 40px;
+	
+}
+
+/* Paging Style Set */
+a{
+    color:#555;
+    text-decoration:none;
+}
+ 
+#paging{
+    margin-left : 30%;
+   
+}
+#paging a,
+#paging strong{
+    padding:2px 5px;
+    border:1px solid #CCC;
+    display:inline-block;
+    margin-top: 5%;
+}
+#paging a:hover,
+#paging strong{
+    color:#000;
+    border:1px solid #666;
+    background:#F0F0F0;
+}
+
+
+.serch{
+	margin-left: 10%;
 }

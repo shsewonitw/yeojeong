@@ -22,6 +22,8 @@ public class Review_InsertService {
 				
 		values.put("result", reviewDAO.insert(reviewview));
 		
+		
+		
 		return values;
 	}
 }

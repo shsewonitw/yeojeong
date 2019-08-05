@@ -6,18 +6,17 @@
 <head>
 <meta charset="UTF-8">
 <title>쪽지작성 : 여정 쪽지</title>
-<link href="resources/css/jb_bootstrap.min.css?asd=asdda" rel="stylesheet">
-<script src="resources/js/jb_bootstrap.min.js"></script>
-<script type="text/javascript" src="resources/js/jquery.js"></script>
+<link href="<%=request.getContextPath() %>/resources/css/jb_bootstrap.min.css?asd=asdda" rel="stylesheet">
+<script src="<%=request.getContextPath() %>/resources/js/jb_bootstrap.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 
 <script type="text/javascript">
 $(function() {
-	 $('.form-control').keyup(function (e){
+	 $('#textarea').keyup(function (e){
         var content = $(this).val();
-        $(this).height(((content.split('\n').length + 1) * 1.5) + 'em');
         $('.counter').text(content.length + ' / 1000');
     });
-    $('.form-control').keyup();
+    $('#textarea').keyup();
 });
 </script>
 <style type="text/css">
@@ -69,14 +68,15 @@ div {
 
 </head>
 <body>
-
+<form action="<%=request.getContextPath()%>/message/transformsubmit" method="post">
 <div class="top"></div>
 <div class="middle" role="main">
 	<div class="column_center">
 		<input type="hidden" name="sender_id" value="${ login_member.member_id }">
-			<input class="form-control" id="disabledInput" name="receiver_id" type="text" placeholder="${ rList.sender_id }" readonly>
+			<input class="form-control" id="disabledInput" name="receiver_id" type="text" value="${ message.receiver_id }" readonly>
 				<div class="textarea">
-					<textarea class="form-control" name="content" maxlength="1000" rows="23" cols="81" placeholder="내용을 입력하세요"></textarea>
+					<textarea class="form-control" id="textarea" name="content" maxlength="1000" rows="23" cols="81" placeholder="내용을 입력하세요" autofocus required></textarea>
+					<p id="text"></p>
 				</div>
 					<div class="text_byte">
 						<span class="counter">###</span>
@@ -87,6 +87,7 @@ div {
 		<input class="btn btn-primary" type="submit" value="전송">
 		<button type="button" class="btn btn-default" onclick="self.close()">취소</button>
 	</div>
+</form>
 <div class="battom">
 </div>
 

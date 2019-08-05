@@ -190,4 +190,9 @@ public class City_DataDAO {
 		return result;
 	}
 	
+	// Count
+	public int City_DataCount() {
+		String sql = "select count(*) from city_data";
+		return this.jdbcTemplate.queryForObject(sql, Integer.class);
+	}
 }

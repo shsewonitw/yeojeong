@@ -47,6 +47,7 @@
 					<div class="col-sm-10">
 						<input type="text" class="form-control" id="city" name="city"
 							placeholder="도시를 입력해주세요" required>
+						<span id="positionInfo">　</span>
 					</div>
 				</div>
 				
@@ -133,6 +134,7 @@
     <div id="map"></div>
     <script>
       function initMap() {
+    	var flag = true;
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 8,
           center: {lat: -34.397, lng: 150.644}
@@ -140,6 +142,29 @@
         var geocoder = new google.maps.Geocoder();
 
         $("#city").on("focusout",function(){
+        	var data = "city="+$("#city").val();
+        	// 도시명 중복 검사
+        	$.ajax({
+        		url : "<%=request.getContextPath()%>/adminCityDupleCheck",
+        		type : "get",
+        		data : data,
+        		dataType : "text",
+        		async:false,
+        		success : function(data) {
+        			if (eval(data)) {
+        				flag = true;
+        			} else {
+        				$("#positionInfo").html("<font color='red'>이미 등록된 도시입니다.</font>");
+        				flag = false;
+        			}
+        		},
+        		error : function(data) {
+        			alert("통신오류(관리자에게 문의하세요.)");
+        		}
+        	});
+			if(!flag){
+				return;
+			}        	
         	geocodeAddress(geocoder, map);
         	
         })
@@ -156,19 +181,18 @@
               position: results[0].geometry.location
             });
             $("#position").val(marker.position);
+            $("#positionInfo").html("<font color='green'>"+marker.position+"</font>");
           } else {
             // 위도경도 정보 못가져왔을때 
+        	  $("#positionInfo").html("<font color='red'>도시명을 확인해주세요</font>");
           }
         });
       }
     
-      $(function(){
-    	  $("#alertButton").on("click",function(){
-    	    	alert(marker.position);
-    	   })
-      })
     
-    </script>
+
+
+	</script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFPpdIjRpRNIAeRsh3PZkN_XlxtAhSpfE&callback=initMap">
     </script>

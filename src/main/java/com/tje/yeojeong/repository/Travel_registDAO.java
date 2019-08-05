@@ -69,4 +69,12 @@ public class Travel_registDAO {
 		return Travel_registList.isEmpty() ? null : Travel_registList;
 	}
 
+	
+	// Count
+	public int Travel_registCount() {
+		String sql = "select count(*) from travel_regist";
+		return this.jdbcTemplate.queryForObject(sql, Integer.class);
+	}
+	
+
 }

@@ -40,13 +40,15 @@
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
 	p:maxUploadSize="100000000" p:maxInMemorySize="100000000" />
 	
+	<!--  웹소켓   -->
+	<beans:bean id="echoController" class="com.tje.yeojeong.controller.EchoController" />
+	<beans:bean id="broadCastController" class="com.tje.yeojeong.controller.BroadCastController" />
+	
 	<websocket:handlers>
-		<websocket:mapping handler="echocontroller" path="/yeojeong/echo"/>		
-		<websocket:sockjs />
+		<websocket:mapping handler="echoController" path="/echo"/>
+		<websocket:mapping handler="broadCastController" path="/bc"/>
 	</websocket:handlers>
-	
-	<beans:bean id="echocontroller" class="com.tje.yeojeong.websocket.EchoHandler"/>	
-	
+
 		
 </beans:beans>
 

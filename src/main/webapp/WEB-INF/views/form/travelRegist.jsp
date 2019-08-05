@@ -91,7 +91,7 @@ function removeAll(e){
 		<th colspan="3" style="padding-bottom:0px;">
 			<h1 style="color:rgb(52,152,219); font-weight:bold; text-align:center;"><img style="width: auto; height: auto; max-width: 100px; max-height: 100px;"
 				src="<%=request.getContextPath()%>/resources/images/logo.png"
-				alt="logo"><b>여행지 등록</b></h1>
+				alt="logo"><b>여행 등록</b></h1>
 		</th>
 	</tr>
 	

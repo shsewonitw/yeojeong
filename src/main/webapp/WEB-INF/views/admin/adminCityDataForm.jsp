@@ -27,13 +27,25 @@
 	
 	<h1></h1>
 
-
+	
 
 	<jsp:include page="/WEB-INF/views/admin/adminCountryDropdownMenu.jsp" />
 
-
-
-
+	<div style="overflow:hidden;">
+		<div style="float:left;">
+				
+		<c:if test="${adminCityDataResult eq 'insertOk'}">
+			<div class="alert alert-success" role="alert">도시 정보가 정상적으로 추가 되었습니다.</div>
+		</c:if> 
+		<c:if test="${adminCityDataResult eq 'updateOk'}">
+			<div class="alert alert-success" role="alert">도시 정보가 정상적으로 업데이트 되었습니다.</div>
+		</c:if> 
+		<c:if test="${adminCityDataResult eq 'deleteOk'}">
+			<div class="alert alert-success" role="alert">도시 정보가 정상적으로 삭제 되었습니다.</div>
+		</c:if> 
+			
+		</div>
+	</div>
 
 </body>
 </html>

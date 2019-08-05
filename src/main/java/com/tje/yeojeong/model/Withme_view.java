@@ -7,6 +7,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Withme_view {
 	private int article_id;
 	private String member_id;
+	private String country;
+	private String city;
+	private Date start_date;
+	private Date end_date;
 	private int category_gender;
 	private int category_style;
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -17,16 +21,72 @@ public class Withme_view {
 	public Withme_view() {
 	}
 
-	public Withme_view(int article_id, String member_id, int category_gender, int category_style, Date write_time,
-			int read_count, String name) {
+
+
+	public Withme_view(int article_id, String member_id, String country, String city, Date start_date, Date end_date,
+			int category_gender, int category_style, Date write_time, int read_count, String name) {
 		this.article_id = article_id;
 		this.member_id = member_id;
+		this.country = country;
+		this.city = city;
+		this.start_date = start_date;
+		this.end_date = end_date;
 		this.category_gender = category_gender;
 		this.category_style = category_style;
 		this.write_time = write_time;
 		this.read_count = read_count;
 		this.name = name;
 	}
+
+
+
+	public String getCountry() {
+		return country;
+	}
+
+
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+
+
+	public String getCity() {
+		return city;
+	}
+
+
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+
+
+	public Date getStart_date() {
+		return start_date;
+	}
+
+
+
+	public void setStart_date(Date start_date) {
+		this.start_date = start_date;
+	}
+
+
+
+	public Date getEnd_date() {
+		return end_date;
+	}
+
+
+
+	public void setEnd_date(Date end_date) {
+		this.end_date = end_date;
+	}
+
+
 
 	public int getArticle_id() {
 		return article_id;

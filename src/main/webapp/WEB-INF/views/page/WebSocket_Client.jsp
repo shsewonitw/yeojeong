@@ -21,7 +21,7 @@
         <fieldset>
             <div id="messageWindow"></div>
             <br /> <input id="inputMessage" type="text" onkeyup="enterkey()" />
-            <input type="submit" value="send" onclick="sendMessage()" />
+            <input type="submit" value="전송" onclick="sendMessage()" />
         </fieldset>
     </div>
 
@@ -70,6 +70,7 @@
             $("#messageWindow").html($("#messageWindow").html()
                     + "<p class='chat_content'>나 : " + inputMessage.value + "</p>");
 		}
+		
 		wsocket.send(inputMessage.value);
 		$("#inputMessage").val("");
 	}
@@ -81,10 +82,10 @@
         }
     }
     //     채팅이 많아져 스크롤바가 넘어가더라도 자동적으로 스크롤바가 내려가게함
-    window.setInterval(function() {
-        var elem = document.getElementById('messageWindow');
-        elem.scrollTop = elem.scrollHeight;
-    }, 0);
+    // window.setInterval(function() {
+    //    var elem = document.getElementById('messageWindow');
+    //    elem.scrollTop = elem.scrollHeight;
+    // }, 0);
     
 </script>
 </body>

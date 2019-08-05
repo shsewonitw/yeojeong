@@ -13,6 +13,8 @@ import org.springframework.web.socket.WebSocketSession;
 public class ChatInfo {
 	HashMap<WebSocketSession, String> chatMap = new HashMap<WebSocketSession, String>();
 
+	HashMap<String,WebSocketSession> admin = new HashMap<String, WebSocketSession>();
+	
 	public ChatInfo() {
 	}
 
@@ -20,8 +22,10 @@ public class ChatInfo {
 		return chatMap;
 	}
 
+	public HashMap<String, WebSocketSession> getAdmin() {
+		return admin;
+	}
 
-	
 	
 	
 }

@@ -31,12 +31,11 @@ public class WebSocketClient extends TextWebSocketHandler{
 		public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 			// 클라이언트가 연결되면 세션 아이디의 값을 출력
 			System.out.printf("%s가 연결됨\n",session.getId());
-			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Calendar time = Calendar.getInstance();
 			String now = sdf.format(time.getTime());
 			
-			chatInfo.getChatMap().put(session, session.getId()+"님이 "+now+" 에 접속하였습니다.");
+			chatInfo.getChatMap().put(session, "user_"+session.getId()+"님이 "+now+" 에 접속하였습니다.");
 			
 			
 		}
@@ -47,9 +46,17 @@ public class WebSocketClient extends TextWebSocketHandler{
 			System.out.printf("%s로부터 [%s]를 받음\n",session.getId(), message.getPayload());
 			String msgByUser = message.getPayload();
 			String beforeMsg = chatInfo.getChatMap().get(session);
-			String msg = beforeMsg + "<br>" + msgByUser;
+			String msg = beforeMsg + "<br>" + "user_"+session.getId()+" : "+msgByUser;
 			chatInfo.getChatMap().put(session, msg);
 
+			
+			// 어드민이 실시간 접속중일 때
+			WebSocketSession adminSession = chatInfo.getAdmin().get("admin");
+			System.out.println(adminSession);
+			if(adminSession == null)
+				return;
+			
+			adminSession.sendMessage(new TextMessage(session.getId()+"|"+msgByUser));
 			// 세션을 사용하여 클라이언트에게 텍스트 메세지를 전송
 //			session.sendMessage(new TextMessage("echo : " + message.getPayload()));
 			
@@ -57,7 +64,13 @@ public class WebSocketClient extends TextWebSocketHandler{
 		
 		@Override
 		public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-
+			// 어드민이 실시간 접속중일 때
+			WebSocketSession adminSession = chatInfo.getAdmin().get("admin");
+			
+			if(adminSession == null)
+				return;
+			
+			adminSession.sendMessage(new TextMessage(session.getId()+"|유저의 연결이 끊겼습니다."));
 			System.out.printf("%s가 연결종료됨\n",session.getId());
 			chatInfo.getChatMap().remove(session);
 		}

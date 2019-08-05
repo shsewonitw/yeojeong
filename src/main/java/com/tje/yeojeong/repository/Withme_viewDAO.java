@@ -31,7 +31,7 @@ public class Withme_viewDAO {
 		@Override
 		public Withme_view mapRow(ResultSet rs, int arg1) throws SQLException {
 			Withme_view withme_view = new Withme_view(
-					rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4),rs.getDate(5),rs.getInt(6),rs.getString(7));
+					rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getTimestamp(5),rs.getTimestamp(6),rs.getInt(7),rs.getInt(8),rs.getDate(9),rs.getInt(10),rs.getString(11));
 			return withme_view;
 		}
 	}

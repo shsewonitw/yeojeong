@@ -35,7 +35,7 @@ public class WebSocketClient extends TextWebSocketHandler{
 			Calendar time = Calendar.getInstance();
 			String now = sdf.format(time.getTime());
 			
-			chatInfo.getChatMap().put(session, "user_"+session.getId()+"님이 "+now+" 에 접속하였습니다.");
+			chatInfo.getChatMap().put(session, "<div class='alert alert-info' role='alert' style='clear:both;float:left;max-width:280px;word-break:break-all;'>user_"+session.getId()+"님이 "+now+" 에 접속하였습니다.</div>");
 			
 			
 		}
@@ -46,7 +46,7 @@ public class WebSocketClient extends TextWebSocketHandler{
 			System.out.printf("%s로부터 [%s]를 받음\n",session.getId(), message.getPayload());
 			String msgByUser = message.getPayload();
 			String beforeMsg = chatInfo.getChatMap().get(session);
-			String msg = beforeMsg + "<br>" + "user_"+session.getId()+" : "+msgByUser;
+			String msg = beforeMsg + "<div class='alert alert-info' role='alert' style='clear:both;float:left;max-width:280px;word-break:break-all;'>"+msgByUser+"</div>";
 			chatInfo.getChatMap().put(session, msg);
 
 			

@@ -48,7 +48,7 @@ public class WebSocketAdmin extends TextWebSocketHandler {
 					
 
 					String beforeMsg = chatInfo.getChatMap().get(sess);
-					String msg = beforeMsg + "<br>" + "나 : "+realMsg;
+					String msg = beforeMsg + "<div class='alert alert-success' role='alert' style='clear:both;float:right;max-width:280px;word-break:break-all;text-align:right;'>"+realMsg+"</div>";
 					chatInfo.getChatMap().put(sess,msg);
 				}
 			}

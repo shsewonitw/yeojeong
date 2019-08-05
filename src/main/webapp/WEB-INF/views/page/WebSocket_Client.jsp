@@ -5,7 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/css/sw_bootstrap.css?wer=121">
+	<script src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
+<script src="<%=request.getContextPath()%>/resources/js/bootstrap.js"></script>
 
 <title>Insert title here</title>
 
@@ -17,12 +20,15 @@
 <body>
     <!--     채팅창 -->
     <div id="_chatbox">
-    <button onclick="wsConnect();">연결</button><button onclick="wsClose();">종료</button>
-        <fieldset>
-            <div id="messageWindow"></div>
-            <br /> <input id="inputMessage" type="text" onkeyup="enterkey()" />
-            <input type="submit" value="전송" onclick="sendMessage()" />
-        </fieldset>
+	    <button class="btn btn-default" onclick="wsConnect();">연결</button><button class="btn btn-default" onclick="wsClose();">종료</button>
+	    <div id="scrollDiv" style="overflow:auto;width:500px;height:326px;">
+			<fieldset>
+				<div id="messageWindow"></div>
+			</fieldset>
+		</div>
+		<div style="overflow:hidden;">
+		 	<input id="inputMessage" class="form-control" type="text" onkeyup="enterkey()" style="float:left;width:450px;" /><input type="submit" class="btn btn-default" value="전송" onclick="sendMessage()" style="float:left;" />
+		</div>
     </div>
 
 <!-- 말풍선아이콘 클릭시 채팅창 열고 닫기 -->
@@ -43,7 +49,8 @@
     	wsocket.onmessage = function(evt){
     		var data = evt.data;
     		$("#messageWindow").html($("#messageWindow").html()
-                    + "<p class='chat_content'>관리자 : " + data + "</p>");
+                    + "<div class='alert alert-info' role='alert' style='clear:both;float:left;max-width:280px;word-break:break-all;'>" + data + "</div>");
+    		scrollDown();
     		
     	}
     	wsocket.onclose = function() {
@@ -53,7 +60,7 @@
     	}
     	wsocket.onopen = function(){
     		$("#messageWindow").html($("#messageWindow").html()
-                    + "<p class='chat_content'> 관리자와 연결되었습니다. </p>");
+                    + "<div class='alert alert-info' role='alert' style='clear:both;float:left;max-width:280px;word-break:break-all;'>관리자에게 메세지를 보내주세요. 이 페이지를 나가거나 연결을 종료하면 대화내용은 저장되지 않습니다. </div>");
     	}
     }
     
@@ -63,12 +70,14 @@
     	wsocket.close();
     }
     
+    // client -> admin
 	function sendMessage(){
 		if(inputMessage.value == ""){
 			;
 		} else {
             $("#messageWindow").html($("#messageWindow").html()
-                    + "<p class='chat_content'>나 : " + inputMessage.value + "</p>");
+                    + "<div class='alert alert-success' role='alert' style='clear:both;float:right;max-width:280px;word-break:break-all;text-align:right;'>" + inputMessage.value + "</div>");
+            scrollDown();
 		}
 		
 		wsocket.send(inputMessage.value);
@@ -81,12 +90,10 @@
             sendMessage();
         }
     }
-    //     채팅이 많아져 스크롤바가 넘어가더라도 자동적으로 스크롤바가 내려가게함
-    // window.setInterval(function() {
-    //    var elem = document.getElementById('messageWindow');
-    //    elem.scrollTop = elem.scrollHeight;
-    // }, 0);
-    
+
+    function scrollDown(){
+    	$("#scrollDiv").scrollTop($("#scrollDiv").prop("scrollHeight"));
+    }
 </script>
 </body>
 </html>

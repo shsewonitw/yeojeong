@@ -46,7 +46,7 @@
 			<!-- 채팅 내용 -->
 			<c:forEach items="${chatMap}" var="chatMap">
 			<div style="float:left;display:none;" id="user_${chatMap.key.getId()}_div" class="user_all_div">
-				<div id="scrollDiv" style="overflow:auto;width:195;height:326px;">
+				<div id="scrollDiv" style="overflow:auto;width:500px;height:326px;">
 					<fieldset>
 						<div id="${chatMap.key.getId()}_messageWindow">
 							${chatMap.value}
@@ -56,7 +56,7 @@
 					</fieldset>
 				</div>
 				<div style="overflow:hidden;">
-					<input id="${chatMap.key.getId()}_inputMessage" class="form-control" type="text" onkeyup="enterkey('${chatMap.key.getId()}')" style="float:left;width:282px;" /> <input type="submit" class="btn btn-default" value="전송" onclick="sendMessage('${chatMap.key.getId()}')" style="float:left;"/>
+					<input id="${chatMap.key.getId()}_inputMessage" class="form-control" type="text" onkeyup="enterkey('${chatMap.key.getId()}')" style="float:left;width:450px;" /> <input type="submit" class="btn btn-default" value="전송" onclick="sendMessage('${chatMap.key.getId()}')" style="float:left;"/>
 				</div>
 			</div>
 			</c:forEach>
@@ -112,7 +112,7 @@ function wsConnect(user_id){
 	wsocket = new WebSocket("ws://localhost:8080/yeojeong/wsa")
 	
 
-    	
+    // client -> admin
 	wsocket.onmessage = function(evt){
    		var data = evt.data;
    		var temp = data.split("|");
@@ -120,7 +120,7 @@ function wsConnect(user_id){
    		var sender_msg = temp[1];
 
    		$("#"+sender_id+"_messageWindow").html($("#"+sender_id+"_messageWindow").html()
-                   + "<p class='chat_content'>user_"+sender_id+" : " + sender_msg + "</p>");
+                   + "<div class='alert alert-info' role='alert' style='clear:both;float:left;max-width:280px;word-break:break-all;'>" + sender_msg + "</div>");
    		
    		scrollDown();
    	}
@@ -133,13 +133,14 @@ function wsConnect(user_id){
 	
 }
 
+// admin -> client
 function sendMessage(user_id){
 	var inputVal = $("#"+user_id+"_inputMessage").val();
 	if(inputVal == ""){
 		;
 	} else {
         $("#"+user_id+"_messageWindow").html($("#"+user_id+"_messageWindow").html()
-                + "<p class='chat_content'>나 : " + inputVal + "</p>");
+                + "<div class='alert alert-success' role='alert' style='clear:both;float:right;max-width:280px;word-break:break-all;text-align:right;'>" + inputVal + "</div><br/>");
 	}
 	wsocket.send(user_id+"|"+inputVal);
 	$("#"+user_id+"_inputMessage").val("");

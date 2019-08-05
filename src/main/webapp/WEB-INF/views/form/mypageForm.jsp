@@ -272,45 +272,45 @@ function removeAll(e){
 								 hoverColor_withme($(this),"color", "white");
 							}
 						});
+		// 동행 요청 리스트 버튼 구별 함수
+		function withme_btn(statue_val, request_id_val){
+			$.ajax({
+				url : "<%=request.getContextPath()%>/auth/mypageWithMe",
+				type : "post",
+				data : "statue_val=" +statue_val+"&request_id_val=" + request_id_val,
+				dataType : "text",
+				success : function(data) {
+					if (eval(data)) {
+						alert("수락요청이 완료되었습니다.");
+					} else {
+						alert("수락요청에 실패하였습니다.(관리자에게 문의하세요.)");
+					}
+
+				},
+				error : function(data) {
+					alert("통신오류(관리자에게 문의하세요.)");
+				}
+			});
+		}
 		
 		$(".request_btn").on("click",function() {
 			
 			var id_check = $(this).attr("id");
 			
-			var ac = $(this).parent().find(".request_btn").eq(0);
-			var ref = $(this).parent().find(".request_btn").eq(1);
-			var hol = $(this).parent().find(".request_btn").eq(2);
+			var ac = $(this).parent().find(".request_btn").eq(0).attr("id");
+			var ref = $(this).parent().find(".request_btn").eq(1).attr("id");
+			var hol = $(this).parent().find(".request_btn").eq(2).attr("id");
+			
+			var request_id_val = $(this).parents("div#seperate_div").find(".receive_request_id").val();
+			var statue_val = null;
 			
 			if(id_check==ac){
-				// 수락 눌렀을시
-				$.ajax({
-					url : "<%=request.getContextPath()%>/auth/mypageWithMe",
-					type : "post",
-					contentType : "application/json; charset=UTF-8",
-					data : travelRegistJsonObject,
-					dataType : "text",
-					success : function(data) {
-						if (eval(data)) {
-							alert("수락요청이 완료되었습니다.");
-						} else {
-							alert("일정 변경에 실패하였습니다.(관리자에게 문의하세요.)");
-						}
-	
-					},
-					error : function(data) {
-						alert("통신오류(관리자에게 문의하세요.)");
-					}
-				});
+				statue_val = "수락";
 			} else if(id_check==ref){
-				// 거절 눌렀을시
-				
+				statue_val = "거절";
 			} else if(id_check==hol){
-				// 보류 눌렀을시
-				
+				statue_val = "요청대기중";
 			}
-			
-			
-			
 			
 			for(var i = 0 ; i <= 2;i++){
 				hoverColor_withme($(this).parent().find(".request_btn").eq(i),"background-color", "white");
@@ -318,6 +318,22 @@ function removeAll(e){
 			}
 			hoverColor_withme($(this),"background-color", "rgb(52, 152, 219)");
 			hoverColor_withme($(this),"color", "white");
+			
+			if(id_check==ac){
+				// 수락 눌렀을시
+				withme_btn(statue_val, request_id_val);
+			} else if(id_check==ref){
+				// 거절 눌렀을시
+				withme_btn(statue_val, request_id_val);
+			} else if(id_check==hol){
+				// 보류 눌렀을시
+				withme_btn(statue_val, request_id_val);
+			}
+			
+			
+			
+			
+			
 		});
 // 		```````````````````````````````````//
 		
@@ -511,15 +527,20 @@ function removeAll(e){
 				List<Review_view> content = (List<Review_view>) request.getAttribute("rList");
 				List<String> subcontent = new ArrayList<String>();
 				String substr;
-
-				for (int i = 0; i < content.size(); i++) {
-					try {
-						substr = content.get(i).getContent().substring(0, 20) + "...";
-					} catch (Exception e) {
-						substr = content.get(i).getContent();
+					if(content == null){
+						
+						
+					}else{
+						for (int i = 0; i < content.size(); i++) {
+							try {
+								substr = content.get(i).getContent().substring(0, 20) + "...";
+							} catch (Exception e) {
+								substr = content.get(i).getContent();
+							}
+							subcontent.add(substr);
+						}
 					}
-					subcontent.add(substr);
-				}
+				
 				request.setAttribute("subcontent", subcontent);
 			%>
 
@@ -564,75 +585,90 @@ function removeAll(e){
 
 			<%
 				List<Review_view> write_time = (List<Review_view>) request.getAttribute("rList");
-				int size = write_time.size();
+				int size = 0;
 				List<String> date = new ArrayList<String>();
-				for (int i = 0; i < write_time.size(); i++) {
-					date.add(formatTimeString(write_time.get(i).getWrite_time()));
+				if(write_time==null){
+					
+				} else{
+					size = write_time.size();
+					for (int i = 0; i < write_time.size(); i++) {
+						date.add(formatTimeString(write_time.get(i).getWrite_time()));
+					}
 				}
+				
+				
 				request.setAttribute("date", date);
 			%>
-
-			<div id="write" class="info_box">
-				<c:forEach begin="0" end="${rList.size()-1}" var="i">
-					<div class="write_body_div">
-						<div style="padding: 20px">
-							<div id="write_sub_div">
-								<div class="write_head_div" >
-									<div style="float: left;">
-										<span>${ rList[i].name }</span>
-										<span>${ date[i] }</span>
+			<c:if test="${ not empty rList or not rList.size() eq 0}" var="r" >
+				<div id="write" class="info_box">
+					<c:forEach begin="0" end="${rList.size()-1}" var="i">
+						<div class="write_body_div">
+							<div style="padding: 20px">
+								<div id="write_sub_div">
+									<div class="write_head_div" >
+										<div style="float: left;">
+											<span>${ rList[i].name }</span>
+											<span>${ date[i] }</span>
+										</div>
+										<div style="float: right;">
+											<span>${ rList[i].country }</span>
+											<span>${ rList[i].city }</span>
+										</div>
+		
+										<div class="write_bottom_div"><a href=""><b>${subcontent[i]}</b></a></div>
+										<div>
+											<span>평점 ${ rList[i].review_star }&nbsp;&nbsp;</span>
+											<span>댓글${ rList[i].comment_count }</span>
+										</div>
 									</div>
-									<div style="float: right;">
-										<span>${ rList[i].country }</span>
-										<span>${ rList[i].city }</span>
+									
+									<div id="write_img_div" OnClick="" >
+										<img id="write_img" class="img-thumbnail" src="<%=request.getContextPath()%>/resources/cityimg/${ rList[i].image_src }">
 									</div>
+								</div>
 	
-									<div class="write_bottom_div"><a href=""><b>${subcontent[i]}</b></a></div>
-									<div>
-										<span>평점 ${ rList[i].review_star }&nbsp;&nbsp;</span>
-										<span>댓글${ rList[i].comment_count }</span>
-									</div>
-								</div>
-								
-								<div id="write_img_div" OnClick="" >
-									<img id="write_img" class="img-thumbnail" src="<%=request.getContextPath()%>/resources/cityimg/${ rList[i].image_src }">
-								</div>
 							</div>
-
 						</div>
-					</div>
-				</c:forEach>
-				<ul class="pagination">
-					<c:if test="${beforePageNo ne -1}">
-						<li>
-							<a href="<%=request.getContextPath()%>/auth/mypage/${beforePageNo}">  <span aria-hidden="true">&laquo;</span></a>
-						</li>
-					</c:if>
-	
-					<c:forEach var="pageNo" begin="${startPageNo}" end="${endPageNo}">
-						<c:if test="${ curPage eq pageNo }" var="r">
-							<li>
-								<a id="page_num_a" href="#">${pageNo}</a>
-							</li>
-						</c:if>
-						<c:if test="${ not r }">
-							<li>
-								<a href="<%=request.getContextPath()%>/auth/mypage/${pageNo}">${pageNo}</a>
-							</li>
-						</c:if>
 					</c:forEach>
-	
-					<c:if test="${afterPageNo ne -1}">
-						<li>
-							<a href="<%=request.getContextPath()%>/auth/mypage/${afterPageNo}"> <span aria-hidden="true">&raquo;</span></a>
-						</li>
-					</c:if>
-				</ul>
-			</div>
+				
+					<ul class="pagination">
+						<c:if test="${beforePageNo ne -1}">
+							<li>
+								<a href="<%=request.getContextPath()%>/auth/mypage/${beforePageNo}">  <span aria-hidden="true">&laquo;</span></a>
+							</li>
+						</c:if>
+		
+						<c:forEach var="pageNo" begin="${startPageNo}" end="${endPageNo}">
+							<c:if test="${ curPage eq pageNo }" var="r">
+								<li>
+									<a id="page_num_a" href="#">${pageNo}</a>
+								</li>
+							</c:if>
+							<c:if test="${ not r }">
+								<li>
+									<a href="<%=request.getContextPath()%>/auth/mypage/${pageNo}">${pageNo}</a>
+								</li>
+							</c:if>
+						</c:forEach>
+		
+						<c:if test="${afterPageNo ne -1}">
+							<li>
+								<a href="<%=request.getContextPath()%>/auth/mypage/${afterPageNo}"> <span aria-hidden="true">&raquo;</span></a>
+							</li>
+						</c:if>
+					</ul>	
+					</div>
+				</c:if>
+				<c:if test="${not r }">
+					<div id="write" class="info_box">
+						<div style="text-align: center;">글이 없습니다.</div>
+					</div>
+				</c:if>
+			
 			<!-- 			``````````````````````` -->
 
 			<!-- 		``````````````````	내정보 페이지 -->
-			<div id="myInformation" class="info_box">
+			<div id="myInformation" class="info_box" style="display: block;">
 				<div class="myInformationHeader">내
 					정보</div>
 				<div class="myInformationBody">

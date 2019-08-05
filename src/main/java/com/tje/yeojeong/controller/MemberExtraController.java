@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tje.yeojeong.model.Member;
+import com.tje.yeojeong.model.Withme_request;
 import com.tje.yeojeong.service.MemberChangeTelService;
 import com.tje.yeojeong.service.MemberSearchEmailService;
 import com.tje.yeojeong.service.MemberSearchIDService;
+import com.tje.yeojeong.service.WithmeRequest_UpdateStatusService;
 
 @Controller
 public class MemberExtraController {
@@ -28,6 +30,9 @@ public class MemberExtraController {
 
 	@Autowired
 	private MemberChangeTelService mctService;
+
+	@Autowired
+	private WithmeRequest_UpdateStatusService wrusService;
 
 	@PostMapping("/searchID")
 	@ResponseBody
@@ -61,6 +66,23 @@ public class MemberExtraController {
 			session.setAttribute("login_member", jm);
 			result = true;
 		}
+
+		return result;
+	}
+
+	@PostMapping("/auth/mypageWithMe")
+	@ResponseBody
+	public boolean mypageWithMe(@RequestParam String statue_val, @RequestParam String request_id_val,
+			HttpSession session) {
+
+		Withme_request withme_request = new Withme_request();
+		int request_id = Integer.parseInt(request_id_val);
+		withme_request.setRequest_id(request_id);
+		withme_request.setStatue(statue_val);
+
+		wrusService.service(withme_request);
+
+		boolean result = (Boolean) wrusService.service(withme_request);
 
 		return result;
 	}

@@ -59,11 +59,9 @@ public class ReviewController {
 	@Autowired
 	private ReviewListCountService rcountService;
 	@Autowired
-	private Review_SelectIdService rsidservice;
+	private Review_ReviewSerachService rrsService;
 	@Autowired
-	private Review_SelectCountryService rscouservice;
-	@Autowired
-	private Review_SelectIdService rsctiyservice;
+	private Review_SerachCountService rscService;
 
 	
 	@GetMapping("/review")
@@ -201,11 +199,18 @@ public class ReviewController {
 	}
 	
 	// 게시판 리스트
-	@GetMapping({"reviewlist","/reviewlist/{pageNo}"})
-	public String reviewListForm(Model model, HttpSession session, Review_view reviewview,@PathVariable(value = "pageNo", required = false) Integer page){
+	@GetMapping({"/reviewlist","/reviewlist/{pageNo}"})
+	public String reviewListForm(Model model, HttpSession session, Review_view reviewview,@PathVariable(value = "pageNo", required = false) Integer page,
+			@RequestParam(value = "searchItem", required = false) String searchItem,
+			@RequestParam(value = "searchValue", required = false) String searchValue,HttpServletRequest request){
 		
 		if( page == null )
 			page = 1;
+		
+		HashMap<String, Object> values = new HashMap<>();
+		values.put("searchItem", searchItem);
+		values.put("searchValue", searchValue);
+		
 		
 		HashMap<String, Object> resultMap = (HashMap<String, Object>) rlService.service(page);
 		resultMap.put("curPageNo", page);
@@ -225,6 +230,8 @@ public class ReviewController {
 		int beforePage = startPageNo != 1 ? startPageNo - pagingInfo.getPageRange() : -1;
 		int afterPage = endPageNo != totalPageCount ? endPageNo +1 : -1;
 		
+		request.setAttribute("searchItem", searchItem);
+		request.setAttribute("searchValue", searchValue);
 		model.addAttribute("totalPageCount",totalPageCount);
 		model.addAttribute("startPageNo",startPageNo);
 		model.addAttribute("endPageNo",endPageNo);
@@ -234,6 +241,91 @@ public class ReviewController {
 		
 		return "form/reviewListForm";
 	}
+	
+	// 게시판 검색
+	@PostMapping({"/reviewlist/serach","/reviewlist/serach/{pageNo}"})
+	public String reviewListSubmit(@RequestParam(value = "searchItem", required = false) String searchItem,
+								   @RequestParam(value = "searchValue", required = false) String searchValue,Model model,
+								   @PathVariable(value = "pageNo", required = false) Integer page,HttpServletRequest request) {
+		
+		if( page == null )
+			page = 1;
+		
+		HashMap<String, Object> values = new HashMap<>();
+		values.put("searchItem", searchItem);
+		values.put("searchValue", searchValue);
+		
+		HashMap<String, Object> resultMap =  (HashMap<String, Object>) rrsService.service(values,page);
+		model.addAttribute("reviewSearch", resultMap.get("ReviewSearch"));
+		
+		HashMap<String, Integer> result = (HashMap<String, Integer>)rscService.service(searchItem,searchValue);
+
+		model.addAttribute("r_count", result.get("totalCount"));
+
+		int totalPageCount = (int) result.get("totalPageCount");
+		int startPageNo = (page % pagingInfo.getPageRange() == 0 ? page - 1 : page) / pagingInfo.getPageRange()
+				* pagingInfo.getPageRange() + 1;
+
+		int endPageNo = startPageNo + pagingInfo.getPageRange() - 1;
+		if (endPageNo > totalPageCount)
+			endPageNo = totalPageCount;
+		int beforePage = startPageNo != 1 ? startPageNo - pagingInfo.getPageRange() : -1;
+		int afterPage = endPageNo != totalPageCount ? endPageNo + 1 : -1;
+
+		model.addAttribute("totalPageCount", totalPageCount);
+		model.addAttribute("startPageNo", startPageNo);
+		model.addAttribute("endPageNo", endPageNo);
+		model.addAttribute("beforePage", beforePage);
+		model.addAttribute("afterPage", afterPage);
+		model.addAttribute("curPage", page);
+		request.setAttribute("searchItem", searchItem);
+		request.setAttribute("searchValue", searchValue);
+		
+		return "form/reviewListSubmit";
+	}
+	
+	// 게시판 검색 후 리스트
+	@GetMapping({ "/reviewlist/serach", "/reviewlist/serach/{pageNo}" })
+	public String reviewSerachForm(@RequestParam(value = "searchItem", required = false) String searchItem,
+			@RequestParam(value = "searchValue", required = false) String searchValue, Model model,
+			@PathVariable(value = "pageNo", required = false) Integer page,HttpServletRequest request) {
+
+		if (page == null)
+			page = 1;
+
+		HashMap<String, Object> values = new HashMap<>();
+		values.put("searchItem", searchItem);
+		values.put("searchValue", searchValue);
+
+		HashMap<String, Object> resultMap = (HashMap<String, Object>) rrsService.service(values, page);
+		model.addAttribute("reviewSearch", resultMap.get("ReviewSearch"));
+
+		HashMap<String, Integer> result = (HashMap<String, Integer>) rscService.service(searchItem, searchValue);
+
+		model.addAttribute("r_count", result.get("totalCount"));
+
+		int totalPageCount = (int) result.get("totalPageCount");
+		int startPageNo = (page % pagingInfo.getPageRange() == 0 ? page - 1 : page) / pagingInfo.getPageRange()
+				* pagingInfo.getPageRange() + 1;
+
+		int endPageNo = startPageNo + pagingInfo.getPageRange() - 1;
+		if (endPageNo > totalPageCount)
+			endPageNo = totalPageCount;
+		int beforePage = startPageNo != 1 ? startPageNo - pagingInfo.getPageRange() : -1;
+		int afterPage = endPageNo != totalPageCount ? endPageNo + 1 : -1;
+
+		model.addAttribute("totalPageCount", totalPageCount);
+		model.addAttribute("startPageNo", startPageNo);
+		model.addAttribute("endPageNo", endPageNo);
+		model.addAttribute("beforePage", beforePage);
+		model.addAttribute("afterPage", afterPage);
+		model.addAttribute("curPage", page);
+		request.setAttribute("searchItem", searchItem);
+		request.setAttribute("searchValue", searchValue);
+
+		return "form/reviewserachForm";
+	}
+	
 	
 	// 게시판 상세페이지
 	@GetMapping("/datailreview")

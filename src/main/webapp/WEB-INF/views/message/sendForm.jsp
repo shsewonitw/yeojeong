@@ -19,11 +19,15 @@
 .top {
 	height:170px;
 }
+.div_body {
+	width:80%;
+	margin:0 auto;
+}
 .message_bar {
 	height:auto;
 }
 .middle {
-	height:auto;
+	height:534px;
 }
 th, td {
 	text-align:center;
@@ -31,10 +35,9 @@ th, td {
 .trcolor {
 	background-color:#F4F4F4;
 }
-.battom {
-	position:absolute;
-	left:50%;
-	transform:translate(-50%);
+.bottom {
+	position:relative;
+	left:44%;
 	height:auto;
 }
 br {
@@ -104,6 +107,7 @@ br {
 	}
 </script>
 <div class="top"></div>
+<div class="div_body">
 <div class="message_bar">
 <h3><a href="<%=request.getContextPath()%>/message/receive/" class="a">&nbsp;&nbsp;&nbsp;&nbsp;받은쪽지</a> | <a href="<%=request.getContextPath()%>/message/send/" class="a">보낸쪽지</a>(${s_count})
 <input class="btn btn-default" type="submit" id="delete" name="delete" value="삭제"></h3>
@@ -169,7 +173,7 @@ br {
 	</c:forEach>
 </table>
 </div>
-<div class="battom">
+<div class="bottom">
 <nav>
   <ul class="pagination">
   
@@ -192,6 +196,7 @@ br {
 	
    </ul>
 </nav>
+</div>
 </div>
 </form>
 </body>

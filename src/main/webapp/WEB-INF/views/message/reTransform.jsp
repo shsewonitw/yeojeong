@@ -55,7 +55,7 @@ div {
 	right:0;
 	height:auto;
 }
-.battom {
+.bottom {
 	height:auto;
 }
 .message_btn {
@@ -88,7 +88,7 @@ div {
 		<button type="button" class="btn btn-default" onclick="self.close()">취소</button>
 	</div>
 </form>
-<div class="battom">
+<div class="bottom">
 </div>
 
 </body>

@@ -53,32 +53,35 @@ th, td {
 <div class="middle">
 <table class="table">
 	<tr class="trcolor">
-		<th width="5%">#</th>
-		<th width="20%">작성자</th>
-		<th width="20%">아이디</th>
+		<th colspan="2" width="15%">도시</th>
+		<th width="15%">출국일</th>
+		<th width="15%">입국일</th>
 		<th width="5%">성별</th>
-		<th width="15%">연령</th>
-		<th width="15%">스타일</th>
+		<th width="10%">연령</th>
+		<th width="10%">스타일</th>
 		<th width="5%">조회수</th>
-		<th width="15%">작성날짜</th>
+		<th width="10%">작성자</th>
+		<th width="10%">작성일</th>
+		<th width="5%">상태</th>
 	</tr>
 	
 	<c:if test="${ empty withmelist }">
 	<tr>
-		<td colspan="8">게시글이 없습니다.</td>
+		<td colspan="11">게시글이 없습니다.</td>
 	</tr>
 	</c:if>
 	
 	<c:forEach items="${withmelist}" var="wlist">
 	<tr>
-		<td width="5%">${wlist.article_id}</td>
-		<td width="20%">${wlist.name}</td>
-		<td width="20%">${wlist.member_id}</td>
+		<td><input type="hidden" name="article_id" value="${wlist.article_id}"></td>
+		<td colspan="3" width="45%">${wlist.city} | ${wlist.start_date} ~ ${wlist.end_date}</td>
 		<td width="5%">${wlist.category_gender}</td>
-		<td width="15%">${wlist.category_age}</td>
-		<td width="15%">${wlist.category_style}</td>
-		<td width="5%">${wlist.write_time}</td>
-		<td width="15%">${wlist.read_count}</td>
+		<td width="10%">${wlist.category_age}</td>
+		<td width="10%">${wlist.category_style}</td>
+		<td width="5%">${wlist.read_count}</td>
+		<td width="10%">${wlist.name}</td>
+		<td width="10%">${wlist.write_time}</td>
+		<td width="5%">상태</td>
 	</tr>
 	</c:forEach>
 </table>

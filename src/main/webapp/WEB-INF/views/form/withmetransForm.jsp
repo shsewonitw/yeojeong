@@ -22,7 +22,7 @@ div {
 	margin:0 auto;
 }
 .top {
-	height:auto;
+	height:170px;
 }
 .middle {
 	margin:0 auto;
@@ -42,17 +42,9 @@ div {
 .form-control {
 	resize:none;
 }
-.text_byte {
-	position:absolute;
-	margin:0 auto;
-	padding:1% 0 0;
-	right:0;
-	height:auto;
-}
 .write_btn {
 	position:absolute;
-	left:95%;
-	transform:translate(-5%);
+	left:50%;
 }
 .bottom {
 	position:absolute;
@@ -63,71 +55,62 @@ div {
 </style>
 </head>
 <body>
-<form action="<%=request.getContextPath()%>/transformsubmit" method="post">
+<form action="<%=request.getContextPath()%>/transform" method="post" enctype="multipart/form-data">
 <div class="top"></div>
 <div class="div_body">
 <div class="withme_bar">
 <h3>&nbsp;&nbsp;&nbsp;&nbsp;같이갈래?</h3>
 </div>
 <div class="middle" role="main">
-<table class="table">
-	<tr class="trcolor">
-		<th width="5%">#</th>
-		<th width="20%">작성자</th>
-		<th width="20%">아이디</th>
-		<th width="5%">성별</th>
-		<th width="15%">연령</th>
-		<th width="15%">스타일</th>
-		<th width="5%">조회수</th>
-		<th width="15%">작성날짜</th>
-	</tr>
-	
-	<c:if test="${ empty withmelist }">
-	<tr>
-		<td colspan="8">게시글이 없습니다.</td>
-	</tr>
-	</c:if>
-	
-	<c:forEach items="${withmelist}" var="wlist">
-	<tr>
-		<td width="5%">${wlist.article_id}</td>
-		<td width="20%">${wlist.name}</td>
-		<td width="20%">${wlist.member_id}</td>
-		<td width="5%">${wlist.category_gender}</td>
-		<td width="15%">${wlist.category_age}</td>
-		<td width="15%">${wlist.category_style}</td>
-		<td width="5%">${wlist.write_time}</td>
-		<td width="15%">${wlist.read_count}</td>
-	</tr>
-	</c:forEach>
-</table>
+<select class="form-control" name="city" style="width:200px">
+  <option value="">여행지</option>
+  <option value="후보">후보</option>
+  <option value="3">${withme_view.city}</option>
+  <option value="4">${withme_view.city}</option>
+  <option value="5">${withme_view.city}</option>
+</select>
+<select class="form-control" name="start_date" style="width:200px">
+  <option value="">08-10</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+</select>
+<select class="form-control" name="end_date" style="width:200px">
+  <option value="">08-15</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+</select>
+<select class="form-control" name="category_gender" style="width:200px">
+  <option value="">성별</option>
+  <option value="0">무관</option>
+  <option value="2">남자</option>
+  <option value="1">여자</option>
+</select>
+<select class="form-control" name="category_age" style="width:200px">
+  <option value="">연령</option>
+  <option value="0">무관</option>
+  <option value="1">20대</option>
+  <option value="2">30대</option>
+  <option value="3">40대이상</option>
+</select>
+<select class="form-control" name="category_style" style="width:200px">
+  <option value="">목적</option> 
+  <option value="0">무관</option>
+  <option value="1">관광</option>
+  <option value="2">맛집</option>
+  <option value="3">쇼핑</option>
+  <option value="4">휴양</option>
+  <option value="5">엑티비티</option>
+</select>
 </div>
 	<div class="write_btn">
-		<a class="btn btn-primary" href="<%=request.getContextPath()%>/transform" role="button">글쓰기</a>
+		<input class="btn btn-primary" type="submit" value="작성">
 	</div>
 <div class="bottom">
-<nav>
-  <ul class="pagination">
-  
-  <c:if test="${ beforePageNo ne -1 }">
-    <li><a href="<%=request.getContextPath()%>/withmelist${ beforePageNo }" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-    </c:if>
-    
-  <c:forEach var="pageNo" begin="${ startPageNo }" end="${ endPageNo }">
-	<c:if test="${ curPage eq pageNo }" var="r">
-    <li class="active"><a href="#">${ pageNo }</a></li>
-    </c:if>
-    <c:if test="${ not r }">
-    <li><a href="<%=request.getContextPath()%>/withmelist${ pageNo }">${ pageNo }</a></li>
-    </c:if>
-  </c:forEach>
-  
-  <c:if test="${ afterPageNo ne -1 }">
-    <li><a href="<%=request.getContextPath()%>/withmelist${ afterPageNo }" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-	</c:if>
-	
-   </ul>
-</nav>
+
 </div>
 </div>
 </form>

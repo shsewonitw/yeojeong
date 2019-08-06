@@ -131,24 +131,23 @@ public class Withme_requestDAO {
 
 	}
 
-//	public boolean update(Withme_request obj) {
-//		boolean result = false;
-//		int member_flag = this.jdbcTemplate.update(new PreparedStatementCreator() {
-//
-//			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-//				PreparedStatement pstmt = con
-//						.prepareStatement("upbdate withme_request set password = ?,email = ? where member_id = ?  ");
-//				pstmt.setString(1, obj.getPassword());
-//				pstmt.setString(2, obj.getEmail());
-//				pstmt.setString(3, obj.getMember_id());
-//				return pstmt;
-//			}
-//		});
-//
-//		result = member_flag == 1 ? true : false;
-//
-//		return result;
-//	}
+	public boolean update_Status(Withme_request obj) {
+		boolean result = false;
+		int member_flag = this.jdbcTemplate.update(new PreparedStatementCreator() {
+
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement pstmt = con
+						.prepareStatement("update withme_request set statue = ? where request_id = ?");
+				pstmt.setString(1, obj.getStatue());
+				pstmt.setInt(2, obj.getRequest_id());
+				return pstmt;
+			}
+		});
+
+		result = member_flag == 1 ? true : false;
+
+		return result;
+	}
 
 	// Count
 	public int Withme_RequestCount() {

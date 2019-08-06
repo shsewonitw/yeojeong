@@ -14,10 +14,7 @@
 
 </head>
 <body style="overflow:scroll;">
-<div style="height:200px;"></div>
 
-<h1> 웹소켓 테스트 페이지 </h1>
-<body>
     <!--     채팅창 -->
     <div id="_chatbox">
 	    <button class="btn btn-default" onclick="wsConnect();">연결</button><button class="btn btn-default" onclick="wsClose();">종료</button>
@@ -31,7 +28,6 @@
 		</div>
     </div>
 
-<!-- 말풍선아이콘 클릭시 채팅창 열고 닫기 -->
 
 
 <script type="text/javascript">
@@ -48,8 +44,14 @@
     	wsocket = new WebSocket("ws://localhost:8080/yeojeong/wsc");
     	wsocket.onmessage = function(evt){
     		var data = evt.data;
+    		if( data.length > 5 && data.substring(0,5)=="/all ") {
+    			$("#messageWindow").html($("#messageWindow").html()
+                        + "<div class='alert alert-danger' role='alert' style='clear:both;float:left;max-width:280px;word-break:break-all;'>-전체메세지-<br>" + data.substr(5) + "</div>");
+    		}
+    		else {
     		$("#messageWindow").html($("#messageWindow").html()
                     + "<div class='alert alert-info' role='alert' style='clear:both;float:left;max-width:280px;word-break:break-all;'>" + data + "</div>");
+    		}
     		scrollDown();
     		
     	}

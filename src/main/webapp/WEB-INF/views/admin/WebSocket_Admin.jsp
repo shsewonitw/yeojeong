@@ -17,10 +17,12 @@
 
 </head>
 <body style="overflow:scroll;">
+<jsp:include page="/WEB-INF/views/admin/prelude_admin.jsp"/>
 <div style="height:200px;"></div>
 
-<h1> 웹소켓 테스트 관리자페이지 </h1>
-
+<div style="margin-left:30px;">
+	<a onClick="window.location.reload()" style="cursor: pointer;"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>채팅 새로고침</a>
+</div>
 <body>
 <div id="_chatbox">
 <!-- 
@@ -48,7 +50,7 @@
 			<div style="float:left;display:none;" id="user_${chatMap.key.getId()}_div" class="user_all_div">
 				<div id="user_${chatMap.key.getId()}_scrollDiv" style="overflow:auto;width:500px;height:326px;">
 					<fieldset>
-						<div id="${chatMap.key.getId()}_messageWindow">
+						<div id="${chatMap.key.getId()}_messageWindow" class="all_messageWindow">
 							${chatMap.value}
 						</div>
 						
@@ -114,7 +116,7 @@ function wsConnect(user_id){
 
     // client -> admin
 	wsocket.onmessage = function(evt){
-   		var data = evt.data;
+   		var data = evt.data;  		
    		var temp = data.split("|");
    		var sender_id = temp[0];
    		var sender_msg = temp[1];
@@ -138,7 +140,11 @@ function sendMessage(user_id){
 	var inputVal = $("#"+user_id+"_inputMessage").val();
 	if(inputVal == ""){
 		;
-	} else {
+	} else if( (inputVal.length > 5) && (inputVal.substring(0,5)=="/all ") ) {
+		 $(".all_messageWindow").html($(".all_messageWindow").html()
+	                + "<div class='alert alert-danger' role='alert' style='clear:both;float:right;max-width:280px;word-break:break-all;text-align:right;'>-전체메세지-<br>" + inputVal.substr(5) + "</div><br/>");
+	}
+	else {
         $("#"+user_id+"_messageWindow").html($("#"+user_id+"_messageWindow").html()
                 + "<div class='alert alert-success' role='alert' style='clear:both;float:right;max-width:280px;word-break:break-all;text-align:right;'>" + inputVal + "</div><br/>");
 	}

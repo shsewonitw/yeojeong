@@ -1,6 +1,5 @@
 package com.tje.yeojeong.websocket;
 
-import java.util.Hashtable;
 import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +41,15 @@ public class WebSocketAdmin extends TextWebSocketHandler {
 			}
 
 			
+			if( (realMsg.length() > 5) && (realMsg.substring(0,5).equals("/all ")) ){
+				for(WebSocketSession sess : chatInfo.getChatMap().keySet()) {
+					sess.sendMessage(new TextMessage(realMsg));
+					String beforeMsg = chatInfo.getChatMap().get(sess);
+					String msg = beforeMsg + "<div class='alert alert-danger' role='alert' style='clear:both;float:right;max-width:280px;word-break:break-all;text-align:right;'>-전체메세지-<br>"+realMsg.substring(5)+"</div>";
+					chatInfo.getChatMap().put(sess,msg);
+				}
+				return;
+			}
 			for(WebSocketSession sess : chatInfo.getChatMap().keySet()) {
 				if( sess.getId().equals(clientId) ) {
 					sess.sendMessage(new TextMessage(realMsg));

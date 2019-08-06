@@ -4,22 +4,14 @@ package com.tje.yeojeong.websocket;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.PageContext;
-import javax.xml.bind.JAXBElement.GlobalScope;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.context.annotation.ApplicationScope;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.tje.yeojeong.websocket.*;
 
 @Controller
 public class WebSocketClient extends TextWebSocketHandler{
@@ -35,10 +27,6 @@ public class WebSocketClient extends TextWebSocketHandler{
 			Calendar time = Calendar.getInstance();
 			String now = sdf.format(time.getTime());
 			
-//			WebSocketSession adminSession = chatInfo.getAdmin().get("admin");
-//			
-//			if(adminSession == null)
-//				return;
 			
 			chatInfo.getChatMap().put(session, "<div class='alert alert-info' role='alert' style='clear:both;float:left;max-width:280px;word-break:break-all;'>user_"+session.getId()+"님이 "+now+" 에 접속하였습니다.</div>");
 			

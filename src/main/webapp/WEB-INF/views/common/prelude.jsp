@@ -68,7 +68,6 @@
 	</c:if>
 	<div class="main_menu">
 	<ul>
-	 <li><a href="<%= request.getContextPath()%>"><b class="menu_font">Home</b></a></li>
 	 <li><a href="#" ><b class="menu_font">여행</b></a>
 		 <ul>
 	     <li><a href="<%=request.getContextPath()%>/travelRegist"><b class="menu_font">여행지 등록</b></a></li>
@@ -78,6 +77,7 @@
 	 <li><a href="<%=request.getContextPath()%>/withmelist" ><b class="menu_font">같이갈래?</b></a></li>
 	 <li><a href="<%=request.getContextPath()%>/reviewlist"><b class="menu_font">여행자들의 웃음(여행후기)</b></a></li>
 	 <li><a href="<%=request.getContextPath()%>/qaarticle"><b class="menu_font">자주 묻는 질문</b></a></li>
+	  <li><a href="<%= request.getContextPath()%>/wsClient" onClick="window.open(this.href, '', 'width=520px, height=400px'); return false;"><b class="menu_font">문의하기</b></a></li>
 	</ul>
 	</div>
 </div>

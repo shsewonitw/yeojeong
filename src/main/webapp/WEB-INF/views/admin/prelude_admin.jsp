@@ -61,10 +61,7 @@ function time_format(s) {
 
 		
 	<ul style="text-align:center;">
-	 <li style="max-width:9%; margin:auto;"><img src="<%=request.getContextPath()%>/resources/images/admin_logo.png" style="max-width:100%; height:auto;"></li>
-	 
-	 <li style="padding-top:30px; margin:auto;"><a href="<%=request.getContextPath()%>/admin"><b class="menu_font">
-	 <span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;&nbsp;관리자메인</b></a></li>
+	 <li style="max-width:12%; margin:auto;"><a href="<%=request.getContextPath()%>/admin"><img src="<%=request.getContextPath()%>/resources/images/admin_logo.png" style="max-width:100%; height:auto;"></a></li>
 	 
 	 <li style="padding-top:30px; margin:auto;"><a href="<%=request.getContextPath()%>/adminCityData" ><b class="menu_font">
 	 <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;&nbsp;여행지 업데이트</b></a></li>
@@ -72,6 +69,8 @@ function time_format(s) {
 	 <li style="padding-top:30px; margin:auto;"><a href="<%=request.getContextPath()%>/adminMemberManage"><b class="menu_font">
 	 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;회원정보 조회</b></a></li>
 	 
+	 <li style="padding-top:30px; margin:auto;"><a href="<%=request.getContextPath()%>/wsAdmin"><b class="menu_font">
+	 <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;실시간 문의</b></a></li>
 	 
 	 <li style="line-height:135.5px; margin:auto; float:right;">
 	 <span id="counter"> </span> <b>후 자동로그아웃 </b><input type="button" class="btn btn-primary" value="연장" onclick="counter_reset()">

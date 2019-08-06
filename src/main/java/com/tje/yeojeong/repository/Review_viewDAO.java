@@ -123,17 +123,31 @@ public class Review_viewDAO {
 		String sql = "select count(*) from review_view";
 		return this.jdbcTemplate.queryForObject(sql, Integer.class);
 	}
-	// 카테고리  검색
-	public List<Review_view> selectSerach(String searchItem, String searchValue,int page) {
-		String sql = String.format("select * from Review_view where %s like ? limit ?, ?", searchItem);
-		List<Review_view> result = this.jdbcTemplate.query(sql,new Review_viewRowMapper(), "%" + searchValue  + "%",
-				(page-1)*this.pagingInfo.getPagingSize(),this.pagingInfo.getPagingSize());
+	// 카테고리  검색 ( 국가 )
+	public List<Review_view> selectSerachWhereCountry(String searchValue,int page) {
+		String sql = "select * from review_view where country like ? limit ?,?";
+		List<Review_view> result = this.jdbcTemplate.query(sql, new Review_viewRowMapper(),"%"+searchValue+"%", (page-1)*this.pagingInfo.getPagingSize(),this.pagingInfo.getPagingSize());
+		
 		return result.isEmpty() ? null : result;
 	}
 	
+	// 카테고리  검색 ( 도시 )
+		public List<Review_view> selectSerachWhereCity(String searchValue,int page) {
+			String sql = "select * from review_view where city like ? limit ?,?";
+			List<Review_view> result = this.jdbcTemplate.query(sql, new Review_viewRowMapper(),"%"+searchValue+"%", (page-1)*this.pagingInfo.getPagingSize(),this.pagingInfo.getPagingSize());
+			return result.isEmpty() ? null : result;
+		}
+	
+		// 카테고리  검색 ( 작성자 )
+		public List<Review_view> selectSerachWhereMember_id(String searchValue,int page) {
+			String sql = "select * from review_view where member_id like ? limit ?,?";
+			List<Review_view> result = this.jdbcTemplate.query(sql, new Review_viewRowMapper(),"%"+searchValue+"%", (page-1)*this.pagingInfo.getPagingSize(),this.pagingInfo.getPagingSize());
+			return result.isEmpty() ? null : result;
+		}	
+		
 	// 카테고리 검색 카운트
 	public Integer review_SerachCount(String searchItem, String searchValue) {
-		String sql = String.format("select count(*) from Review_view where %s like %s", searchItem, "'" + searchValue + "'");
-		return this.jdbcTemplate.queryForObject(sql, Integer.class);
+		String sql = String.format("select count(*) from Review_view where %s like ?", searchItem);
+		return this.jdbcTemplate.queryForObject(sql, Integer.class,"%"+searchValue+"%");
 	}
 }

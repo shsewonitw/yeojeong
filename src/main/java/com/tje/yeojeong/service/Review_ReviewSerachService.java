@@ -20,7 +20,15 @@ public class Review_ReviewSerachService {
 		String searchItem = (String)values.get("searchItem");
 		String searchValue = (String)values.get("searchValue");
 		
-		result.put("ReviewSearch", reviewDAO.selectSerach(searchItem, searchValue,page));
+		if(searchItem.equals("country")) {
+			result.put("ReviewSearch", reviewDAO.selectSerachWhereCountry(searchValue,page));
+		}
+		else if(searchItem.equals("city")) {
+			result.put("ReviewSearch", reviewDAO.selectSerachWhereCity(searchValue,page));
+		}
+		else if(searchItem.equals("member_id")) {
+			result.put("ReviewSearch", reviewDAO.selectSerachWhereMember_id(searchValue,page));
+		}
 		
 		return result;
 	}

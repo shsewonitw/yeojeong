@@ -129,7 +129,7 @@ public class MessageDAO {
 	// 메세지 삭제
 	public boolean delete(Message model) {
 		boolean result = false;
-		String sql = "delete from message where message_id = ?";
+		String sql = "delete from message where message_id = ? and ?";
 		result = this.jdbcTemplate.update(
 				sql,model.getMessage_id()) == 0 ? false : true;
 

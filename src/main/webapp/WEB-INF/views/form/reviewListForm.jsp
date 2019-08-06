@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 
 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/reviewlist.css?var=44">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/reviewlist.css?var=11">
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 
 <!-- 컨텍스트 메뉴 -->
@@ -161,7 +161,7 @@ function temp(member_id){
 	       var m = key;
 	        //window.console && console.log(m) || alert(m);
 	        if(m == "edit"){
-	        	location.href='<%= request.getContextPath()%>/message/transform/'+member_id;
+	        	window.open('<%= request.getContextPath()%>/message/transform/'+member_id,'message',width='740',height='620',true);
 	        }
 	        	
 	    },

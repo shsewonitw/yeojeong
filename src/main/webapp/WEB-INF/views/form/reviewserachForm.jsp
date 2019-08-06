@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 
 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/reviewlist.css?var=44">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/reviewlist.css?var=11">
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 
 

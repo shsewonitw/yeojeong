@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>마이페이지</title>
 <link href="<%=request.getContextPath()%>/resources/css/kh_bootstrap.min.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/resources/css/kh_mypage.css?asd=sd" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/resources/css/kh_mypage.css?asd=sdds" rel="stylesheet">
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/kh_bootstrap.min.js"></script>
 
@@ -123,8 +123,6 @@ function removeAll(e){
 
 	$(document).ready(function() {
 		
-		
-
 		
 		
 		$(".trip_delete_btn").on("click",function(){
@@ -818,7 +816,7 @@ function removeAll(e){
 				<!-- 요청 보낸 리스트 -->
 				  <div role="tabpanel" class="tab-pane fade in" id=requestSend>
 					<c:forEach items="${withmeRequestSend }" var="Send" varStatus="statu">
-						<div class="withme__body_div">
+						<div class="withme__body_div withme__body_div${statu.index }">
 							<input type="hidden" name="request_id" value="${Send.request_id }"/>
 								
 								<div style="padding: 5px;">
@@ -842,13 +840,41 @@ function removeAll(e){
 								<div style="padding: 5px;">
 									상태 : ${Send.statue }
 								</div>
-								삭제	쪽지보내기
-								
+								<div class="request_delete_btn" id="ac${statu.index }" ><div id="ac${statu.index }" onclick="deleteWithMeRquest('${Send.request_id }', 'withme__body_div${statu.index }');">삭제</div></div>
+								<div class="request_delete_btn" id="ac${statu.index }" ><div id="ac${statu.index }" onclick="">쪽지보내기</div></div>
 								
 						</div>
 					
 					</c:forEach>
+				  <script type="text/javascript">
+				  function deleteWithMeRquest(data, data2){
+					  if(confirm("정말 삭제하시겠습니까??") == true){
+						$.ajax({
+							url : "<%=request.getContextPath()%>/auth/deleteWithMeRquest",
+							type : "post",
+							data : "request_id_val=" + data +"&div=" + data2,
+							dataType:"json",
+							success : function(data) {
+								
+								if (eval(data.result)) {
+									alert("요청이 삭제되었습니다.");
+									$("." + data.div).remove();
+									
+								} else {
+									alert("요청 삭제에 실패하였습니다.(관리자에게 문의하세요.)");
+								}
+
+							},
+							error : function(data) {
+								alert("통신오류(관리자에게 문의하세요.)");
+							}
+						});
+					  } else {
+						  alert("삭제가 취소 되었습니다.");
+					  }
+				  }
 				  
+				  </script>
 				  
 				  </div>
 				<!-- ------------------ -->

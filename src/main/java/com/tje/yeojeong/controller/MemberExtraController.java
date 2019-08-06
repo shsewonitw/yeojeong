@@ -1,24 +1,27 @@
 package com.tje.yeojeong.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.JsonObject;
 import com.tje.yeojeong.model.Member;
 import com.tje.yeojeong.model.Withme_request;
 import com.tje.yeojeong.service.MemberChangeTelService;
 import com.tje.yeojeong.service.MemberSearchEmailService;
 import com.tje.yeojeong.service.MemberSearchIDService;
+import com.tje.yeojeong.service.WithmeRequest_DeleteService;
 import com.tje.yeojeong.service.WithmeRequest_UpdateStatusService;
-
 @Controller
 public class MemberExtraController {
 
@@ -33,6 +36,9 @@ public class MemberExtraController {
 
 	@Autowired
 	private WithmeRequest_UpdateStatusService wrusService;
+	
+	@Autowired
+	private WithmeRequest_DeleteService wrdService;
 
 	@PostMapping("/searchID")
 	@ResponseBody
@@ -85,6 +91,22 @@ public class MemberExtraController {
 		boolean result = (Boolean) wrusService.service(withme_request);
 
 		return result;
+	}
+	@PostMapping("/auth/deleteWithMeRquest")
+	@ResponseBody
+	public String deleteWithMeRquest(@RequestParam String request_id_val, @RequestParam String div, HttpSession session, HttpServletResponse response) {
+		
+		Withme_request withme_request = new Withme_request(); 
+		int request_id = Integer.parseInt(request_id_val);
+		withme_request.setRequest_id(request_id);
+		boolean result = (Boolean) wrdService.service(withme_request);
+		
+		
+		
+		String jsonTxt = "{\"result\":\"" + result + "\", \"div\":\"" + div +"\"}";
+		
+		
+		return jsonTxt;
 	}
 
 }

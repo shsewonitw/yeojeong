@@ -1,8 +1,8 @@
 .img{
-    position: relative;                                                                  
-    height: 100%;
+    position: relative;
     width: 100%;
-    background-size: cover;
+    height: 100%;
+    background-size: 100% 100%;
 }
 .img-cover{
    position: absolute;

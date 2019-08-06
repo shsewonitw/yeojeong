@@ -52,10 +52,10 @@ public class MessageDAO {
 	}
 	
 	// 보낸 쪽지함에서 쪽지 작성 시, 받는 사람 ID 자동 갱신
-		public Message searchbyReceiverID(Message model) {
-			return this.jdbcTemplate.queryForObject("select * from message where receiver_id = ? limit 1", new MessageRowMapper(),
-					model.getReceiver_id());
-		}
+	public Message searchbyReceiverID(Message model) {
+		return this.jdbcTemplate.queryForObject("select * from message where receiver_id = ? limit 1", new MessageRowMapper(),
+				model.getReceiver_id());
+	}
 	
 	// 각 사용자 별, 보낸 메세지의 갯수를 반환하는 메소드
 	public Integer selectBySenderCount(Message model) {
@@ -129,7 +129,7 @@ public class MessageDAO {
 	// 메세지 삭제
 	public boolean delete(Message model) {
 		boolean result = false;
-		String sql = "delete from message where message_id = ?";
+		String sql = "delete from message where message_id = ? and ?";
 		result = this.jdbcTemplate.update(
 				sql,model.getMessage_id()) == 0 ? false : true;
 

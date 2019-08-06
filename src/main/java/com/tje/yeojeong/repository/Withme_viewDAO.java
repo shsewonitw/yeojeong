@@ -1,13 +1,13 @@
 package com.tje.yeojeong.repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -31,9 +31,21 @@ public class Withme_viewDAO {
 		@Override
 		public Withme_view mapRow(ResultSet rs, int arg1) throws SQLException {
 			Withme_view withme_view = new Withme_view(
-					rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getTimestamp(5),rs.getTimestamp(6),rs.getInt(7),rs.getInt(8),rs.getDate(9),rs.getInt(10),rs.getString(11));
+					rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getTimestamp(5),rs.getTimestamp(6),
+					rs.getInt(7),rs.getInt(8),rs.getInt(9),rs.getDate(10),rs.getInt(11),rs.getString(12));
 			return withme_view;
 		}
+	}
+	
+	// 게시글 작성
+	public boolean insert(Withme_view obj) {
+		boolean result = false;
+		String sql = "insert into withme_article values(null,?,?,?,?,?,?,?,?,now(),0)";
+		result = this.jdbcTemplate.update(sql, 
+			obj.getMember_id(), obj.getCountry(),obj.getCity(), 
+			obj.getStart_date(), obj.getEnd_date(), obj.getCategory_gender(), 
+			obj.getCategory_age(), obj.getCategory_style()) == 0 ? false : true;
+		return result;
 	}
 	
 	// 조회수

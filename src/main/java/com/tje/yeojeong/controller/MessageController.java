@@ -105,6 +105,20 @@ public class MessageController {
 		return receiveForm(1, model, session);
 	}
 	
+	// 받은 메세지 쪽에서 답장하기(받는사람 ID는 session에서 자동 갱신)
+	@GetMapping("/retransform/{sender_id}")
+	public String transReceiveForm(Message message, Model model, HttpSession session,
+			@PathVariable("sender_id") String sender_id) {
+		Member loginMember = 
+				(Member)session.getAttribute("login_member");
+		message.setSender_id(sender_id);
+		
+		session.setAttribute("receiver_id", loginMember);
+		// System.out.println(message.getSender_id());
+		return "message/reTransform";
+	}
+	
+	/*
 	// 메세지 수신 파트 답장 부분
 	@GetMapping("/retransform/{sender_id}")
 	public String transReceiveForm(Message message, Model model, HttpSession session,
@@ -117,6 +131,7 @@ public class MessageController {
 		// System.out.println(message.getSender_id());
 		return "message/reTransform";
 	}
+	*/
 		
 	@PostMapping("/retransformsubmit")
 	public String reTransformSubmit(Message message, Model model) {
@@ -139,16 +154,15 @@ public class MessageController {
 	}
 	
 	// 수신 메세지 삭제
-	@GetMapping("/message/receive")
-	public String deleteReceiveMessage(HttpSession session, Message message, Model model,
+	@GetMapping("/message/receivecontent/{message_id}")
+	public String deleteReceiveMessage(Model model,
 			@PathVariable("message_id") int message_id) throws Exception {
-		Member loginMember = 
-				(Member)session.getAttribute("login_member");
+		Message message = new Message();
 		message.setMessage_id(message_id);
 		
 		model.addAttribute("message_id", mdService.service(message));
 		
-		return "message/receiveForm";
+		return "";
 	}
 	
 	// ----------------------------메세지 송신------------------------
@@ -225,6 +239,20 @@ public class MessageController {
 		return "message/sendMessage";
 	}
 	
+	// 보낸 메세지 쪽에서 답장하기(받는사람 ID는 session에서 자동 갱신)
+	@GetMapping("/transform/{receiver_id}")
+	public String transSendForm(Message message, Model model, HttpSession session,
+			@PathVariable("receiver_id") String receiver_id) {
+		Member loginMember = 
+				(Member)session.getAttribute("login_member");
+		message.setSender_id(receiver_id);
+		
+		session.setAttribute("receiver_id", loginMember);
+		// System.out.println(message.getReceiver_id());
+		return "message/transform";
+		}
+	
+	/*
 	// 메세지 송신 파트 답장 부분
 	@GetMapping("/transform/{receiver_id}")
 	public String transSendForm(Message message, Model model, HttpSession session,
@@ -237,6 +265,7 @@ public class MessageController {
 		// System.out.println(message.getReceiver_id());
 		return "message/transform";
 	}
+	*/
 	
 	@PostMapping("/transformsubmit")
 	public String transformSubmit(Message message, Model model) {

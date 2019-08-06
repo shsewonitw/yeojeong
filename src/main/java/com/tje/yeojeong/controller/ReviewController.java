@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -207,10 +208,6 @@ public class ReviewController {
 		if( page == null )
 			page = 1;
 		
-		HashMap<String, Object> values = new HashMap<>();
-		values.put("searchItem", searchItem);
-		values.put("searchValue", searchValue);
-		
 		
 		HashMap<String, Object> resultMap = (HashMap<String, Object>) rlService.service(page);
 		resultMap.put("curPageNo", page);
@@ -230,8 +227,6 @@ public class ReviewController {
 		int beforePage = startPageNo != 1 ? startPageNo - pagingInfo.getPageRange() : -1;
 		int afterPage = endPageNo != totalPageCount ? endPageNo +1 : -1;
 		
-		request.setAttribute("searchItem", searchItem);
-		request.setAttribute("searchValue", searchValue);
 		model.addAttribute("totalPageCount",totalPageCount);
 		model.addAttribute("startPageNo",startPageNo);
 		model.addAttribute("endPageNo",endPageNo);
@@ -244,20 +239,25 @@ public class ReviewController {
 	
 	// 게시판 검색
 	@PostMapping({"/reviewlist/serach","/reviewlist/serach/{pageNo}"})
-	public String reviewListSubmit(@RequestParam(value = "searchItem", required = false) String searchItem,
-								   @RequestParam(value = "searchValue", required = false) String searchValue,Model model,
+	public String reviewListSubmit(/*@RequestParam(value = "searchItem", required = false) String searchItem,*/
+			/* @RequestParam(value = "searchValue", required = false) String searchValue,*/Model model,
 								   @PathVariable(value = "pageNo", required = false) Integer page,HttpServletRequest request) {
 		
 		if( page == null )
 			page = 1;
+		
+		
+		String searchItem = request.getParameter("searchItem");
+		String searchValue = request.getParameter("searchValue");
+		
 		
 		HashMap<String, Object> values = new HashMap<>();
 		values.put("searchItem", searchItem);
 		values.put("searchValue", searchValue);
 		
 		HashMap<String, Object> resultMap =  (HashMap<String, Object>) rrsService.service(values,page);
-		model.addAttribute("reviewSearch", resultMap.get("ReviewSearch"));
-		
+		model.addAttribute("reviewSearch", (List<Review_view>)resultMap.get("ReviewSearch"));
+
 		HashMap<String, Integer> result = (HashMap<String, Integer>)rscService.service(searchItem,searchValue);
 
 		model.addAttribute("r_count", result.get("totalCount"));
@@ -278,21 +278,22 @@ public class ReviewController {
 		model.addAttribute("beforePage", beforePage);
 		model.addAttribute("afterPage", afterPage);
 		model.addAttribute("curPage", page);
-		request.setAttribute("searchItem", searchItem);
-		request.setAttribute("searchValue", searchValue);
-		
+		model.addAttribute("searchItem",searchItem);
+		model.addAttribute("searchValue",searchValue);
 		return "form/reviewListSubmit";
 	}
 	
 	// 게시판 검색 후 리스트
 	@GetMapping({ "/reviewlist/serach", "/reviewlist/serach/{pageNo}" })
-	public String reviewSerachForm(@RequestParam(value = "searchItem", required = false) String searchItem,
-			@RequestParam(value = "searchValue", required = false) String searchValue, Model model,
+	public String reviewSerachForm(/*@RequestParam(value = "searchItem", required = false) String searchItem,*/
+			/*@RequestParam(value = "searchValue", required = false) String searchValue,*/ Model model,
 			@PathVariable(value = "pageNo", required = false) Integer page,HttpServletRequest request) {
 
 		if (page == null)
 			page = 1;
-
+		String searchItem = request.getParameter("searchItem");
+		String searchValue = request.getParameter("searchValue");
+		
 		HashMap<String, Object> values = new HashMap<>();
 		values.put("searchItem", searchItem);
 		values.put("searchValue", searchValue);
@@ -320,9 +321,8 @@ public class ReviewController {
 		model.addAttribute("beforePage", beforePage);
 		model.addAttribute("afterPage", afterPage);
 		model.addAttribute("curPage", page);
-		request.setAttribute("searchItem", searchItem);
-		request.setAttribute("searchValue", searchValue);
-
+		model.addAttribute("searchValue",searchValue);
+		model.addAttribute("searchItem",searchItem);
 		return "form/reviewserachForm";
 	}
 	
@@ -473,4 +473,5 @@ public class ReviewController {
 		}		
 		return null;
 	}
+	
 }

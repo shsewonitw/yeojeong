@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 
 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/reviewlist.css?var=112">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/reviewlist.css?var=11">
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 
 
@@ -113,7 +113,7 @@
 		
 		<span id="paging">
 		<c:if test="${ beforePage ne -1 }">
-				<a href="<%= request.getContextPath()%>/reviewlist/serach/${beforePage}">이전</a>
+				<a href="<%= request.getContextPath()%>/reviewlist/serach/${beforePage}?searchItem=${searchItem}&searchValue=${searchValue}">이전</a>
 				</c:if>
 				
 				<c:forEach var="pageNo" begin="${startPageNo }" end="${endPageNo }">
@@ -121,23 +121,23 @@
 				  		<strong>${ pageNo }</strong>
 				  	</c:if>	
 				  	<c:if test="${ not r }">
-					<a href="<%= request.getContextPath()%>/reviewlist/serach/${pageNo}">${pageNo}</a>
+					<a href="<%= request.getContextPath()%>/reviewlist/serach/${pageNo}?searchItem=${searchItem}&searchValue=${searchValue}">${pageNo}</a>
 					</c:if>	
 				</c:forEach>
 				
 				<c:if test="${ afterPage ne -1 }">
-				<a href="<%= request.getContextPath()%>/reviewlist/serach/${afterPage}">다음</a>
+				<a href="<%= request.getContextPath()%>/reviewlist/serach/${afterPage}?searchItem=${searchItem}&searchValue=${searchValue}">다음</a>
 				</c:if>
 				
 		</span>
 		<form action="<%= request.getContextPath() %>/reviewlist/serach" method="post">
 		<span class="serch">
 		<select name="searchItem">
-			<option value="member_id" ${ searchItem eq 'member_id' ? 'selected' : ''}>작성자</option>
-			<option value="country" ${ searchItem eq 'country' ? 'selected' : ''}>국가</option>
-			<option value="city" ${ searchItem eq 'city' ? 'selected' : ''}>도시</option>
+			<option value="member_id" >작성자</option>
+			<option value="country" >국가</option>
+			<option value="city" >도시</option>
 		</select>
-		<input style="margin-top: 3%" type="text" name="searchValue" value="${ searchValue }" required>
+		<input style="margin-top: 3%" type="text" name="searchValue" required> 
 		<input type="submit" class="button" value="검색">
 		</span>
 		</form>

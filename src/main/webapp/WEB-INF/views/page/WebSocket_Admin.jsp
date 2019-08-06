@@ -46,7 +46,7 @@
 			<!-- 채팅 내용 -->
 			<c:forEach items="${chatMap}" var="chatMap">
 			<div style="float:left;display:none;" id="user_${chatMap.key.getId()}_div" class="user_all_div">
-				<div id="scrollDiv" style="overflow:auto;width:500px;height:326px;">
+				<div id="user_${chatMap.key.getId()}_scrollDiv" style="overflow:auto;width:500px;height:326px;">
 					<fieldset>
 						<div id="${chatMap.key.getId()}_messageWindow">
 							${chatMap.value}
@@ -96,7 +96,7 @@ function user_click(user_id){
 	$(select_a).css("background-color","rgb(52, 152, 219)");
 	$(select_a).css("color","rgb(255, 255, 255)");
 	
-	scrollDown();
+	scrollDown(user_id);
 }
 
 </script>
@@ -122,7 +122,7 @@ function wsConnect(user_id){
    		$("#"+sender_id+"_messageWindow").html($("#"+sender_id+"_messageWindow").html()
                    + "<div class='alert alert-info' role='alert' style='clear:both;float:left;max-width:280px;word-break:break-all;'>" + sender_msg + "</div>");
    		
-   		scrollDown();
+   		scrollDown(sender_id);
    	}
    	wsocket.onclose = function() {
    		wsocket.close();
@@ -145,7 +145,7 @@ function sendMessage(user_id){
 	wsocket.send(user_id+"|"+inputVal);
 	$("#"+user_id+"_inputMessage").val("");
 	
-	scrollDown();
+	scrollDown(user_id);
 }
 
 //     엔터키를 통해 send함
@@ -155,8 +155,8 @@ function enterkey(user_id) {
     }
 }
 
-function scrollDown(){
-	$("#scrollDiv").scrollTop($("#scrollDiv").prop("scrollHeight"));
+function scrollDown(user_id){
+	$("#user_"+user_id+"_scrollDiv").scrollTop($("#user_"+user_id+"_scrollDiv").prop("scrollHeight"));
 }
 wsConnect('${chatMap.key.getId()}');
 </script>

@@ -35,6 +35,11 @@ public class WebSocketClient extends TextWebSocketHandler{
 			Calendar time = Calendar.getInstance();
 			String now = sdf.format(time.getTime());
 			
+//			WebSocketSession adminSession = chatInfo.getAdmin().get("admin");
+//			
+//			if(adminSession == null)
+//				return;
+			
 			chatInfo.getChatMap().put(session, "<div class='alert alert-info' role='alert' style='clear:both;float:left;max-width:280px;word-break:break-all;'>user_"+session.getId()+"님이 "+now+" 에 접속하였습니다.</div>");
 			
 			
@@ -57,8 +62,7 @@ public class WebSocketClient extends TextWebSocketHandler{
 				return;
 			
 			adminSession.sendMessage(new TextMessage(session.getId()+"|"+msgByUser));
-			// 세션을 사용하여 클라이언트에게 텍스트 메세지를 전송
-//			session.sendMessage(new TextMessage("echo : " + message.getPayload()));
+			
 			
 		}
 		

@@ -54,56 +54,7 @@ public class WebSocketAdmin extends TextWebSocketHandler {
 			}
 			
 			
-			
-//			// 각 세션의 첫번째 메세지 전달 코드는 별칭 전달
-//			String id = session.getId();
-//			if( sessionMap.get(id).getAlias() == null ) {
-//				StringBuffer idAndAliases = new StringBuffer("newClient:"); 
-//				for( String key : sessionMap.keySet() ) {
-//					System.out.printf("%s, %s\n", id, key);
-//					if( key.equals(id) ) {
-//						System.out.printf("%s, %s - continue\n", id, key);
-//						continue;
-//					}
-//					
-//					idAndAliases.append(String.format("%s (%s),", 
-//							sessionMap.get(key).getAlias(), key));	
-//				}		
-//				
-//				session.sendMessage(
-//						new TextMessage(
-//								idAndAliases.toString()));
-//				
-//				sessionMap.get(id).setAlias(message.getPayload());
-//				
-//				sendClientAliases(id);
-//				return;
-//			}
-//			
-//			// 클라이언트가 전송한 데이터를 출력
-//			System.out.printf("%s로부터 [%s]를 받음\n", 
-//					sessionMap.get(id).getAlias(), 
-//					message.getPayload());
-//			
-//			StringTokenizer st = new StringTokenizer(message.getPayload(), ":@");
-//			st.nextToken();	// to
-//			String target = st.nextToken();	// target ID
-//			String msg = st.nextToken();	// message
-//			
-//			if( !target.equals("all") ) {
-//				sessionMap.get(target).getSession().sendMessage(
-//					new TextMessage(
-//						"(" + sessionMap.get(id).getAlias() + " 님으로부터 쪽지) : " + msg));
-//			} else {		
-//				// 메세지를 보낸 클라이언트를 제외한 모든 클라이언트들에게 메세지 전송		
-//				for( String key : sessionMap.keySet() ) {
-//					if( key.equals(id) )
-//						continue;
-//					
-//					sessionMap.get(key).getSession().sendMessage(
-//							new TextMessage(sessionMap.get(id).getAlias() + " : " + message.getPayload()));
-//				}
-//			}
+
 		}
 		
 		@Override

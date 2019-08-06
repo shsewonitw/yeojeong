@@ -47,8 +47,8 @@
 	</script>
 </head>
 <body>
-<div class="dropmenu" style="z-index:100;position:absolute; background-color:black; width:100%; height:170px; opacity:0.2; transition:all 0.4s ease-out;" id="menu">
-<a href="<%= request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/img/test1.png" style="height: 50%;"></a>
+<div class="dropmenu" style="z-index:100;position:absolute; background-color:black; width:100%; height:170px; opacity:0.2; transition:all 0.4s ease-out;text-align:left;" id="menu">
+<a href="<%= request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/img/title3.png" style="height: 50%;"></a>
 	<c:if test="${ empty sessionScope.login_member }" var="r">
 
 

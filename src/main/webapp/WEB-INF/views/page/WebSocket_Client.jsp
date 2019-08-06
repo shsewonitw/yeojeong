@@ -55,7 +55,7 @@
     	}
     	wsocket.onclose = function() {
     		$("#messageWindow").html($("#messageWindow").html()
-                    + "<p class='chat_content'> 관리자와 연결이 종료 되었습니다. </p>");
+                    + "<div class='alert alert-info' role='alert' style='clear:both;float:left;max-width:280px;word-break:break-all;'>관리자와 연결이 종료 되었습니다. </div>");
     		
     	}
     	wsocket.onopen = function(){

@@ -35,7 +35,8 @@ public class Withme_requestDAO {
 		@Override
 		public Withme_request mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Withme_request withme_request = new Withme_request(rs.getInt(1), rs.getString(2), rs.getString(3),
-					rs.getString(4),rs.getString(5),rs.getString(6),rs.getTimestamp(7),rs.getTimestamp(8),rs.getTimestamp(9));
+					rs.getString(4), rs.getString(5), rs.getString(6), rs.getTimestamp(7), rs.getTimestamp(8),
+					rs.getTimestamp(9));
 			return withme_request;
 		}
 
@@ -72,7 +73,8 @@ public class Withme_requestDAO {
 					@Override
 					public Withme_requestForReSe mapRow(ResultSet rs, int rowNum) throws SQLException {
 						Withme_requestForReSe wr = new Withme_requestForReSe(rs.getInt(1), rs.getString(2),
-								rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6), rs.getTimestamp(7),rs.getTimestamp(8),rs.getTimestamp(9), rs.getInt(10), rs.getString(11));
+								rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getTimestamp(7),
+								rs.getTimestamp(8), rs.getTimestamp(9), rs.getInt(10), rs.getString(11));
 						return wr;
 					}
 
@@ -88,7 +90,8 @@ public class Withme_requestDAO {
 					@Override
 					public Withme_requestForReSe mapRow(ResultSet rs, int rowNum) throws SQLException {
 						Withme_requestForReSe wr = new Withme_requestForReSe(rs.getInt(1), rs.getString(2),
-								rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6), rs.getTimestamp(7),rs.getTimestamp(8),rs.getTimestamp(9), rs.getInt(10), rs.getString(11));
+								rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getTimestamp(7),
+								rs.getTimestamp(8), rs.getTimestamp(9), rs.getInt(10), rs.getString(11));
 						return wr;
 					}
 
@@ -108,6 +111,13 @@ public class Withme_requestDAO {
 			pstmt.setTimestamp(index, new java.sql.Timestamp(value.getTime()));
 		else
 			pstmt.setNull(index, Types.NULL);
+	}
+
+	public boolean deleteWithRequest(Withme_request obj) {
+		int withme_request_flag = this.jdbcTemplate.update("delete from withme_request where request_id = ?",
+				obj.getRequest_id());
+		boolean result = withme_request_flag == 1 ? true : false;
+		return result;
 	}
 
 	public boolean insert(Withme_request obj) {
@@ -133,7 +143,7 @@ public class Withme_requestDAO {
 
 	public boolean update_Status(Withme_request obj) {
 		boolean result = false;
-		int member_flag = this.jdbcTemplate.update(new PreparedStatementCreator() {
+		int withme_request_flag = this.jdbcTemplate.update(new PreparedStatementCreator() {
 
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 				PreparedStatement pstmt = con
@@ -144,7 +154,7 @@ public class Withme_requestDAO {
 			}
 		});
 
-		result = member_flag == 1 ? true : false;
+		result = withme_request_flag == 1 ? true : false;
 
 		return result;
 	}

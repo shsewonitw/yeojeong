@@ -12,9 +12,15 @@
 
 <script type="text/javascript">
 
+var comment_count = ${commentSize};
 // 댓글 등록 
 function insert_comment() {
 	var comment_data = $("#comment_form").serialize();
+	
+	if($("#testest").val().length == 0){
+		alert("댓글을 입력하세요");
+		return;
+	}
 	
 	$.ajax({
 		url:'<%=request.getContextPath()%>/commentinsert',
@@ -25,7 +31,7 @@ function insert_comment() {
 		dataType:"json",
 		success:function(result){			
 			if( eval(result.result) )  {
-				var commentTag = "<b id='comment_" + result.comment_id + "''></b>";
+				var commentTag = "<div id='comment_" + result.comment_id + "'>";
 				commentTag += "<b>";
 				commentTag += result.member_id;
 				commentTag += "</b>";
@@ -34,8 +40,12 @@ function insert_comment() {
 				commentTag += "&nbsp";
 				commentTag += result.write_time + "<br>";
 				commentTag += result.content;
-				//commentTag += "<button type='button' class='btn-red' onclick='delete_comment(" + result.comment_id + ");'>삭제</button>";
-				commentTag += "<hr>";
+				commentTag += "<button type='button' class='btn-red' onclick='delete_comment(" + result.comment_id + ");'>삭제</button>";
+				commentTag += "<hr></div>";
+				comment_count += 1;
+				$("#comment_count").text("댓글("+ comment_count+")");
+				$("#yame").remove();
+				$("#testest").val("");
 				$("#comment_div").append(commentTag);
 			} else {
 				alert('댓글 작성에서 문제 발생1');	
@@ -48,7 +58,7 @@ function insert_comment() {
 	});
 }
 
-var comment_count = ${commentSize};
+
 function delete_comment(comment_id) {
 	$.ajax({
 		url:'<%=request.getContextPath()%>/commentdelete',
@@ -66,7 +76,7 @@ function delete_comment(comment_id) {
 				
 				if( comment_count == 0 ) {
 					$("#comment_table").remove();
-					$("#comment_area").append("<h4>댓글이 존재하지 않습니다.</h4>");
+					$("#comment_area").append("<h4 id='yame'>댓글이 없습니다..</h4>");
 				}
 			} else {
 				alert('댓글 삭제과정에서 문제 발생1');		
@@ -158,21 +168,27 @@ function delete_comment(comment_id) {
 			<br>
 			
 		<!-- 댓글 삭제 -->
+		
 		<div id="comment_area">
 		<label><span id="comment_count">댓글(${commentSize})</span></label><br>
 		<div id="comment_table">
+		<c:if test="${ empty  commentList}" var ="resu">
+			<h4 id='yame'>댓글이 없습니다.</h4>
+		</c:if>
+		<c:if test="${!resu }">
 		<c:forEach items="${ commentList }" var="comment">
 		<div id="comment_${comment.comment_id}">
 			<b>${ comment.member_id }</b>&nbsp;&nbsp;&nbsp;${ comment.write_time }<br>
 			${ comment.content }
 			
-			<c:if test="${ login_member.member_id eq detailreview.member_id}">
+			<c:if test="${ login_member.member_id eq comment.member_id}">
 			<button class="btn-red" type='button' onclick="delete_comment(${comment.comment_id});">삭제</button>
 			</c:if>
 		<br>
 		<hr>
 		</div>
 		</c:forEach>
+		</c:if>
 		</div>
 		</div>
 		
@@ -184,7 +200,9 @@ function delete_comment(comment_id) {
 			<textarea id="testest" name="content" style="height: 20%;" placeholder="${ login_member != null ? '댓글을 입력하세요' : '로그인 해야 작성할 수 있습니다'}"
 			${ login_member != null ? '' : 'readonly'  }></textarea>
 			<div class="buttoncomment">
+			<c:if test="${ not empty login_member }">
 			<input type="button" value="등록" class="button" onclick="insert_comment();">
+			</c:if>
 			</div>
 		</form>
 	

@@ -41,7 +41,7 @@ public class Review_CommentDAO{
 	}
 	
 	public List<Review_Comment> selectAll(Review_Comment model){
-		String sql = "select * from review_comment where article_id = ? order by write_time desc";
+		String sql = "select * from review_comment where article_id = ?";
 		List<Review_Comment> result = this.jdbcTemplate.query(sql,new Review_CommentRowMapper(),model.getArticle_id());
 		return result.isEmpty() ? null : result;
 	}
@@ -61,6 +61,13 @@ public class Review_CommentDAO{
 				model.getMember_id(),model.getArticle_id(),model.getContent()) == 0 ? false : true;
 		
 		return result;		
+	}
+	
+	public int last_insert_id() {
+		int result = -1;
+		String sql = "select last_insert_id()";
+		result = this.jdbcTemplate.queryForObject(sql, Integer.class);
+		return result;
 	}
 	
 	// 댓글 삭제

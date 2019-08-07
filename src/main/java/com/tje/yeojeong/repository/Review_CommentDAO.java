@@ -57,6 +57,7 @@ public class Review_CommentDAO{
 	public boolean insert(Review_Comment model) {
 		boolean result = false;
 		String sql = "insert into review_comment values (0, ?, ?, ?, now())";
+		System.out.println(model.getMember_id());
 		result = this.jdbcTemplate.update(sql,
 				model.getMember_id(),model.getArticle_id(),model.getContent()) == 0 ? false : true;
 		

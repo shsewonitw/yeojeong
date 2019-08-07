@@ -417,10 +417,11 @@ public class ReviewController {
 	public String comment(Model model,Review_Comment comment,HttpServletResponse response,HttpSession session,HttpServletRequest request) throws IOException {
 		
 		Member member = (Member)session.getAttribute("login_member");
-		
+		comment.setMember_id(member.getMember_id());
 		boolean result = false;
 		HashMap<String, Object> values = new HashMap<>();
 		values.put("comment", comment);
+		System.out.println("aaaaaaaaaaaaaaaaaa:"+comment.getMember_id());
 		
 		Review_Comment reviewcomment = new Review_Comment();
 		reviewcomment.setArticle_id(comment.getArticle_id());

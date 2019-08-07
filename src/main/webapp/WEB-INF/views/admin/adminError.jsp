@@ -11,11 +11,11 @@
 	style="color: rgb(52, 152, 219); margin: auto; font-family: sans-serif; font-size: 30px; text-align: center;">
 	<img
 		style="width: auto; height: auto; max-width: 100px; max-height: 100px;"
-		src="<%=request.getContextPath()%>/resources/images/logo.png"
-		alt="logo"> <b>로그인이 필요한 서비스입니다.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+		src="<%=request.getContextPath()%>/resources/images/admin_logo.png"
+		alt="logo"> <b>관리자의 아이디 비밀번호를 확인해주세요.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
 
 	<div class="form-group">
-			<button type="submit" onclick="location.href='<%=request.getContextPath()%>/login'" class="btn btn-default">로그인</button>
+			<button type="submit" onclick="location.href='<%=request.getContextPath()%>/admin'" class="btn btn-default">로그인</button>
 			<button type="submit" onclick="location.href='<%=request.getContextPath()%>/'" class="btn btn-default">홈으로</button>
 	</div>
 </div>

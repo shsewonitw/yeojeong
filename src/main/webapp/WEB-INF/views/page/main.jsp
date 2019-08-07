@@ -110,7 +110,7 @@
 		<!-- 4페이지 시작 -->
 		
 		<section class="section4" style="background-color:wheat;">
-			<div class="img" style="background-image: url('<%=request.getContextPath()%>/resources/cityimg/IMG_E2255.JPG');">
+			<div class="img" style="background-image: url('<%=request.getContextPath()%>/resources/cityimg/IMG_2255.JPG');">
 				<div class="content">
 					<h3 class="animated fadeInUp infinite delay-1s">여행자들의 정보</h3>
 				</div>

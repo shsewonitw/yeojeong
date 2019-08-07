@@ -41,7 +41,7 @@
     	if(wsocket != null)
     		return;
     		
-    	wsocket = new WebSocket("ws://localhost:8080/yeojeong/wsc");
+    	wsocket = new WebSocket("ws://192.168.0.30:8080/yeojeong/wsc");
     	wsocket.onmessage = function(evt){
     		var data = evt.data;
     		if( data.length > 5 && data.substring(0,5)=="/all ") {

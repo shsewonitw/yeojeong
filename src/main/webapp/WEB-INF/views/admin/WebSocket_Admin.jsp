@@ -111,7 +111,7 @@ var wsocket;
 function wsConnect(user_id){
 
 	
-	wsocket = new WebSocket("ws://localhost:8080/yeojeong/wsa")
+	wsocket = new WebSocket("ws://192.168.0.30:8080/yeojeong/wsa")
 	
 
     // client -> admin

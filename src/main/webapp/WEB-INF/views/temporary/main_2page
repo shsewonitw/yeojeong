@@ -1,0 +1,62 @@
+<!-- 2페이지 시작 -->
+	
+	<section class="section2" style="background-color:#f2f2f2;">
+	<div class="tophegiht"></div>
+	
+		<div id="myCarousel" class="carousel slide" data-ride="carousel"> 
+	
+	<!--페이지-->
+	<ol class="carousel-indicators">
+		<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+		<li data-target="#myCarousel" data-slide-to="1"></li>
+		<li data-target="#myCarousel" data-slide-to="2"></li>
+	</ol>
+	<!--페이지-->
+
+	<div class="carousel-inner">	
+		<h3>인기 후기 게시판 TOP3</h3>
+		<!--슬라이드1-->
+		<div class="item active" align="center"> 
+			<img src="http://www.blueb.co.kr/SRC2/_image/w01.jpg" class="img-thumbnail" style="width:1000px; height:700px;">
+			<div class="container">
+				<div class="carousel-caption">
+					<h1>Slide 1</h1>
+					<p>텍스트 1</p>
+				</div>
+			</div>
+		</div>
+		<!--슬라이드1-->
+
+		<!--슬라이드2-->
+		<div class="item" align="center"> 
+			<img src="http://www.blueb.co.kr/SRC2/_image/w02.jpg" class="img-thumbnail" style="width:1000px; height:700px;">
+			<div class="container">
+				<div class="carousel-caption">
+					<h1>Slide 2</h1>
+					<p>텍스트 2</p>
+				</div>
+			</div>
+		</div>
+		<!--슬라이드2-->
+		
+		<!--슬라이드3-->
+		<div class="item" align="center"> 
+			<img src="http://www.blueb.co.kr/SRC2/_image/w03.jpg" class="img-thumbnail" style="width:1000px; height:700px;">
+			<div class="container">
+				<div class="carousel-caption">
+					<h1>${review_article.content }</h1>
+					<p>${review_article.member_id }</p>
+				</div>
+			</div>
+		</div>
+		<!--슬라이드3-->
+	</div>
+	
+	<!--이전, 다음 버튼-->
+	<a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> 
+	<a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a> 
+</div>
+
+      </section>
+       
+      <!-- 2페이지 끝 -->

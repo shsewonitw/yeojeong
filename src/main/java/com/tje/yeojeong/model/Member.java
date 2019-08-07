@@ -61,7 +61,7 @@ public class Member {
 	}
 
 	public String getGenderString() {
-		return gender == 1 ? "남성" : "여성";
+		return gender == 1 ? "여성" : "남성";
 	}
 
 	public final int getGender() {

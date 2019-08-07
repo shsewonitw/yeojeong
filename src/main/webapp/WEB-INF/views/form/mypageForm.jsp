@@ -597,7 +597,7 @@ function removeAll(e){
 				
 				request.setAttribute("date", date);
 			%>
-			<c:if test="${ not empty rList or not rList.size() eq 0}" var="r" >
+			<c:if test="${ not empty rList and rList.size() ne 0}" var="r" >
 				<div id="write" class="info_box">
 					<c:forEach begin="0" end="${rList.size()-1}" var="i">
 						<div class="write_body_div">

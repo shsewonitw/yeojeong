@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>마이페이지</title>
 <link href="<%=request.getContextPath()%>/resources/css/kh_bootstrap.min.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/resources/css/kh_mypage.css?as=ss" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/resources/css/kh_mypage.css?ass=11" rel="stylesheet">
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/kh_bootstrap.min.js"></script>
 
@@ -58,7 +58,7 @@ function doChange(srcE, targetId){
 					addOption(element, targetE);
 				})
 			} else {
-				alert("false");
+				alert("국가리스트 로딩에 실패했습니다.");
 			}
 		},
 		error : function(data) {
@@ -597,7 +597,7 @@ function removeAll(e){
 				
 				request.setAttribute("date", date);
 			%>
-			<c:if test="${ not empty rList and not rList.size() eq 0}" var="r" >
+			<c:if test="${ not empty rList and rList.size() ne 0}" var="r" >
 				<div id="write" class="info_box">
 					<c:forEach begin="0" end="${rList.size()-1}" var="i">
 						<div class="write_body_div">
@@ -613,14 +613,14 @@ function removeAll(e){
 											<span>${ rList[i].city }</span>
 										</div>
 		
-										<div class="write_bottom_div"><a class="a_css" href=""><b>${subcontent[i]}</b></a></div>
+										<div class="write_bottom_div"><a class="a_css" href="<%=request.getContextPath()%>/datailreview?article_id=${rList[i].article_id}"><b>${subcontent[i]}</b></a></div>
 										<div>
 											<span>평점 ${ rList[i].review_star }&nbsp;&nbsp;</span>
 											<span>댓글${ rList[i].comment_count }</span>
 										</div>
 									</div>
 									
-									<div id="write_img_div" OnClick="" >
+									<div id="write_img_div" OnClick="location.href='<%=request.getContextPath()%>/datailreview?article_id=${rList[i].article_id}'" >
 										<img id="write_img" class="img-thumbnail" src="<%=request.getContextPath()%>/resources/cityimg/${ rList[i].image_src }">
 									</div>
 								</div>

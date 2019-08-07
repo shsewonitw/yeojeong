@@ -133,7 +133,7 @@ $("#regist_btn").on("click",function(){
 					member.tel = $("#tel").val();
 					
 					var memberJsonObject = JSON.stringify(member);
-					alert(memberJsonObject);
+					// alert(memberJsonObject);
 				
 			if(all_flag){
 				$.ajax({

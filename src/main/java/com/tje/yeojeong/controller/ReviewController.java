@@ -32,7 +32,8 @@ import com.tje.yeojeong.setting.PagingInfo;
 import com.tje.yeojeong.setting.UtilFile;
 @Controller
 public class ReviewController {
-	
+	@Autowired
+	private CommentLastInsertIdService cliiService;
 	@Autowired
 	private Review_InsertService riService;
 	@Autowired
@@ -418,16 +419,24 @@ public class ReviewController {
 		
 		Member member = (Member)session.getAttribute("login_member");
 		comment.setMember_id(member.getMember_id());
+
 		boolean result = false;
 		HashMap<String, Object> values = new HashMap<>();
 		values.put("comment", comment);
 		System.out.println("aaaaaaaaaaaaaaaaaa:"+comment.getMember_id());
 		
+		
+		
 		Review_Comment reviewcomment = new Review_Comment();
 		reviewcomment.setArticle_id(comment.getArticle_id());
 		
 		HashMap<String, Object> resultMap = (HashMap<String, Object>) rciService.service(values);
+		int last_insert_id =  (int)cliiService.service();
+		System.out.println("last id : " + last_insert_id);
+		comment.setComment_id(last_insert_id);
+		
 		result = (boolean)resultMap.get("result");
+		
 		
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out = response.getWriter();
@@ -439,7 +448,7 @@ public class ReviewController {
 		
 		String output = 
 				String.format("{ \"result\" : \"%b\", \"article_id\" : \"%d\", \"member_id\" : \"%s\", \"comment_id\" : \"%d\", \"content\" : \"%s\", \"write_time\" : \"%s\" }", 
-						result, comment.getArticle_id(), comment.getMember_id(),reviewcomment.getArticle_id(), comment.getContent(), format_time2 );
+						result, comment.getArticle_id(), comment.getMember_id(),comment.getComment_id(), comment.getContent(), format_time2 );
 			out.println(output);
 			out.flush();
 			out.close();
@@ -451,11 +460,14 @@ public class ReviewController {
 	@PostMapping("/commentdelete")
 	@ResponseBody
 	public String commentdelete(@RequestParam("comment_id") int comment_id,HttpServletResponse response, HttpSession session) {
+		
 		Member member = (Member)session.getAttribute("login_member");
+		
 		boolean result = false;
 		
 		Review_Comment reviewcomment = new Review_Comment();
 		reviewcomment.setComment_id(comment_id);
+		reviewcomment.setMember_id(member.getMember_id());
 		
 		HashMap<String, Object> values = new HashMap<>();
 		values.put("reviewcommnet", reviewcomment);

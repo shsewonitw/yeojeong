@@ -51,7 +51,7 @@ function doChange(srcE, targetId){
 					addOption(element, targetE);
 				})
 			} else {
-				alert("false");
+				alert("등록에 실패했습니다.");
 			}
 		},
 		error : function(data) {
@@ -82,7 +82,6 @@ function removeAll(e){
 <!-- prelude 자리 만들어주는 div  -->
 <div style="height: 170px;"></div>
 <script type="text/javascript">
-	alert(13332);
 </script>
 <!-- ----------test----------------------------------------- -->
 <form action="<%=request.getContextPath()%>/travelRegist" method="POST">

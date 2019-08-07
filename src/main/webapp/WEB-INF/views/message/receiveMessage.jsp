@@ -10,6 +10,19 @@
 <script src="<%=request.getContextPath() %>/resources/js/jb_bootstrap.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#delete_message').click(function() {
+		var result = confirm("삭제된 쪽지는 복구하실 수 없습니다.\n정말 삭제하시겠습니까?");
+		if ( result ) {
+			location.href='<%=request.getContextPath()%>/message/receivecontent/delete/${message.message_id}';
+		} else {
+			return false;
+		}
+	});
+});
+</script>
+
 <style type="text/css">
 .a:link {color:#3498DB;text-decoration:none;}
 .a:visited {color:#3498DB;text-decoration:none;}
@@ -52,6 +65,7 @@ th, td {
 
 </head>
 <body>
+<form action="<%=request.getContextPath()%>/message/receivecontent/delete/${message.message_id}" method="post">
 <div class="top"></div>
 <div class="middle" role="main">
 	<div class="column_center">
@@ -72,10 +86,11 @@ th, td {
 </div>
 	<div class="message_btn">
 		<a class="btn btn-primary" href="<%=request.getContextPath()%>/message/retransform/${message.sender_id}" role="button">답장</a>
-		<button type="button" class="btn btn-default" id="delete_btn" name="message_id">삭제</button>
+		<button type="submit" class="btn btn-default" id="delete_message" name="message_id">삭제</button>
 		<button type="button" class="btn btn-default" onclick="self.close()">닫기</button>
 	</div>
 <div class="bottom">
 </div>
+</form>
 </body>
 </html>

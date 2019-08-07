@@ -48,41 +48,38 @@ br {
 </head>
 <body>
 <script type="text/javascript">
-	// 페이지 새로고침
-	$(document).ready(function() {
-		$('a').click(function() {
-			setTimeout("history.go(0);",1000)
-		});
+//메세지 수신 부분 
+function winopen(num) {
+	window.open("<%=request.getContextPath()%>/message/receivecontent/"+num,"receivecontentOpen",
+		"width=740,height=620,left=150,top=150,resizable=no,location=no,menubar=no,toolbar=no,scrollbars=no");
+};
+
+// 메세지 답장(아이디 클릭) 부분 
+function transform(sender) {
+	window.open("<%=request.getContextPath()%>/message/retransform/"+sender,"receivecontentOpen",
+		"width=740,height=620,left=150,top=150,resizable=no,location=no,menubar=no,toolbar=no,scrollbars=no");
+};
+
+// 페이지 새로고침
+$(document).ready(function() {
+	$('a').click(function() {
+		setTimeout("history.go(0);",1000)
 	});
-	// 메세지 수신 부분 
-	function winopen(num) {
-		window.open("<%=request.getContextPath()%>/message/receivecontent/"+num,"receivecontentOpen",
-			"width=740,height=620,left=150,top=150,resizable=no,location=no,menubar=no,toolbar=no,scrollbars=no");
-	};
 	
-	// 메세지 답장(아이디 클릭) 부분 
-	function transform(sender) {
-		window.open("<%=request.getContextPath()%>/message/retransform/"+sender,"receivecontentOpen",
-			"width=740,height=620,left=150,top=150,resizable=no,location=no,menubar=no,toolbar=no,scrollbars=no");
-	};
-	
-	// 메세지 삭제 부분 
 	// 체크박스 전체 선택 
-	$(document).ready(function() {
-		$('#chk_all').click(function() {
-			var chk = $('#chk_all').prop('checked');
-			if(chk) {
-				$('.chk_row').prop('checked', true);
-			} else {
-				$('.chk_row').prop('checked', false);
-			}
-		});
+	$('#chk_all').click(function() {
+		var chk = $('#chk_all').prop('checked');
+		if(chk) {
+			$('.chk_row').prop('checked', true);
+		} else {
+			$('.chk_row').prop('checked', false);
+		}
 	});
 	
 	// 메세지 삭제
 	$("#delete_btn").click(function(){ 
 		var confirm_val = confirm("정말 삭제하시겠습니까?");
-
+		
 		if(confirm_val) {
 		var checkArr = new Array();
 
@@ -100,12 +97,13 @@ br {
 			});
 		}
 	});
+});
 </script>
 <div class="top"></div>
 <div class="div_body">
 <div class="message_bar">
 <h3><a href="<%=request.getContextPath()%>/message/receive/" class="a">&nbsp;&nbsp;&nbsp;&nbsp;받은쪽지</a>(${readCount}/${r_count}) | <a href="<%=request.getContextPath()%>/message/send/" class="a">보낸쪽지</a>
-<input class="btn btn-default" id="delete_btn" type="submit" value="삭제"></h3>
+<input class="btn btn-default" id="delete_btn" type="button" value="삭제"></h3>
 </div>
 <div class="middle">
 <table class="table">
@@ -126,7 +124,7 @@ br {
 	<c:forEach items="${rList}" var="rmsg">
 	<c:if test="${ empty rmsg.receive_time }" var="r">
 	<tr>
-		<th width="10%"><input type="checkbox" class="chk_row" name="${rmsg.message_id}"></th>
+		<th width="10%"><input type="checkbox" class="chk_row" name="chk_row" data-message_id="${rmsg.message_id}"></th>
 		<th width="20%"><a href="#" class="a" onclick="transform('${rmsg.sender_id}');">${rmsg.sender_id}</a></th>
 		<th style="text-align:left" width="40%"><a href="" class="a" onclick="winopen('${rmsg.message_id}');">새 쪽지 확인</a></th>
 		<th width="15%">${ rmsg.send_time }</th>
@@ -136,7 +134,7 @@ br {
 	
 	<c:if test="${ not r }">
 	<tr>
-		<td width="10%"><input type="checkbox" class="chk_row" name="${rmsg.message_id}"></td>
+		<td width="10%"><input type="checkbox" class="chk_row" data-message_id="${rmsg.message_id}"></td>
 		<td width="20%"><a href="#" class="a" onclick="transform('${rmsg.sender_id}');">${rmsg.sender_id}</a></td>
 		<td style="text-align:left" width="40%"><a href="" class="a" onclick="winopen('${rmsg.message_id}');">
 		<!-- ...으로 자르는 코드 -->

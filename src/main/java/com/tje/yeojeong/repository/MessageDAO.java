@@ -126,10 +126,10 @@ public class MessageDAO {
 		return keyHolder.getKey().intValue();
 	}
 	
-	// 메세지 삭제
+	// 메세지 개별 삭제
 	public boolean delete(Message model) {
 		boolean result = false;
-		String sql = "delete from message where message_id = ? and ?";
+		String sql = "delete from message where message_id = ?";
 		result = this.jdbcTemplate.update(
 				sql,model.getMessage_id()) == 0 ? false : true;
 

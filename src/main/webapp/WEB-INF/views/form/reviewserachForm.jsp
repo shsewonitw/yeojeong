@@ -11,6 +11,10 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/reviewlist.css?var=11">
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 
+<!-- 컨텍스트 메뉴 -->
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/contextmenu.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/contextmenuui.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/contextmenu.css">
 
 
 <title>여행자들의 웃음 리스트</title>
@@ -63,7 +67,7 @@
 			</a>
         	</td>
         	
-        	<td>${ r_list.name }</td>
+        	<td><input type="button" class="namebtn" id="${r_list.member_id}_namebtn" onclick="temp('${r_list.member_id}');" value="${ r_list.name }"></td>
         	<td>${ r_list.country }</td>
         	<td>${ r_list.city }</td>
         	<td>
@@ -133,7 +137,7 @@
 		<form action="<%= request.getContextPath() %>/reviewlist/serach" method="post">
 		<span class="serch">
 		<select name="searchItem">
-			<option value="member_id">작성자</option>
+			<option value="name">작성자</option>
 			<option value="country" >국가</option>
 			<option value="city" >도시</option>
 		</select>
@@ -145,6 +149,31 @@
 
 </body>
 
+<script type="text/javascript">
+
+function temp(member_id){
+	$.contextMenu({
+	    selector: "#"+member_id+"_namebtn",
+	    trigger: 'left',
+	    callback: function(key, options) {
+	    	
+	       var m = key;
+	        if(m == "edit"){
+	        	window.open('<%= request.getContextPath()%>/message/transform/'+member_id,'message',width='740',height='620',true);
+	        }
+	        	
+	    },
+	    items: {
+	        "edit": {name: "쪽지보내기"},
+	        "cut": {name: "1:1채팅(미구현)"},
+	        "copy": {name: "쓴글 확인(미구현)"},
+	    }
+	});
+	
+}
+
+
+</script>
 
 
 

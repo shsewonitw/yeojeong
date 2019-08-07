@@ -26,7 +26,7 @@ public class Review_ReviewSerachService {
 		else if(searchItem.equals("city")) {
 			result.put("ReviewSearch", reviewDAO.selectSerachWhereCity(searchValue,page));
 		}
-		else if(searchItem.equals("member_id")) {
+		else if(searchItem.equals("name")) {
 			result.put("ReviewSearch", reviewDAO.selectSerachWhereMember_id(searchValue,page));
 		}
 		

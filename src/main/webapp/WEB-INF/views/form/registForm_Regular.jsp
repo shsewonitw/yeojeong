@@ -133,7 +133,7 @@ $("#regist_btn").on("click",function(){
 					member.tel = $("#tel").val();
 					
 					var memberJsonObject = JSON.stringify(member);
-					alert(memberJsonObject);
+					// alert(memberJsonObject);
 				
 			if(all_flag){
 				$.ajax({
@@ -146,7 +146,7 @@ $("#regist_btn").on("click",function(){
 						alert(member.name +"님 회원가입 성공. 로그인 페이지로 이동합니다.");
 						
 						if(eval(data)){
-							window.location.href = 'http://192.168.0.30:8080/yeojeong/login';
+							window.location.href = 'http://localhost:8080/yeojeong/login';
 						}else{
 							alert("회원가입 실패(관리자에게 문의하세요.)");
 						}

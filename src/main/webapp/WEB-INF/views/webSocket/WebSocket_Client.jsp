@@ -24,7 +24,7 @@
 			</fieldset>
 		</div>
 		<div style="overflow:hidden;">
-		 	<input id="inputMessage" class="form-control" type="text" onkeyup="enterkey()" style="float:left;width:450px;" /><input type="submit" class="btn btn-default" value="전송" onclick="sendMessage()" style="float:left;" />
+		 	<input id="inputMessage" class="form-control" type="text" onkeyup="enterkey()" style="float:left;width:450px;"/><input type="submit" class="btn btn-default" value="전송" onclick="sendMessage()" style="float:left;" />
 		</div>
     </div>
 
@@ -38,8 +38,12 @@
     var wsocket;
 	
     function wsConnect() {
-    	if(wsocket != null)
+    
+    	if(wsocket != null){
+    		
     		return;
+    		
+    	}
     		
     	wsocket = new WebSocket("ws://192.168.0.30:8080/yeojeong/wsc");
     	wsocket.onmessage = function(evt){
@@ -58,11 +62,14 @@
     	wsocket.onclose = function() {
     		$("#messageWindow").html($("#messageWindow").html()
                     + "<div class='alert alert-info' role='alert' style='clear:both;float:left;max-width:280px;word-break:break-all;'>관리자와 연결이 종료 되었습니다. </div>");
+    		wsocket = null;
+    		scrollDown();
     		
     	}
     	wsocket.onopen = function(){
     		$("#messageWindow").html($("#messageWindow").html()
                     + "<div class='alert alert-info' role='alert' style='clear:both;float:left;max-width:280px;word-break:break-all;'>관리자에게 메세지를 보내주세요. 이 페이지를 나가거나 연결을 종료하면 대화내용은 저장되지 않습니다. </div>");
+    		scrollDown();
     	}
     }
     

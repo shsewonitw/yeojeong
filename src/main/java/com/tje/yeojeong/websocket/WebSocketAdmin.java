@@ -54,6 +54,9 @@ public class WebSocketAdmin extends TextWebSocketHandler {
 				return;
 			}
 			for(WebSocketSession sess : chatInfo.getChatMap().keySet()) {
+				if(!sess.isOpen()) {
+					continue;
+				}
 				if( sess.getId().equals(clientId) ) {
 					sess.sendMessage(new TextMessage(realMsg));
 					

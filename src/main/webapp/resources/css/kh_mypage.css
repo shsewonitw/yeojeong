@@ -202,6 +202,7 @@ write_sub_div {
 }
 
 #write_img {
+	
 	max-width: 100px;
 	max-height: 100px;
 	width: 100%;
@@ -209,6 +210,7 @@ write_sub_div {
 }
 
 #write_img_div {
+	overflow:hidden;
 	float: right;
 	cursor: pointer;
 }

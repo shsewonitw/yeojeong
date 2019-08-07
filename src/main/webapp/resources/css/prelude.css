@@ -58,7 +58,7 @@ display:block;
 
 .dropmenu li li {
 /*메뉴바*/
-/*background-color:gray;*/
+background-color:rgba(0,0,0,0.6);
 display:block;
 float:none;
 margin:0px;

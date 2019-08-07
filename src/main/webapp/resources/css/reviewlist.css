@@ -131,7 +131,7 @@ body{
 }
 .imgsize1{
 	width: 150px;
-	height: 40px;
+	height: 30px;
 	
 }
 
@@ -161,5 +161,12 @@ a{
 
 
 .serch{
-	margin-left: 10%;
+	margin-left: 35%;
+}
+
+.namebtn{
+	cursor:pointer;
+	border: 0;
+	outline: 0;
+	background-color: white;
 }

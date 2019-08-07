@@ -8,9 +8,13 @@
 <meta charset="UTF-8">
 
 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/reviewlist.css?var=112">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/reviewlist.css?var=11">
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 
+<!-- 컨텍스트 메뉴 -->
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/contextmenu.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/contextmenuui.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/contextmenu.css">
 
 
 <title>여행자들의 웃음 리스트</title>
@@ -63,7 +67,8 @@
 			</a>
         	</td>
         	
-        	<td>${ r_list.name }</td>
+        	<td><input type="button" class="namebtn" onclick="temp('${r_list.member_id}');" value="${ r_list.name }"></td>
+        	
         	<td>${ r_list.country }</td>
         	<td>${ r_list.city }</td>
         	<td>
@@ -130,20 +135,47 @@
 				</c:if>
 		</span>
 		
+		<form action="<%= request.getContextPath() %>/reviewlist/serach" method="post">
 		<span class="serch">
-		<select name="serchcheck">
-			<option value="1">작성자</option>
-			<option value="2">국가</option>
-			<option value="2">도시</option>
+		<select name="searchItem">
+			<option value="member_id" selected>작성자</option>
+			<option value="country">국가</option>
+			<option value="city">도시</option>
 		</select>
-		<input style="margin-top: 3%" type="text" name="serchinput">
-		<button type="submit" class="button" style="margin-top: 5%;">검색</button>
+		<input style="margin-top: 3%" type="text" name="searchValue" required> 
+		
+		<input type="submit" class="button" value="검색">
 		</span>
+		</form>
 	</div>
 
 </body>
 
+<script type="text/javascript">
 
+function temp(member_id){
+	$.contextMenu({
+	    selector: ".namebtn",
+	    trigger: 'left',
+	    callback: function(key, options) {
+	       var m = key;
+	        //window.console && console.log(m) || alert(m);
+	        if(m == "edit"){
+	        	window.open('<%= request.getContextPath()%>/message/transform/'+member_id,'message',width='740',height='620',true);
+	        }
+	        	
+	    },
+	    items: {
+	        "edit": {name: "쪽지보내기"},
+	        "cut": {name: "1:1채팅(미구현)"},
+	        "copy": {name: "쓴글 확인(미구현)"},
+	        "paste": {name: "???"},
+	    }
+	});
+	
+}
+
+</script>
 
 
 </html>

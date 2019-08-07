@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/full-page-scroll.min.css?var=1">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/prelude.css?var=1">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/prelude.css?var=2221">
 
 <script src="<%=request.getContextPath() %>/resources/js/jquery.js?sdf=1"></script>
 	<script type="text/javascript">
@@ -47,8 +47,8 @@
 	</script>
 </head>
 <body>
-<div class="dropmenu" style="z-index:100;position:absolute; background-color:black; width:100%; height:170px; opacity:0.2; transition:all 0.4s ease-out;" id="menu">
-<a href="<%= request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/img/test1.png" style="height: 50%;"></a>
+<div class="dropmenu" style="z-index:100;position:absolute; background-color:black; width:100%; height:170px; opacity:0.2; transition:all 0.4s ease-out;text-align:left;" id="menu">
+<a href="<%= request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/img/title3.png" style="height: 50%;"></a>
 	<c:if test="${ empty sessionScope.login_member }" var="r">
 
 
@@ -68,16 +68,16 @@
 	</c:if>
 	<div class="main_menu">
 	<ul>
-	 <li><a href="<%= request.getContextPath()%>"><b class="menu_font">Home</b></a></li>
 	 <li><a href="#" ><b class="menu_font">여행</b></a>
 		 <ul>
 	     <li><a href="<%=request.getContextPath()%>/travelRegist"><b class="menu_font">여행지 등록</b></a></li>
 	     <li><a href="<%=request.getContextPath()%>/traveldata"><b class="menu_font">여행지 정보</b></a></li>
 	    </ul>
 	   </li>
-	 <li><a href="#" ><b class="menu_font">같이갈래?</b></a></li>
+	 <li><a href="<%=request.getContextPath()%>/withmelist" ><b class="menu_font">같이갈래?</b></a></li>
 	 <li><a href="<%=request.getContextPath()%>/reviewlist"><b class="menu_font">여행자들의 웃음(여행후기)</b></a></li>
 	 <li><a href="<%=request.getContextPath()%>/qaarticle"><b class="menu_font">자주 묻는 질문</b></a></li>
+	  <li><a href="<%= request.getContextPath()%>/wsClient" onClick="window.open(this.href, '', 'width=520px, height=400px'); return false;"><b class="menu_font">문의하기</b></a></li>
 	</ul>
 	</div>
 </div>

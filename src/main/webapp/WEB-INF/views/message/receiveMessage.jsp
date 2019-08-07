@@ -40,7 +40,7 @@ th, td {
 .trcolor {
 	background-color:#F4F4F4;
 }
-.battom {
+.bottom {
 	height:auto;
 }
 .message_btn {
@@ -72,9 +72,10 @@ th, td {
 </div>
 	<div class="message_btn">
 		<a class="btn btn-primary" href="<%=request.getContextPath()%>/message/retransform/${message.sender_id}" role="button">답장</a>
+		<button type="button" class="btn btn-default" id="delete_btn" name="message_id">삭제</button>
 		<button type="button" class="btn btn-default" onclick="self.close()">닫기</button>
 	</div>
-<div class="battom">
+<div class="bottom">
 </div>
 </body>
 </html>

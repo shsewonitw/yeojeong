@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/datilreview.css?var=11">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/datilreview.css?var=33">
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 
 <script type="text/javascript">
@@ -136,7 +138,15 @@ function delete_comment(comment_id) {
         		</c:if>
 			<hr>
 			<label>후기 내용</label><br><br>
-			<textarea readonly>${detailreview.content }</textarea>
+			
+			<div class="contentDIV">
+			<c:if test="${ fn:length(detailreview.image_src) < 15 }" var="img"> 
+        	</c:if>
+        	<c:if test="${ !img}"> 
+			<img class="imgsize" src="<%=request.getContextPath()%>/resources/cityimg/${detailreview.image_src}"><br><br><br>
+			</c:if>
+			${detailreview.content }
+			</div>
 			
 			<div class="buttonmargin">
 			<c:if test="${ login_member.member_id eq detailreview.member_id}">
@@ -154,9 +164,9 @@ function delete_comment(comment_id) {
 		<c:forEach items="${ commentList }" var="comment">
 		<div id="comment_${comment.comment_id}">
 			<b>${ comment.member_id }</b>&nbsp;&nbsp;&nbsp;${ comment.write_time }<br>
-			${ comment.content }
+			${ comment.content } 멤버아이디:${comment.member_id }
 			
-			<c:if test="${ login_member.member_id eq detailreview.member_id}">
+			<c:if test="${ login_member.member_id eq comment.member_id}">
 			<button class="btn-red" type='button' onclick="delete_comment(${comment.comment_id});">삭제</button>
 			</c:if>
 		<br>

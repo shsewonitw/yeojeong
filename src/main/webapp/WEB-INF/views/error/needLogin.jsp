@@ -15,7 +15,7 @@
 		alt="logo"> <b>로그인이 필요한 서비스입니다.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
 
 	<div class="form-group">
-			<button type="submit" class="btn btn-default">로그인</button>
-			<button type="submit" class="btn btn-default">홈으로</button>
+			<button type="submit" onclick="location.href='<%=request.getContextPath()%>/login'" class="btn btn-default">로그인</button>
+			<button type="submit" onclick="location.href='<%=request.getContextPath()%>/'" class="btn btn-default">홈으로</button>
 	</div>
 </div>

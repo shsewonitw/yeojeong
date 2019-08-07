@@ -1,0 +1,207 @@
+@charset "UTF-8";
+@import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+
+body{
+	overflow: scroll;
+}
+
+.top{
+	height: 170px;
+	background-color: black;
+}
+
+.titleDIV{
+	width: 50%;
+	height : 6%;
+	margin-top: 3%;
+	margin-left: 40%;
+	font-size : 50px;
+	font-family: 'Nanum Pen Script', cursive;
+	overflow: hidden;
+	color: #3498DB;
+	
+}
+
+.formDIV{
+	width: 60%;
+	height: 60%;
+	margin-top : 3%;
+	margin-left: 20%;
+	
+}
+/*------------------------------------------------------------------------------------------*/
+input, textarea {
+	padding: 9px;
+	border: solid 1px #E5E5E5;
+	outline: 0;
+	font: normal 13px/100% Verdana, Tahoma, sans-serif;
+	width: 200px;
+	background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF),
+		color-stop(4%, #EEEEEE), to(#FFFFFF));
+	background: -moz-linear-gradient(top, #FFFFFF, #EEEEEE 1px, #FFFFFF 25px);
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+	-moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
+}
+
+textarea {
+	width: 98%;;
+	max-width: 98%;
+	height: 60%;
+	line-height: 150%;
+	resize: none;
+}
+
+input:hover, textarea:hover, input:focus, textarea:focus {
+	border-color: #C9C9C9;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 8px;
+}
+
+label {
+	color: #999999;
+	float:left;
+}
+
+.submit input {
+	width: auto;
+	padding: 9px 15px;
+	background: #617798;
+	border: 0;
+	font-size: 14px;
+	color: #FFFFFF;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+/*-----------------------------------------*/
+
+form{
+	height: 100%;
+	
+}
+
+#default {
+	width:280;
+	border:1px solid;
+	padding:5;
+}
+
+select {
+	font-family:굴림;
+	font-size:12px;
+}
+
+
+
+
+/*--------------------------------------------*/
+.selectbox { position: relative; width: 200px; height: 40px; line-height: 40px; border: 1px solid #999; z-index: 1; } 
+.selectbox label { position: absolute; top: 0px; left: 5px; height: 40px; line-height: 40px; color: #999; z-index: -1; } 
+.selectbox select { width: 100%; height: 40px; line-height: 40px; font-family: inherit; border: 0; opacity: 0; filter:alpha(opacity=0); -webkit-appearance: none; /* 네이티브 외형 감추기 */ -moz-appearance: none; appearance: none; }
+
+
+/*--------------------------------------------*/
+.button {
+  display: inline-block;
+  margin-top : 1%;
+  vertical-align: top;
+  position: relative;
+  overflow: hidden;
+  min-width: 43px;
+  line-height: 30px;
+  padding: 0 24px;
+  font-size: 14px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 0 1px #154c86;
+  background-color: #247edd;
+  background-clip: padding-box;
+  border: 1px solid;
+  border-color: #1c65b2 #18589c #18589c;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));
+  background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));
+  background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));
+}
+.button:before {
+  content: '';
+  position: absolute;
+  top: -25%;
+  bottom: -25%;
+  left: -20%;
+  right: -20%;
+  border-radius: 50%;
+  background: transparent;
+  -webkit-box-shadow: inset 0 0 38px rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 0 38px rgba(255, 255, 255, 0.5);
+}
+.button:hover {
+  background-color: #1a74d3;
+}
+.button:active {
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 -1px #154c86;
+  background: #1f71c8;
+  border-color: #113f70 #154c86 #1c65b2;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px rgba(255, 255, 255, 0.4);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px rgba(255, 255, 255, 0.4);
+  background-image: -webkit-linear-gradient(top, #1a5da5, #3a8be0);
+  background-image: -moz-linear-gradient(top, #1a5da5, #3a8be0);
+  background-image: -o-linear-gradient(top, #1a5da5, #3a8be0);
+  background-image: linear-gradient(to bottom, #1a5da5, #3a8be0);
+}
+.button:active:before {
+  top: -50%;
+  bottom: -125%;
+  left: -15%;
+  right: -15%;
+  -webkit-box-shadow: inset 0 0 96px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 96px rgba(0, 0, 0, 0.2);
+}
+
+.buttontype{
+	border: 0%;
+}
+
+[class*='btn-'] {
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px
+		rgba(0, 0, 0, 0.08);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px
+		rgba(0, 0, 0, 0.08);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px
+		rgba(0, 0, 0, 0.08);
+	color: #fff;
+	display: inline-block;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	text-decoration: none;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+	float: right;
+	-webkit-transition: background-color 0.1s linear;
+	-moz-transition: background-color 0.1s linear;
+	-o-transition: background-color 0.1s linear;
+	transition: background-color 0.1s linear;
+}
+
+[class*='btn-']:hover {
+	cursor: pointer;
+}
+
+.btn-red {
+	background-color: rgb(207, 56, 91);
+	border: 1px solid rgb(187, 40, 74);
+}
+
+.btn-red:hover {
+	background-color: rgb(227, 77, 130);
+}
+
+.btn-red:active {
+	background-color: rgb(187, 40, 74);
+}
+

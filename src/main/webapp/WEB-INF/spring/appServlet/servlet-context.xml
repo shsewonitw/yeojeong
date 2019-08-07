@@ -41,12 +41,12 @@
 	p:maxUploadSize="100000000" p:maxInMemorySize="100000000" />
 	
 	<!--  웹소켓   -->
-	<beans:bean id="echoController" class="com.tje.yeojeong.controller.EchoController" />
-	<beans:bean id="broadCastController" class="com.tje.yeojeong.controller.BroadCastController" />
+	<beans:bean id="webSocketClient" class="com.tje.yeojeong.websocket.WebSocketClient" />
+	<beans:bean id="webSocketAdmin" class="com.tje.yeojeong.websocket.WebSocketAdmin" />
 	
 	<websocket:handlers>
-		<websocket:mapping handler="echoController" path="/echo"/>
-		<websocket:mapping handler="broadCastController" path="/bc"/>
+		<websocket:mapping handler="webSocketClient" path="/wsc"/>
+		<websocket:mapping handler="webSocketAdmin" path="/wsa"/>
 	</websocket:handlers>
 
 		
@@ -54,4 +54,3 @@
 
 	
 
-	

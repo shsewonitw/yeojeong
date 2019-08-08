@@ -39,6 +39,7 @@
 	border: solid thin #ddd;
 	margin: 2px;
 }
+
 .request_delete_btn {
 	display: inline-block;
 	cursor: pointer;
@@ -202,15 +203,13 @@ write_sub_div {
 }
 
 #write_img {
-	
 	max-width: 100px;
 	max-height: 100px;
-
 	height: 100%;
 }
 
 #write_img_div {
-	overflow:hidden;
+	overflow: hidden;
 	float: right;
 	cursor: pointer;
 }

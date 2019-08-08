@@ -51,6 +51,17 @@
 	color: white;
 }
 
+#mypage_delet_write {
+	display: inline-block;
+	cursor: pointer;
+	border-radius: 4px;
+	border: solid thin #ddd;
+	margin: 2px;
+	background-color: rgb(52, 152, 219);
+	color: white;
+	padding: 0px 8px;
+}
+
 .direction {
 	cursor: pointer;
 	line-height: 40px

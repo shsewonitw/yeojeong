@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>마이페이지</title>
 <link href="<%=request.getContextPath()%>/resources/css/kh_bootstrap.min.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/resources/css/kh_mypage.css?ass=11" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/resources/css/kh_mypage.css?aas=11324" rel="stylesheet">
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/kh_bootstrap.min.js"></script>
 
@@ -36,7 +36,29 @@ $(function(){
 	
 });
 
-
+function mypage_delete_write(article_id){
+	if (confirm("정말 삭제하시겠습니까??") == true){   
+	 $.ajax({
+			url : "<%=request.getContextPath()%>/auth/mypage_delet_write",
+			type : "post",
+			data : "article_id=" + article_id,
+			dataType : "text",
+			success : function(data) {
+				if (eval(data)) {
+					alert("삭제를 완료했습니다.");
+					location.href = "http://localhost:8080/yeojeong/auth/mypage/${curPage}";
+				} else {
+					alert("삭제를 실패헀습니다.(관리자에게 문의하세요.)");
+				}
+			},
+			error : function(data) {
+				alert("통신오류(관리자에게 문의하세요.)");
+			}
+		});
+	} else{
+		
+	}
+}
 
 function doChange(srcE, targetId){
     var val = srcE.options[srcE.selectedIndex].value;
@@ -600,7 +622,7 @@ function removeAll(e){
 			<c:if test="${ not empty rList and rList.size() ne 0}" var="r" >
 				<div id="write" class="info_box">
 					<c:forEach begin="0" end="${rList.size()-1}" var="i">
-						<div class="write_body_div">
+						<div class="write_body_div write_body_div${rList[i].article_id}">
 							<div style="padding: 20px">
 								<div id="write_sub_div">
 									<div class="write_head_div" >
@@ -614,9 +636,13 @@ function removeAll(e){
 										</div>
 		
 										<div class="write_bottom_div"><a class="a_css" href="<%=request.getContextPath()%>/datailreview?article_id=${rList[i].article_id}"><b>${subcontent[i]}</b></a></div>
-										<div>
+										<div style="float: left;">
 											<span>평점 ${ rList[i].review_star }&nbsp;&nbsp;</span>
 											<span>댓글${ rList[i].comment_count }</span>
+										</div>
+										<div style="float: right;">
+											<div id="mypage_delet_write" onclick="mypage_delete_write('${rList[i].article_id}');">삭제</div>
+											
 										</div>
 									</div>
 									

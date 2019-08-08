@@ -20,7 +20,8 @@
 	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-			
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/attrchange.js"></script>
+        		
 	<!-- 1페이지 시작 -->	
 	<div id="main" class="scroll-container">
 		<section class="section1">
@@ -38,9 +39,9 @@
       <!-- 3페이지 시작 -->
 	      <section class="section3" style="background-color:#DAD9FF;">	      	
 			<div class="img" style="background-image: url('<%=request.getContextPath()%>/resources/cityimg/IMG_3609.JPG');">
-				<div class="content">
-					<h1 class="animated fadeInUp delay-1s">여행자들의 정보</h1>
-					<h1 class="animated fadeInUp delay-1s">가고싶은 여행지의 정보를 알아보세요!</h1>
+				<div class="content" id="target1" style="width:616.56px">
+					<h1 class="animated jackInTheBox delay-1s">여행자들의 정보</h1>
+					<h1 class="animated jackInTheBox delay-2s">가고싶은 여행지의 정보를 알아보세요!</h1>
 				</div>
 				<div class="img-cover"></div>
 			</div>			
@@ -52,7 +53,7 @@
 		<section class="section4" style="background-color:wheat;">
 			<div class="img" style="background-image: url('<%=request.getContextPath()%>/resources/cityimg/IMG_2255.JPG');">
 
-				<div class="content" id="target1">
+				<div class="content" id="target2" style="width:400.56px">
 					<h3 class="animated fadeInUp delay-1s">If you want to go fast, go alone</h3>
 					<h2 class="animated fadeInUp delay-2s">If you want to go far</h2>
 					<h1 class="animated fadeInUp delay-3s" style="font-size:70px;"><b>go together.</b></h1>
@@ -97,4 +98,22 @@
 		}
 
 	}	
+	
+	$("#main").attrchange({
+		trackValues: true, /* Default to false, if set to true the event object is 
+					updated with old and new value.*/
+		callback: function (event) { 
+			 $('#target1').load(document.URL +  ' #target1');
+			 $('#target2').load(document.URL +  ' #target2');
+		    //event    	          - event object
+		    //event.attributeName - Name of the attribute modified
+		    //event.oldValue      - Previous value of the modified attribute
+		    //event.newValue      - New value of the modified attribute
+		    //Triggered when the selected elements attribute is added/updated/removed
+		}        
+	});
+	
+	
+
+	
 </script>

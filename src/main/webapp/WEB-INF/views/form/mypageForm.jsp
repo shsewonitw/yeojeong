@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>마이페이지</title>
 <link href="<%=request.getContextPath()%>/resources/css/kh_bootstrap.min.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/resources/css/kh_mypage.css?ass=11" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/resources/css/kh_mypage.css?aas=11324" rel="stylesheet">
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/kh_bootstrap.min.js"></script>
 
@@ -36,7 +36,29 @@ $(function(){
 	
 });
 
-
+function mypage_delete_write(article_id){
+	if (confirm("정말 삭제하시겠습니까??") == true){   
+	 $.ajax({
+			url : "<%=request.getContextPath()%>/auth/mypage_delet_write",
+			type : "post",
+			data : "article_id=" + article_id,
+			dataType : "text",
+			success : function(data) {
+				if (eval(data)) {
+					alert("삭제를 완료했습니다.");
+					location.href = "http://localhost:8080/yeojeong/auth/mypage/${curPage}";
+				} else {
+					alert("삭제를 실패헀습니다.(관리자에게 문의하세요.)");
+				}
+			},
+			error : function(data) {
+				alert("통신오류(관리자에게 문의하세요.)");
+			}
+		});
+	} else{
+		
+	}
+}
 
 function doChange(srcE, targetId){
     var val = srcE.options[srcE.selectedIndex].value;
@@ -600,7 +622,7 @@ function removeAll(e){
 			<c:if test="${ not empty rList and rList.size() ne 0}" var="r" >
 				<div id="write" class="info_box">
 					<c:forEach begin="0" end="${rList.size()-1}" var="i">
-						<div class="write_body_div">
+						<div class="write_body_div write_body_div${rList[i].article_id}">
 							<div style="padding: 20px">
 								<div id="write_sub_div">
 									<div class="write_head_div" >
@@ -614,9 +636,13 @@ function removeAll(e){
 										</div>
 		
 										<div class="write_bottom_div"><a class="a_css" href="<%=request.getContextPath()%>/datailreview?article_id=${rList[i].article_id}"><b>${subcontent[i]}</b></a></div>
-										<div>
+										<div style="float: left;">
 											<span>평점 ${ rList[i].review_star }&nbsp;&nbsp;</span>
 											<span>댓글${ rList[i].comment_count }</span>
+										</div>
+										<div style="float: right;">
+											<div id="mypage_delet_write" onclick="mypage_delete_write('${rList[i].article_id}');">삭제</div>
+											
 										</div>
 									</div>
 									
@@ -659,7 +685,7 @@ function removeAll(e){
 				</c:if>
 				<c:if test="${not r }">
 					<div id="write" class="info_box">
-						<div style="text-align: center;">글이 없습니다.</div>
+						<div style="text-align: center;margin-top: 100px;">글이 없습니다.</div>
 					</div>
 				</c:if>
 			
@@ -694,57 +720,66 @@ function removeAll(e){
 			
 			
 			<!-- 		``````````````````	내여행 페이지 -->
+			
 			<div id="trip" class="info_box" >
-				<c:forEach items="${TravelRegistList }" var="travelList" varStatus="status">
-					<form>
-						<div class="trip_div">
-							<div class="tripHeader">${travelList.country} ${travelList.city} 일정</div>
-							<div class="trip_tel_div" >
-								<span><label for="help_tel" style="display: inline-block;"><b>비상연락처&nbsp;&nbsp;&nbsp;</b></label></span>
-								<span><input id="help_tel" name="help_tel" class="form-control help_tel" value="${travelList.help_tel }" placeholder="번호를 입력해주세요"></span>
-								<span><input type="hidden" id="travel_id" class="travel_id" name="travel_id" value="${travelList.travel_id }"></span>
+				<c:if test="${ not empty TravelRegistList and TravelRegistList.size() ne 0}" var="r" >
+					<c:forEach items="${TravelRegistList }" var="travelList" varStatus="status">
+						<form>
+							<div class="trip_div">
+								<div class="tripHeader">${travelList.country} ${travelList.city} 일정</div>
+								<div class="trip_tel_div" >
+									<span><label for="help_tel" style="display: inline-block;"><b>비상연락처&nbsp;&nbsp;&nbsp;</b></label></span>
+									<span><input id="help_tel" name="help_tel" class="form-control help_tel" value="${travelList.help_tel }" placeholder="번호를 입력해주세요"></span>
+									<span><input type="hidden" id="travel_id" class="travel_id" name="travel_id" value="${travelList.travel_id }"></span>
+								</div>
+								
+								<div id="trip_form_div">
+									<span>
+										<b>국가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+									</span>
+									<span>
+										<select class="date_selcet country" name="country" id="selOne" onchange="doChange(this, 'selTwo${status.index}')">
+											<option value="default">---국가 선택---</option>
+												<c:forEach items="${countryList}" var="country">
+													<c:if test="${travelList.country == country }" var="r">
+														<option value="${country}" selected>${country}</option>
+													</c:if>	
+													<c:if test="${!r}" >
+														<option value="${country}">${country}</option>
+													</c:if>	
+												</c:forEach>
+										</select >
+										<select class="date_selcet city" name="city" id="selTwo${status.index}">
+											<option value="default">---도시 선택---</option>
+												<option value="${travelList.city}" selected>${travelList.city}</option>
+										</select>
+									</span>
+								
+								</div>
+								
+								<div class="date_div">
+									<span><label for="start_date" style="display: inline-block;"><b>출국날짜&nbsp;&nbsp;&nbsp;</b></label></span>
+									<span><input name="start_date" value="${travelList.start_date }" class="form-control start_date" placeholder="클릭하여 날짜 선택"  autocomplete="off"></span>
+								</div>
+								<div class="date_div">
+									<span><label for="end_date" style="display: inline-block;"><b>입국날짜&nbsp;&nbsp;&nbsp;</b></label></span>
+									<span><input name="end_date" value="${travelList.end_date }" class="form-control end_date"  placeholder="클릭하여 날짜 선택"  autocomplete="off" ></span>
+								</div>
+								<div style="padding-left: 30px;">
+									<button type="button" class="btn btn-primary trip_update_btn">변경</button>
+									<button id="trip_delete_btn" type="button" class="btn btn-primary trip_delete_btn">삭제</button>
+								</div>
 							</div>
-							
-							<div id="trip_form_div">
-								<span>
-									<b>국가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-								</span>
-								<span>
-									<select class="date_selcet country" name="country" id="selOne" onchange="doChange(this, 'selTwo${status.index}')">
-										<option value="default">---국가 선택---</option>
-											<c:forEach items="${countryList}" var="country">
-												<c:if test="${travelList.country == country }" var="r">
-													<option value="${country}" selected>${country}</option>
-												</c:if>	
-												<c:if test="${!r}" >
-													<option value="${country}">${country}</option>
-												</c:if>	
-											</c:forEach>
-									</select >
-									<select class="date_selcet city" name="city" id="selTwo${status.index}">
-										<option value="default">---도시 선택---</option>
-											<option value="${travelList.city}" selected>${travelList.city}</option>
-									</select>
-								</span>
-							
-							</div>
-							
-							<div class="date_div">
-								<span><label for="start_date" style="display: inline-block;"><b>출국날짜&nbsp;&nbsp;&nbsp;</b></label></span>
-								<span><input name="start_date" value="${travelList.start_date }" class="form-control start_date" placeholder="클릭하여 날짜 선택"  autocomplete="off"></span>
-							</div>
-							<div class="date_div">
-								<span><label for="end_date" style="display: inline-block;"><b>입국날짜&nbsp;&nbsp;&nbsp;</b></label></span>
-								<span><input name="end_date" value="${travelList.end_date }" class="form-control end_date"  placeholder="클릭하여 날짜 선택"  autocomplete="off" ></span>
-							</div>
-							<div style="padding-left: 30px;">
-								<button type="button" class="btn btn-primary trip_update_btn">변경</button>
-								<button id="trip_delete_btn" type="button" class="btn btn-primary trip_delete_btn">삭제</button>
-							</div>
-						</div>
-					</form>
-				</c:forEach>
+						</form>
+					</c:forEach>
+				</c:if>
+				<c:if test="${!r }">
+					<div style="text-align: center;margin-top: 100px;">일정이 없습니다.</div>
+				</c:if>
 			</div>
+			
+			
+			
 			<!-- 			``````````````````````` -->
 			
 			<!-- 		``````````````````	동행 요청리스트 -->
@@ -758,96 +793,105 @@ function removeAll(e){
 				<div class="tab-content">
 				<!-- 요청 받은 리스트 -->
 				  <div role="tabpanel" class="tab-pane fade in active" id="requestReceive">
-					<c:forEach items="${withmeRequestReceive }" var="Receive" varStatus="statu">
-						<div class="withme__body_div" id="seperate_div">
-							<input type="hidden" class="receive_request_id" name="request_id" value="${Receive.request_id }"/>
-							<input type="hidden" class="receive_statue" name="statue" value="${Receive.statue }"/>
-								<div style="padding: 5px;">
-									보낸사람 : ${Receive.name }
-								</div>
-								<div style="padding: 5px;">
-									보낸사람성별 : ${Receive.genderString }
-								</div>
-								<div style="padding: 5px;">
-									나라<br>${Receive.country }
-								</div>
-								<div style="padding: 5px;">
-									시티<br>${Receive.city }
-								</div>
-								<div style="padding: 5px;">
-									출국날짜<br>${Receive.start_dateString }
-								</div>
-								<div style="padding: 5px;">
-									입국날짜<br>${Receive.end_dateString }
-								</div>
-								<div id="withme_btn" >
-								
-									<div class="request_btn" id="ac${statu.index }" ><div id="ac${statu.index }" onclick="">수락</div></div>
-									<div class="request_btn" id="ref${statu.index }" ><div id="ref${statu.index }" onclick="">거절</div></div>
-									<div class="request_btn" id="hol${statu.index }"><div id="hol${statu.index }" onclick="">보류</div></div>
-									<script type="text/javascript">
- 										var status = "${Receive.statue }";
- 										var index = "${statu.index }";
-										if(status == '수락'){ 
-											$('#ac'+index).css("background-color","rgb(52, 152, 219)"); 
-											$('#ac'+index).css("color","white"); 
-										} 
- 										if(status == '거절'){ 
-											$('#ref'+index).css("background-color","rgb(52, 152, 219)"); 
-											$('#ref'+index).css("color","white"); 
-										} 
-										if(status == '요청대기중'){ 
-											$('#hol'+index).css("background-color","rgb(52, 152, 219)"); 
-											$('#hol'+index).css("color","white"); 
-										} 
-									</script> 
-
-								</div>
-								
-						</div>
-					
-					
-					</c:forEach>
-
+					  <c:if test="${ not empty withmeRequestReceive and withmeRequestReceive.size() ne 0}" var="r" >
+						<c:forEach items="${withmeRequestReceive }" var="Receive" varStatus="statu">
+							<div class="withme__body_div" id="seperate_div">
+								<input type="hidden" class="receive_request_id" name="request_id" value="${Receive.request_id }"/>
+								<input type="hidden" class="receive_statue" name="statue" value="${Receive.statue }"/>
+									<div style="padding: 5px;">
+										보낸사람 : ${Receive.name }
+									</div>
+									<div style="padding: 5px;">
+										보낸사람성별 : ${Receive.genderString }
+									</div>
+									<div style="padding: 5px;">
+										나라<br>${Receive.country }
+									</div>
+									<div style="padding: 5px;">
+										시티<br>${Receive.city }
+									</div>
+									<div style="padding: 5px;">
+										출국날짜<br>${Receive.start_dateString }
+									</div>
+									<div style="padding: 5px;">
+										입국날짜<br>${Receive.end_dateString }
+									</div>
+									<div id="withme_btn" >
+									
+										<div class="request_btn" id="ac${statu.index }" ><div id="ac${statu.index }" onclick="">수락</div></div>
+										<div class="request_btn" id="ref${statu.index }" ><div id="ref${statu.index }" onclick="">거절</div></div>
+										<div class="request_btn" id="hol${statu.index }"><div id="hol${statu.index }" onclick="">보류</div></div>
+										<script type="text/javascript">
+	 										var status = "${Receive.statue }";
+	 										var index = "${statu.index }";
+											if(status == '수락'){ 
+												$('#ac'+index).css("background-color","rgb(52, 152, 219)"); 
+												$('#ac'+index).css("color","white"); 
+											} 
+	 										if(status == '거절'){ 
+												$('#ref'+index).css("background-color","rgb(52, 152, 219)"); 
+												$('#ref'+index).css("color","white"); 
+											} 
+											if(status == '요청대기중'){ 
+												$('#hol'+index).css("background-color","rgb(52, 152, 219)"); 
+												$('#hol'+index).css("color","white"); 
+											} 
+										</script> 
+	
+									</div>
+									
+							</div>
+						
+						
+						</c:forEach>
+					</c:if>
+					<c:if test="${!r }">
+						<div style="text-align: center;margin-top: 100px;">받은 요청이 없습니다.</div>
+					</c:if>
 
 				  </div>
 				<!-- ------------------ -->
 				
 				<!-- 요청 보낸 리스트 -->
 				  <div role="tabpanel" class="tab-pane fade in" id=requestSend>
-					<c:forEach items="${withmeRequestSend }" var="Send" varStatus="statu">
-						<div class="withme__body_div withme__body_div${statu.index }">
-							<input type="hidden" name="request_id" value="${Send.request_id }"/>
-								
-								<div style="padding: 5px;">
-									받는사람 : ${Send.name }
-								</div>
-								<div style="padding: 5px;">
-									받는사람성별 : ${Send.genderString }
-								</div>
-								<div style="padding: 5px;">
-									나라<br>${Send.country }
-								</div>
-								<div style="padding: 5px;">
-									시티<br> ${Send.city }
-								</div>
-								<div style="padding: 5px;">
-									출국날짜<br>${Send.start_dateString }
-								</div>
-								<div style="padding: 5px;">
-									입국날짜<br> ${Send.end_dateString }
-								</div>
-								<div style="padding: 5px;">
-									상태 : ${Send.statue }
-								</div>
-								<div class="request_delete_btn" id="ac${statu.index }" ><div id="ac${statu.index }" onclick="deleteWithMeRquest('${Send.request_id }', 'withme__body_div${statu.index }');">삭제</div></div>
-								<c:if test="${Send.statue=='수락' }">
-									<div class="request_delete_btn" id="ac${statu.index }" ><div id="ac${statu.index }" onclick="window.open('<%=request.getContextPath()%>/message/transform/${Send.receiver_id }','message',width='740',height='620',true);">쪽지보내기</div></div>
-								</c:if>
-								
-						</div>
-					
-					</c:forEach>
+					  <c:if test="${ not empty withmeRequestSend and withmeRequestSend.size() ne 0}" var="r" >
+						<c:forEach items="${withmeRequestSend }" var="Send" varStatus="statu">
+							<div class="withme__body_div withme__body_div${statu.index }">
+								<input type="hidden" name="request_id" value="${Send.request_id }"/>
+									
+									<div style="padding: 5px;">
+										받는사람 : ${Send.name }
+									</div>
+									<div style="padding: 5px;">
+										받는사람성별 : ${Send.genderString }
+									</div>
+									<div style="padding: 5px;">
+										나라<br>${Send.country }
+									</div>
+									<div style="padding: 5px;">
+										시티<br> ${Send.city }
+									</div>
+									<div style="padding: 5px;">
+										출국날짜<br>${Send.start_dateString }
+									</div>
+									<div style="padding: 5px;">
+										입국날짜<br> ${Send.end_dateString }
+									</div>
+									<div style="padding: 5px;">
+										상태 : ${Send.statue }
+									</div>
+									<div class="request_delete_btn" id="ac${statu.index }" ><div id="ac${statu.index }" onclick="deleteWithMeRquest('${Send.request_id }', 'withme__body_div${statu.index }');">삭제</div></div>
+									<c:if test="${Send.statue=='수락' }">
+										<div class="request_delete_btn" id="ac${statu.index }" ><div id="ac${statu.index }" onclick="window.open('<%=request.getContextPath()%>/message/transform/${Send.receiver_id }','message',width='740',height='620',true);">쪽지보내기</div></div>
+									</c:if>
+									
+							</div>
+						
+						</c:forEach>
+					</c:if>
+					<c:if test="${!r }">
+						<div style="text-align: center;margin-top: 100px;">보낸 요청이 없습니다.</div>
+					</c:if>
 				  <script type="text/javascript">
 				  function deleteWithMeRquest(data, data2){
 					  if(confirm("정말 삭제하시겠습니까??") == true){

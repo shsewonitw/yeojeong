@@ -9,19 +9,14 @@ import com.tje.yeojeong.model.*;
 import com.tje.yeojeong.repository.*;
 
 @Service
-public class Review_DeleteService {
+public class Review_Mypage_DeleteService {
 	
 	@Autowired
 	private Review_viewDAO reviewDAO;
 	
-	public Object service(HashMap<String, Object> values) {
+	public Object service(Object objs) {
 		
-		HashMap<String, Object> result = new HashMap<>();
-		
-		Review_view review = (Review_view)values.get("review");
-		
-		result.put("result", reviewDAO.delete(review));
 				
-		return result;
+		return reviewDAO.delete((Review_view)objs);
 	}
 }

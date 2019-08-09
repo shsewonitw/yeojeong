@@ -39,6 +39,7 @@
 	border: solid thin #ddd;
 	margin: 2px;
 }
+
 .request_delete_btn {
 	display: inline-block;
 	cursor: pointer;
@@ -48,6 +49,17 @@
 	margin: 2px;
 	background-color: rgb(52, 152, 219);
 	color: white;
+}
+
+#mypage_delet_write {
+	display: inline-block;
+	cursor: pointer;
+	border-radius: 4px;
+	border: solid thin #ddd;
+	margin: 2px;
+	background-color: rgb(52, 152, 219);
+	color: white;
+	padding: 0px 8px;
 }
 
 .direction {
@@ -204,11 +216,11 @@ write_sub_div {
 #write_img {
 	max-width: 100px;
 	max-height: 100px;
-
 	height: 100%;
 }
 
 #write_img_div {
+	overflow: hidden;
 	float: right;
 	cursor: pointer;
 }

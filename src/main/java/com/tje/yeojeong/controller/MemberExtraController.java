@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonObject;
 import com.tje.yeojeong.model.Member;
+import com.tje.yeojeong.model.Review_view;
 import com.tje.yeojeong.model.Withme_request;
 import com.tje.yeojeong.service.MemberChangeTelService;
 import com.tje.yeojeong.service.MemberSearchEmailService;
 import com.tje.yeojeong.service.MemberSearchIDService;
+import com.tje.yeojeong.service.Review_Mypage_DeleteService;
 import com.tje.yeojeong.service.WithmeRequest_DeleteService;
 import com.tje.yeojeong.service.WithmeRequest_UpdateStatusService;
 @Controller
@@ -39,6 +41,9 @@ public class MemberExtraController {
 	
 	@Autowired
 	private WithmeRequest_DeleteService wrdService;
+	
+	@Autowired
+	private Review_Mypage_DeleteService rmdService;
 
 	@PostMapping("/searchID")
 	@ResponseBody
@@ -91,6 +96,18 @@ public class MemberExtraController {
 		boolean result = (Boolean) wrusService.service(withme_request);
 
 		return result;
+	}
+	@PostMapping("/auth/mypage_delet_write")
+	@ResponseBody
+	public boolean mypage_delet_write(@RequestParam String article_id,
+			HttpSession session) {
+		int article_id_in = Integer.parseInt(article_id);
+		Review_view review_view = new Review_view();
+		review_view.setArticle_id(article_id_in);
+		
+		
+		
+		return (Boolean)rmdService.service(review_view);
 	}
 	@PostMapping("/auth/deleteWithMeRquest")
 	@ResponseBody

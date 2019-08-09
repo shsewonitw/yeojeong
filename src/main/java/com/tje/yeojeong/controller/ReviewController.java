@@ -55,7 +55,7 @@ public class ReviewController {
 	@Autowired 
 	private Review_UpdateService ruservice;
 	@Autowired
-	private Review_DeleteService rdeservice;
+	private Review_Mypage_DeleteService rdeservice;
 	@Autowired
 	private PagingInfo pagingInfo;
 	@Autowired

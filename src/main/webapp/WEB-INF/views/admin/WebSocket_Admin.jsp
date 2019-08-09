@@ -12,6 +12,13 @@
 	<script src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/bootstrap.js"></script>
 
+
+<link rel="stylesheet"
+   href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/2796c86652.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">	
+	
+	
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
@@ -37,8 +44,8 @@
 			<!-- 채팅 목록 -->
 			<div style="float:left; margin-left:30px;margin-right:30px;overflow:auto;width:195;height:360px">
 				<c:forEach items="${chatMap}" var="chatMap">
-					<div class="list-group" style="margin: auto; text-align: center;">
-						<a href="javascript:void(0);" onclick="user_click('${chatMap.key.getId()}');" class="list-group-item" id="a_${chatMap.key.getId()}"> user_${chatMap.key.getId()} 의 실시간 문의 </a>
+					<div class="list-group" style="margin: auto; text-align: center;" id="chat_list">
+						<a href="javascript:void(0);" onclick="user_click('${chatMap.key.getId()}');" class="list-group-item" id="a_${chatMap.key.getId()}"> user_${chatMap.key.getId()} 의 실시간 문의&nbsp;&nbsp;&nbsp;<i class="far fa-envelope animated infinite heartBeat delay-0s" style="color:green;" id="${chatMap.key.getId()}_icon"></i></a>
 					</div>
 				</c:forEach>
 			</div>
@@ -121,6 +128,11 @@ function wsConnect(user_id){
    		var sender_id = temp[0];
    		var sender_msg = temp[1];
 
+   		// 현재 어드민페이지에서 채팅목록에 없는 사용자가 메세지 보냈을 때
+   		if( $("#a_"+sender_id).length  == 0 ){
+   			$("#chat_list").prepend("<a href='javascript:void(0);' onclick='user_click("+sender_id+");' class='list-group-item' id='a_"+sender_id+"'> user_"+sender_id+"의 실시간 문의&nbsp;&nbsp;&nbsp;");
+   		}
+   		
    		$("#"+sender_id+"_messageWindow").html($("#"+sender_id+"_messageWindow").html()
                    + "<div class='alert alert-info' role='alert' style='clear:both;float:left;max-width:280px;word-break:break-all;'>" + sender_msg + "</div>");
    		

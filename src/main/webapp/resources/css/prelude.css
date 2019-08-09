@@ -1,147 +1,192 @@
 @charset "UTF-8";
+
 @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
 
-
-<!------------------>
-
-
-.dropmenu{
-border:none;
-border:0px;
-margin:0px;
-padding:0px;
-font: "sans-serif";
-font-size:18px;
+<!--
+--------------
+-->
+.main_menu {
+	border: none;
+	border: 0px;
+	margin: 0px;
+	padding: 0px;
+	font: "sans-serif";
+	font-size: 18px;
 }
 
-.dropmenu ul{
-height:100px;
-list-style:none;
-margin:0;
-padding:0;
+.main_menu ul {
+	height: 100%;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
-.dropmenu li{
-float:left;
-padding:0px;
+.main_menu li {
+	float: left;
+	padding: 0px;
 }
 
-.dropmenu li a{
-color:#fff;
-display:block;
-line-height:100px;
-margin:0px;
-padding:0px 50px;
-text-align:center;
-text-decoration:none;
+.main_menu li a {
+	color: #fff;
+	display: block;
+	line-height: 100px;
+	margin: 0px;
+	padding: 0px 50px;
+	text-align: center;
+	text-decoration: none;
 }
 
-.dropmenu li a:hover, .dropmenu ul li:hover a{
-color:#FFFFFF;
-text-decoration:none;
+.main_menu li a:hover, .main_menu ul li:hover a {
+	color: #FFFFFF;
+	text-decoration: none;
 }
 
-.dropmenu li ul{
-display:none; 
-height:auto;
-border:0px;
-position:absolute;
-z-index:200;
+.main_menu li ul {
+	display: none;
+	height: auto;
+	border: 0px;
+	position: absolute;
+	z-index: 200;
 
-/*top:1em;
+	/*top:1em;
 /*left:0;*/
 }
 
-.dropmenu li:hover ul{
-display:block;
+.main_menu li:hover ul {
+	display: block;
 }
 
-.dropmenu li li {
-/*메뉴바*/
-background-color:rgba(0,0,0,0.6);
-display:block;
-float:none;
-margin:0px;
-padding:0px;
+.main_menu li li {
+	/*메뉴바*/
+	background-color: rgba(0, 0, 0, 0.6);
+	display: block;
+	float: none;
+	margin: 0px;
+	padding: 0px;
 }
 
-.dropmenu li:hover li a{
-background:none;
+.main_menu li:hover li a {
+	background: none;
 }
 
-.dropmenu li ul a{
-display:block;
-height:80px;
-font-size:14px;
-margin:0px;
-padding:0px 10px 0px 50px;
-text-align:left;
+.main_menu li ul a {
+	display: block;
+	height: 80px;
+	font-size: 14px;
+	margin: 0px;
+	padding: 0px 10px 0px 50px;
+	text-align: left;
 }
 
-.dropmenu li ul a:hover, .dropmenu li ul li:hover a{
-border:0px;
-color:#ffffff;
-text-decoration:none;
+.main_menu li ul a:hover, .dropmenu li ul li:hover a {
+	border: 0px;
+	color: #ffffff;
+	text-decoration: none;
 }
 
-.dropmenu p{
-clear:left;
+.main_menu p {
+	clear: left;
 }
 
 /* 로그인 상태 */
-.message_link{
-	color: white;
-	text-decoration:none;
-	position: absolute;
-    top: 10%;
-    right: 10.2%;
-    font-family: "Arial", "돋움", "dotum", sans-serif;
-}
-.mypage_link{
-	color: white;
-	text-decoration:none;
-	position: absolute;
-    top: 10%;
-    right: 5.2%;
-    font-family: "Arial", "돋움", "dotum", sans-serif;
-}
-.logout_link{
-	color: white;
-	text-decoration:none;
-	position: absolute;
-    top: 10%;
-    right: 1%;
-    font-family: "Arial", "돋움", "dotum", sans-serif;
-}
+/* .message_link{ */
+/* 	color: white; */
+/* 	text-decoration:none; */
+/* 	position: absolute; */
+/*     top: 10%; */
+/*     right: 10.2%; */
+/*     font-family: "Arial", "돋움", "dotum", sans-serif; */
+/* } */
+/* .mypage_link{ */
+/* 	color: white; */
+/* 	text-decoration:none; */
+/* 	position: absolute; */
+/*     top: 10%; */
+/*     right: 5.2%; */
+/*     font-family: "Arial", "돋움", "dotum", sans-serif; */
+/* } */
+/* .logout_link{ */
+/* 	color: white; */
+/* 	text-decoration:none; */
+/* 	position: absolute; */
+/*     top: 10%; */
+/*     right: 1%; */
+/*     font-family: "Arial", "돋움", "dotum", sans-serif; */
+/* } */
 
 /* 비 로그인 상태 */
-.login_link{
-	color: #ffffff;
-	text-decoration:none;
-	position: absolute;
-    top: 10%;
-    right: 5.2%;
-    font-family: "Arial", "돋움", "dotum", sans-serif;
-}
+/* .login_link{ */
+/* 	color: #ffffff; */
+/* 	text-decoration:none; */
+/* 	position: absolute; */
+/*     top: 10%; */
+/*     right: 5.2%; */
+/*     font-family: "Arial", "돋움", "dotum", sans-serif; */
+/* } */
 
-.regist_link{
-	color: #ffffff;
-	text-decoration:none;
-	position: absolute;
-    top: 10%;
-    right: 1%;
-    font-family: "Arial", "돋움", "dotum", sans-serif;
-}
-
-.main_menu{
-	width : 1100px;
+/* .regist_link{ */
+/* 	color: #ffffff; */
+/* 	text-decoration:none; */
+/* 	position: absolute; */
+/*     top: 10%; */
+/*     right: 1%; */
+/*     font-family: "Arial", "돋움", "dotum", sans-serif; */
+/* } */
+.main_menu {
+	width: 1100px;
 	margin: 0 auto;
 	overflow: hidden;
-	
 }
 
-.menu_font{
-     font-family: 'Nanum Pen Script', cursive;
-     font-size: 30px;
+.menu_font {
+	font-family: 'Nanum Pen Script', cursive;
+	font-size: 30px;
 }
 
+.content_ul a {
+	font-family: "Arial", "돋움", "dotum", sans-serif;
+	text-decoration: none;
+	cursor: pointer;
+	color: #ffffff;
+}
+
+.content_ul li a:link {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.content_ul li a:visited {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.content_ul li a:hover {
+	color: #ffffff;
+	text-decoration: underline;
+	font-size: 15px
+}
+
+.content_ul li {
+	color: #ffffff;
+	list-style: none;
+	float: left;
+	margin-right: 5px;
+}
+
+.content_ul li::before {
+	padding-left: 5px;
+	padding-right: 5px;
+	content: "|";
+}
+
+.content_ul li:first-child::before {
+	content: "";
+}
+
+.content {
+	display: inline-block;
+	text-align: right;
+	float: right;
+	vertical-align: top;
+	line-height: 70px;
+}

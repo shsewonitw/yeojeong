@@ -53,6 +53,7 @@
 			
 			
 			<!-- 채팅 내용 -->
+			<div id="chat_detail">
 			<c:forEach items="${chatMap}" var="chatMap">
 			<div style="float:left;display:none;" id="user_${chatMap.key.getId()}_div" class="user_all_div">
 				<div id="user_${chatMap.key.getId()}_scrollDiv" style="overflow:auto;width:500px;height:326px;">
@@ -69,7 +70,7 @@
 				</div>
 			</div>
 			</c:forEach>
-		
+			</div>		
 	</div>
 	
 
@@ -130,7 +131,11 @@ function wsConnect(user_id){
 
    		// 현재 어드민페이지에서 채팅목록에 없는 사용자가 메세지 보냈을 때
    		if( $("#a_"+sender_id).length  == 0 ){
-   			$("#chat_list").prepend("<a href='javascript:void(0);' onclick='user_click("+sender_id+");' class='list-group-item' id='a_"+sender_id+"'> user_"+sender_id+"의 실시간 문의&nbsp;&nbsp;&nbsp;");
+   			$("#chat_list").prepend("<a href='javascript:void(0);' onclick='user_click("+sender_id+");' class='list-group-item' id='a_"+sender_id+"'> user_"+sender_id+"의 실시간 문의&nbsp;&nbsp;&nbsp;<i class='far fa-envelope animated infinite heartBeat delay-0s' style='color:green;' id='"+sender_id+"_icon'></i></a>");
+   			
+   			$("#chat_detail").append("<div style='float:left;display:none;' id='user_"+sender_id+"_div' class='user_all_div'><div id='user_"+sender_id+"_scrollDiv' style='overflow:auto;width:500px;height:326px;'><fieldset><div id='"+sender_id+"_messageWindow' class='all_messageWindow'>${chatMap.value}</div></fieldset></div><div style='overflow:hidden;'><input id='"+sender_id+"_inputMessage' class='form-control' type='text' onkeyup='enterkey("+sender_id+")' style='float:left;width:450px;' /> <input type='submit' class='btn btn-default' value='전송' onclick='sendMessage("+sender_id+")' style='float:left;'/></div></div> ")
+   			
+   			
    		}
    		
    		$("#"+sender_id+"_messageWindow").html($("#"+sender_id+"_messageWindow").html()

@@ -154,7 +154,7 @@
 	text-decoration: none;
 }
 
-.content_ul li a:hover {
+.content_ul li a:hover {  
 	color: #ffffff;
 	text-decoration: underline;
 	font-size: 15px

@@ -62,13 +62,18 @@ div {
 <h3>&nbsp;&nbsp;&nbsp;&nbsp;같이갈래?</h3>
 </div>
 <div class="middle" role="main">
+
 <select class="form-control" name="city" style="width:200px">
-  <option value="">여행지</option>
-  <option value="후보">후보</option>
-  <option value="3">${withme_view.city}</option>
-  <option value="4">${withme_view.city}</option>
-  <option value="5">${withme_view.city}</option>
+<option value="default">여행지</option>
+<c:forEach items="${TravelRegistList }" var="travelList" varStatus="status">
+	<c:forEach items="${countryList}" var="country">
+	<c:if test="${travelList.country == country }" var="r">
+		<option value="${country}">${country}</option>
+	</c:if>
+	</c:forEach>
+</c:forEach>
 </select>
+
 <select class="form-control" name="start_date" style="width:200px">
   <option value="">08-10</option>
   <option value="2">2</option>

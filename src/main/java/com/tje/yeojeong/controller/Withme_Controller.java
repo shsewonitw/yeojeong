@@ -29,23 +29,35 @@ public class Withme_Controller {
 	@Autowired
 	private WithmeListCountService wcService;
 	@Autowired
+	private TravelSearchedTravelListService tstlService;
+	@Autowired
+	private City_DataSelectCountryService cdsCountryService;
+	@Autowired
+	private City_DataSelectCityService cdsCityService;
+	@Autowired
 	private PagingInfo pagingInfo;
 	
 	// 같이갈래 글 작성
 	@GetMapping("/transform")
-	public String withmetransForm() {
+	public String withmetransForm(Model model) {
+		Travel_regist travelRegist = new Travel_regist();
+		List<Travel_regist> TravelRegistList = (List<Travel_regist>) tstlService.service(travelRegist);
+		List<String> countryList = (List<String>) cdsCountryService.service();
+		model.addAttribute("countryList", countryList);
 		return "form/withmetransForm";
 	}
 	
 	@PostMapping("/transform")
 	public String withmeSubmit(Model model, HttpSession session,
+			@RequestParam("country") String country, 
 			@RequestParam("city") String city, 
 			@RequestParam("start_date") Date start_date, @RequestParam("end_date") Date end_date, @RequestParam("category_gender") int category_gender, 
 			@RequestParam("category_age") int category_age, @RequestParam("category_style") int category_style) {
 		Member member = 
 				(Member)session.getAttribute("login_member");
 		Withme_view withme_view = new Withme_view();
-		
+			
+			withme_view.setCountry(country);
 			withme_view.setCity(city);
 			withme_view.setStart_date(start_date);
 			withme_view.setEnd_date(end_date);
@@ -55,7 +67,8 @@ public class Withme_Controller {
 			HashMap<String, Object> values = new HashMap<String, Object>();
 			values.put("withme_view", withme_view);
 			HashMap<String, Object> result = (HashMap<String, Object>)wiService.service(values);
-			
+			List<String> countryList = (List<String>) cdsCountryService.service();
+			model.addAttribute("countryList", countryList);
 			model.addAttribute("withme_view", values);
 			model.addAttribute("result", result.get("result"));
 		return "form/withmeSubmit";

@@ -376,6 +376,7 @@ public class ReviewController {
          else {
              System.out.println("cookie 있음");
              // 쿠키 값 받아옴.
+             // 쿠기가 있으면 조회수 증가시키지 않음
              String value = viewCookie.getValue();
              System.out.println("cookie 값 : " + value);
      
@@ -431,7 +432,6 @@ public class ReviewController {
 		
 		HashMap<String, Object> resultMap = (HashMap<String, Object>) rciService.service(values);
 		int last_insert_id =  (int)cliiService.service();
-		System.out.println("last id : " + last_insert_id);
 		comment.setComment_id(last_insert_id);
 		
 		result = (boolean)resultMap.get("result");

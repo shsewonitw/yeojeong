@@ -156,7 +156,7 @@ function wsConnect(user_id){
 function sendMessage(user_id){
 	var inputVal = $("#"+user_id+"_inputMessage").val();
 	if(inputVal == ""){
-		;
+		return;
 	} else if( (inputVal.length > 5) && (inputVal.substring(0,5)=="/all ") ) {
 		 $(".all_messageWindow").html($(".all_messageWindow").html()
 	                + "<div class='alert alert-danger' role='alert' style='clear:both;float:right;max-width:280px;word-break:break-all;text-align:right;'>-전체메세지-<br>" + inputVal.substr(5) + "</div><br/>");

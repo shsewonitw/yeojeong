@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/full-page-scroll.min.css?var=1">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/prelude.css?sdasr=22h1">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/prelude.css?sdasadsr=22h1">
 
 <script src="<%=request.getContextPath() %>/resources/js/jquery.js?sdf=1"></script>
 	<script type="text/javascript">
@@ -45,97 +45,6 @@
 	
 
 	</script>
-	<style type="text/css">
-	
-	.main_menu {
-	margin:auto;
-	width: 1100px;
-	margin: 0 auto;
-	overflow: hidden;
-	height: 50%;
-}
-.main_menu {
-	border: none;
-	border: 0px;
-	padding: 0px;
-	font: "sans-serif";
-	font-size: 18px;
-}
-
-.main_menu ul {
-	height: 100%;
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-.main_menu li {
-	float: left;
-	padding: 0px;
-}
-
-.main_menu li a {
-	line-height:85px;
-	color: #fff;
-	display: block;
-	margin: 0px;
-	padding: 0px 50px;
-	text-align: center;
-	text-decoration: none;
-}
-
-.main_menu li a:hover, .main_menu ul li:hover a {
-	color: #FFFFFF;
-	text-decoration: none;
-}
-
-.main_menu li ul {
-	display: none;
-	height: auto;
-	border: 0px;
-	position: absolute;
-	z-index: 200;
-
-	/*top:1em;
-/*left:0;*/
-}
-
-.main_menu li:hover ul {
-	display: block;
-}
-
-.main_menu li li {
-	/*메뉴바*/
-	background-color: rgba(0, 0, 0, 0.6);
-	display: block;
-	float: none;
-	margin: 0px;
-	padding: 0px;
-}
-
-.main_menu li:hover li a {
-	background: none;
-}
-
-.main_menu li ul a {
-	display: block;
-	height: 80px;
-	font-size: 14px;
-	margin: 0px;
-	padding: 0px 10px 0px 50px;
-	text-align: left;
-}
-
-.main_menu li ul a:hover, .dropmenu li ul li:hover a {
-	border: 0px;
-	color: #ffffff;
-	text-decoration: none;
-}
-
-.main_menu p {
-	clear: left;
-}
-	</style>
 </head>
 <body>
 <div class="dropmenu" style="z-index:200;position:absolute; background-color:black; width:100%; height:170px; opacity:0.2; transition:all 0.4s ease-out;text-align:left;" id="menu">
@@ -164,7 +73,7 @@
 		<ul>
 			 <li><a href="#" ><b class="menu_font">여행</b></a>
 				 <ul>
-				     <li><a href="<%=request.getContextPath()%>/travelRegist"><b class="menu_font">여행지 등록</b></a></li>
+				     <li><a href="<%=request.getContextPath()%>/travelRegist" style="text-align: "><b class="menu_font">여행지 등록</b></a></li>
 				     <li><a href="<%=request.getContextPath()%>/traveldata"><b class="menu_font">여행지 정보</b></a></li>
 			    </ul>
 		     </li>

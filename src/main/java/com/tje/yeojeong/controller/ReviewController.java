@@ -420,10 +420,11 @@ public class ReviewController {
 		
 		Member member = (Member)session.getAttribute("login_member");
 		comment.setMember_id(member.getMember_id());
-		
+
 		boolean result = false;
 		HashMap<String, Object> values = new HashMap<>();
 		values.put("comment", comment);
+		System.out.println("aaaaaaaaaaaaaaaaaa:"+comment.getMember_id());
 		
 		
 		

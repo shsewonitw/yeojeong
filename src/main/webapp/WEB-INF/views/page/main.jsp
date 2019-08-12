@@ -19,8 +19,8 @@
 	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jssor.slider-27.5.0.min.js"></script>
 	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>	
-		
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+			
 	<!-- 1페이지 시작 -->	
 	<div id="main" class="scroll-container">
 		<section class="section1">
@@ -32,75 +32,15 @@
 	</section>
 	<!-- 1페이지 끝 -->
 	
-	<!-- 2페이지 시작 -->
 	
-	<section class="section2" style="background-color:#f2f2f2;">
-	<div class="tophegiht"></div>
-	
-		<div id="myCarousel" class="carousel slide" data-ride="carousel"> 
-	
-	<!--페이지-->
-	<ol class="carousel-indicators">
-		<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-		<li data-target="#myCarousel" data-slide-to="1"></li>
-		<li data-target="#myCarousel" data-slide-to="2"></li>
-	</ol>
-	<!--페이지-->
-
-	<div class="carousel-inner">
-		<h3>인기 후기 게시판 TOP3</h3>
-		<!--슬라이드1-->
-		<div class="item active"> 
-			<img src="<%=request.getContextPath()%>/resources/cityimg/" style="width:100%; height: 100%;" alt="First slide">
-			<div class="container">
-				<div class="carousel-caption">
-					<h1>Slide 1</h1>
-					<p>텍스트 1</p>
-				</div>
-			</div>
-		</div>
-		<!--슬라이드1-->
-
-		<!--슬라이드2-->
-		<div class="item"> 
-			<img src="<%=request.getContextPath()%>/resources/cityimg/" style="width:100%;" data-src="" alt="Second slide">
-			<div class="container">
-				<div class="carousel-caption">
-					<h1>Slide 2</h1>
-					<p>텍스트 2</p>
-				</div>
-			</div>
-		</div>
-		<!--슬라이드2-->
-		
-		<!--슬라이드3-->
-		<div class="item"> 
-			<img src="http://www.blueb.co.kr/SRC2/_image/w03.jpg" style="width:100%; height: 100%;" data-src="" alt="Third slide">
-			<div class="container">
-				<div class="carousel-caption">
-					<h1>Slide 3</h1>
-					<p>텍스트 3</p>
-				</div>
-			</div>
-		</div>
-		<!--슬라이드3-->
-	</div>
-	
-	<!--이전, 다음 버튼-->
-	<a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> 
-	<a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a> 
-</div>
-
-      </section>
-      
-      <!-- 2페이지 끝 -->
-      
+       
       
       <!-- 3페이지 시작 -->
 	      <section class="section3" style="background-color:#DAD9FF;">	      	
 			<div class="img" style="background-image: url('<%=request.getContextPath()%>/resources/cityimg/IMG_3609.JPG');">
 				<div class="content">
-					<h3 class="animated fadeInUp delay-1s">여행자들의 정보</h3>
+					<h1 class="animated fadeInUp delay-1s">여행자들의 정보</h1>
+					<h1 class="animated fadeInUp delay-1s">가고싶은 여행지의 정보를 알아보세요!</h1>
 				</div>
 				<div class="img-cover"></div>
 			</div>			
@@ -110,9 +50,13 @@
 		<!-- 4페이지 시작 -->
 		
 		<section class="section4" style="background-color:wheat;">
-			<div class="img" style="background-image: url('<%=request.getContextPath()%>/resources/cityimg/IMG_E2255.JPG');">
-				<div class="content">
-					<h3 class="animated fadeInUp infinite delay-1s">여행자들의 정보</h3>
+			<div class="img" style="background-image: url('<%=request.getContextPath()%>/resources/cityimg/IMG_2255.JPG');">
+
+				<div class="content" id="target1">
+					<h3 class="animated fadeInUp delay-1s">If you want to go fast, go alone</h3>
+					<h2 class="animated fadeInUp delay-2s">If you want to go far</h2>
+					<h1 class="animated fadeInUp delay-3s" style="font-size:70px;"><b>go together.</b></h1>
+
 				</div>
 				<div class="img-cover"></div>
 			</div>						
@@ -121,7 +65,8 @@
 				
 		<!-- 4페이지 끝 -->		
 	</div>	
-<script type="text/javascript">
+<script type="text/javascript">	
+
 	new fullScroll({
 		displayDots : true,
 		dotsPosition : 'left',

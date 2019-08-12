@@ -179,7 +179,7 @@ function delete_comment(comment_id) {
 		<c:forEach items="${ commentList }" var="comment">
 		<div id="comment_${comment.comment_id}">
 			<b>${ comment.member_id }</b>&nbsp;&nbsp;&nbsp;${ comment.write_time }<br>
-			${ comment.content }
+			${ comment.content } 멤버아이디:${comment.member_id }
 			
 			<c:if test="${ login_member.member_id eq comment.member_id}">
 			<button class="btn-red" type='button' onclick="delete_comment(${comment.comment_id});">삭제</button>

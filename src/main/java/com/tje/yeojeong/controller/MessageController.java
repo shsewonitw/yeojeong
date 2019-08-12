@@ -140,20 +140,38 @@ public class MessageController {
 		return "message/reTransformSubmit";
 	}
 	
-	// 메세지 수신 본문
+	// 메세지 수신 본문(개별 삭제 포함)
 	@GetMapping("/receivecontent/{message_id}")
 	public String receiveContent(
-			Model model,
+			Model model, HttpSession session,
 			@PathVariable("message_id") int message_id) {
 		Message message = new Message();
 		message.setMessage_id(message_id);
+		session.getAttribute("message_id");
 		
 		murtService.service(message);
 		model.addAttribute("message", messagesbIDService.service(message));
 		return "message/receiveMessage";
 	}
 	
-	// 수신 메세지 삭제
+	@PostMapping("/receivecontent/delete/{message_id}")
+	public String receivecontentdeleteSubmit(
+			Model model, @PathVariable("message_id") int message_id) {
+		Message message = new Message();
+		message.setMessage_id(message_id);
+		
+		HashMap<String, Object> values = new HashMap<>();
+		values.put("message", message);
+		
+		HashMap<String, Object> result = 
+				(HashMap<String, Object>)mdService.service(values);
+		model.addAttribute("result", result.get("result"));
+		
+		return "message/receiveDeleteSubmit";
+	}
+	
+	/*
+	// 수신 메세지 삭제(체크박스)
 	@GetMapping("/message/receivecontent/{message_id}")
 	public String deleteReceiveMessage(Model model,
 			@PathVariable("message_id") int message_id) throws Exception {
@@ -164,6 +182,7 @@ public class MessageController {
 		
 		return "";
 	}
+	*/
 	
 	// ----------------------------메세지 송신------------------------
 	public String sendForm(

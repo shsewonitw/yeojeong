@@ -57,17 +57,17 @@
         	<!-- 10글자 이상 될 시 ...으로 자르는 코드 -->
         	<c:choose>
 	        <c:when test="${fn:length(r_list.content) gt 10}">
-	        <c:out value="${fn:substring(r_list.content, 0, 10)}....">
+	        <c:out value="${fn:substring(r_list.content, 0, 10)}...." escapeXml="false">
 	        </c:out></c:when>
 	        <c:otherwise>
-	        <c:out value="${r_list.content}">
+	        <c:out value="${r_list.content}" escapeXml="false">
       		 </c:out></c:otherwise>
 			</c:choose>
 			<!--------------------------------- -->
 			</a>
         	</td>
         	
-        	<td><input type="button" class="namebtn" onclick="temp('${r_list.member_id}');" value="${ r_list.name }"></td>
+        	<td><input type="button" class="namebtn" id="${r_list.member_id}_namebtn" onclick="temp('${r_list.member_id}');" value="${ r_list.name }"></td>
         	
         	<td>${ r_list.country }</td>
         	<td>${ r_list.city }</td>
@@ -138,7 +138,7 @@
 		<form action="<%= request.getContextPath() %>/reviewlist/serach" method="post">
 		<span class="serch">
 		<select name="searchItem">
-			<option value="member_id" selected>작성자</option>
+			<option value="name" selected>작성자</option>
 			<option value="country">국가</option>
 			<option value="city">도시</option>
 		</select>
@@ -155,13 +155,13 @@
 
 function temp(member_id){
 	$.contextMenu({
-	    selector: ".namebtn",
+	    selector: "#"+member_id+"_namebtn",
 	    trigger: 'left',
 	    callback: function(key, options) {
+	    	
 	       var m = key;
-	        //window.console && console.log(m) || alert(m);
 	        if(m == "edit"){
-	        	window.open('<%= request.getContextPath()%>/message/transform/'+member_id,'message',width='740',height='620',true);
+	        	window.open('<%= request.getContextPath()%>/message/transform/'+member_id,'message','width=740,height=620',true);
 	        }
 	        	
 	    },
@@ -169,11 +169,11 @@ function temp(member_id){
 	        "edit": {name: "쪽지보내기"},
 	        "cut": {name: "1:1채팅(미구현)"},
 	        "copy": {name: "쓴글 확인(미구현)"},
-	        "paste": {name: "???"},
 	    }
 	});
 	
 }
+
 
 </script>
 

@@ -133,7 +133,7 @@ $("#regist_btn").on("click",function(){
 					member.tel = $("#tel").val();
 					
 					var memberJsonObject = JSON.stringify(member);
-					alert(memberJsonObject);
+					// alert(memberJsonObject);
 				
 			if(all_flag){
 				$.ajax({
@@ -531,8 +531,8 @@ $("#regist_btn").on("click",function(){
 			</tr>
 			<tr>
 				<th style="text-align: center;" colspan="3"><label><input
-						type="radio" name="gender" value="1" checked />남자</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<label><input type="radio" name="gender" value="2" />여자</label></th>
+						type="radio" name="gender" value="2" checked />남자</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<label><input type="radio" name="gender" value="1" />여자</label></th>
 			</tr>
 
 			<tr>

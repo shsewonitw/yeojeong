@@ -42,9 +42,6 @@ width: 100%;
 </head>
 <body>
 <c:if test="${not empty login_message }">
-<script type="text/javascript">
-alert("${login_message }");
-</script>
 
 </c:if>
 
@@ -138,7 +135,7 @@ alert("${login_message }");
              
             },
             fail: function(error) {
-             alert(JSON.stringify(error));
+             alert("통신오류. 관리자에게 문의하세요");
             }
         	
         });
@@ -146,7 +143,7 @@ alert("${login_message }");
        
       },
       fail: function(err) {
-         alert(JSON.stringify(err));
+         alert("통신오류. 관리자에게 문의하세요");
       }
     });
 		            

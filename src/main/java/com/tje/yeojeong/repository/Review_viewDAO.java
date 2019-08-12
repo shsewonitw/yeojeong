@@ -140,7 +140,7 @@ public class Review_viewDAO {
 	
 		// 카테고리  검색 ( 작성자 )
 		public List<Review_view> selectSerachWhereMember_id(String searchValue,int page) {
-			String sql = "select * from review_view where member_id like ? limit ?,?";
+			String sql = "select * from review_view where name like ? limit ?,?";
 			List<Review_view> result = this.jdbcTemplate.query(sql, new Review_viewRowMapper(),"%"+searchValue+"%", (page-1)*this.pagingInfo.getPagingSize(),this.pagingInfo.getPagingSize());
 			return result.isEmpty() ? null : result;
 		}	

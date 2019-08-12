@@ -35,8 +35,8 @@ import com.tje.yeojeong.service.ReviewSelectWhereIdService;
 import com.tje.yeojeong.service.TravelRegistDeleteService;
 import com.tje.yeojeong.service.TravelRegistUpdateService;
 import com.tje.yeojeong.service.TravelSearchedTravelListService;
-import com.tje.yeojeong.service.WithmeRequestReceiveService;
-import com.tje.yeojeong.service.WithmeRequestSendService;
+import com.tje.yeojeong.service.WithmeRequest_ReceiveService;
+import com.tje.yeojeong.service.WithmeRequest_SendService;
 import com.tje.yeojeong.setting.PagingInfo;
 
 @Controller
@@ -63,9 +63,9 @@ public class MemberController {
 	@Autowired
 	private TravelRegistUpdateService truService;
 	@Autowired
-	private WithmeRequestReceiveService wrrService;
+	private WithmeRequest_ReceiveService wrrService;
 	@Autowired
-	private WithmeRequestSendService wrsService;
+	private WithmeRequest_SendService wrsService;
 	@Autowired
 	private PagingInfo pagingInfo;
 
@@ -269,7 +269,6 @@ public class MemberController {
 	@PostMapping("/auth/mypageTravelRegistUpdate")
 	@ResponseBody
 	public boolean mypageTravelRegistUpdate_Submit(HttpSession session, @RequestBody Travel_regist travelRegist) {
-		System.out.println(1);
 		boolean result = (Boolean) truService.service(travelRegist);
 
 		return result;

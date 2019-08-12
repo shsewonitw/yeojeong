@@ -198,7 +198,135 @@
         <hr size="5" noshade>
     </div> 
  </div>
+ <div>  <!-- accordion 8 -->
+	
+        <div class="panel-heading">
+          <h4 class="panel-title"> <!-- title 8 -->
+            <a data-toggle="collapse" data-parent="#accordion" href="#accordionEight">
+              Q. 여행경보제도란?
+            </a>
+          </h4>
+        </div>
+		
+        <div id="accordionEight" class="panel-collapse collapse">
+          <!-- panel body -->
+          <div class="panel-body">
+        	A. 여행경보제도는 특정 국가(지역) 여행·체류시 특별한 주의가 요구되는 국가 및 지역에 경보를 지정하여 위험수준과 이에 따른 안전대책(행동지침)의 기준을 안내하는 제도입니다.<br> 
+        	 우리국민의 안전에 대한 위험(위협)을 중요한 기준으로 해당 국가(지역)의 치안정세와 기타 위험요인을 종합적으로 판단하여 <br>
+        	  안전대책의 기준을 판단할 수 있도록 중·장기적 관점에서 여행경보를 지정·공지하고 있습니다.<br>
+			이미 미국, 영국, 캐나다, 호주, 뉴질랜드 등의 국가에서 유사한 제도를 운영하고 있어, 안전한 해외여행에 기여하고 있습니다. 
+        </div>
+        <hr size="5" noshade>
+    </div> 
+ </div>
+ <div>  <!-- accordion 9 -->
+	
+        <div class="panel-heading">
+          <h4 class="panel-title"> <!-- title 9 -->
+            <a data-toggle="collapse" data-parent="#accordion" href="#accordionNine">
+              Q. 여행지의 정보를 알고 싶습니다.
+            </a>
+          </h4>
+        </div>
+		
+        <div id="accordionNine" class="panel-collapse collapse">
+          <!-- panel body -->
+          <div class="panel-body">
+        	A. 상단의 여행 -> 여행지 정보 페이지에 시차, 비행시간(직항), 비자등을 확인하실 수 있습니다.  
+        </div>
+        <hr size="5" noshade>
+    </div> 
+ </div>
+ <div>  <!-- accordion 10 -->
+	
+        <div class="panel-heading">
+          <h4 class="panel-title"> <!-- title 10 -->
+            <a data-toggle="collapse" data-parent="#accordion" href="#accordionTen">
+              Q. 유럽에서 쓰는 화폐는 어떤건가요?
+            </a>
+          </h4>
+        </div>
+		
+        <div id="accordionTen" class="panel-collapse collapse">
+          <!-- panel body -->
+          <div class="panel-body">
+        	A. EU 회원국 중에 유로화를 사용하는 국가는 독일, 프랑스 , 이탈리아 , 벨기에 , 핀란드, 록셈부르크 , 스페인 , <br> 
+        	     포르투갈, 슬로바키아 , 슬로베니아 , 그리스 , 라트비아, 에스토니아, 아일랜드, 오스트리아 , 벨기에, 몰타 등입니다.<br>
+			     크로아티아 , 불가리아 , 폴란드 , 체코 , 헝가리 , 루마니아 , 스웨덴 등은 유료화사용 미참가국입니다. <br>
+			     그 외의 국가에서도 자체 화폐 외에도 유로화와 달러가 모두 통용되고 있습니다.<br>
+			     그밖에 봉사료도 유로화로 지불하시면 됩니다.
+        </div>
+        <hr size="5" noshade>
+    </div> 
+ </div>
  
+ <div>  <!-- accordion 11 -->
+	
+        <div class="panel-heading">
+          <h4 class="panel-title"> <!-- title 11 -->
+            <a data-toggle="collapse" data-parent="#accordion" href="#accordionEleven">
+              Q. 군 미필자도 해외여행을 갈 수 있나요?
+            </a>
+          </h4>
+        </div>
+		
+        <div id="accordionEleven" class="panel-collapse collapse">
+          <!-- panel body -->
+          <div class="panel-body">
+        	A. 07.1.1.부터 24세이하자에 대한 ;국외여행허가제가 폐지되어 24세가 되는 해 12월말까지는 별도의 허가절차 없이 국외여행이 가능합니다. <br> 
+			     다만, 24세 이하자라 하더라고 공익근무요원 등으로 대체복무중인 사람은 국외여행허가를 받아야 합니다.<br>
+                           또한, 25세 이후까지 계속 국외에 체재하고자 할 경우에는 25세가 되는 해 1월 15일까지 여행목적에 따른 구비서류를 갖추어 병무청장의 국외여행기간연장허가를 받아야 합니다.<br>
+        </div>
+        <hr size="5" noshade>
+    </div> 
+ </div>
+<div>  <!-- accordion 12 -->
+	
+        <div class="panel-heading">
+          <h4 class="panel-title"> <!-- title 12 -->
+            <a data-toggle="collapse" data-parent="#accordion" href="#accordionTwelve">
+              Q. 국내에서 사용하는 전기제품을 해외에서도 사용할 수 있나요?
+            </a>
+          </h4>
+        </div>
+		
+        <div id="accordionTwelve" class="panel-collapse collapse">
+          <!-- panel body -->
+          <div class="panel-body">
+        	A. 방문하시는 국가에따라 다르나, 대부분의 국가가 상이한 전압 시스템을 사용하기 때문에 따로 어댑터가 필요합니다.<br>
+        	      또한 전압은 같으나 사용 규격(크기 또는 모양)이 다른 경우도 많습니다. <br>
+			     인천공항에서는 대부분의 어댑터를 판매하고 있으며, 한국인이 많이 방문하는 호텔의 경우 프론트에서 어댑터 대여가 가능하기도 합니다.<br>
+                            다만, 호텔대여같은경우 한정수량을 제공하고있기때문에 ,별도로 미리 준비하여 방문하시길 권장드립니다.<br>
+        </div>
+        <hr size="5" noshade>
+    </div> 
+ </div>
+ 
+ <div>  <!-- accordion 13 -->
+	
+        <div class="panel-heading">
+          <h4 class="panel-title"> <!-- title 13 -->
+            <a data-toggle="collapse" data-parent="#accordion" href="#accordionThirteen">
+              Q. 해외에서 카드사용시 환율은?
+            </a>
+          </h4>
+        </div>
+		
+        <div id="accordionThirteen" class="panel-collapse collapse">
+          <!-- panel body -->
+          <div class="panel-body">
+        	A. 해외에서 카드를 사용할 경우 환율 적용 시점을 알아두면 유용합니다. <br>
+			     환율 적용시점은 각 카드사마다 상이하오니 해당 카드사에 문의 부탁 드립니다.<br>
+			     세계 어느 나라에서 사용하시더라도 모든 거래 금액은 미 달러화로 전환 후 원화로 청구됩니다.<br> 
+			     예를 들어 유럽에서 유로화로 결제하실 경우 미화로 전환하여 청구됩니다.<br>
+			     해외에서 카드를 분실하면 최대한 빨리 해당 카드사에 신고하는 것이 중요합니다.<br>
+			     이를 위해서는 출국 전에 미리 카드사의 긴급 연락처를 메모해두는 것이 좋습니다.<br>
+			     또 장기 체류자가 해외에서 카드를 분실하였을 경우, 현지에서 긴급 대체 카드 발급을 신청하면 이틀 내에 새로운 카드를 발급 받을 수 있습니다.<br>
+        </div>
+        <hr size="5" noshade>
+    </div> 
+ </div>
+	 
 </div>
 </div>
 

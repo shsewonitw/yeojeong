@@ -40,6 +40,7 @@ import com.tje.yeojeong.service.Review_viewCountService;
 import com.tje.yeojeong.service.TravelRegistCountService;
 import com.tje.yeojeong.service.Withme_viewCountService;
 import com.tje.yeojeong.service.Withme_requestCountService;
+import com.tje.yeojeong.setting.AdminLoginData;
 import com.tje.yeojeong.setting.PagingInfo;
 import com.tje.yeojeong.setting.UtilFile;
 
@@ -83,6 +84,8 @@ public class AdminController {
 	private Withme_viewCountService wmvcService;
 	@Autowired
 	private Review_viewCountService rvcService;
+	@Autowired
+	private AdminLoginData adminLoginData;
 	// 관리자 로그인 페이지 호출
 	@GetMapping("/admin")
 	public String adminLoginForm(HttpSession session,HttpServletRequest request) {
@@ -111,6 +114,7 @@ public class AdminController {
 	// 관리자 로그인
 	@PostMapping("/admin")
 	public String adminLoginSubmit(HttpServletRequest request) {
+		
 		String member_id = request.getParameter("member_id");
 		String password = request.getParameter("password");
 
@@ -119,12 +123,20 @@ public class AdminController {
 		member.setPassword(password);
 
 		boolean flag_login = (boolean) mlService.service(member);
-		boolean flag_level = ((Member) msService.service(member)).getLevel() == 2;
+		boolean flag_level = ( msService.service(member) != null ) && ((Member) msService.service(member)).getLevel() == 2;
 
 		if (flag_login && flag_level) {
+			
+			// 로그인 시도한 어드민 아이디가 이미 접속중
+			if( (adminLoginData.getMap().get("login_admin") != null ) && adminLoginData.getMap().get("login_admin").getMember_id().equals(member.getMember_id())) {
+				System.out.println("로그인 시도한 어드민 아이디가 이미 접속중");
+				return "admin/adminError2";
+			}
+			
 			// 관리자 로그인 성공
 			HttpSession session = request.getSession();
 			session.setAttribute("login_admin", member);
+			adminLoginData.getMap().put("login_admin", member);
 			
 			// 여정 통계자료 
 			HashMap<String, Object> result = (HashMap<String, Object>)mcService.service();
@@ -153,7 +165,7 @@ public class AdminController {
 
 		HttpSession session = request.getSession();
 		session.removeAttribute("login_admin");
-
+		adminLoginData.getMap().remove("login_admin");
 		return "admin/adminLoginForm";
 	}
 

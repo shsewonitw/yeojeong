@@ -47,64 +47,57 @@ br {
 
 </head>
 <body>
-<form action="<%=request.getContextPath()%>/message/send">
 <script type="text/javascript">
-	// 페이지 새로고침
-	$(document).ready(function() {
-		$('a').click(function() {
-			setTimeout("history.go(0);",1000)
-		});
+//메세지 수신 부분 
+function winopen(num) {
+	window.open("<%=request.getContextPath()%>/message/receivecontent/"+num,"receivecontentOpen",
+		"width=740,height=620,left=150,top=150,resizable=no,location=no,menubar=no,toolbar=no,scrollbars=no");
+};
+
+// 메세지 답장(아이디 클릭) 부분 
+function transform(sender) {
+	window.open("<%=request.getContextPath()%>/message/retransform/"+sender,"receivecontentOpen",
+		"width=740,height=620,left=150,top=150,resizable=no,location=no,menubar=no,toolbar=no,scrollbars=no");
+};
+
+// 페이지 새로고침
+$(document).ready(function() {
+	$('a').click(function() {
+		setTimeout("history.go(0);",1000)
 	});
-	// 메세지 송신 부분 
-	function winopen(num) {
-		window.open("<%=request.getContextPath()%>/message/sendcontent/"+num,"sendcontentOpen",
-			"width=740,height=620,left=150,top=150,resizable=no,location=no,menubar=no,toolbar=no,scrollbars=no");
-	};
 	
-	// 메세지 답장(아이디 클릭) 부분 
-	function transform(receiver) {
-		window.open("<%=request.getContextPath()%>/message/transform/"+receiver,"sendcontentOpen",
-			"width=740,height=620,left=150,top=150,resizable=no,location=no,menubar=no,toolbar=no,scrollbars=no");
-	};
-	
-	// 메세지 삭제 부분 
 	// 체크박스 전체 선택 
-	$(document).ready(function() {
-		$('#chk_all').click(function() {
-			var chk = $('#chk_all').prop('checked');
-			if(chk) {
-				$('.chk_row').prop('checked', true);
-			} else {
-				$('.chk_row').prop('checked', false);
-			}
-		});
-	// 메세지 삭제 
-	/*
-		$('#delete').click(function() {
-			$('input[type=checkbox]:checked').parent().parent().remove();
-		});
-	*/
+	$('#chk_all').click(function() {
+		var chk = $('#chk_all').prop('checked');
+		if(chk) {
+			$('.chk_row').prop('checked', true);
+		} else {
+			$('.chk_row').prop('checked', false);
+		}
 	});
 	
-	function deleteMessage() {
-		var chkVals = [];
-		$('input[type=checkbox]:checked').each(function(i) {
-			chkVals.push($(this).val());
-		});
+	// 메세지 삭제
+	$("#delete_btn").click(function(){ 
+		var confirm_val = confirm("정말 삭제하시겠습니까?");
 		
-		$.ajax({
-			url : "chk_row",
-			type : "POST",
-			dataType: "text",
-			data : {valueArr:chkVals},
-			error: function() {
-				alert("service not found");
-			},
-			success : function(data) {
-				
-			}
+		if(confirm_val) {
+		var checkArr = new Array();
+
+		$("input[class='chk_row']:checked").each(function(){
+		checkArr.push($(this).attr("data-message_id"));
 		});
-	}
+
+			$.ajax({
+				url : "<%=request.getContextPath()%>/message/receive/",
+				type : "post",
+				data : { chk_row : checkArr },
+				success : function(){
+				location.href = "<%=request.getContextPath()%>/message/receive/";
+				}
+			});
+		}
+	});
+});
 </script>
 <div class="top"></div>
 <div class="div_body">
@@ -115,7 +108,7 @@ br {
 <div class="middle">
 <table class="table">
 	<tr class="trcolor">
-		<th width="10%"><input type="checkbox" class="chk_all"></th>
+		<th width="10%"><input type="checkbox" id="chk_all"></th>
 		<th width="20%">받는사람</th>
 		<th width="40%">내용</th>
 		<th width="15%">보낸시간</th>
@@ -131,7 +124,7 @@ br {
 	<c:forEach items="${sList}" var="smsg">
 	<c:if test="${ empty smsg.receive_time }" var="s">
 	<tr>
-		<td width="10%"><input type="checkbox" class="chk" name="chk_row" value="${smsg.message_id}"></td>
+		<td width="10%"><input type="checkbox" class="chk_row" name="${smsg.message_id}"></td>
 		<td width="20%"><a href="#" class="a" onclick="transform('${smsg.receiver_id}');">${smsg.receiver_id}</a></td>
 		<td style="text-align:left" width="40%"><a href="" class="a" onclick="winopen('${smsg.message_id}');">
 		<!-- ...으로 자르는 코드 -->
@@ -152,7 +145,7 @@ br {
 	
 	<c:if test="${ not s }">
 	<tr>
-		<td width="10%"><input type="checkbox" class="chk" name="chk_row" value="${smsg.message_id}"></td>
+		<td width="10%"><input type="checkbox" class="chk_row" name="${smsg.message_id}"></td>
 		<td width="20%"><a href="#" class="a" onclick="transform('${smsg.receiver_id}');">${smsg.receiver_id}</a></td>
 		<td style="text-align:left" width="40%"><a href="" class="a" onclick="winopen('${smsg.message_id}');">
 		<!-- ...으로 자르는 코드 -->
@@ -198,6 +191,5 @@ br {
 </nav>
 </div>
 </div>
-</form>
 </body>
 </html>

@@ -28,7 +28,7 @@
 <div style="height:200px;"></div>
 
 <div style="margin-left:30px;">
-	<a onClick="window.location.reload()" style="cursor: pointer;"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>채팅 새로고침</a>
+	<a onClick="window.location.reload()" style="cursor: pointer;"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>종료된 채팅 지우기</a>
 </div>
 <body>
 <div id="_chatbox">
@@ -45,7 +45,7 @@
 			<div style="float:left; margin-left:30px;margin-right:30px;overflow:auto;width:195;height:360px">
 				<div class="list-group" style="margin: auto; text-align: center;" id="chat_list">
 					<c:forEach items="${chatMap}" var="chatMap">
-						<a href="javascript:void(0);" onclick="user_click('${chatMap.key.getId()}');" class="list-group-item" id="a_${chatMap.key.getId()}"> user_${chatMap.key.getId()} 의 실시간 문의&nbsp;&nbsp;&nbsp;<i class="far fa-envelope animated infinite heartBeat delay-0s" style="color:green;" id="${chatMap.key.getId()}_icon"></i></a>
+						<a href="javascript:void(0);" onclick="user_click('${chatMap.key.getId()}');" class="list-group-item" id="a_${chatMap.key.getId()}"> user_${chatMap.key.getId()} 의 실시간 문의&nbsp;&nbsp;&nbsp;<i class="far fa-envelope animated infinite heartBeat delay-0s" style="color:green;" id="${chatMap.key.getId()}_icon"></i><i class="fas fa-user-times animated infinite flash delay-0s" style="color:red;display:none;" id="${chatMap.key.getId()}_outicon"></i></a>
 					</c:forEach>
 				</div>
 			</div>
@@ -77,7 +77,8 @@
 </div>
 
 <script type="text/javascript">
-
+// 현재 관리자가 보고있는 유저
+var currentSelectUser = null;
 
 //hover속성
 $(function(){
@@ -106,7 +107,11 @@ function user_click(user_id){
 	$(select_a).css("background-color","rgb(52, 152, 219)");
 	$(select_a).css("color","rgb(255, 255, 255)");
 	
+	// 새로온 알림 아이콘 지우기
+	$('#'+user_id+'_icon').css("visibility","hidden");
+	
 	scrollDown(user_id);
+	currentSelectUser = user_id;
 }
 
 </script>
@@ -133,7 +138,7 @@ function wsConnect(user_id){
    		// 현재 어드민페이지에서 채팅목록에 없는 사용자가 메세지 보냈을 때
    		if( $("#a_"+sender_id).length  == 0 ){
    			// $("#chat_list").prepend("<a href='javascript:void(0);' onclick='user_click('" +sender_id+"');' class='list-group-item' id='a_"+sender_id+"'> user_"+sender_id+"의 실시간 문의&nbsp;&nbsp;&nbsp;<i class='far fa-envelope animated infinite heartBeat delay-0s' style='color:green;' id='"+sender_id+"_icon'></i></a>");
-   			$('#chat_list').prepend('<a href="javascript:void(0);" onclick="user_click(\''+sender_id+'\');" class="list-group-item" id="a_'+sender_id+'"> user_'+sender_id+'의 실시간 문의&nbsp;&nbsp;&nbsp;<i class="far fa-envelope animated infinite heartBeat delay-0s" style="color:green;" id="'+sender_id+'_icon"></i></a>');
+   			$('#chat_list').prepend('<a href="javascript:void(0);" onclick="user_click(\''+sender_id+'\');" class="list-group-item" id="a_'+sender_id+'"> user_'+sender_id+'의 실시간 문의&nbsp;&nbsp;&nbsp;<i class="far fa-envelope animated infinite heartBeat delay-0s" style="color:green;" id="'+sender_id+'_icon"></i><i class="fas fa-user-times animated infinite flash delay-0s" style="color:red;display:none;" id="'+sender_id+'_outicon"></i></a>');
    			$('#chat_detail').append('<div style="float:left;display:none;" id="user_'+sender_id+'_div" class="user_all_div"><div id="user_'+sender_id+'_scrollDiv" style="overflow:auto;width:500px;height:326px;"><fieldset><div id="'+sender_id+'_messageWindow" class="all_messageWindow">${chatMap.value}</div></fieldset></div><div style="overflow:hidden;"><input id="'+sender_id+'_inputMessage" class="form-control" type="text" onkeyup="enterkey(\''+sender_id+'\')" style="float:left;width:450px;" /> <input type="submit" class="btn btn-default" value="전송" onclick="sendMessage(\''+sender_id+'\')" style="float:left;"/></div></div> ');
 
    			$("#"+sender_id+"_messageWindow").html($("#"+sender_id+"_messageWindow").html()
@@ -141,6 +146,17 @@ function wsConnect(user_id){
    			
 
    			
+   		}
+		
+   		// 대화종료 유저
+   		if(sender_msg == "유저의 연결이 끊겼습니다."){
+   			$('#'+sender_id+'_icon').css("display","none");
+   			$('#'+sender_id+'_outicon').css("display","inline-block");
+   		}
+   		
+   		// 새로운 알림 아이콘 
+   		if(currentSelectUser != sender_id){
+   			$('#'+sender_id+'_icon').css("visibility","visible");
    		}
    		
    		$('#'+sender_id+'_messageWindow').html($('#'+sender_id+'_messageWindow').html()

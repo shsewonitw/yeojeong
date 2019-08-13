@@ -147,11 +147,11 @@ width: 100%;
 				
 			</tr>
 			<tr>
-				<th >
-					<div  >
+				<th>
+					<div>
 						<ul class="find_ul">
-							<li><a>아이디 찾기</a></li>
-							<li><a>비밀번호 찾기</a></li>
+							<li><a  onclick='newwinID();' target="_blank">아이디 찾기</a></li>
+							<li><a  onclick='newwinPW();' target="_blank">비밀번호 찾기</a></li>
 							<li><a href="<%= request.getContextPath() %>/regist_Regular">회원가입</a></li>
 						</ul>
 					</div>
@@ -160,7 +160,21 @@ width: 100%;
 		</table>
 	</form:form>
 	
+	<script type="text/javascript">
+	var popupX = (window.screen.width / 2) - (300 / 2);
+
+	var popupY= (window.screen.height / 2) - (250 / 2);
+
+	function newwinID(){
 	
+		window.open('<%=request.getContextPath()%>/findID', '아이디찾 기', 'status=no, height=250, width=300, left='+ popupX + ', top='+ popupY);
+	}
+	function newwinPW(){
+	
+		window.open('<%=request.getContextPath()%>/findPW', '비밀번호 찾기', 'status=no, height=250, width=300, left='+ popupX + ', top='+ popupY);
+	}
+	
+	</script>
 	
 	
 	<a href="http://developers.kakao.com/logout"></a>

@@ -24,6 +24,7 @@ import com.tje.yeojeong.service.MemberSearchIDService;
 import com.tje.yeojeong.service.Review_Mypage_DeleteService;
 import com.tje.yeojeong.service.WithmeRequest_DeleteService;
 import com.tje.yeojeong.service.WithmeRequest_UpdateStatusService;
+
 @Controller
 public class MemberExtraController {
 
@@ -38,10 +39,10 @@ public class MemberExtraController {
 
 	@Autowired
 	private WithmeRequest_UpdateStatusService wrusService;
-	
+
 	@Autowired
 	private WithmeRequest_DeleteService wrdService;
-	
+
 	@Autowired
 	private Review_Mypage_DeleteService rmdService;
 
@@ -97,32 +98,29 @@ public class MemberExtraController {
 
 		return result;
 	}
+
 	@PostMapping("/auth/mypage_delet_write")
 	@ResponseBody
-	public boolean mypage_delet_write(@RequestParam String article_id,
-			HttpSession session) {
+	public boolean mypage_delet_write(@RequestParam String article_id, HttpSession session) {
 		int article_id_in = Integer.parseInt(article_id);
 		Review_view review_view = new Review_view();
 		review_view.setArticle_id(article_id_in);
-		
-		
-		
-		return (Boolean)rmdService.service(review_view);
+
+		return (Boolean) rmdService.service(review_view);
 	}
+
 	@PostMapping("/auth/deleteWithMeRquest")
 	@ResponseBody
-	public String deleteWithMeRquest(@RequestParam String request_id_val, @RequestParam String div, HttpSession session, HttpServletResponse response) {
-		
-		Withme_request withme_request = new Withme_request(); 
+	public String deleteWithMeRquest(@RequestParam String request_id_val, @RequestParam String div, HttpSession session,
+			HttpServletResponse response) {
+
+		Withme_request withme_request = new Withme_request();
 		int request_id = Integer.parseInt(request_id_val);
 		withme_request.setRequest_id(request_id);
 		boolean result = (Boolean) wrdService.service(withme_request);
-		
-		
-		
-		String jsonTxt = "{\"result\":\"" + result + "\", \"div\":\"" + div +"\"}";
-		
-		
+
+		String jsonTxt = "{\"result\":\"" + result + "\", \"div\":\"" + div + "\"}";
+
 		return jsonTxt;
 	}
 

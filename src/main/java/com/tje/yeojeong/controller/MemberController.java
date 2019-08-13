@@ -191,14 +191,14 @@ public class MemberController {
 		Review_view review_view = new Review_view();
 		Member member = (Member) session.getAttribute("login_member");
 		Withme_request Withme_request = new Withme_request();
-		
+
 		// 동행 요청 받는 관련
 		Withme_request.setReceiver_id(member.getMember_id());
-		model.addAttribute("withmeRequestReceive",(List<Withme_request>)wrrService.service(Withme_request));
-		
-		//동행 요청 보낸 관련
+		model.addAttribute("withmeRequestReceive", (List<Withme_request>) wrrService.service(Withme_request));
+
+		// 동행 요청 보낸 관련
 		Withme_request.setSender_id(member.getMember_id());
-		model.addAttribute("withmeRequestSend",(List<Withme_request>)wrsService.service(Withme_request));
+		model.addAttribute("withmeRequestSend", (List<Withme_request>) wrsService.service(Withme_request));
 
 		Travel_regist travelRegist = new Travel_regist();
 		travelRegist.setMember_id(member.getMember_id());
@@ -272,6 +272,35 @@ public class MemberController {
 		boolean result = (Boolean) truService.service(travelRegist);
 
 		return result;
+	}
+
+	@GetMapping("/findID")
+	public String findID_Form() {
+
+		return "submits/findID";
+	}
+
+	@PostMapping("/findID")
+	public String find_Submit(@RequestBody Member member) {
+
+		
+		
+		return "submits/findID";
+	}
+
+	@GetMapping("/findPW")
+	public String findPW_Form() {
+
+		return "submits/findPW";
+	}
+
+	@PostMapping("/findPW")
+	public String find_Sumit() {
+		
+		
+		
+
+		return "submits/findPW";
 	}
 
 }

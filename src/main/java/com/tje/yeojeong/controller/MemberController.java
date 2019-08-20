@@ -27,6 +27,7 @@ import com.tje.yeojeong.model.Travel_regist;
 import com.tje.yeojeong.model.Withme_request;
 import com.tje.yeojeong.service.City_DataSelectCountryService;
 import com.tje.yeojeong.service.MemberInsertService;
+import com.tje.yeojeong.service.MemberKAKAOInsertService;
 import com.tje.yeojeong.service.MemberLoginService;
 import com.tje.yeojeong.service.MemberSearchIDService;
 import com.tje.yeojeong.service.ReviewCountByMemberService;
@@ -44,6 +45,8 @@ public class MemberController {
 
 	@Autowired
 	private MemberInsertService miService;
+	@Autowired
+	private MemberKAKAOInsertService mkiService;
 	@Autowired
 	private MemberLoginService mlservice;
 	@Autowired
@@ -170,7 +173,7 @@ public class MemberController {
 	@PostMapping("/regist_Kakao")
 	@ResponseBody
 	public boolean regist_Kakao_Submit(HttpServletRequest request, Model model, @RequestBody Member member) {
-		return (Boolean) miService.service(member);
+		return (Boolean) mkiService.service(member);
 
 	}
 

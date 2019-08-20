@@ -9,13 +9,13 @@ import com.tje.yeojeong.model.Member;
 import com.tje.yeojeong.repository.MemberDAO;
 
 @Service
-public class MemberInsertService {
+public class MemberKAKAOInsertService {
 	@Autowired
 	private MemberDAO memberDAO;
 
 	public Object service(Object args) {
 
-		return memberDAO.insert((Member) args);
+		return memberDAO.insert_Kakao((Member) args);
 	}
 
 }

@@ -564,4 +564,15 @@ public class AdminController {
 		}
 		model.addAttribute("map", map);
 	}
+	
+	// 안드로이드 /////////////////////////////////////////////////////////
+	@RequestMapping(value="/list",method=RequestMethod.POST)
+	@ResponseBody
+	public Object android() {
+		List<String> countryList = (List<String>) cdsCountryService.service();
+		System.out.println(countryList);
+		return countryList;
+	}
+	
+	///////////////////////////////////////////////////////////////////
 }

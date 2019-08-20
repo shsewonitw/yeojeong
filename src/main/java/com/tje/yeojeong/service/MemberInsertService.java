@@ -15,7 +15,7 @@ public class MemberInsertService {
 
 	public Object service(Object args) {
 
-		return memberDAO.insert_Kakao((Member) args);
+		return memberDAO.insert((Member) args);
 	}
 
 }

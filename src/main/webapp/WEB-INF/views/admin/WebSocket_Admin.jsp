@@ -45,7 +45,7 @@
 			<div style="float:left; margin-left:30px;margin-right:30px;overflow:auto;width:195;height:360px">
 				<div class="list-group" style="margin: auto; text-align: center;" id="chat_list">
 					<c:forEach items="${chatMap}" var="chatMap">
-						<a href="javascript:void(0);" onclick="user_click('${chatMap.key.getId()}');" class="list-group-item" id="a_${chatMap.key.getId()}"> user_${chatMap.key.getId()} 의 실시간 문의&nbsp;&nbsp;&nbsp;<i class="far fa-envelope animated infinite heartBeat delay-0s" style="color:green;" id="${chatMap.key.getId()}_icon"></i><i class="fas fa-user-times animated infinite flash delay-0s" style="color:red;display:none;" id="${chatMap.key.getId()}_outicon"></i></a>
+						<a href="javascript:void(0);" onclick="user_click('${chatMap.key.getId()}');" class="list-group-item" id="a_${chatMap.key.getId()}"> user_${chatMap.key.getId()} 의 실시간 문의&nbsp;&nbsp;&nbsp;<i class="far fa-envelope animated infinite heartBeat delay-0s" style="color:green;" id="${chatMap.key.getId()}_icon"></i><i class="fas fa-user-times animated infinite jello delay-0s" style="color:red;display:none;" id="${chatMap.key.getId()}_outicon"></i></a>
 					</c:forEach>
 				</div>
 			</div>
@@ -138,7 +138,7 @@ function wsConnect(user_id){
    		// 현재 어드민페이지에서 채팅목록에 없는 사용자가 메세지 보냈을 때
    		if( $("#a_"+sender_id).length  == 0 ){
    			// $("#chat_list").prepend("<a href='javascript:void(0);' onclick='user_click('" +sender_id+"');' class='list-group-item' id='a_"+sender_id+"'> user_"+sender_id+"의 실시간 문의&nbsp;&nbsp;&nbsp;<i class='far fa-envelope animated infinite heartBeat delay-0s' style='color:green;' id='"+sender_id+"_icon'></i></a>");
-   			$('#chat_list').prepend('<a href="javascript:void(0);" onclick="user_click(\''+sender_id+'\');" class="list-group-item" id="a_'+sender_id+'"> user_'+sender_id+'의 실시간 문의&nbsp;&nbsp;&nbsp;<i class="far fa-envelope animated infinite heartBeat delay-0s" style="color:green;" id="'+sender_id+'_icon"></i><i class="fas fa-user-times animated infinite flash delay-0s" style="color:red;display:none;" id="'+sender_id+'_outicon"></i></a>');
+   			$('#chat_list').prepend('<a href="javascript:void(0);" onclick="user_click(\''+sender_id+'\');" class="list-group-item" id="a_'+sender_id+'"> user_'+sender_id+'의 실시간 문의&nbsp;&nbsp;&nbsp;<i class="far fa-envelope animated infinite heartBeat delay-0s" style="color:green;" id="'+sender_id+'_icon"></i><i class="fas fa-user-times animated infinite jello delay-0s" style="color:red;display:none;" id="'+sender_id+'_outicon"></i></a>');
    			$('#chat_detail').append('<div style="float:left;display:none;" id="user_'+sender_id+'_div" class="user_all_div"><div id="user_'+sender_id+'_scrollDiv" style="overflow:auto;width:500px;height:326px;"><fieldset><div id="'+sender_id+'_messageWindow" class="all_messageWindow">${chatMap.value}</div></fieldset></div><div style="overflow:hidden;"><input id="'+sender_id+'_inputMessage" class="form-control" type="text" onkeyup="enterkey(\''+sender_id+'\')" style="float:left;width:450px;" /> <input type="submit" class="btn btn-default" value="전송" onclick="sendMessage(\''+sender_id+'\')" style="float:left;"/></div></div> ');
 
    			$("#"+sender_id+"_messageWindow").html($("#"+sender_id+"_messageWindow").html()

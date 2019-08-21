@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tje.yeojeong.model.Member;
 import com.tje.yeojeong.service.MemberInsertService;
+import com.tje.yeojeong.service.MemberLoginService;
 
 @Controller
 public class AndroidController {
 	@Autowired
 	private MemberInsertService miService;
+	@Autowired
+	private MemberLoginService mlService;
 	
 	@PostMapping("/android_join")
 	@ResponseBody
@@ -57,6 +60,23 @@ public class AndroidController {
 		
 		Boolean result = (Boolean)miService.service(member);
 		System.out.println(birth);
+		System.out.println(result);
+		return result;
+	}
+	
+	
+	@PostMapping("/android_login")
+	@ResponseBody
+	public Boolean android_login(
+			@RequestParam(value = "id") String id,
+			@RequestParam(value = "pw") String pw) {
+		
+		
+		Member member = new Member();
+		member.setMember_id(id);
+		member.setPassword(pw);
+		
+		Boolean result = (Boolean)mlService.service(member);
 		System.out.println(result);
 		return result;
 	}

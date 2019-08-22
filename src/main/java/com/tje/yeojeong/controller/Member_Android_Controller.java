@@ -1,5 +1,6 @@
 package com.tje.yeojeong.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,7 +42,7 @@ import com.tje.yeojeong.service.WithmeRequest_SendService;
 import com.tje.yeojeong.setting.PagingInfo;
 
 @Controller
-public class MemberController {
+public class Member_Android_Controller {
 
 	@Autowired
 	private MemberInsertService miService;
@@ -72,130 +73,65 @@ public class MemberController {
 	@Autowired
 	private PagingInfo pagingInfo;
 
-	@GetMapping("/login")
-	public String login_Form(@RequestParam(value = "myurl", required = false) String myurl,
-			@ModelAttribute(value = "member") Member member,
-			@CookieValue(value = "rememberID", required = false) Cookie rCookie, HttpSession session) {
-		if (session != null && session.getAttribute("login_member") != null) {
-			// 접속 여부 검사
-			if (myurl != null) {
-				return "redirect:" + myurl;
-			} else {
-				return "page/main";
-			}
+	
 
-		}
-		if (rCookie != null) {
-			// 쿠키가 있을때
-			member.setMember_id(rCookie.getValue());
-		}
-		return "form/loginForm";
-	}
+	@PostMapping("/android_login")
+	@ResponseBody
+	public HashMap<String, Object> android_login_sumit(Member member, HttpSession session) {
+		boolean login_flag = false;
 
-	@PostMapping("/login")
-	public String login_sumit(@ModelAttribute(value = "member") Member member, HttpSession session, Model model,
-			@RequestParam(value = "rememberID", required = false) String rememberID,
-			@CookieValue(value = "rememberID", required = false) Cookie rCookie, HttpServletResponse response) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		if (session.getAttribute("login_member") != null) {
+			result.put("result", login_flag);
+			result.put("login_message", "이미 접속중인 아이디 입니다.");
+			return result;
+		}
+
 		// 아이디 검사
 		Member search_ID = (Member) msiService.service(member);
 		if (search_ID == null) {
 			// 없는 아이디
-			model.addAttribute("login_message", "존재하지 않는 아이디 입니다.");
-			return "form/loginForm";
+			result.put("login_message", "존재하지 않는 아이디 입니다.");
 		} else {
 			// 아이디 체크 성공
 			// 비밀번호 검사
 			if (!(Boolean) mlservice.service(member)) {
 				// 로그인 실패(비밀번호)
-				model.addAttribute("login_message", "비밀번호가 틀렸습니다.");
-				return "form/loginForm";
+				result.put("login_message", "비밀번호가 틀렸습니다.");
 			}
-			// 세션 저장
 			session.setAttribute("login_member", search_ID);
-			// 로그인 성공
-			if (rememberID != null && rememberID.equals("on")) {
-				// 아이디저장
-				rCookie = new Cookie("rememberID", member.getMember_id());
-			} else {
-				rCookie = new Cookie("rememberID", member.getMember_id());
-				rCookie.setMaxAge(0);
-			}
-			response.addCookie(rCookie);
-			return "/page/main";
+			result.put("login_message", "로그인 성공");
+			login_flag = true;
+			result.put("result", login_flag);
 		}
+		return result;
 	}
 
-	@GetMapping("/auth/logout")
-	public String login_Form(HttpSession session, @RequestParam(value = "myurl") String myurl) {
-		if (session != null) {
-			session.removeAttribute("login_member");
-		}
+	
 
-		return "redirect:" + myurl;
-	}
-
-	@GetMapping("/regist_Regular")
-	public String regist_Regular_Form(@ModelAttribute(value = "member") Member member) {
-
-		return "form/registForm_Regular";
-	}
-
-	@PostMapping("/regist_Regular")
+	@PostMapping("/auth/mypage")
 	@ResponseBody
-	public boolean regist_Regular_Submit(HttpServletRequest request, Model model, @RequestBody Member member) {
-
-		System.out.println(member.getMember_id());
-		System.out.println(member.getBirthString());
-		return (Boolean) miService.service(member);
-	}
-
-	@GetMapping("/regist_Kakao")
-	public String regist_Kakao_Form(@ModelAttribute(value = "member") Member member, @RequestParam String kakao_id,
-			@RequestParam String kakao_email, @RequestParam(required = false) String kakao_gender, Model model,
-			HttpSession session) {
-
-		member.setMember_id(kakao_id);
-		member.setEmail(kakao_email);
-
-		Member searched_Member = (Member) msiService.service(member);
-		if (session.getAttribute("login_member") == null && searched_Member != null) {
-			session.setAttribute("login_member", searched_Member);
-			return "page/main";
-		}
-
-		if (kakao_gender != null && kakao_gender.equals("male")) {
-			member.setGender(1);
-		} else if (kakao_gender != null && kakao_gender.equals("female")) {
-			member.setGender(2);
-		}
-
-		return "form/registForm_Kakao";
-	}
-
-	@PostMapping("/regist_Kakao")
-	@ResponseBody
-	public boolean regist_Kakao_Submit(HttpServletRequest request, Model model, @RequestBody Member member) {
-		return (Boolean) mkiService.service(member);
-
-	}
-
-	@GetMapping("/auth/mypage")
-	public String mypage_Form(HttpSession session, Model model) {
+	public HashMap<String, Object> mypage_Form(HttpSession session, Model model) {
 
 		return mypageForm(1, model, session);
 	}
 
-	@GetMapping("/auth/mypage/{pageNo}")
-	public String mypage_Form(@PathVariable(value = "pageNo") Integer page, HttpSession session, Model model) {
+	@PostMapping("/auth/mypage/{pageNo}")
+	@ResponseBody
+	public HashMap<String, Object> mypage_Form(@PathVariable(value = "pageNo") Integer page, HttpSession session, Model model) {
 		model.addAttribute("mypagelistname", "write");
 
 		return mypageForm(page, model, session);
 	}
 
-	private String mypageForm(Integer page, Model model, HttpSession session) {
+	private HashMap<String, Object> mypageForm(Integer page, Model model, HttpSession session) {
+		
+		HashMap<String, Object> android_result = new HashMap<String, Object>();
+		
 		Review_view review_view = new Review_view();
 		Member member = (Member) session.getAttribute("login_member");
 		Withme_request Withme_request = new Withme_request();
+		System.out.println(member.getMember_id());
 
 		// 동행 요청 받는 관련
 		Withme_request.setReceiver_id(member.getMember_id());
@@ -222,7 +158,11 @@ public class MemberController {
 
 		// 내가 쓴글 관련
 		model.addAttribute("rList", rsbimervice.service(args));
-
+		android_result.put("rList",  rsbimervice.service(args));
+		System.out.println(((List<Review_view>)rsbimervice.service(args)).get(1).getArticle_id());
+		List<Review_view> a =(List<Review_view>)(android_result.get("rList") );
+		System.out.println(a.get(0).getArticle_id());
+		System.out.println(a.get(0).getWrite_time());
 		// 내가쓴글 페이징 관련
 		HashMap<String, Integer> result = (HashMap<String, Integer>) rcbmService.service(review_view);
 		model.addAttribute("r_count", result.get("totalCount"));
@@ -254,48 +194,9 @@ public class MemberController {
 		model.addAttribute("afterPageNo", afterPageNo);
 		model.addAttribute("curPage", page);
 
-		return "form/mypageForm";
+		return android_result;
 	}
 
-
-	@PostMapping("/auth/mypageTravelRegistDelete")
-	@ResponseBody
-	public boolean mypageTravelRegistDelete_Submit(HttpSession session, @RequestBody Travel_regist travelRegist) {
-
-		boolean result = (Boolean) trdService.service(travelRegist);
-		return result;
-	}
-
-	@PostMapping("/auth/mypageTravelRegistUpdate")
-	@ResponseBody
-	public boolean mypageTravelRegistUpdate_Submit(HttpSession session, @RequestBody Travel_regist travelRegist) {
-		boolean result = (Boolean) truService.service(travelRegist);
-
-		return result;
-	}
-
-	@GetMapping("/findID")
-	public String findID_Form() {
-
-		return "submits/findID";
-	}
-
-	@PostMapping("/findID")
-	public String find_Submit(@RequestBody Member member) {
-
-		return "submits/findID";
-	}
-
-	@GetMapping("/findPW")
-	public String findPW_Form() {
-
-		return "submits/findPW";
-	}
-
-	@PostMapping("/findPW")
-	public String find_Sumit() {
-
-		return "submits/findPW";
-	}
+	
 
 }

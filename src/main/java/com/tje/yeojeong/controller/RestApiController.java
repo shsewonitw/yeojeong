@@ -8,6 +8,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,12 +17,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.tje.yeojeong.api.AirportInfo;
 @Controller
 public class RestApiController {
 
-	@GetMapping("/apitest")
-	@ResponseBody
-	public String apitest() throws IOException {
+	@GetMapping("/airportInfo")
+
+	public String apitest(Model model) throws IOException {
 		
 		 StringBuilder urlBuilder = new StringBuilder("http://openapi.airport.kr/openapi/service/");
 		 	urlBuilder.append(URLEncoder.encode("StatusOfDepartures","UTF-8") + "/" + URLEncoder.encode("getDeparturesCongestion","UTF-8")); /*URL*/
@@ -34,29 +36,56 @@ public class RestApiController {
 	        conn.setRequestProperty("Content-type", "application/json");
 	        conn.setRequestProperty("Accept", "application/json");
 	        System.out.println("Response code: " + conn.getResponseCode());
-	        System.out.println(conn.getErrorStream());
 	        BufferedReader rd;
 	        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
 	            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 	        } else {
 	            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
 	        }
-	        StringBuilder result = new StringBuilder();
+	        StringBuilder sb = new StringBuilder();
 	        String line;
 	        while ((line = rd.readLine()) != null) {
-	            result.append(line);
+	            sb.append(line);
 	        }
 	        rd.close();
 	        conn.disconnect();
-	        System.out.println(result.toString());
 	        
-	        JsonObject jsonObject = new JsonParser().parse(result.toString()).getAsJsonObject();
+	        String result = sb.toString();
 	        
-	        System.out.println(jsonObject.toString());
+	        // 받아온 공공데이터 파싱
+	        /*
+	           areadiv - 지역구분
+	           cgtdt - 혼잡일자 ( YYYYMMDD )
+	           cgthm - 혼잡일시 ( HHMM )
+	           gate1 - T1 2번 / T2 1번 출국장 혼잡도
+	           gate2 - T1 3번 / T2 2번 출국장 혼잡도
+	           gate3 - T1 4번 출국장혼잡도
+	           gate4 - T1 5번 출국장 혼잡도
+	           1-원활, 2-보통, 3-혼잡, 4-매우혼잡, 5-종료
+	           
+	           gateinfo1 - T1 2번 / T2 1번 출국장대기인수
+        	   gateinfo2 - T1 3번 / T2 2번 출국장대기인수
+        	   gateinfo3 - T1 4번  출국장대기인수
+        	   gateinfo4 - T1 5번  출국장대기인수
+        	   terno - 터미널구분
+	        */
+	        JsonObject jsonObject = new JsonParser().parse(result).getAsJsonObject().getAsJsonObject("response").getAsJsonObject("body").getAsJsonObject("items").getAsJsonObject("item");
+	        String cgtdt = jsonObject.get("cgtdt").toString();
+	        String cgthm = jsonObject.get("cgthm").toString();
+	        String gate1 = jsonObject.get("gate1").toString();
+	        String gate2 = jsonObject.get("gate2").toString();
+	        String gate3 = jsonObject.get("gate3").toString();
+	        String gate4 = jsonObject.get("gate4").toString();
+	        String gateinfo1 = jsonObject.get("gateinfo1").toString();
+	        String gateinfo2 = jsonObject.get("gateinfo2").toString();
+	        String gateinfo3 = jsonObject.get("gateinfo3").toString();
+	        String gateinfo4 = jsonObject.get("gateinfo4").toString();
+	        System.out.println("json data: "+gateinfo1);
 	        
-	        Gson gson = new Gson();
+	        AirportInfo info = new AirportInfo(cgtdt, cgthm, gate1, gate2, gate3, gate4, gateinfo1, gateinfo2, gateinfo3, gateinfo4); 
+	        model.addAttribute("airportInfo",info);
 	        
-		return result.toString();
+	        return "form/airportInfo";
 	}
 }
 

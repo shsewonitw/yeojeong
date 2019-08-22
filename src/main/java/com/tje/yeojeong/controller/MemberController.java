@@ -125,6 +125,38 @@ public class MemberController {
 		}
 	}
 
+	@PostMapping("/android_login")
+	@ResponseBody
+	public HashMap<String, Object> android_login_sumit(Member member, HttpSession session) {
+		boolean login_flag = false;
+
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		if (session.getAttribute("login_member") != null) {
+			result.put("result", login_flag);
+			result.put("login_message", "이미 접속중인 아이디 입니다.");
+			return result;
+		}
+
+		// 아이디 검사
+		Member search_ID = (Member) msiService.service(member);
+		if (search_ID == null) {
+			// 없는 아이디
+			result.put("login_message", "존재하지 않는 아이디 입니다.");
+		} else {
+			// 아이디 체크 성공
+			// 비밀번호 검사
+			if (!(Boolean) mlservice.service(member)) {
+				// 로그인 실패(비밀번호)
+				result.put("login_message", "비밀번호가 틀렸습니다.");
+			}
+			session.setAttribute("login_member", search_ID);
+			result.put("login_message", "로그인 성공");
+			login_flag = true;
+			result.put("result", login_flag);
+		}
+		return result;
+	}
+
 	@GetMapping("/auth/logout")
 	public String login_Form(HttpSession session, @RequestParam(value = "myurl") String myurl) {
 		if (session != null) {
@@ -144,6 +176,8 @@ public class MemberController {
 	@ResponseBody
 	public boolean regist_Regular_Submit(HttpServletRequest request, Model model, @RequestBody Member member) {
 
+		System.out.println(member.getMember_id());
+		System.out.println(member.getBirthString());
 		return (Boolean) miService.service(member);
 	}
 
@@ -286,8 +320,6 @@ public class MemberController {
 	@PostMapping("/findID")
 	public String find_Submit(@RequestBody Member member) {
 
-		
-		
 		return "submits/findID";
 	}
 
@@ -299,9 +331,6 @@ public class MemberController {
 
 	@PostMapping("/findPW")
 	public String find_Sumit() {
-		
-		
-		
 
 		return "submits/findPW";
 	}

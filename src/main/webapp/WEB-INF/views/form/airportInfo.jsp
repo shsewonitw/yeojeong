@@ -20,7 +20,7 @@
 <title>공항 정보</title>
 
 </head>
-<body style="overflow:scroll;">
+<body style="overflow:scroll;width:100%;height:100%">
 <script type="text/javascript">
 
 // hover속성
@@ -57,39 +57,44 @@ function clickMenu(clicked_id){
 
 <div style="height: 200px;"></div>
 
-<div style="overflow:hidden;">
+
 <div style="text-align:center;color:rgb(52, 152, 219);"><h1>실시간 공항 정보</h1></div>
 
 <div style="height: 30px;"></div>
 
+<div style="overflow:hidden;">
 
-<div style="width:200px; margin-left:100px; float:left;">
-	<!-- 메뉴 리스트 -->
-	<div class="list-group" style="margin:auto; text-align:center;">
-		<a href="javascript:void(0);" onclick="clickMenu('menu1');" class="list-group-item" id="a_menu1">현재 공항 혼잡도</a>
-		<a href="javascript:void(0);" onclick="clickMenu('menu2');" class="list-group-item" id="a_menu2">메뉴2</a>
-		<a href="javascript:void(0);" onclick="clickMenu('menu3');" class="list-group-item" id="a_menu3">메뉴3</a>
+	<div style="width:200px; margin-left:100px; float:left;">
+		<!-- 메뉴 리스트 -->
+		<div class="list-group" style="text-align:center;">
+			<a href="javascript:void(0);" onclick="clickMenu('menu1');" class="list-group-item" id="a_menu1">현재 공항 혼잡도</a>
+			<a href="javascript:void(0);" onclick="clickMenu('menu2');" class="list-group-item" id="a_menu2">메뉴2</a>
+			<a href="javascript:void(0);" onclick="clickMenu('menu3');" class="list-group-item" id="a_menu3">메뉴3</a>
+		</div>
 	</div>
-</div>
 
 
-<div style="float:left; margin-left:50px">
-	<!-- 공항 혼잡도 -->
-	<div class="div_menu_all" id="menu1" style="display:none;float:left;">
-		<img src="<%=request.getContextPath()%>/resources/images/ter_1.1.png" style="width:60%">
-		<h1>gate1 : ${airportInfo.gate1}</h1>
-		<h1>gate2 : ${airportInfo.gate2}</h1>
-		<h1>gate3 : ${airportInfo.gate3}</h1>
-		<h1>gate4 : ${airportInfo.gate4}</h1>
-		<h1>gateinfo1 : ${airportInfo.gateinfo1}</h1>
-		<h1>gateinfo2 : ${airportInfo.gateinfo2}</h1>
-		<h1>gateinfo3 : ${airportInfo.gateinfo3}</h1>
-		<h1>gateinfo4 : ${airportInfo.gateinfo4}</h1>
+	<div style="float:left; margin-left:50px">
+		<!-- 공항 혼잡도 -->
+		<div class="div_menu_all" id="menu1" style="display:none;">
+			<div>
+				<img src="<%=request.getContextPath()%>/resources/images/ter_1.2.png" style="width:40%;">
+			</div>
+			<!-- 
+			<h1>gate1 : ${airportInfo.gate1}</h1>
+			<h1>gate2 : ${airportInfo.gate2}</h1>
+			<h1>gate3 : ${airportInfo.gate3}</h1>
+			<h1>gate4 : ${airportInfo.gate4}</h1>
+			<h1>gateinfo1 : ${airportInfo.gateinfo1}</h1>
+			<h1>gateinfo2 : ${airportInfo.gateinfo2}</h1>
+			<h1>gateinfo3 : ${airportInfo.gateinfo3}</h1>
+			<h1>gateinfo4 : ${airportInfo.gateinfo4}</h1>
+			 -->
+		</div>
+		
+		<div class="div_menu_all" id="menu2" style="display:none;"><h1>test2</h1></div>	
+		<div class="div_menu_all" id="menu3" style="display:none;"><h1>test3</h1></div>	
 	</div>
-	
-	<div class="div_menu_all" id="menu2" style="display:none;"><h1>test2</h1></div>	
-	<div class="div_menu_all" id="menu3" style="display:none;"><h1>test3</h1></div>	
-</div>
 
 </div>
 

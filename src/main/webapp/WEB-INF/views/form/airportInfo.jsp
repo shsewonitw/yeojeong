@@ -19,6 +19,55 @@
 <meta charset="UTF-8">
 <title>공항 정보</title>
 
+<style>
+#submenu1 > span {
+	font-size: 1vw;
+}
+#submenu2 > span {
+	font-size: 1vw;
+}
+
+.text_content1_5 {
+    position: relative;
+    display:inline-block;
+    left:-55.5%;
+    transform: translate(0%, 280%);                                                                   
+    font-size:2vw;
+    z-index: 2;
+    text-align: center;
+}
+
+.text_content1_4 {
+    position: relative;
+    display:inline-block;
+    left:-49.5%;
+    transform: translate(0%, 280%);                                                                   
+    font-size:2vw;
+    z-index: 2;
+    text-align: center;
+}
+
+.text_content1_3 {
+    position: relative;
+    display:inline-block;
+    left:-43%;
+    transform: translate(0%, 280%);                                                                   
+    font-size:2vw;
+    z-index: 2;
+    text-align: center;
+}
+
+.text_content1_2 {
+    position: relative;
+    display:inline-block;
+    left:-36.5%;
+    transform: translate(0%, 280%);                                                                   
+    font-size:2vw;
+    z-index: 2;
+    text-align: center;
+}
+</style>
+
 </head>
 <body style="overflow:scroll;width:100%;height:100%">
 <script type="text/javascript">
@@ -53,6 +102,11 @@ function clickMenu(clicked_id){
 	$(select_a).css("color","rgb(255, 255, 255)");
 }
 
+function clickSubMenu(clicked_id){
+	var select_div = '#'+clicked_id;
+	$('.submenu_all').css("display","none")
+	$(select_div).css("display","block")
+}
 </script>
 
 <div style="height: 200px;"></div>
@@ -73,13 +127,83 @@ function clickMenu(clicked_id){
 		</div>
 	</div>
 
-
-	<div style="float:left; margin-left:50px">
+	<div style="float:left; margin-left:50px; width:70%">
 		<!-- 공항 혼잡도 -->
 		<div class="div_menu_all" id="menu1" style="display:none;">
-			<div>
-				<img src="<%=request.getContextPath()%>/resources/images/ter_1.2.png" style="width:40%;">
-			</div>
+			<ul class="nav nav-tabs">
+			  <li role="presentation"><a href="javascript:void(0);" onclick="clickSubMenu('submenu1')">제 1 터미널</a></li>
+			  <li role="presentation"><a href="javascript:void(0);" onclick="clickSubMenu('submenu2')">제 2 터미널</a></li>
+			</ul>
+				<div id="submenu1" class="submenu_all" style="display:none;">
+				<br/>
+					<span class="label label-success">원활</span><span class="label label-primary">보통</span><span class="label label-warning">혼잡</span><span class="label label-danger">매우혼잡</span>&nbsp;&nbsp;<span class="label label-default">단위 : 명</span><br />
+					<img src="<%=request.getContextPath()%>/resources/images/ter_1.2.png" width="70%">
+					<div class="text_content1_5">
+						<c:if test="${airportInfo.gate4 eq 0}">
+							<span class="label label-success">${airportInfo.gateinfo4}</span>				
+						</c:if>
+						<c:if test="${airportInfo.gate4 eq 1}">
+							<span class="label label-primary">${airportInfo.gateinfo4}</span>				
+						</c:if>
+						<c:if test="${airportInfo.gate4 eq 2}">
+							<span class="label label-warning">${airportInfo.gateinfo4}</span>				
+						</c:if>
+						<c:if test="${airportInfo.gate4 eq 3}">
+							<span class="label label-danger">${airportInfo.gateinfo4}</span>				
+						</c:if>
+					</div>
+					
+					<div class="text_content1_4">
+						<c:if test="${airportInfo.gate3 eq 0}">
+							<span class="label label-success">${airportInfo.gateinfo3}</span>				
+						</c:if>
+						<c:if test="${airportInfo.gate3 eq 1}">
+							<span class="label label-primary">${airportInfo.gateinfo3}</span>				
+						</c:if>
+						<c:if test="${airportInfo.gate3 eq 2}">
+							<span class="label label-warning">${airportInfo.gateinfo3}</span>				
+						</c:if>
+						<c:if test="${airportInfo.gate3 eq 3}">
+							<span class="label label-danger">${airportInfo.gateinfo3}</span>				
+						</c:if>			
+					</div>
+					
+					<div class="text_content1_3">
+						<c:if test="${airportInfo.gate2 eq 0}">
+							<span class="label label-success">${airportInfo.gateinfo2}</span>				
+						</c:if>
+						<c:if test="${airportInfo.gate2 eq 1}">
+							<span class="label label-primary">${airportInfo.gateinfo2}</span>				
+						</c:if>
+						<c:if test="${airportInfo.gate2 eq 2}">
+							<span class="label label-warning">${airportInfo.gateinfo2}</span>				
+						</c:if>
+						<c:if test="${airportInfo.gate2 eq 3}">
+							<span class="label label-danger">${airportInfo.gateinfo2}</span>				
+						</c:if>
+					</div>
+					
+					<div class="text_content1_2">
+						<c:if test="${airportInfo.gate1 eq 0}">
+							<span class="label label-success">${airportInfo.gateinfo1}</span>				
+						</c:if>
+						<c:if test="${airportInfo.gate1 eq 1}">
+							<span class="label label-primary">${airportInfo.gateinfo1}</span>				
+						</c:if>
+						<c:if test="${airportInfo.gate1 eq 2}">
+							<span class="label label-warning">${airportInfo.gateinfo1}</span>				
+						</c:if>
+						<c:if test="${airportInfo.gate1 eq 3}">
+							<span class="label label-danger">${airportInfo.gateinfo1}</span>				
+						</c:if>		
+					</div>
+				</div>		
+				<div id="submenu2" class="submenu_all" style="display:none;">
+				<br />
+				<span class="label label-success">원활</span><span class="label label-primary">보통</span><span class="label label-warning">혼잡</span><span class="label label-danger">매우혼잡</span>&nbsp;&nbsp;<span class="label label-default">단위 : 명</span><br />
+					<img src="<%=request.getContextPath()%>/resources/images/ter_1.2.png" width="70%">
+							
+				</div>
 			<!-- 
 			<h1>gate1 : ${airportInfo.gate1}</h1>
 			<h1>gate2 : ${airportInfo.gate2}</h1>

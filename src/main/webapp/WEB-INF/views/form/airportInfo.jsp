@@ -15,6 +15,16 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.js"></script>
 
 
+<script>
+
+$(document).ready(function(e) {
+
+$('img[usemap]').rwdImageMaps();
+
+});
+</script>
+
+<!--  -->
 	
 <meta charset="UTF-8">
 <title>공항 정보</title>
@@ -202,7 +212,7 @@ function clickSubMenu(clicked_id){
 				<br />
 				<span class="label label-success">원활</span><span class="label label-primary">보통</span><span class="label label-warning">혼잡</span><span class="label label-danger">매우혼잡</span>&nbsp;&nbsp;<span class="label label-default">단위 : 명</span><br />
 					<img src="<%=request.getContextPath()%>/resources/images/ter_1.2.png" width="70%">
-							
+				
 				</div>
 			<!-- 
 			<h1>gate1 : ${airportInfo.gate1}</h1>

@@ -9,14 +9,14 @@ import com.tje.yeojeong.model.*;
 import com.tje.yeojeong.repository.*;
 
 @Service
-public class ReviewSelectWhereIdService {
+public class Review_like_DuplecheckService {
 	
 	@Autowired
-	private Review_viewDAO reviewDAO;
+	private Like_ThumbDAO like_ThumbDAO;
 	
 	public Object service(Object args) {
 		
-		return 	(List<Review_view>)reviewDAO.selectWhereId((Review_view)args);
+		return like_ThumbDAO.dupleCheck((Like_Thumb)args);
 		}
 	}
 

@@ -39,9 +39,23 @@ public class Like_ThumbDAO {
 	}
 	
 	// 좋아요 클릭
-	public Like_Thumb insertLike(Like_Thumb model) {
-		return this.jdbcTemplate.queryForObject("insert into like_thumb values(?, ?)", new Like_ThumbRowMapper(),
-				model.getArticle_id(),
-				model.getMember_id());
+	public boolean insertLike(Like_Thumb model) {
+		return this.jdbcTemplate.update("insert into like_thumb values (?, ?)",
+				model.getArticle_id(), model.getMember_id()) == 1 ? true : false;
+	}
+	
+	public boolean dupleCheck(Like_Thumb model) {
+		return this.jdbcTemplate.queryForObject("select count(*) from like_thumb where article_id = ? and member_id = ?",Integer.class ,
+				model.getArticle_id(),model.getMember_id()) == 1 ? true : false;
+	}
+	
+	public boolean delete(Like_Thumb model) {
+		return this.jdbcTemplate.update("delete from like_thumb where article_id = ? and member_id = ?", 
+				model.getArticle_id(),model.getMember_id()) == 1 ? true : false;
+	}
+	
+	public int selectCountWhereArticle_Id(Like_Thumb model) {
+		String sql = "select count(*) from like_thumb where article_id = ?";
+		return this.jdbcTemplate.queryForObject(sql, Integer.class,model.getArticle_id());
 	}
 }

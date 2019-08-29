@@ -168,7 +168,7 @@ function clickSubMenu(clicked_id){
 					<span class="label label-success">원활</span><span class="label label-primary">보통</span><span class="label label-warning">혼잡</span><span class="label label-danger">매우혼잡</span>&nbsp;&nbsp;<span class="label label-default">단위 : 명</span><br />
 					<img src="<%=request.getContextPath()%>/resources/images/ter_1.3.png" width="70%">
 					<div class="text_content1_5">
-						<c:if test="${airportInfo.gate4 eq 0}">
+						<c:if test="${airportInfo.gate4 eq 0 or airportInfo.gate4 eq 9}">
 							<span class="label label-success" id="gateInfo4">${airportInfo.gateinfo4}</span>				
 						</c:if>
 						<c:if test="${airportInfo.gate4 eq 1}">
@@ -180,10 +180,12 @@ function clickSubMenu(clicked_id){
 						<c:if test="${airportInfo.gate4 eq 3}">
 							<span class="label label-danger" id="gateInfo4">${airportInfo.gateinfo4}</span>				
 						</c:if>
+						
+						
 					</div>
 					
 					<div class="text_content1_4">
-						<c:if test="${airportInfo.gate3 eq 0}">
+						<c:if test="${airportInfo.gate3 eq 0 or airportInfo.gate3 eq 9}">
 							<span class="label label-success" id="gateInfo3">${airportInfo.gateinfo3}</span>				
 						</c:if>
 						<c:if test="${airportInfo.gate3 eq 1}">
@@ -198,7 +200,7 @@ function clickSubMenu(clicked_id){
 					</div>
 					
 					<div class="text_content1_3">
-						<c:if test="${airportInfo.gate2 eq 0}">
+						<c:if test="${airportInfo.gate2 eq 0 or airportInfo.gate2 eq 9}">
 							<span class="label label-success" id="gateInfo2">${airportInfo.gateinfo2}</span>				
 						</c:if>
 						<c:if test="${airportInfo.gate2 eq 1}">
@@ -213,7 +215,7 @@ function clickSubMenu(clicked_id){
 					</div>
 					
 					<div class="text_content1_2">
-						<c:if test="${airportInfo.gate1 eq 0}">
+						<c:if test="${airportInfo.gate1 eq 0 or airportInfo.gate1 eq 9}">
 							<span class="label label-success" id="gateInfo1">${airportInfo.gateinfo1}</span>				
 						</c:if>
 						<c:if test="${airportInfo.gate1 eq 1}">
@@ -233,7 +235,7 @@ function clickSubMenu(clicked_id){
 				<span class="label label-success">원활</span><span class="label label-primary">보통</span><span class="label label-warning">혼잡</span><span class="label label-danger">매우혼잡</span>&nbsp;&nbsp;<span class="label label-default">단위 : 명</span><br />
 					<img src="<%=request.getContextPath()%>/resources/images/ter_2.3.png" width="70%">
 					<div class="text_content2_2">
-						<c:if test="${airportInfo2.gate2 eq 0}">
+						<c:if test="${airportInfo2.gate2 eq 0 or airportInfo.gate2 eq 9}">
 							<span class="label label-success" id="gateInfo2_2">${airportInfo2.gateinfo2}</span>				
 						</c:if>
 						<c:if test="${airportInfo2.gate2 eq 1}">
@@ -247,7 +249,7 @@ function clickSubMenu(clicked_id){
 						</c:if>
 					</div>
 					<div class="text_content2_1">
-						<c:if test="${airportInfo2.gate1 eq 0}">
+						<c:if test="${airportInfo2.gate1 eq 0 or airportInfo.gate1 eq 9}">
 							<span class="label label-success" id="gateInfo2_1">${airportInfo2.gateinfo1}</span>				
 						</c:if>
 						<c:if test="${airportInfo2.gate1 eq 1}">

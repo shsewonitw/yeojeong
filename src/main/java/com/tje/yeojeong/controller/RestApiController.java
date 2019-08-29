@@ -82,7 +82,6 @@ public class RestApiController {
 	        String gateinfo3 = jsonObject.get("gateinfo3").toString();
 	        String gateinfo4 = jsonObject.get("gateinfo4").toString();
 	        
-	  
 	        
 	        
 	        AirportInfo info = new AirportInfo(cgtdt, cgthm, gate1, gate2, gate3, gate4, gateinfo1, gateinfo2, gateinfo3, gateinfo4); 

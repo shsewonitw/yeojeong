@@ -28,6 +28,17 @@ public class AirportInfo {
 		this.gateinfo3 = gateinfo3;
 		this.gateinfo4 = gateinfo4;
 	}
+    
+    public AirportInfo(String cgtdt, String cgthm, String gate1, String gate2, String gateinfo1, String gateinfo2) {
+    	this.cgtdt = cgtdt;
+		this.cgthm = cgthm;
+		this.gate1 = gate1;
+		this.gate2 = gate2;
+
+		this.gateinfo1 = gateinfo1;
+		this.gateinfo2 = gateinfo2;
+
+    }
 
 	public String getCgtdt() {
 		return cgtdt;

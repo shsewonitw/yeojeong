@@ -63,36 +63,18 @@ div {
 </div>
 <div class="middle" role="main">
 
-<select class="form-control" name="city" style="width:200px">
+<select class="form-control" name="data" style="width:300px">
 <option value="default">여행지</option>
-<c:forEach items="${TravelRegistList }" var="travelList" varStatus="status">
-	<c:forEach items="${countryList}" var="country">
-	<c:if test="${travelList.country == country }" var="r">
-		<option value="${country}">${country}</option>
-	</c:if>
-	</c:forEach>
+<c:forEach items="${travelRegistList}" var="travelList" varStatus="status">
+		<option value="${travelList.country}&${travelList.city}&${travelList.start_date}&${travelList.end_date}">
+		${travelList.country} ${travelList.city} ${travelList.start_date} ~ ${travelList.end_date}</option>
 </c:forEach>
-</select>
-
-<select class="form-control" name="start_date" style="width:200px">
-  <option value="">08-10</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-  <option value="5">5</option>
-</select>
-<select class="form-control" name="end_date" style="width:200px">
-  <option value="">08-15</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-  <option value="5">5</option>
 </select>
 <select class="form-control" name="category_gender" style="width:200px">
   <option value="">성별</option>
   <option value="0">무관</option>
-  <option value="2">남자</option>
-  <option value="1">여자</option>
+  <option value="1">여성</option>
+  <option value="2">남성</option>
 </select>
 <select class="form-control" name="category_age" style="width:200px">
   <option value="">연령</option>

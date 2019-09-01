@@ -44,7 +44,7 @@ public class Withme_viewDAO {
 		result = this.jdbcTemplate.update(sql, 
 			obj.getMember_id(), obj.getCountry(),obj.getCity(), 
 			obj.getStart_date(), obj.getEnd_date(), obj.getCategory_gender(), 
-			obj.getCategory_age(), obj.getCategory_style()) == 0 ? false : true;
+			obj.getCategory_age(), obj.getCategory_style()) == 1? true : false;
 		return result;
 	}
 	

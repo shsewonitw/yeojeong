@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.servlet.http.HttpSession;
@@ -39,24 +41,48 @@ public class Withme_Controller {
 	
 	// 같이갈래 글 작성
 	@GetMapping("/transform")
-	public String withmetransForm(Model model) {
+	public String withmetransForm(Model model, HttpSession session) {
+		Member member = (Member) session.getAttribute("login_member");
 		Travel_regist travelRegist = new Travel_regist();
+		travelRegist.setMember_id(member.getMember_id());
 		List<Travel_regist> TravelRegistList = (List<Travel_regist>) tstlService.service(travelRegist);
 		List<String> countryList = (List<String>) cdsCountryService.service();
 		model.addAttribute("countryList", countryList);
+		model.addAttribute("travelRegistList", TravelRegistList);
 		return "form/withmetransForm";
 	}
 	
 	@PostMapping("/transform")
 	public String withmeSubmit(Model model, HttpSession session,
-			@RequestParam("country") String country, 
-			@RequestParam("city") String city, 
-			@RequestParam("start_date") Date start_date, @RequestParam("end_date") Date end_date, @RequestParam("category_gender") int category_gender, 
+			@RequestParam("data") String data,
+			@RequestParam("category_gender") int category_gender, 
 			@RequestParam("category_age") int category_age, @RequestParam("category_style") int category_style) {
 		Member member = 
 				(Member)session.getAttribute("login_member");
 		Withme_view withme_view = new Withme_view();
-			
+		
+		String country ="";
+		String city = "";
+		String strStart_date = "";
+		String strEnd_date = "";
+		
+		StringTokenizer st = new StringTokenizer(data, "&");
+		while(st.hasMoreTokens()) {
+			country = st.nextToken();
+			city = st.nextToken();
+			strStart_date = st.nextToken();
+			strEnd_date = st.nextToken();
+		}
+		
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date start_date = null;
+		Date end_date = null;
+		try {
+			start_date = transFormat.parse(strStart_date);
+			end_date = transFormat.parse(strEnd_date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 			withme_view.setCountry(country);
 			withme_view.setCity(city);
 			withme_view.setStart_date(start_date);
@@ -64,11 +90,14 @@ public class Withme_Controller {
 			withme_view.setMember_id(member.getMember_id());
 			withme_view.setName(member.getName());
 			
+			Travel_regist travelRegist = new Travel_regist();
 			HashMap<String, Object> values = new HashMap<String, Object>();
 			values.put("withme_view", withme_view);
 			HashMap<String, Object> result = (HashMap<String, Object>)wiService.service(values);
+			List<Travel_regist> TravelRegistList = (List<Travel_regist>) tstlService.service(travelRegist);
 			List<String> countryList = (List<String>) cdsCountryService.service();
 			model.addAttribute("countryList", countryList);
+			model.addAttribute("travelRegistList", TravelRegistList);
 			model.addAttribute("withme_view", values);
 			model.addAttribute("result", result.get("result"));
 		return "form/withmeSubmit";

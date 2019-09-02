@@ -36,7 +36,51 @@ width: 100%;
 }
 </style>
 
+<style type="text/css">
+ .find_ul{ 
 
+ padding:10px 0px 0px 0px;
+ border-top:thin solid #ddd;  
+ margin-top: 20px; 
+ } 
+  	.find_ul a {  
+  	font-family: "Arial", "돋움", "dotum", sans-serif;   
+  	text-decoration: none;  
+  	cursor: pointer;  
+  	color: #aeaeae;  
+   }  
+
+   .find_ul li a:link {   
+   	color: #aeaeae;   
+   	text-decoration: none;   
+   }   
+
+   .find_ul li a:visited {   
+     	color: #aeaeae;   
+   	text-decoration: none;   
+   }   
+  .find_ul li a:hover {  
+  	color: #aeaeae;  
+  	text-decoration: underline;  
+  	font-size: 13px ; 
+  }  
+  	.find_ul li {  
+  	float : left;
+  	font-size:12px;
+  	text-align:center;
+  	color: #aeaeae;  
+  	list-style: none;  
+  	margin-right: 5px;  
+  }  
+	.find_ul li::before {
+	padding-right: 5px;
+	content: "|";
+	}
+
+	.find_ul li:first-child::before {
+	content: "";
+	}
+	</style>
 
 
 </head>
@@ -102,9 +146,35 @@ width: 100%;
 				</th>
 				
 			</tr>
+			<tr>
+				<th>
+					<div>
+						<ul class="find_ul">
+							<li><a  onclick='newwinID();' target="_blank">아이디 찾기</a></li>
+							<li><a  onclick='newwinPW();' target="_blank">비밀번호 찾기</a></li>
+							<li><a href="<%= request.getContextPath() %>/regist_Regular">회원가입</a></li>
+						</ul>
+					</div>
+				</th>
+			</tr>
 		</table>
 	</form:form>
 	
+	<script type="text/javascript">
+	var popupX = (window.screen.width / 2) - (300 / 2);
+
+	var popupY= (window.screen.height / 2) - (250 / 2);
+
+	function newwinID(){
+	
+		window.open('<%=request.getContextPath()%>/findID', '아이디찾 기', 'status=no, height=250, width=300, left='+ popupX + ', top='+ popupY);
+	}
+	function newwinPW(){
+	
+		window.open('<%=request.getContextPath()%>/findPW', '비밀번호 찾기', 'status=no, height=250, width=300, left='+ popupX + ', top='+ popupY);
+	}
+	
+	</script>
 	
 	
 	<a href="http://developers.kakao.com/logout"></a>

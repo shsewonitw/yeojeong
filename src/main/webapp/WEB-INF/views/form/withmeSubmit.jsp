@@ -13,7 +13,7 @@
 <script type="text/javascript">
 	
 	
-	alert("게시글이 작성되었습니다");
+	alert("일정이 등록되었습니다.");
 	location.href='<%= request.getContextPath()%>/withmelist';
 	
 </script>
@@ -23,7 +23,7 @@
 <script type="text/javascript">
 	
 	
-	alert("게시글 작성에 실패했습니다");
+	alert("일정등록에 오류가 발생했습니다.");
 	location.href='<%= request.getContextPath()%>/withmelist';
 	
 </script>

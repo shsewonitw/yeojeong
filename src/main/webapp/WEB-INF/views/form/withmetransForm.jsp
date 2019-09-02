@@ -62,32 +62,19 @@ div {
 <h3>&nbsp;&nbsp;&nbsp;&nbsp;같이갈래?</h3>
 </div>
 <div class="middle" role="main">
-<select class="form-control" name="city" style="width:200px">
-  <option value="">여행지</option>
-  <option value="후보">후보</option>
-  <option value="3">${withme_view.city}</option>
-  <option value="4">${withme_view.city}</option>
-  <option value="5">${withme_view.city}</option>
-</select>
-<select class="form-control" name="start_date" style="width:200px">
-  <option value="">08-10</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-  <option value="5">5</option>
-</select>
-<select class="form-control" name="end_date" style="width:200px">
-  <option value="">08-15</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-  <option value="5">5</option>
+
+<select class="form-control" name="data" style="width:300px">
+<option value="default">여행지</option>
+<c:forEach items="${travelRegistList}" var="travelList" varStatus="status">
+		<option value="${travelList.country}&${travelList.city}&${travelList.start_date}&${travelList.end_date}">
+		${travelList.country} ${travelList.city} ${travelList.start_date} ~ ${travelList.end_date}</option>
+</c:forEach>
 </select>
 <select class="form-control" name="category_gender" style="width:200px">
   <option value="">성별</option>
   <option value="0">무관</option>
-  <option value="2">남자</option>
-  <option value="1">여자</option>
+  <option value="1">여성</option>
+  <option value="2">남성</option>
 </select>
 <select class="form-control" name="category_age" style="width:200px">
   <option value="">연령</option>

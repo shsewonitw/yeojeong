@@ -56,7 +56,7 @@ function winopen(num) {
 
 // 메세지 답장(아이디 클릭) 부분 
 function transform(sender) {
-	window.open("<%=request.getContextPath()%>/message/retransform/"+sender,"receivecontentOpen",
+	window.open("<%=request.getContextPath()%>/message/transform/"+sender,"receivecontentOpen",
 		"width=740,height=620,left=150,top=150,resizable=no,location=no,menubar=no,toolbar=no,scrollbars=no");
 };
 

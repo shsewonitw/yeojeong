@@ -53,7 +53,8 @@ th, td {
 <div class="middle">
 <table class="table">
 	<tr class="trcolor">
-		<th colspan="2" width="15%">도시</th>
+		<th><input type="hidden" value="No"></th>
+		<th width="15%">여행지</th>
 		<th width="15%">출국일</th>
 		<th width="15%">입국일</th>
 		<th width="5%">성별</th>
@@ -74,8 +75,10 @@ th, td {
 	<c:forEach items="${withmelist}" var="wlist">
 	<tr>
 		<td><input type="hidden" name="article_id" value="${wlist.article_id}"></td>
-		<td colspan="3" width="45%">${wlist.city} | ${wlist.start_date} ~ ${wlist.end_date}</td>
-		<td width="5%">${wlist.category_gender}</td>
+		<td width="15%">${wlist.country} ${wlist.city}</td>
+		<td width="15%">${wlist.start_date}</td>
+		<td width="15%">${wlist.end_date}</td>
+		<td width="5%">${wlist.category_genderString}</td>
 		<td width="10%">${wlist.category_age}</td>
 		<td width="10%">${wlist.category_style}</td>
 		<td width="5%">${wlist.read_count}</td>
@@ -87,14 +90,14 @@ th, td {
 </table>
 </div>
 	<div class="write_btn">
-		<a class="btn btn-primary" href="<%=request.getContextPath()%>/transform" role="button">글쓰기</a>
+		<a class="btn btn-primary" href="<%=request.getContextPath()%>/transform" role="button">일정등록</a>
 	</div>
 <div class="bottom">
 <nav>
   <ul class="pagination">
   
   <c:if test="${ beforePageNo ne -1 }">
-    <li><a href="<%=request.getContextPath()%>/withmelist${ beforePageNo }" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+    <li><a href="<%=request.getContextPath()%>/withmelist/${ beforePageNo }" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
     </c:if>
     
   <c:forEach var="pageNo" begin="${ startPageNo }" end="${ endPageNo }">
@@ -102,12 +105,12 @@ th, td {
     <li class="active"><a href="#">${ pageNo }</a></li>
     </c:if>
     <c:if test="${ not r }">
-    <li><a href="<%=request.getContextPath()%>/withmelist${ pageNo }">${ pageNo }</a></li>
+    <li><a href="<%=request.getContextPath()%>/withmelist/${ pageNo }">${ pageNo }</a></li>
     </c:if>
   </c:forEach>
   
   <c:if test="${ afterPageNo ne -1 }">
-    <li><a href="<%=request.getContextPath()%>/withmelist${ afterPageNo }" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+    <li><a href="<%=request.getContextPath()%>/withmelist/${ afterPageNo }" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
 	</c:if>
 	
    </ul>

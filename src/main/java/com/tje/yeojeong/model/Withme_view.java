@@ -9,12 +9,14 @@ public class Withme_view {
 	private String member_id;
 	private String country;
 	private String city;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date start_date;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date end_date;
 	private int category_gender;
 	private int category_age;
 	private int category_style;
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date write_time;
 	private int read_count;
 	private String name;
@@ -84,6 +86,10 @@ public class Withme_view {
 
 	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
+	}
+	
+	public String getCategory_genderString() {
+		return category_gender == 0 ? "무관" : "여성" + "남성";
 	}
 
 	public int getCategory_gender() {

@@ -140,7 +140,7 @@ public class MemberController {
 	@PostMapping("/regist_Regular")
 	@ResponseBody
 	public boolean regist_Regular_Submit(HttpServletRequest request, Model model, @RequestBody Member member) {
-
+		
 		return (Boolean) miService.service(member);
 	}
 
@@ -272,6 +272,14 @@ public class MemberController {
 		boolean result = (Boolean) truService.service(travelRegist);
 
 		return result;
+	}
+	
+	@PostMapping("/regist_app")
+	@ResponseBody
+	public boolean regist_Regular_appt(HttpServletRequest request, Model model, @RequestBody Member member) {
+		
+		
+		return (Boolean) miService.service(member);
 	}
 
 }

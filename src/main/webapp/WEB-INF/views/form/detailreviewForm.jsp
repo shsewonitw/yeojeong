@@ -8,9 +8,54 @@
 <meta charset="UTF-8">
 
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/datilreview.css?var=33">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/hw_bootstrap.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/hw_bootstrap.min.css">
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/hw_bootstrap.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/hw_bootstrap.min.js"></script>
 
 <script type="text/javascript">
+
+function logincheck(){
+	alert("로그인 후 이용 가능 합니다")
+}
+
+// 좋아요
+
+function thumbsUp() {
+	var article_id = ${detailreview.article_id};
+	var login_member_id = "${login_member.member_id}";
+	var params = "login_member_id="+login_member_id+"&article_id="+article_id;
+
+	$.ajax({
+		url:'<%=request.getContextPath()%>/like',
+		type:"get",
+		contentType: 
+			"application/x-www-form-urlencoded; charset=utf-8",
+		data: params,
+		dataType:"text",
+		success:function(result){
+			
+			if( eval(result) == 1) {
+				var temp = $(".likeCount").text();
+				temp *= 1;
+				$(".likeCount").text(temp+1);
+				$(".likeCountATag").attr("style","color:#8080f1;text-decoration:none;");
+			} else if( eval(result) == 2 ){
+				var temp = $(".likeCount").text();
+				temp *= 1;
+				$(".likeCount").text(temp-1);
+				$(".likeCountATag").attr("style","text-decoration:none;");
+			} else {
+				alert("좋아요 기능 실패1!");
+			}
+			
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			alert("좋아요 기능 실패2!");
+		}
+	});
+}
 
 var comment_count = ${commentSize};
 // 댓글 등록 
@@ -164,11 +209,37 @@ function delete_comment(comment_id) {
 			<a href="<%=request.getContextPath()%>/reviewdelete" class="button">삭제</a>
 			</c:if>
 			</div>
+			
+			<!--  좋아요 -->
+			<c:if test="${ not empty login_member }" var="r">
+			<div style="margin-left: 45%; margin-top: 3%" >
+			<c:if test="${requestScope.isLike}">
+			<a class="likeCountATag" href="javascript:void(0)" onclick="thumbsUp();" style="color:#8080f1;text-decoration:none;">
+			<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="font-size: 30px;"></span> <span class="likeCount">${detailreview.like_count }</span></a>
+			</c:if>
+			<c:if test="${!requestScope.isLike}">
+			<a class="likeCountATag" href="javascript:void(0)" onclick="thumbsUp();" style="color:black;text-decoration:none;">
+			<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="font-size: 30px;"></span> <span class="likeCount">${detailreview.like_count }</span></a>
+			</c:if>
+			</div>
+			</c:if>
+			
+			<c:if test="${ !r }">
+			<div style="margin-left: 45%; margin-top: 3%" >
+			<c:if test="${requestScope.isLike}">
+			<a class="likeCountATag" href="javascript:void(0)" onclick="logincheck();" style="color:#8080f1;text-decoration:none;">
+			<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="font-size: 30px;"></span> <span class="likeCount">${detailreview.like_count }</span></a>
+			</c:if>
+			<c:if test="${!requestScope.isLike}">
+			<a class="likeCountATag" href="javascript:void(0)" onclick="logincheck();" style="color:black;text-decoration:none;">
+			<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="font-size: 30px;"></span> <span class="likeCount">${detailreview.like_count }</span></a>
+			</c:if>
+			</div>
+			</c:if>
 			<hr>
 			<br>
 			
 		<!-- 댓글 삭제 -->
-		
 		<div id="comment_area">
 		<label><span id="comment_count">댓글(${commentSize})</span></label><br>
 		<div id="comment_table">
@@ -208,7 +279,6 @@ function delete_comment(comment_id) {
 	
 </div>
 </body>
-
 
 
 </html>

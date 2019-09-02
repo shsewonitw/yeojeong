@@ -2,6 +2,7 @@ package com.tje.yeojeong.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.channels.SeekableByteChannel;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -64,6 +65,17 @@ public class ReviewController {
 	private Review_ReviewSerachService rrsService;
 	@Autowired
 	private Review_SerachCountService rscService;
+	@Autowired
+	private Review_like_DuplecheckService rldcService;
+	@Autowired
+	private Review_like_DeleteService rldService;
+	@Autowired
+	private Review_like_InsertService rliService;
+	@Autowired
+	private Review_Like_MinusCountService rlmcService;
+	@Autowired
+	private Review_Like_PlusCountService rlpcservice;
+	
 
 	
 	@GetMapping("/review")
@@ -77,7 +89,8 @@ public class ReviewController {
 	public String reviewSubmit(Model model, HttpSession session, HttpServletRequest request,
 			@RequestParam("country") String country,@RequestParam("city") String city,
 			@RequestParam("content") String content,@RequestParam("image_src") MultipartFile uploadFile1, MultipartHttpServletRequest mpRequest,
-			@RequestParam(value = "review_star", required = false ,defaultValue = "1") int review_star){
+			@RequestParam(value = "review_star", required = false ,defaultValue = "1") int review_star
+			){
 
 		// 파일이름가져오기
 		UtilFile utilFile = new UtilFile();
@@ -202,7 +215,7 @@ public class ReviewController {
 	
 	// 게시판 리스트
 	@GetMapping({"/reviewlist","/reviewlist/{pageNo}"})
-	public String reviewListForm(Model model, HttpSession session, Review_view reviewview,@PathVariable(value = "pageNo", required = false) Integer page,
+	public String reviewListForm(Model model, HttpSession session,@PathVariable(value = "pageNo", required = false) Integer page,
 			@RequestParam(value = "searchItem", required = false) String searchItem,
 			@RequestParam(value = "searchValue", required = false) String searchValue,HttpServletRequest request){
 		
@@ -332,7 +345,8 @@ public class ReviewController {
 	@GetMapping("/datailreview")
 	public String datailview(@RequestParam("article_id") Integer arID,Model model,HttpServletRequest request, Review_Comment comment,
 			HttpSession session,Review_view review, HttpServletResponse response) {
-        
+		
+		
 		review.setArticle_id(arID);
 		
 		HashMap<String, Object> values = new HashMap<>();
@@ -376,6 +390,7 @@ public class ReviewController {
          else {
              System.out.println("cookie 있음");
              // 쿠키 값 받아옴.
+             // 쿠기가 있으면 조회수 증가시키지 않음
              String value = viewCookie.getValue();
              System.out.println("cookie 값 : " + value);
      
@@ -392,12 +407,20 @@ public class ReviewController {
 		}
 		*/
 		
+		 		 
 		resultMap = (HashMap<String, Object>) rdService.service(values);
-		
-		
 		model.addAttribute("detailreview",resultMap.get("detailreview"));
 		session.setAttribute("articleNo", review);
 		
+		// 좋아요
+		Member member = (Member)session.getAttribute("login_member");
+		
+		if(member != null) {
+			Like_Thumb like_Thumb = new Like_Thumb(review.getArticle_id(),member.getMember_id());
+			boolean isLike = (boolean) rldcService.service(like_Thumb);
+			
+			request.setAttribute("isLike", isLike);
+		}
 		// 댓글 리스트
 		Review_Comment review_comment = new Review_Comment();
 		review_comment.setArticle_id(arID);
@@ -423,16 +446,12 @@ public class ReviewController {
 		boolean result = false;
 		HashMap<String, Object> values = new HashMap<>();
 		values.put("comment", comment);
-		System.out.println("aaaaaaaaaaaaaaaaaa:"+comment.getMember_id());
-		
-		
 		
 		Review_Comment reviewcomment = new Review_Comment();
 		reviewcomment.setArticle_id(comment.getArticle_id());
 		
 		HashMap<String, Object> resultMap = (HashMap<String, Object>) rciService.service(values);
 		int last_insert_id =  (int)cliiService.service();
-		System.out.println("last id : " + last_insert_id);
 		comment.setComment_id(last_insert_id);
 		
 		result = (boolean)resultMap.get("result");
@@ -487,4 +506,68 @@ public class ReviewController {
 		return null;
 	}
 	
-}
+	// 좋아요
+	@GetMapping("/like")
+	@ResponseBody
+	public String like(HttpServletRequest request,HttpServletResponse response) {
+		
+		String member_id = request.getParameter("login_member_id");
+		String strarticle_id = request.getParameter("article_id");
+		
+		if (strarticle_id == null)
+			return null;
+		if (member_id != null && member_id.length() == 0) {
+			return null;
+		}
+		int article_id = Integer.parseInt(strarticle_id);
+		
+		Review_view review_view = new Review_view();
+		review_view.setArticle_id(article_id);
+		
+		Like_Thumb like_Thumb = new Like_Thumb(article_id,member_id);
+		
+		Boolean result = null;
+		result = (Boolean) rldcService.service(like_Thumb);
+		
+		try {
+			if(result == null)
+				return null;
+			
+			if(result) {
+				// 좋아요 중복체크 걸렸을때
+				boolean flag1 = (boolean) rlmcService.service(review_view);
+				boolean flag2 = (boolean) rldService.service(like_Thumb);
+				
+				if(!flag1 || !flag2)
+					return null;
+				
+				response.setContentType("text/plane;charset=utf-8");
+				PrintWriter out = response.getWriter();
+				out.println(2);
+				out.flush();
+				out.close();
+				return null;
+				
+			
+			}else {
+				boolean flag1 = (boolean) rlpcservice.service(review_view);
+				boolean flag2 = (boolean) rliService.service(like_Thumb);
+				
+				if(!flag1 || !flag2)
+					return null;
+				
+				response.setContentType("text/plane;charset=utf-8");
+				PrintWriter out = response.getWriter();
+				out.println(1);
+				out.flush();
+				out.close();
+				return null;
+				
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+}	
+

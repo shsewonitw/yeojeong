@@ -17,12 +17,14 @@ public class Review_view {
 	private int read_count;
 	private String name;
 	private int comment_count;
+	private int like_count;
 
 	public Review_view() {
 	}
 
+
 	public Review_view(int article_id, String member_id, String country, String city, String content, String image_src,
-			int review_star, Date write_time, int read_count, String name, int comment_count) {
+			int review_star, Date write_time, int read_count, String name, int comment_count, int like_count) {
 		super();
 		this.article_id = article_id;
 		this.member_id = member_id;
@@ -35,7 +37,10 @@ public class Review_view {
 		this.read_count = read_count;
 		this.name = name;
 		this.comment_count = comment_count;
+		this.like_count = like_count;
 	}
+
+
 
 
 
@@ -125,6 +130,14 @@ public class Review_view {
 
 	public void setWrite_time(Date write_time) {
 		this.write_time = write_time;
+	}
+
+	public int getLike_count() {
+		return like_count;
+	}
+
+	public void setLike_count(int like_count) {
+		this.like_count = like_count;
 	}
 	
 	

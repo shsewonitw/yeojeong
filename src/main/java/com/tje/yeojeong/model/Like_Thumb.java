@@ -4,6 +4,10 @@ public class Like_Thumb {
 	private int article_id;
 	private String member_id;
 	
+	public Like_Thumb() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Like_Thumb(int article_id, String member_id) {
 		this.article_id = article_id;
 		this.member_id = member_id;

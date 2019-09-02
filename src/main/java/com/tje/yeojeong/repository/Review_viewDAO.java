@@ -33,7 +33,7 @@ public class Review_viewDAO {
 		public Review_view mapRow(ResultSet rs, int arg1) throws SQLException {
 			Review_view review_view = new Review_view(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
 					rs.getString(5), rs.getString(6), rs.getInt(7), rs.getTimestamp(8), rs.getInt(9), rs.getString(10),
-					rs.getInt(11));
+					rs.getInt(11),rs.getInt(12));
 			return review_view;
 		}
 	}
@@ -61,7 +61,7 @@ public class Review_viewDAO {
 	// 리뷰 테이블에 데이터 입력
 	public boolean insert(Review_view obj) {
 		boolean result = false;
-		String sql = "insert into Review_article values (0,?,?,?,?,?,?,now(),0)";
+		String sql = "insert into Review_article values (0,?,?,?,?,?,?,now(),0,0)";
 		result = this.jdbcTemplate.update(sql, obj.getMember_id(), obj.getCountry(), obj.getCity(),
 				obj.getContent().replaceAll("\n", "<br>"), obj.getImage_src(), obj.getReview_star()) == 0 ? false
 						: true;
@@ -132,14 +132,14 @@ public class Review_viewDAO {
 	}
 	
 	// 카테고리  검색 ( 도시 )
-		public List<Review_view> selectSerachWhereCity(String searchValue,int page) {
+	public List<Review_view> selectSerachWhereCity(String searchValue,int page) {
 			String sql = "select * from review_view where city like ? limit ?,?";
 			List<Review_view> result = this.jdbcTemplate.query(sql, new Review_viewRowMapper(),"%"+searchValue+"%", (page-1)*this.pagingInfo.getPagingSize(),this.pagingInfo.getPagingSize());
 			return result.isEmpty() ? null : result;
 		}
 	
 		// 카테고리  검색 ( 작성자 )
-		public List<Review_view> selectSerachWhereMember_id(String searchValue,int page) {
+	public List<Review_view> selectSerachWhereMember_id(String searchValue,int page) {
 			String sql = "select * from review_view where name like ? limit ?,?";
 			List<Review_view> result = this.jdbcTemplate.query(sql, new Review_viewRowMapper(),"%"+searchValue+"%", (page-1)*this.pagingInfo.getPagingSize(),this.pagingInfo.getPagingSize());
 			return result.isEmpty() ? null : result;
@@ -149,5 +149,16 @@ public class Review_viewDAO {
 	public Integer review_SerachCount(String searchItem, String searchValue) {
 		String sql = String.format("select count(*) from Review_view where %s like ?", searchItem);
 		return this.jdbcTemplate.queryForObject(sql, Integer.class,"%"+searchValue+"%");
+	}
+	
+	// 좋아요
+	public boolean plus_like_count(Review_view obj) {
+		return this.jdbcTemplate.update("update review_article set like_count = like_count + 1 where article_id = ?",obj.getArticle_id()) == 1 ? true : false;
+
+	}
+	
+	public boolean minus_like_count(Review_view obj) {
+		return this.jdbcTemplate.update("update review_article set like_count = like_count - 1 where article_id = ?",obj.getArticle_id()) == 1 ? true : false;
+
 	}
 }

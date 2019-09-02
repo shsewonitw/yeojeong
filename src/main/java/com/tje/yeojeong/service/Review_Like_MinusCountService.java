@@ -9,14 +9,12 @@ import com.tje.yeojeong.model.*;
 import com.tje.yeojeong.repository.*;
 
 @Service
-public class ReviewSelectWhereIdService {
+public class Review_Like_MinusCountService {
 	
 	@Autowired
 	private Review_viewDAO reviewDAO;
 	
 	public Object service(Object args) {
-		
-		return 	(List<Review_view>)reviewDAO.selectWhereId((Review_view)args);
-		}
+		return reviewDAO.minus_like_count((Review_view)args);
 	}
-
+}

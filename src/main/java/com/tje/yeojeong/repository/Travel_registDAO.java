@@ -70,6 +70,19 @@ public class Travel_registDAO {
 	}
 
 	
+	public List<Travel_regist> selectAll(){
+		String sql = "select * from travel_regist";
+		List<Travel_regist> Travel_registList = this.jdbcTemplate.query(sql, new RowMapper<Travel_regist>() {
+			@Override
+			public Travel_regist mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Travel_regist travel_regist = new Travel_regist(rs.getInt(1), rs.getString(2), rs.getString(3),
+						rs.getDate(4), rs.getDate(5), rs.getString(6), rs.getString(7));
+				return travel_regist;
+			}
+		});
+		return Travel_registList.isEmpty() ? null : Travel_registList;
+	}
+	
 	// Count
 	public int Travel_registCount() {
 		String sql = "select count(*) from travel_regist";

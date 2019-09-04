@@ -148,6 +148,7 @@ function removeAll(e){
 		
 		
 		$(".trip_delete_btn").on("click",function(){
+			var test = $(this).parents("div.trip_div");
 			if (confirm("정말 삭제하시겠습니까??") == true){    
 				// 내여행 정보 삭제
 			
@@ -166,10 +167,19 @@ function removeAll(e){
 				type : "post",
 				contentType : "application/json; charset=UTF-8",
 				data : travelRegistJsonObject,
-				dataType : "text",
+				dataType : "json",
 				success : function(data) {
-					if (eval(data)) {
-						alert("삭제가 완료 되었습니다.");
+					if (eval(data.result)) {
+						alert("삭제가 완료 되었습니다.");		
+						if (data.count == null){
+							test.remove();
+							$("#trip").html("<div style='text-align: center;margin-top: 100px;'>일정이 없습니다.</div>");
+						} else{
+							test.remove();	
+									
+						}
+						
+						
 					} else {
 						alert("삭제에 실패하였습니다.(관리자에게 문의하세요.)");
 					}
@@ -781,7 +791,41 @@ function removeAll(e){
 			
 			
 			<!-- 			``````````````````````` -->
+			<!-- 		``````````````````	내가 다녀온 곳 -->
 			
+			<div id="haveBeen" class="info_box" >
+				<c:if test="${ not empty TravelendList and TravelendList.size() ne 0}" var="r" >
+					<c:forEach items="${TravelendList }" var="travelList" varStatus="status">
+						<form>
+							<div class="trip_div">
+								<div class="tripHeader">${travelList.country} ${travelList.city} 일정</div>
+								<div class="trip_tel_div" >
+									<span><b>비상연락처&nbsp;&nbsp;&nbsp; : ${travelList.help_tel }</b></span>
+									<span><input type="hidden" id="travel_id" class="travel_id" name="travel_id" value="${travelList.travel_id }"></span>
+								</div>
+								
+																
+								<div class="date_div">
+									<span><b>출국날짜&nbsp;&nbsp;&nbsp; : ${travelList.start_date }</b></span>
+								</div>
+								<div class="date_div">
+									<span><b>입국날짜&nbsp;&nbsp;&nbsp; : ${travelList.end_date }</b></span>
+								</div>
+								<div style="padding-left: 30px;">
+									<button type="button" onClick="location.href='http://localhost:8080/yeojeong/review'"  class="btn btn-primary">여행지 후기 등록</button>							
+								</div>
+							</div>
+						</form>
+					</c:forEach>
+				</c:if>
+				<c:if test="${!r }">
+					<div style="text-align: center;margin-top: 100px;"> 다녀온 곳이 없습니다.</div>
+				</c:if>
+			</div>
+			
+			
+			
+			<!-- 			``````````````````````` -->
 			<!-- 		``````````````````	동행 요청리스트 -->
 			<div id="withMe" class="info_box">
 			

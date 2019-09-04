@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/full-page-scroll.min.css?var=1">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/prelude.css?sdasadsr=22h1">
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/prelude.css?sdasadsr=22sda">
 
 <script src="<%=request.getContextPath() %>/resources/js/jquery.js?sdf=1"></script>
 	<script type="text/javascript">

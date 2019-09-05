@@ -31,6 +31,7 @@ import com.tje.yeojeong.service.City_DataSelectCountryService;
 import com.tje.yeojeong.service.MemberInsertService;
 import com.tje.yeojeong.service.MemberKAKAOInsertService;
 import com.tje.yeojeong.service.MemberLoginService;
+import com.tje.yeojeong.service.MemberSearchEmailService;
 import com.tje.yeojeong.service.MemberSearchIDService;
 import com.tje.yeojeong.service.ReviewCountByMemberService;
 import com.tje.yeojeong.service.ReviewSearchByMemberService;
@@ -77,6 +78,8 @@ public class MemberController {
 	private TravelEndSelectIDService tesiService;
 	@Autowired
 	private TravelRegistSelectService trssService;
+	@Autowired
+	private MemberSearchEmailService mseService;
 	@Autowired
 	private PagingInfo pagingInfo;
 
@@ -308,8 +311,13 @@ public class MemberController {
 	}
 
 	@PostMapping("/findID")
-	public String find_Submit(@RequestBody Member member) {
+	public String find_Submit(Member member) {
 
+		msiService.service(member);
+		mseService.service(member);
+		
+		System.out.println(member.getEmail());
+		System.out.println(member.getName());
 		return "submits/findID";
 	}
 
@@ -325,4 +333,5 @@ public class MemberController {
 		return "submits/findPW";
 	}
 
+	
 }

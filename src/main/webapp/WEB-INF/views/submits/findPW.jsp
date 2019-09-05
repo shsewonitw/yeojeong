@@ -4,6 +4,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
+<script type="text/javascript">
+
+
+$(function(){
+	
+	
+});
+
+
+</script>
+
 <title>비밀번호 찾기</title>
 </head>
 <body>
@@ -20,7 +32,7 @@
 			<tr>
 				<td><input type="submit" value="찾기"></td>
 				<td>
-					<button>닫기</button>
+					<button href="#" onclick="javascript:self.close();">닫기</button>
 				</td>
 			</tr>
 

@@ -18,14 +18,14 @@ public class Withme_view {
 	private int category_style;
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date write_time;
-	private int read_count;
+	private int travel_id;
 	private String name;
 	
 	public Withme_view() {
 	}
 	
 	public Withme_view(int article_id, String member_id, String country, String city, Date start_date, Date end_date,
-			int category_gender, int category_age, int category_style, Date write_time, int read_count, String name) {
+			int category_gender, int category_age, int category_style, Date write_time, int travel_id, String name) {
 		this.article_id = article_id;
 		this.member_id = member_id;
 		this.country = country;
@@ -36,7 +36,7 @@ public class Withme_view {
 		this.category_age = category_age;
 		this.category_style = category_style;
 		this.write_time = write_time;
-		this.read_count = read_count;
+		this.travel_id = travel_id;
 		this.name = name;
 	}
 
@@ -120,12 +120,12 @@ public class Withme_view {
 		this.write_time = write_time;
 	}
 
-	public int getRead_count() {
-		return read_count;
+	public int getTravel_id() {
+		return travel_id;
 	}
 
-	public void setRead_count(int read_count) {
-		this.read_count = read_count;
+	public void setTravel_id(int travel_id) {
+		this.travel_id = travel_id;
 	}
 
 	public String getName() {

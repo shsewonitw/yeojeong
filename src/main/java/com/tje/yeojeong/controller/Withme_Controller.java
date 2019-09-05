@@ -40,17 +40,37 @@ public class Withme_Controller {
 	private WithmeDeleteService wdService;
 	@Autowired
 	private PagingInfo pagingInfo;
-	
+	@Autowired
+	private Withme_viewSelectTravelIdWhereMemberIdService wvstiwmiService;
 	// 같이갈래 글 작성
 	@GetMapping("/transform")
 	public String withmetransForm(Model model, HttpSession session) {
 		Member member = (Member) session.getAttribute("login_member");
+		
+		// 미로그인 시, 로그인 페이지로 안내
+		if(member == null) {
+			return "error/needLogin";
+		}
+		
 		Travel_regist travelRegist = new Travel_regist();
 		travelRegist.setMember_id(member.getMember_id());
 		List<Travel_regist> TravelRegistList = (List<Travel_regist>) tstlService.service(travelRegist);
+		
+		// 여행일정 미등록 시, 등록페이지로 안내
+		if( TravelRegistList == null ) {
+			return "error/needTravelRegist";
+		}
+		Withme_view withme_view = new Withme_view();
+		withme_view.setMember_id(member.getMember_id());
+		
+		// 중복 등록 검사용 모델
+		List<Withme_view> Withme_viewList = (List<Withme_view>) wvstiwmiService.service(withme_view);
+		
 		List<String> countryList = (List<String>) cdsCountryService.service();
 		model.addAttribute("countryList", countryList);
 		model.addAttribute("travelRegistList", TravelRegistList);
+		model.addAttribute("withme_viewList",Withme_viewList);
+		
 		return "form/withmetransForm";
 	}
 	
@@ -67,21 +87,24 @@ public class Withme_Controller {
 		String city = "";
 		String strStart_date = "";
 		String strEnd_date = "";
-		
+		String strTravel_id = "";
 		StringTokenizer st = new StringTokenizer(data, "&");
 		while(st.hasMoreTokens()) {
 			country = st.nextToken();
 			city = st.nextToken();
 			strStart_date = st.nextToken();
 			strEnd_date = st.nextToken();
+			strTravel_id = st.nextToken();
 		}
 		
 		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date start_date = null;
 		Date end_date = null;
+		int travel_id = 0;
 		try {
 			start_date = transFormat.parse(strStart_date);
 			end_date = transFormat.parse(strEnd_date);
+			travel_id = Integer.parseInt(strTravel_id);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -94,7 +117,7 @@ public class Withme_Controller {
 			withme_view.setCategory_gender(Integer.parseInt(category_gender));
 			withme_view.setCategory_age(Integer.parseInt(category_age));
 			withme_view.setCategory_style(Integer.parseInt(category_style));
-			
+			withme_view.setTravel_id(travel_id);
 			Travel_regist travelRegist = new Travel_regist();
 			HashMap<String, Object> values = new HashMap<String, Object>();
 			values.put("withme_view", withme_view);
@@ -111,6 +134,13 @@ public class Withme_Controller {
 	// 같이갈래 전체 목록 페이지
 	public String withmeListForm(
 			Integer page, Model model, HttpSession session) {
+		Member login_member = (Member)session.getAttribute("login_member");
+		
+		// 미로그인 시, 로그인 페이지로 안내
+		if(login_member == null) {
+			return "error/needLogin";
+		}
+		
 		HashMap<String, Object> args = 
 				(HashMap<String, Object>)wlService.service(page);
 		args.put("curPageNo", page);

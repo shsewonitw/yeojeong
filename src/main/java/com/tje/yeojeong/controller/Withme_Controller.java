@@ -155,7 +155,7 @@ public class Withme_Controller {
 		return withmeListForm(1, model, session);
 	}
 	// 게시글 삭제
-	@PostMapping("/withmelist")
+	@PostMapping("/withmelist/delete/{article_id}")
 	public String withmeDelete(
 			Model model, @PathVariable("article_id") int article_id) {
 		Withme_view withme_view = new Withme_view();

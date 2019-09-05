@@ -19,7 +19,7 @@ $(document).ready(function() {
 	$('.btn-default').click(function() {
 		var result = confirm("삭제된 게시글은 복구하실 수 없습니다.\n정말 삭제하시겠습니까?");
 		if ( result ) {
-			location.href='<%=request.getContextPath()%>/withmelist/delete';
+			location.href='<%=request.getContextPath()%>/withmelist/delete/${wlist.article_id}';
 		} else {
 			return false;
 		}
@@ -108,15 +108,15 @@ th, td {
 		<th width="5%">상태</th>
 		<th width="7%">관리</th>
 	</tr>
-	<form action="<%=request.getContextPath()%>/withmelist" method="post">
 	<c:if test="${ empty withmelist }">
 	<tr>
 		<td colspan="11">게시글이 없습니다.</td>
 	</tr>
 	</c:if>
 	<c:forEach items="${withmelist}" var="wlist">
+	<form action="<%=request.getContextPath()%>/withmelist/delete/${wlist.article_id}" method="post">
 	<tr>
-		<td><input type="hidden"></td>
+		<td><input type="hidden" value="${wlist.article_id}"></td>
 		<td width="15%">${wlist.country} ${wlist.city}</td>
 		<td width="15%">${wlist.start_date}</td>
 		<td width="15%">${wlist.end_date}</td>
@@ -140,14 +140,14 @@ th, td {
 		<td width="8%">${wlist.write_time}</td>
 		<td width="5%">상태</td>
 		<c:if test="${login_member.member_id eq wlist.member_id}" var="r">
-		<td width="7%"><button type="submit" class="btn btn-default" name="article_id">삭제</button></td>
+		<td width="7%"><button type="submit" class="btn btn-default">삭제</button></td>
 		</c:if>
 		<c:if test="${not r}">
 		<td width="7%">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		</c:if>
 	</tr>
-	</c:forEach>
 	</form>
+	</c:forEach>
 </table>
 </div>
 	<div class="write_btn">

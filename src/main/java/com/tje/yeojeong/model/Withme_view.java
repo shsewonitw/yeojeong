@@ -87,10 +87,6 @@ public class Withme_view {
 	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
 	}
-	
-	public String getCategory_genderString() {
-		return category_gender == 0 ? "무관" : "여성" + "남성";
-	}
 
 	public int getCategory_gender() {
 		return category_gender;

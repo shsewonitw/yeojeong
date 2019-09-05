@@ -9,6 +9,43 @@
 <link href="<%=request.getContextPath() %>/resources/css/jb_bootstrap.min.css" rel="stylesheet">
 <script src="<%=request.getContextPath() %>/resources/js/jb_bootstrap.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/contextmenu.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/contextmenuui.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/contextmenu.css">
+
+<script type="text/javascript">
+// 게시글 삭제 이벤트
+$(document).ready(function() {
+	$('.btn-default').click(function() {
+		var result = confirm("삭제된 게시글은 복구하실 수 없습니다.\n정말 삭제하시겠습니까?");
+		if ( result ) {
+			location.href='<%=request.getContextPath()%>/withmelist/delete/${wlist.article_id}';
+		} else {
+			return false;
+		}
+	});
+});
+
+// 아이디 클릭 이벤트
+function temp(member_id) {
+	$.contextMenu({
+	    selector: "#"+member_id+"_namebtn",
+	    trigger: 'left',
+	    callback: function(key, options) {
+	    	var m = key;
+	        if(m == "edit"){
+	        	window.open('<%= request.getContextPath()%>/message/transform/'+member_id,'message','width=740,height=620',true);
+	        }
+	    },
+	    items: {
+	        "edit": {name: "쪽지보내기"},
+	        "cut": {name: "1:1채팅(미구현)"},
+	        "copy": {name: "쓴글 확인(미구현)"},
+	    }
+	});
+}
+</script>
+
 <style type="text/css">
 .a:link {color:#3498DB;text-decoration:none;}
 .a:visited {color:#3498DB;text-decoration:none;}
@@ -42,6 +79,12 @@ th, td {
 	left:44%;
 	height:auto;
 }
+.namebtn {
+	cursor:pointer;
+	border: 0;
+	outline: 0;
+	background-color: white;
+}
 </style>
 </head>
 <body>
@@ -60,32 +103,50 @@ th, td {
 		<th width="5%">성별</th>
 		<th width="10%">연령</th>
 		<th width="10%">스타일</th>
-		<th width="5%">조회수</th>
 		<th width="10%">작성자</th>
-		<th width="10%">작성일</th>
+		<th width="8%">작성일</th>
 		<th width="5%">상태</th>
+		<th width="7%">관리</th>
 	</tr>
-	
 	<c:if test="${ empty withmelist }">
 	<tr>
 		<td colspan="11">게시글이 없습니다.</td>
 	</tr>
 	</c:if>
-	
 	<c:forEach items="${withmelist}" var="wlist">
+	<form action="<%=request.getContextPath()%>/withmelist/delete/${wlist.article_id}" method="post">
 	<tr>
-		<td><input type="hidden" name="article_id" value="${wlist.article_id}"></td>
+		<td><input type="hidden" value="${wlist.article_id}"></td>
 		<td width="15%">${wlist.country} ${wlist.city}</td>
 		<td width="15%">${wlist.start_date}</td>
 		<td width="15%">${wlist.end_date}</td>
-		<td width="5%">${wlist.category_genderString}</td>
-		<td width="10%">${wlist.category_age}</td>
-		<td width="10%">${wlist.category_style}</td>
-		<td width="5%">${wlist.read_count}</td>
-		<td width="10%">${wlist.name}</td>
-		<td width="10%">${wlist.write_time}</td>
+		<!-- 카테고리 성별 -->
+		<c:if test="${wlist.category_gender eq 0 }"><td width="5%">무관</td></c:if>
+		<c:if test="${wlist.category_gender eq 1 }"><td width="5%">여성</td></c:if>
+		<c:if test="${wlist.category_gender eq 2 }"><td width="5%">남성</td></c:if>
+		<!-- 카테고리 연령대 -->
+		<c:if test="${wlist.category_age eq 0 }"><td width="5%">무관</td></c:if>
+		<c:if test="${wlist.category_age eq 1 }"><td width="5%">20대</td></c:if>
+		<c:if test="${wlist.category_age eq 2 }"><td width="5%">30대</td></c:if>
+		<c:if test="${wlist.category_age eq 3 }"><td width="5%">40대이상</td></c:if>
+		<!-- 카테고리 여행스타일 -->
+		<c:if test="${wlist.category_style eq 0 }"><td width="5%">무관</td></c:if>
+		<c:if test="${wlist.category_style eq 1 }"><td width="5%">관광</td></c:if>
+		<c:if test="${wlist.category_style eq 2 }"><td width="5%">맛집</td></c:if>
+		<c:if test="${wlist.category_style eq 3 }"><td width="5%">쇼핑</td></c:if>
+		<c:if test="${wlist.category_style eq 4 }"><td width="5%">휴양</td></c:if>
+		<c:if test="${wlist.category_style eq 5 }"><td width="5%">엑티비티</td></c:if>
+		<td width="10%"><input type="button" class="namebtn" id="${wlist.member_id}_namebtn" onclick="temp('${wlist.member_id}');" value="${wlist.name}"></td>
+		<td width="8%">${wlist.write_time}</td>
 		<td width="5%">상태</td>
+		<c:if test="${login_member.member_id eq wlist.member_id}" var="r">
+		<td width="7%"><button type="submit" class="btn btn-default">삭제</button></td>
+		</c:if>
+		<c:if test="${not r}">
+		<td width="7%">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		</c:if>
 	</tr>
+	</form>
 	</c:forEach>
 </table>
 </div>

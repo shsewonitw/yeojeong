@@ -37,6 +37,8 @@ public class Withme_Controller {
 	@Autowired
 	private City_DataSelectCityService cdsCityService;
 	@Autowired
+	private WithmeDeleteService wdService;
+	@Autowired
 	private PagingInfo pagingInfo;
 	
 	// 같이갈래 글 작성
@@ -55,8 +57,8 @@ public class Withme_Controller {
 	@PostMapping("/transform")
 	public String withmeSubmit(Model model, HttpSession session,
 			@RequestParam("data") String data,
-			@RequestParam("category_gender") int category_gender, 
-			@RequestParam("category_age") int category_age, @RequestParam("category_style") int category_style) {
+			@RequestParam("category_gender") String category_gender, 
+			@RequestParam("category_age") String category_age, @RequestParam("category_style") String category_style) {
 		Member member = 
 				(Member)session.getAttribute("login_member");
 		Withme_view withme_view = new Withme_view();
@@ -89,6 +91,9 @@ public class Withme_Controller {
 			withme_view.setEnd_date(end_date);
 			withme_view.setMember_id(member.getMember_id());
 			withme_view.setName(member.getName());
+			withme_view.setCategory_gender(Integer.parseInt(category_gender));
+			withme_view.setCategory_age(Integer.parseInt(category_age));
+			withme_view.setCategory_style(Integer.parseInt(category_style));
 			
 			Travel_regist travelRegist = new Travel_regist();
 			HashMap<String, Object> values = new HashMap<String, Object>();
@@ -148,5 +153,21 @@ public class Withme_Controller {
 	public String withmeListFormNotPageNo(
 			Model model, HttpSession session) {
 		return withmeListForm(1, model, session);
+	}
+	// 게시글 삭제
+	@PostMapping("/withmelist/delete/{article_id}")
+	public String withmeDelete(
+			Model model, @PathVariable("article_id") int article_id) {
+		Withme_view withme_view = new Withme_view();
+		withme_view.setArticle_id(article_id);
+		
+		HashMap<String, Object> values = new HashMap<>();
+		values.put("withme_view", withme_view);
+		
+		HashMap<String, Object> result = 
+				(HashMap<String, Object>)wdService.service(values);
+		model.addAttribute("result", result.get("result"));
+		
+		return "form/withmeDeleteSubmit";
 	}
 }

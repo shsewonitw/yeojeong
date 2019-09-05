@@ -7,33 +7,51 @@
 
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/review.css?var=33">
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
+
 <script type="text/javascript">
+<!-- 다중 셀렉트박스 -->
+function doChange(srcE, targetId){
+    var val = srcE.options[srcE.selectedIndex].value;
+    var targetE = document.getElementById(targetId);
+    removeAll(targetE);
 
-/*
-function chk_file_type(obj) {
-		 var file_kind = obj.value.lastIndexOf('.');
-		 var file_name = obj.value.substring(file_kind+1,obj.length);
-		 var file_type = file_name.toLowerCase();
-
-		 varcheck_file_type = new Array();​
-
-		 check_file_type=['jpg','gif','png','jpeg','bmp'];
-
-		 if(check_file_type.indexOf(file_type)==-1){
-		  alert('이미지 파일만 선택할 수 있습니다.');
-		  var parent_Obj=obj.parentNode
-		  var node=parent_Obj.replaceChild(obj.cloneNode(true),obj);
-		  return false;
-		 }
+    
+    $.ajax({
+		url : "<%=request.getContextPath()%>/reviewcityAjax",
+		type : "post",
+		data : "country=" + val,
+		dataType : "text",
+		success : function(data) {
+			if (eval(data)) {
+				var str = data.substr(2,data.length-4);
+				var str = str.split('","');
+				str.forEach(function(element){
+					addOption(element, targetE);
+				})
+			} else {
+				alert("등록에 실패했습니다.");
+			}
+		},
+		error : function(data) {
+			alert("통신오류(관리자에게 문의하세요.)");
 		}
-		*/
-</script>
+	});
+}	
 
+function addOption(value, e){
+    var o = new Option(value);
+    try{
+        e.add(o);
+    }catch(ee){
+        e.add(o, null);
+    }
+}
 
-<script type="text/javascript">
-
-	
-	
+function removeAll(e){
+    for(var i = 0, limit = e.options.length; i < limit - 1; ++i){
+        e.remove(1);
+    }
+}
 </script>
 
 <title>여행자들의 웃음</title>
@@ -54,14 +72,15 @@ function chk_file_type(obj) {
 			</p>
 			<hr>
 				<label>여행지</label> &nbsp;&nbsp;&nbsp;
-				 <select id="b_class" name="country" class="selectbox">
-					<option value="">국가</option>
-					<option value="대한민국">대한민국</option>
-					<option value="베트남">베트남</option>
-					<option value="태국">태국</option>
+				 <select name="country" id="selOne" class="selectbox" onchange="doChange(this, 'selTwo')">
+				 <option value="">국가</option>
+					<c:forEach items="${countryList }" var ="country" >
+					<option value="${country}">${country }</option>
+				</c:forEach>
 				</select>
-				<select id="s_class" name="city" class="selectbox">
-					<option value="">도시</option>
+
+				<select id="selTwo" name="city" class="selectbox">
+					<option value="default">도시</option>
 				</select>
 		
 		<hr>
@@ -97,29 +116,6 @@ function chk_file_type(obj) {
 
 
 <script type="text/javascript">
-
-
-
-window.onload = function() {
-	document.getElementById("b_class").onchange = function() { getClass(this.form.b_class.options.selectedIndex) };
-}
-
-var classG = new Array(new Array("국가를 선택해주세요"), new Array("서울", "부산", "대구"),
-										 new Array("다낭", "호치민", "나트랑"), 
-										 new Array("방콕", "푸켓"));
-
-var temp, i=0, j=0;
-var cselect;
-
-function getClass(item) {
-temp = document.getElementById("s_class");
-subCnt = temp.options.length;
-	for (i=(subCnt-1); i>0; i--) { temp.options[i] = null }
-		for (var j=0; j<classG[item].length; j++) {
-			cselect = classG[item][j];
-			temp.options[j] = new Option(cselect, cselect)
-		}
-}
 
 // 별점 처리 
 	var starRating = function(){

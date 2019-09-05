@@ -77,7 +77,7 @@
 				     <li><a href="<%=request.getContextPath()%>/traveldata"><b class="menu_font">여행지 정보</b></a></li>
 			    </ul>
 		     </li>
-			 <li><a href="<%=request.getContextPath()%>/withmelist" ><b class="menu_font">같이갈래?</b></a></li>
+			 <li><a href="<%=request.getContextPath()%>/auth/withmelist" ><b class="menu_font">같이갈래?</b></a></li>
 			 <li><a href="<%=request.getContextPath()%>/reviewlist"><b class="menu_font">여행자들의 웃음(여행후기)</b></a></li>
 			 <li><a href="<%=request.getContextPath()%>/airportInfo"><b class="menu_font">지금 공항은?</b></a></li>
 			 <li><a href="<%=request.getContextPath()%>/qaarticle"><b class="menu_font">자주 묻는 질문</b></a></li>

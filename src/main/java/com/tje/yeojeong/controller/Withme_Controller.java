@@ -142,20 +142,20 @@ public class Withme_Controller {
 		return "form/withmeListForm";
 	}
 	
-	@GetMapping("/withmelist/{pageNo}")
+	@GetMapping("/auth/withmelist/{pageNo}")
 	public String withmeListFormWithPageNo(
 			@PathVariable("pageNo") Integer page, 
 			Model model, HttpSession session) {
 		return withmeListForm(page, model, session);
 	}
 	
-	@GetMapping("/withmelist")
+	@GetMapping("/auth/withmelist")
 	public String withmeListFormNotPageNo(
 			Model model, HttpSession session) {
 		return withmeListForm(1, model, session);
 	}
 	// 게시글 삭제
-	@PostMapping("/withmelist/delete/{article_id}")
+	@PostMapping("/auth/withmelist/delete/{article_id}")
 	public String withmeDelete(
 			Model model, @PathVariable("article_id") int article_id) {
 		Withme_view withme_view = new Withme_view();

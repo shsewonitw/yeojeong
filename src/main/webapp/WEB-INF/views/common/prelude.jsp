@@ -73,7 +73,7 @@
 		<ul>
 			 <li><a href="#" ><b class="menu_font">여행</b></a>
 				 <ul>
-				     <li><a href="<%=request.getContextPath()%>/travelRegist" style="text-align: "><b class="menu_font">여행지 등록</b></a></li>
+				     <li><a href="<%=request.getContextPath()%>/auth/travelRegist" style="text-align: "><b class="menu_font">여행지 등록</b></a></li>
 				     <li><a href="<%=request.getContextPath()%>/traveldata"><b class="menu_font">여행지 정보</b></a></li>
 			    </ul>
 		     </li>

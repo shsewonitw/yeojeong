@@ -20,7 +20,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		if( session == null ) {
 			result = false;
 		} else {
-			if( session.getAttribute("loginMember") == null )
+			if( session.getAttribute("login_member") == null )
 				result = false;
 		}
 		

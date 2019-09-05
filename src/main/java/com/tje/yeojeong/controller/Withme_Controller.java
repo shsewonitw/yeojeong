@@ -42,7 +42,7 @@ public class Withme_Controller {
 	private PagingInfo pagingInfo;
 	
 	// 같이갈래 글 작성
-	@GetMapping("/transform")
+	@GetMapping("/auth/transform")
 	public String withmetransForm(Model model, HttpSession session) {
 		Member member = (Member) session.getAttribute("login_member");
 		Travel_regist travelRegist = new Travel_regist();
@@ -54,7 +54,7 @@ public class Withme_Controller {
 		return "form/withmetransForm";
 	}
 	
-	@PostMapping("/transform")
+	@PostMapping("/auth/transform")
 	public String withmeSubmit(Model model, HttpSession session,
 			@RequestParam("data") String data,
 			@RequestParam("category_gender") String category_gender, 

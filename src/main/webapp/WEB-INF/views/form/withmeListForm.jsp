@@ -151,7 +151,7 @@ th, td {
 </table>
 </div>
 	<div class="write_btn">
-		<a class="btn btn-primary" href="<%=request.getContextPath()%>/transform" role="button">일정등록</a>
+		<a class="btn btn-primary" href="<%=request.getContextPath()%>/auth/transform" role="button">일정등록</a>
 	</div>
 <div class="bottom">
 <nav>

@@ -39,7 +39,7 @@ public class TravelRegistController {
 	private City_DataSelectCityService cdsCityService;
 	
 	
-	@GetMapping("/travelRegist")
+	@GetMapping("/auth/travelRegist")
 	public String travelRegistForm(Model model) {
 		
 		// DB에 저장된 Country 리스트
@@ -52,7 +52,7 @@ public class TravelRegistController {
 	
 	
 	
-	@PostMapping("/travelRegist")
+	@PostMapping("/auth/travelRegist")
 	public String travelRegistSubmit(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Member login_member = (Member)session.getAttribute("login_member");

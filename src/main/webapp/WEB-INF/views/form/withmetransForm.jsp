@@ -55,7 +55,7 @@ div {
 </style>
 </head>
 <body>
-<form action="<%=request.getContextPath()%>/transform" method="post" enctype="multipart/form-data">
+<form action="<%=request.getContextPath()%>/auth/transform" method="post" enctype="multipart/form-data">
 <div class="top"></div>
 <div class="div_body">
 <div class="withme_bar">

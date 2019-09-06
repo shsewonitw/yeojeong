@@ -167,7 +167,7 @@ width: 100%;
 
 	function newwinID(){
 	
-		window.open('<%=request.getContextPath()%>/findID', '아이디찾 기', 'status=no, height=250, width=300, left='+ popupX + ', top='+ popupY);
+		window.open('<%=request.getContextPath()%>/findID', '아이디 찾기', 'status=no, height=250, width=300, left='+ popupX + ', top='+ popupY);
 	}
 	function newwinPW(){
 	

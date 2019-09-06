@@ -113,7 +113,7 @@
 
 		
 		<c:if test="${ login_member != null }">
-		<a href="<%=request.getContextPath()%>/review" class="button">글쓰기</a>
+		<a href="<%=request.getContextPath()%>/auth/review" class="button">글쓰기</a>
 		</c:if>
 		
 		<span id="paging">

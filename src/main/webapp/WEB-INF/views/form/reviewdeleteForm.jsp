@@ -17,7 +17,7 @@
 	
 	<div class="formDIV">
 		
-		<form action="<%=request.getContextPath()%>/reviewdelete" method="post">
+		<form action="<%=request.getContextPath()%>/auth/reviewdelete" method="post">
 			<div style="margin-left: 40%;">
 			<input type="hidden" name="article_id" value="${ articleNo.article_id }">
 			<label >정말 삭제하시겠습니까?</label><br><br><br>

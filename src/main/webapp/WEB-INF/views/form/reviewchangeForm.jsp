@@ -40,7 +40,7 @@ function validate(){
 	
 	<div class="formDIV">
 		
-		<form action="<%=request.getContextPath()%>/reviewchange" method="post" enctype="multipart/form-data">
+		<form action="<%=request.getContextPath()%>/auth/reviewchange" method="post" enctype="multipart/form-data">
 			<hr>
 			<input type="hidden" name="article_id" value="${ articleNo.article_id }">
 			<p class="name">

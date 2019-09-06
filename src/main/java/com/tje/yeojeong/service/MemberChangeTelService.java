@@ -12,7 +12,7 @@ import com.tje.yeojeong.repository.MemberDAO;
 public class MemberChangeTelService {
 	@Autowired
 	private MemberDAO memberDAO;
-
+	// test
 	public Object service(Object args) {
 		
 		return memberDAO.changeTel((Member) args);

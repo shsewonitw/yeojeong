@@ -81,7 +81,7 @@
 			 <li><a href="<%=request.getContextPath()%>/reviewlist"><b class="menu_font">여행자들의 웃음(여행후기)</b></a></li>
 			 <li><a href="<%=request.getContextPath()%>/airportInfo"><b class="menu_font">지금 공항은?</b></a></li>
 			 <li><a href="<%=request.getContextPath()%>/qaarticle"><b class="menu_font">자주 묻는 질문</b></a></li>
-			 <li><a href="<%= request.getContextPath()%>/wsClient" onClick="window.open(this.href, '', 'width=520px, height=400px'); return false;"><b class="menu_font">문의하기</b></a></li>
+			 <li><a href="<%= request.getContextPath()%>/wsClient" onClick="window.open(this.href, '', 'width=540px, height=450px'); return false;"><b class="menu_font">문의하기</b></a></li>
 		</ul>
 	</div>
 </div>

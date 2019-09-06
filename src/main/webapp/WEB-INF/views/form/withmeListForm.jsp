@@ -14,12 +14,23 @@
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/contextmenuui.js"></script>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/contextmenu.css">
 <script type="text/javascript">
-// 게시글 삭제 이벤트
+// 일정 삭제 이벤트
 $(document).ready(function() {
 	$('.btn-default').click(function() {
-		var result = confirm("삭제된 게시글은 복구하실 수 없습니다.\n정말 삭제하시겠습니까?");
+		var result = confirm("삭제된 일정은 복구하실 수 없습니다.\n정말 삭제하시겠습니까?");
 		if ( result ) {
 			location.href='<%=request.getContextPath()%>/auth/withmelist/delete/${wlist.article_id}';
+		} else {
+			return false;
+		}
+	});
+	
+	// 동행 신청하기 이벤트
+	$('.btn-success').click(function() {
+		var result = confirm('동행 신청하시겠습니까?');
+		if ( result ) {
+			document.getElementById('wrForm').submit();
+			$('#withme_request').text('신청완료');
 		} else {
 			return false;
 		}
@@ -118,7 +129,6 @@ th, td {
 	</tr>
 	</c:if>
 	<c:forEach items="${withmelist}" var="wlist">
-	<form action="<%=request.getContextPath()%>/auth/withmelist/delete/${wlist.article_id}" method="post">
 	<tr>
 		<td><input type="hidden" value="${wlist.article_id}"></td>
 		<td width="15%">${wlist.country} ${wlist.city}</td>
@@ -142,26 +152,35 @@ th, td {
 		<c:if test="${wlist.category_style eq 5 }"><td width="5%">엑티비티</td></c:if>
 		<td width="10%"><input type="button" class="namebtn" id="${wlist.member_id}_namebtn" onclick="temp('${wlist.member_id}');" value="${wlist.name}"></td>
 		<td width="8%">${wlist.write_time}</td>
-		<jsp:useBean id="today" class="java.util.Date" />
-		<c:if test="${today > wlist.end_date}" var="a">
-		<td width="5%"><font color="red">여행종료</font></td>
-		</c:if>
-		<c:if test="${not a}">
-			<c:if test="${login_member.member_id eq wlist.member_id}" var="me">
-		<td width="7%">신청불가</td>
-			</c:if>
-			<c:if test="${not me}">
-		<td width="5%"><button type="button" class="btn btn-success">신청하기</button></td>
-			</c:if>
-		</c:if>
+			<jsp:useBean id="today" class="java.util.Date" />
+				<c:if test="${today > wlist.end_date}" var="a">
+					<td width="5%"><font color="red">여행종료</font></td>
+				</c:if>
+				<c:if test="${not a}">
+					<c:if test="${login_member.member_id eq wlist.member_id}" var="me">
+						<td width="7%">신청불가</td>
+					</c:if>
+						<form name="wrForm" action="<%=request.getContextPath()%>/auth/withmelist/request" method="post">
+					<c:if test="${not me}">
+						<td width="5%"><span id="withme_request"><button type="submit" class="btn btn-success">신청하기</button></span></td>
+						 <input type="hidden" name="sender_id" value="${login_member.member_id}" />
+						 <input type="hidden" name="receiver_id" value="${wlist.member_id}" />
+						 <input type="hidden" name="country" value="${wlist.country }" />
+						 <input type="hidden" name="city" value="${wlist.city }" />
+						 <input type="hidden" name="start_date" value="${wlist.start_date }" />
+						 <input type="hidden" name="end_date" value="${wlist.end_date }" />
+					</c:if>
+						</form>
+				</c:if>
+		<form action="<%=request.getContextPath()%>/auth/withmelist/delete/${wlist.article_id}" method="post">
 		<c:if test="${login_member.member_id eq wlist.member_id}" var="r">
 		<td width="7%"><button type="submit" class="btn btn-default">삭제</button></td>
 		</c:if>
 		<c:if test="${not r}">
 		<td width="7%">삭제불가</td>
 		</c:if>
+		</form>
 	</tr>
-	</form>
 	</c:forEach>
 </table>
 </div>

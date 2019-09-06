@@ -86,19 +86,20 @@ public class ReviewController {
 
 	
 
-	@GetMapping("/review")
-	public String reviewForm(Model model){
-		
-		
-		List<String> countryList = (List<String>) cdsCountryService.service();
-		model.addAttribute("countryList", countryList);
-		return "form/reviewForm";
-	}
+//	@GetMapping("/review")
+//	public String reviewForm(Model model){
+//		
+//		
+//		List<String> countryList = (List<String>) cdsCountryService.service();
+//		model.addAttribute("countryList", countryList);
+//		return "form/reviewForm";
+//	}
 	
 	@GetMapping("/auth/review")
-	public String reviewForm(){
+	public String reviewForm(Model model){
 
-		
+		List<String> countryList = (List<String>) cdsCountryService.service();
+		model.addAttribute("countryList", countryList);
 		return "form/reviewForm";
 	}
 	
@@ -123,7 +124,6 @@ public class ReviewController {
 //	@ResponseBody
 
 	@PostMapping("/auth/review")
-
 	public String reviewSubmit(Model model, HttpSession session, HttpServletRequest request,
 			@RequestParam("country") String country,@RequestParam("city") String city,
 			@RequestParam("content") String content,@RequestParam("image_src") MultipartFile uploadFile1, MultipartHttpServletRequest mpRequest,

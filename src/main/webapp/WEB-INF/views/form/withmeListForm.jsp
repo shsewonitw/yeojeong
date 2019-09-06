@@ -19,7 +19,7 @@ $(document).ready(function() {
 	$('.btn-default').click(function() {
 		var result = confirm("삭제된 게시글은 복구하실 수 없습니다.\n정말 삭제하시겠습니까?");
 		if ( result ) {
-			location.href='<%=request.getContextPath()%>/withmelist/delete/${wlist.article_id}';
+			location.href='<%=request.getContextPath()%>/auth/withmelist/delete/${wlist.article_id}';
 		} else {
 			return false;
 		}
@@ -94,7 +94,7 @@ th, td {
 <div class="withme_bar">
 <h3>&nbsp;&nbsp;&nbsp;&nbsp;같이갈래?</h3>
 <div class="write_btn">
-<a class="btn btn-primary" href="<%=request.getContextPath()%>/transform" role="button">일정등록</a>
+<a class="btn btn-primary" href="<%=request.getContextPath()%>/auth/transform" role="button">일정등록</a>
 </div>
 </div>
 <div class="middle">
@@ -118,7 +118,7 @@ th, td {
 	</tr>
 	</c:if>
 	<c:forEach items="${withmelist}" var="wlist">
-	<form action="<%=request.getContextPath()%>/withmelist/delete/${wlist.article_id}" method="post">
+	<form action="<%=request.getContextPath()%>/auth/withmelist/delete/${wlist.article_id}" method="post">
 	<tr>
 		<td><input type="hidden" value="${wlist.article_id}"></td>
 		<td width="15%">${wlist.country} ${wlist.city}</td>
@@ -175,7 +175,7 @@ th, td {
   <ul class="pagination">
   
   <c:if test="${ beforePageNo ne -1 }">
-    <li><a href="<%=request.getContextPath()%>/withmelist/${ beforePageNo }" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+    <li><a href="<%=request.getContextPath()%>/auth/withmelist/${ beforePageNo }" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
     </c:if>
     
   <c:forEach var="pageNo" begin="${ startPageNo }" end="${ endPageNo }">
@@ -183,12 +183,12 @@ th, td {
     <li class="active"><a href="#">${ pageNo }</a></li>
     </c:if>
     <c:if test="${ not r }">
-    <li><a href="<%=request.getContextPath()%>/withmelist/${ pageNo }">${ pageNo }</a></li>
+    <li><a href="<%=request.getContextPath()%>/auth/withmelist/${ pageNo }">${ pageNo }</a></li>
     </c:if>
   </c:forEach>
   
   <c:if test="${ afterPageNo ne -1 }">
-    <li><a href="<%=request.getContextPath()%>/withmelist/${ afterPageNo }" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+    <li><a href="<%=request.getContextPath()%>/auth/withmelist/${ afterPageNo }" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
 	</c:if>
 	
    </ul>

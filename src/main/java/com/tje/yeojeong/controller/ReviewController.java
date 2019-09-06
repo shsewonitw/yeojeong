@@ -85,12 +85,18 @@ public class ReviewController {
 	
 
 	
+
 	@GetMapping("/review")
 	public String reviewForm(Model model){
 		
 		
 		List<String> countryList = (List<String>) cdsCountryService.service();
 		model.addAttribute("countryList", countryList);
+	}
+	
+	@GetMapping("/auth/review")
+	public String reviewForm(){
+
 		
 		return "form/reviewForm";
 	}
@@ -111,8 +117,12 @@ public class ReviewController {
 	}
 	
 	// 게시판 작성
+<<<<<<< HEAD
 	@PostMapping("/review")
 	@ResponseBody
+=======
+	@PostMapping("/auth/review")
+>>>>>>> origin/kh
 	public String reviewSubmit(Model model, HttpSession session, HttpServletRequest request,
 			@RequestParam("country") String country,@RequestParam("city") String city,
 			@RequestParam("content") String content,@RequestParam("image_src") MultipartFile uploadFile1, MultipartHttpServletRequest mpRequest,
@@ -166,14 +176,14 @@ public class ReviewController {
 	}
 	
 	// 게시판 수정
-	@GetMapping("/reviewchange")
+	@GetMapping("/auth/reviewchange")
 	public String reviewchangeSubmit() {
 		
 		
 		return "form/reviewchangeForm";
 	}
 	
-	@PostMapping("/reviewchange")
+	@PostMapping("/auth/reviewchange")
 	public String reviewchangeForm(HttpServletRequest request,
 			@RequestParam("country") String country,@RequestParam("city") String city,
 			@RequestParam("content") String content,@RequestParam(value = "review_star", required = false ,defaultValue = "1") int review_star,
@@ -220,7 +230,7 @@ public class ReviewController {
 	}
 	
 	// 게시판 삭제
-	@GetMapping("/reviewdelete")
+	@GetMapping("/auth/reviewdelete")
 	public String reviewdeleteForm(HttpSession session) {
 		
 		session.getAttribute("articleNo");
@@ -228,7 +238,7 @@ public class ReviewController {
 		return "form/reviewdeleteForm";
 	}
 	
-	@PostMapping("/reviewdelete")
+	@PostMapping("/auth/reviewdelete")
 	public String reviewdeleteSubmit(@RequestParam("article_id") int article_id,HttpServletRequest request,
 			Model model) {
 		

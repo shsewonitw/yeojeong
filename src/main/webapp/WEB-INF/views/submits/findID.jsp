@@ -20,7 +20,7 @@
 			<tr>
 				<td><input type="submit" value="찾기"></td>
 				<td>
-					<button>닫기</button>
+					<button href="#" onclick="javascript:self.close();">닫기</button>
 				</td>
 			</tr>
 

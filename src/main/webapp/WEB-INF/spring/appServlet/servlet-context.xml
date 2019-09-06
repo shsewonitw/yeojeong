@@ -48,6 +48,19 @@
 		<websocket:mapping handler="webSocketClient" path="/wsc"/>
 		<websocket:mapping handler="webSocketAdmin" path="/wsa"/>
 	</websocket:handlers>
+	
+	<beans:bean id="LoginInterceptor" class="com.tje.yeojeong.interceptor.LoginInterceptor"/>
+	
+<!-- 	로그인 검사  -->
+	<interceptors>
+		<interceptor>
+		 
+		        <mapping path="/auth/**"/> 
+		
+		        <beans:ref bean="LoginInterceptor" />
+		
+		</interceptor>
+	</interceptors>
 
 		
 </beans:beans>

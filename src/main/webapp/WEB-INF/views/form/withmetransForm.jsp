@@ -55,7 +55,7 @@ div {
 </style>
 </head>
 <body>
-<form action="<%=request.getContextPath()%>/transform" method="post" enctype="multipart/form-data">
+<form action="<%=request.getContextPath()%>/auth/transform" method="post" enctype="multipart/form-data">
 <div class="top"></div>
 <div class="div_body">
 <div class="withme_bar">
@@ -70,7 +70,7 @@ div {
 		${travelList.country} ${travelList.city} ${travelList.start_date} ~ ${travelList.end_date}</option>
 </c:forEach>
 </select>
-<select class="form-control" name="category_gender" style="width:200px">
+<select class="form-control" id="id_gender" name="category_gender" style="width:200px">
   <option value="">성별</option>
   <option value="0">무관</option>
   <option value="1">여성</option>
@@ -84,7 +84,7 @@ div {
   <option value="3">40대이상</option>
 </select>
 <select class="form-control" name="category_style" style="width:200px">
-  <option value="">목적</option> 
+  <option value="">여행스타일</option> 
   <option value="0">무관</option>
   <option value="1">관광</option>
   <option value="2">맛집</option>

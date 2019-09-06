@@ -67,4 +67,14 @@ public class Withme_viewDAO {
 				(page-1)*this.pagingInfo.getPagingSize(),this.pagingInfo.getPagingSize());
 		return result.isEmpty() ? null : result;
 	}
+	
+	// 게시글 삭제
+		public boolean delete(Withme_view model) {
+			boolean result = false;
+			String sql = "delete from withme_article where article_id = ?";
+			result = this.jdbcTemplate.update(
+					sql,model.getArticle_id()) == 0 ? false : true;
+
+			return result;
+		}
 }

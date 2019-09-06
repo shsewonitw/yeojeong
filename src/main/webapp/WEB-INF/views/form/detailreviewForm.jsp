@@ -205,8 +205,8 @@ function delete_comment(comment_id) {
 			
 			<div class="buttonmargin">
 			<c:if test="${ login_member.member_id eq detailreview.member_id}">
-			<a href="<%=request.getContextPath()%>/reviewchange?" class="button">수정</a>
-			<a href="<%=request.getContextPath()%>/reviewdelete" class="button">삭제</a>
+			<a href="<%=request.getContextPath()%>/auth/reviewchange?" class="button">수정</a>
+			<a href="<%=request.getContextPath()%>/auth/reviewdelete" class="button">삭제</a>
 			</c:if>
 			</div>
 			

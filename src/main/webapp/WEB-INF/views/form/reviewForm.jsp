@@ -65,7 +65,7 @@ function removeAll(e){
 	
 	<div class="formDIV">
 		
-		<form action="<%=request.getContextPath()%>/review" method="post" enctype="multipart/form-data" >
+		<form action="<%=request.getContextPath()%>/auth/review" method="post" enctype="multipart/form-data" >
 			<hr>
 			<p class="name">
 				<label>작성자</label>&nbsp;&nbsp;&nbsp;${login_member.name }

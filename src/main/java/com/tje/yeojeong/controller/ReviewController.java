@@ -92,6 +92,7 @@ public class ReviewController {
 		
 		List<String> countryList = (List<String>) cdsCountryService.service();
 		model.addAttribute("countryList", countryList);
+		return "form/reviewForm";
 	}
 	
 	@GetMapping("/auth/review")

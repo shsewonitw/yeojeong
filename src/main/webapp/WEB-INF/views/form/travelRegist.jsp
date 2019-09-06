@@ -84,7 +84,7 @@ function removeAll(e){
 <script type="text/javascript">
 </script>
 <!-- ----------test----------------------------------------- -->
-<form action="<%=request.getContextPath()%>/travelRegist" method="POST">
+<form action="<%=request.getContextPath()%>/auth/travelRegist" method="POST">
 <table style="margin:auto; text-align:center; align:center;">
 	<tr>
 		<th colspan="3" style="padding-bottom:0px;">

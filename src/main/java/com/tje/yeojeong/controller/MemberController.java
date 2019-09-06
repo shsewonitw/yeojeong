@@ -20,20 +20,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.tje.yeojeong.model.City_Data;
 import com.tje.yeojeong.model.Member;
 import com.tje.yeojeong.model.Review_view;
+import com.tje.yeojeong.model.Travel_end;
 import com.tje.yeojeong.model.Travel_regist;
 import com.tje.yeojeong.model.Withme_request;
 import com.tje.yeojeong.service.City_DataSelectCountryService;
 import com.tje.yeojeong.service.MemberInsertService;
 import com.tje.yeojeong.service.MemberKAKAOInsertService;
 import com.tje.yeojeong.service.MemberLoginService;
+import com.tje.yeojeong.service.MemberSearchEmailService;
 import com.tje.yeojeong.service.MemberSearchIDService;
 import com.tje.yeojeong.service.ReviewCountByMemberService;
 import com.tje.yeojeong.service.ReviewSearchByMemberService;
 import com.tje.yeojeong.service.ReviewSelectWhereIdService;
+import com.tje.yeojeong.service.TravelEndSelectIDService;
 import com.tje.yeojeong.service.TravelRegistDeleteService;
+import com.tje.yeojeong.service.TravelRegistSelectService;
 import com.tje.yeojeong.service.TravelRegistUpdateService;
 import com.tje.yeojeong.service.TravelSearchedTravelListService;
 import com.tje.yeojeong.service.WithmeRequest_ReceiveService;
@@ -69,6 +74,12 @@ public class MemberController {
 	private WithmeRequest_ReceiveService wrrService;
 	@Autowired
 	private WithmeRequest_SendService wrsService;
+	@Autowired
+	private TravelEndSelectIDService tesiService;
+	@Autowired
+	private TravelRegistSelectService trssService;
+	@Autowired
+	private MemberSearchEmailService mseService;
 	@Autowired
 	private PagingInfo pagingInfo;
 
@@ -212,6 +223,14 @@ public class MemberController {
 		List<String> countryList = (List<String>) cdsCountryService.service();
 		// 내여행 관련
 		model.addAttribute("countryList", countryList);
+		
+		// 내가 다녀온 곳 관련 
+		Travel_end travelend = new Travel_end();
+		travelend.setMember_id(member.getMember_id());
+		List<Travel_end> TravelendList = (List<Travel_end>) tesiService.service(travelend);
+		// 내여행 관련
+		model.addAttribute("TravelendList", TravelendList);
+
 
 		HashMap<String, Object> args = new HashMap<String, Object>();
 		args.put("curPageNo", page);
@@ -258,10 +277,15 @@ public class MemberController {
 
 	@PostMapping("/auth/mypageTravelRegistDelete")
 	@ResponseBody
-	public boolean mypageTravelRegistDelete_Submit(HttpSession session, @RequestBody Travel_regist travelRegist) {
-
-		boolean result = (Boolean) trdService.service(travelRegist);
-		return result;
+	public String mypageTravelRegistDelete_Submit(HttpSession session, @RequestBody Travel_regist travelRegist) {
+		
+		boolean result_flag = (Boolean) trdService.service(travelRegist);
+		List<Travel_regist> count= (List<Travel_regist>)trssService.service();
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		result.put("result", result_flag);
+		result.put("count", count);
+		Gson gson = new Gson();
+		return gson.toJson(result);
 	}
 
 	@PostMapping("/auth/mypageTravelRegistUpdate")
@@ -287,8 +311,13 @@ public class MemberController {
 	}
 
 	@PostMapping("/findID")
-	public String find_Submit(@RequestBody Member member) {
+	public String find_Submit(Member member) {
 
+		msiService.service(member);
+		mseService.service(member);
+		
+		System.out.println(member.getEmail());
+		System.out.println(member.getName());
 		return "submits/findID";
 	}
 
@@ -304,4 +333,5 @@ public class MemberController {
 		return "submits/findPW";
 	}
 
+	
 }

@@ -14,7 +14,7 @@
 	
 	
 	alert("일정이 등록되었습니다.");
-	location.href='<%= request.getContextPath()%>/withmelist';
+	location.href='<%= request.getContextPath()%>/auth/withmelist';
 	
 </script>
 </c:if>
@@ -24,7 +24,7 @@
 	
 	
 	alert("일정등록에 오류가 발생했습니다.");
-	location.href='<%= request.getContextPath()%>/withmelist';
+	location.href='<%= request.getContextPath()%>/auth/withmelist';
 	
 </script>
 </c:if>

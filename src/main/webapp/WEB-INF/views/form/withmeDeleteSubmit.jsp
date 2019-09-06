@@ -61,7 +61,7 @@ div {
 <script type="text/javascript">
 	
 	alert("게시글이 삭제되었습니다");
-	location.href='<%= request.getContextPath()%>/withmelist';
+	location.href='<%= request.getContextPath()%>/auth/withmelist';
 	
 </script>
 </c:if>

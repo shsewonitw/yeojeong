@@ -78,6 +78,7 @@ public class Member_Android_Controller {
 	@PostMapping("/android_login")
 	@ResponseBody
 	public HashMap<String, Object> android_login_sumit(Member member, HttpSession session) {
+		System.out.println("안드로이드 로그인!");
 		boolean login_flag = false;
 
 		HashMap<String, Object> result = new HashMap<String, Object>();

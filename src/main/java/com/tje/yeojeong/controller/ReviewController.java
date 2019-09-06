@@ -117,12 +117,12 @@ public class ReviewController {
 	}
 	
 	// 게시판 작성
-<<<<<<< HEAD
-	@PostMapping("/review")
-	@ResponseBody
-=======
+
+//	@PostMapping("/review")
+//	@ResponseBody
+
 	@PostMapping("/auth/review")
->>>>>>> origin/kh
+
 	public String reviewSubmit(Model model, HttpSession session, HttpServletRequest request,
 			@RequestParam("country") String country,@RequestParam("city") String city,
 			@RequestParam("content") String content,@RequestParam("image_src") MultipartFile uploadFile1, MultipartHttpServletRequest mpRequest,

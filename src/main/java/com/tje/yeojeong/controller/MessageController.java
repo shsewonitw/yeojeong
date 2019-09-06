@@ -49,6 +49,9 @@ public class MessageController {
 			Integer page, Model model, HttpSession session) {
 		Member loginMember = 
 				(Member)session.getAttribute("login_member");
+		if(loginMember == null) {
+			return "error/needLogin";
+		}
 		HashMap<String, Object> args =
 				new HashMap<String, Object>();
 		
@@ -189,6 +192,9 @@ public class MessageController {
 			Integer page, Model model, HttpSession session) {
 		Member loginMember = 
 				(Member)session.getAttribute("login_member");
+		if(loginMember == null) {
+			return "error/needLogin";
+		}
 		HashMap<String, Object> args =
 				new HashMap<String, Object>();
 		

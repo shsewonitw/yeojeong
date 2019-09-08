@@ -72,8 +72,8 @@ th, td {
 }
 .write_btn {
 	position:absolute;
-	top:185px;
-	left:85%;
+	top:250px;
+	left:83%;
 }
 .bottom {
 	position:relative;
@@ -91,13 +91,18 @@ th, td {
 <body>
 <div class="top"></div>
 <div class="div_body">
-<div class="withme_bar">
-<h3>&nbsp;&nbsp;&nbsp;&nbsp;같이갈래?</h3>
-<div class="write_btn">
-<a class="btn btn-primary" href="<%=request.getContextPath()%>/auth/transform" role="button">일정등록</a>
-</div>
-</div>
+	<div class="withme_bar">
+	<h1 style="color:rgb(52,152,219); font-weight:bold; text-align:center;"><img style="width: auto; height: auto; max-width: 100px; max-height: 100px;"
+					src="<%=request.getContextPath()%>/resources/images/logo.png"
+					alt="logo"><b>같이 갈래?</b></h1>
+	
+	</div>
+	<div class="write_btn">
+	<a class="btn btn-primary" href="<%=request.getContextPath()%>/auth/transform" role="button">일정등록</a>
+	</div>
+	
 <div class="middle">
+
 <table class="table">
 	<tr class="trcolor">
 		<th><input type="hidden" value="No"></th>

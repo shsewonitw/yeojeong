@@ -137,7 +137,9 @@ function clickSubMenu(clicked_id){
 <div style="height: 200px;"></div>
 
 
-<div style="text-align:center;color:rgb(52, 152, 219);"><h1>실시간 공항 정보</h1></div>
+<h1 style="color:rgb(52,152,219); font-weight:bold; text-align:center;"><img style="width: auto; height: auto; max-width: 100px; max-height: 100px;"
+					src="<%=request.getContextPath()%>/resources/images/logo.png"
+					alt="logo"><b>지금 공항은?</b></h1>
 
 <div style="height: 30px;"></div>
 

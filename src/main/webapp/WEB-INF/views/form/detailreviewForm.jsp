@@ -144,7 +144,10 @@ function delete_comment(comment_id) {
 <body>
 
 	<div class="top"></div>
-	<div class="titleDIV"> ${detailreview.name}님의 여행 후기</div>
+	<!-- <div class="titleDIV"> ${detailreview.name}님의 여행 후기</div> -->
+	<h1 style="color:rgb(52,152,219); font-weight:bold; text-align:center;"><img style="width: auto; height: auto; max-width: 100px; max-height: 100px;"
+					src="<%=request.getContextPath()%>/resources/images/logo.png"
+					alt="logo"><b>${detailreview.name} 님의 후기</b></h1>
 	
 	<div class="formDIV">
 		

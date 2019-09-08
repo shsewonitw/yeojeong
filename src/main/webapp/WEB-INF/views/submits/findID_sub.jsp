@@ -7,10 +7,12 @@
 <title>아이디찾기</title>
 </head>
 <body>
+
+당신의 아이디는 ${ member_result.member_id }
 	<form action="<%= request.getContextPath() %>/findID" method="post">
 		<table style="margin: auto;">
 			<tr>
-				<td colspan="2">이름 : <input type="text" name="member_id">
+				<td colspan="2">이름 : <input type="text" name="name">
 				</td>
 			</tr>
 			<tr>

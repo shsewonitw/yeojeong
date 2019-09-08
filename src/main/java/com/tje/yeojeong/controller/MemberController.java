@@ -311,14 +311,20 @@ public class MemberController {
 	}
 
 	@PostMapping("/findID")
-	public String find_Submit(Member member) {
-
-		msiService.service(member);
-		mseService.service(member);
+	public String find_Submit(Member member, Model model) {
+System.out.println(member.getMember_id());
+		if(msiService.service(member) == null || mseService.service(member) == null || member.getEmail().length() == 0) {
+			System.out.println("일치하는 아이디가 없습니다.");
+			String id_result = "일치하는 아이디가 없습니다.";
+			model.addAttribute("id_result", id_result);
+			return "submits/findID";
+		} else {
+			model.addAttribute("member_result", member);
+			return "submits/findID_sub";
+		}
 		
-		System.out.println(member.getEmail());
-		System.out.println(member.getName());
-		return "submits/findID";
+		
+		
 	}
 
 	@GetMapping("/findPW")

@@ -16,7 +16,7 @@
 	});
 	
 	var socket;
-	socket = new SockJS("ws://localhost:8080/yeojeong/chat");
+	socket = new SockJS("ws://192.168.0.87:8080/yeojeong/chat");
 	
 	socket.onmessage = onMessage;
 	socket.onClose = onClose;

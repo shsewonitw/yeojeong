@@ -45,7 +45,7 @@ public class Android_TravelDataController {
 	}
 	
 	
-	@GetMapping("/android_traveldatad")
+	@GetMapping(value="/android_traveldatad", produces="application/json; charset=utf8")
 	@ResponseBody
 	public String CityDataDetail(HttpServletRequest request) {
 		String city =request.getParameter("city");

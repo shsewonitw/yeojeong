@@ -112,7 +112,6 @@ public class ReviewController {
 	
 	// 게시판 작성
 	@PostMapping("/review")
-	@ResponseBody
 	public String reviewSubmit(Model model, HttpSession session, HttpServletRequest request,
 			@RequestParam("country") String country,@RequestParam("city") String city,
 			@RequestParam("content") String content,@RequestParam("image_src") MultipartFile uploadFile1, MultipartHttpServletRequest mpRequest,
@@ -167,9 +166,10 @@ public class ReviewController {
 	
 	// 게시판 수정
 	@GetMapping("/reviewchange")
-	public String reviewchangeSubmit() {
+	public String reviewchangeSubmit(Model model) {
 		
-		
+		List<String> countryList = (List<String>) cdsCountryService.service();
+		model.addAttribute("countryList", countryList);
 		return "form/reviewchangeForm";
 	}
 	

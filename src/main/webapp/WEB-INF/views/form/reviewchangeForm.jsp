@@ -8,25 +8,49 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/reviewchange.css?var=2">
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery.js"></script>
 <script type="text/javascript">
+<!-- 다중 셀렉트박스 -->
+function doChange(srcE, targetId){
+    var val = srcE.options[srcE.selectedIndex].value;
+    var targetE = document.getElementById(targetId);
+    removeAll(targetE);
 
-/*
-function validate(){
-	var extensions = new Array("jpg","jpeg","gif","png","bmp");  //이곳에 업로드 가능한 확장자 기재
-	var image_file = document.form.image_file.value;
-	var image_length = document.form.image_file.value.length;
-	var pos = image_file.lastIndexOf('.') + 1;
-	var ext = image_file.substring(pos, image_length);
-	var final_ext = ext.toLowerCase();
-	for (i = 0; i < extensions.length; i++){
-		if(extensions[i] == final_ext){
-		return true;
+    
+    $.ajax({
+		url : "<%=request.getContextPath()%>/reviewcityAjax",
+		type : "post",
+		data : "country=" + val,
+		dataType : "text",
+		success : function(data) {
+			if (eval(data)) {
+				var str = data.substr(2,data.length-4);
+				var str = str.split('","');
+				str.forEach(function(element){
+					addOption(element, targetE);
+				})
+			} else {
+				alert("등록에 실패했습니다.");
+			}
+		},
+		error : function(data) {
+			alert("통신오류(관리자에게 문의하세요.)");
 		}
-	}
-		alert(extensions.join(', ') +"파일만 등록 가능합니다.");
-	return false;
-	}
-	
-	*/
+	});
+}	
+
+function addOption(value, e){
+    var o = new Option(value);
+    try{
+        e.add(o);
+    }catch(ee){
+        e.add(o, null);
+    }
+}
+
+function removeAll(e){
+    for(var i = 0, limit = e.options.length; i < limit - 1; ++i){
+        e.remove(1);
+    }
+}
 </script>
 
 <title>여행자들의 웃음 수정</title>
@@ -48,14 +72,15 @@ function validate(){
 			</p>
 			<hr>
 				<label>여행지</label> &nbsp;&nbsp;&nbsp;
-				 <select id="b_class" name="country" class="selectbox">
-					<option value="">국가</option>
-					<option value="대한민국">대한민국</option>
-					<option value="베트남">베트남</option>
-					<option value="태국">태국</option>
+				 <select name="country" id="selOne" class="selectbox" onchange="doChange(this, 'selTwo')">
+				 <option value="">국가</option>
+					<c:forEach items="${countryList }" var ="country" >
+					<option value="${country}">${country }</option>
+				</c:forEach>
 				</select>
-				<select id="s_class" name="city" class="selectbox">
-					<option value="">도시</option>
+
+				<select id="selTwo" name="city" class="selectbox">
+					<option value="default">도시</option>
 				</select>
 		
 		<hr>

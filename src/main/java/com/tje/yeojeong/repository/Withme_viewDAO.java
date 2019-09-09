@@ -69,21 +69,21 @@ public class Withme_viewDAO {
 	}
 	
 	// 게시글 삭제
-		public boolean delete(Withme_view model) {
-			boolean result = false;
-			String sql = "delete from withme_article where article_id = ?";
-			result = this.jdbcTemplate.update(
-					sql,model.getArticle_id()) == 0 ? false : true;
+	public boolean delete(Withme_view model) {
+		boolean result = false;
+		String sql = "delete from withme_article where article_id = ?";
+		result = this.jdbcTemplate.update(
+				sql,model.getArticle_id()) == 0 ? false : true;
 
-			return result;
-		}
+		return result;
+	}
 		
-		// 같이갈래 중복 검사용
-		public List<Withme_view> selectTravelIdWhereMemberId(Withme_view model) {
-			List<Withme_view> result = new ArrayList<Withme_view>();
-			String sql = "select * from withme_view where member_id = ?";
-			result = this.jdbcTemplate.query(sql,new Withme_viewRowMapper(),model.getMember_id());
+	// 같이갈래 중복 검사용
+	public List<Withme_view> selectTravelIdWhereMemberId(Withme_view model) {
+		List<Withme_view> result = new ArrayList<Withme_view>();
+		String sql = "select * from withme_view where member_id = ?";
+		result = this.jdbcTemplate.query(sql,new Withme_viewRowMapper(),model.getMember_id());
 					
-			return result;
-		}
+		return result;
+	}
 }

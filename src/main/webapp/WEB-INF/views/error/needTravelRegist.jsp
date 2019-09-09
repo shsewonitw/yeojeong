@@ -15,7 +15,7 @@
 		alt="logo"> <b>여행등록이 필요한 서비스입니다.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
 
 	<div class="form-group">
-			<button type="submit" onclick="location.href='<%=request.getContextPath()%>/travelRegist'" class="btn btn-default">여행등록</button>
-			<button type="submit" onclick="location.href='<%=request.getContextPath()%>/withmelist'" class="btn btn-default">이전으로</button>
+			<button type="submit" onclick="location.href='<%=request.getContextPath()%>/auth/travelRegist'" class="btn btn-default">여행등록</button>
+			<button type="submit" onclick="location.href='<%=request.getContextPath()%>/auth/withmelist'" class="btn btn-default">이전으로</button>
 	</div>
 </div>

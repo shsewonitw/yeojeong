@@ -119,26 +119,15 @@ public class Withme_requestDAO {
 		boolean result = withme_request_flag == 1 ? true : false;
 		return result;
 	}
-
+	// 동행 신청하기
 	public boolean insert(Withme_request obj) {
 		boolean result = false;
-		int member_flag = this.jdbcTemplate.update(new PreparedStatementCreator() {
-
-			@Override
-			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-
-				PreparedStatement pstmt = con.prepareStatement("insert into withme_request values(?,?,?,now())");
-				pstmt.setInt(1, obj.getRequest_id());
-				pstmt.setString(2, obj.getSender_id());
-				pstmt.setString(3, obj.getReceiver_id());
-
-				return pstmt;
-			}
-		});
-
-		result = member_flag == 1 ? true : false;
+		String sql = "insert into withme_request values(null,?,?,?,?,?,?,?,now())";
+		result = this.jdbcTemplate.update(sql,
+				obj.getSender_id(), obj.getReceiver_id(), 
+				obj.getStatue(), obj.getCountry(), obj.getCity(), 
+				obj.getStart_date(), obj.getEnd_date())== 1 ? true : false;
 		return result;
-
 	}
 
 	public boolean update_Status(Withme_request obj) {

@@ -60,7 +60,7 @@ div {
 		<c:if test="${ result }">
 <script type="text/javascript">
 	
-	alert("일정이 삭제되었습니다.");
+	alert("동행신청이 완료되었습니다.");
 	location.href='<%= request.getContextPath()%>/auth/withmelist';
 	
 </script>

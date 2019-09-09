@@ -9,14 +9,14 @@ public class Withme_view {
 	private String member_id;
 	private String country;
 	private String city;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat
 	private Date start_date;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat
 	private Date end_date;
 	private int category_gender;
 	private int category_age;
 	private int category_style;
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
+	@DateTimeFormat
 	private Date write_time;
 	private int travel_id;
 	private String name;

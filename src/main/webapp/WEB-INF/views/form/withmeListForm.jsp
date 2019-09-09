@@ -26,15 +26,45 @@ $(document).ready(function() {
 	});
 	
 	// 동행 신청하기 이벤트
+	/*
 	$('.btn-success').click(function() {
 		var result = confirm('동행 신청하시겠습니까?');
 		if ( result ) {
-			document.getElementById('wrForm').submit();
-			$('#withme_request').text('신청완료');
+			$('wrForm').submit();
+			$('.btn-success').css('disabled', 'disabled');
 		} else {
 			return false;
 		}
 	});
+});
+*/
+
+$(".wrForm").submit(function(event) {
+	event.preventDefault();
+	var form = $(this);
+	var button = form.find('.btn-success');
+
+   $.ajax({
+        type: "POST",
+        url: "<%=request.getContextPath()%>/auth/withmelist/request",
+        data: form.serialize()
+        	+ '&delay=1',
+        timeout: 10000,
+        
+        beforeSend: function(xhr, settings) {
+        	button.attr('disabled', true);
+        },
+        complete: function(xhr, textStatus) {
+        	button.attr('disabled', false);
+        },
+        
+        success: function (result, textStatus, xhr) {
+            form[0],reset();
+        },
+        error: function(xhr, textStatus, error) {
+        	
+        }
+    });
 });
 
 // 아이디 클릭 이벤트
@@ -132,7 +162,7 @@ th, td {
 	<tr>
 		<td><input type="hidden" value="${wlist.article_id}"></td>
 		<td width="15%">${wlist.country} ${wlist.city}</td>
-		<td width="15%">${wlist.start_date}</td>
+		<td class="start_date" width="15%">${wlist.start_date}</td>
 		<td width="15%">${wlist.end_date}</td>
 		<!-- 카테고리 성별 -->
 		<c:if test="${wlist.category_gender eq 0 }"><td width="5%">무관</td></c:if>
@@ -158,26 +188,26 @@ th, td {
 				</c:if>
 				<c:if test="${not a}">
 					<c:if test="${login_member.member_id eq wlist.member_id}" var="me">
-						<td width="7%">신청불가</td>
+						<td width="7%"><button class="btn btn-default" disabled>신청하기</button></td>
 					</c:if>
-						<form name="wrForm" action="<%=request.getContextPath()%>/auth/withmelist/request" method="post">
 					<c:if test="${not me}">
-						<td width="5%"><span id="withme_request"><button type="submit" class="btn btn-success">신청하기</button></span></td>
-						 <input type="hidden" name="sender_id" value="${login_member.member_id}" />
-						 <input type="hidden" name="receiver_id" value="${wlist.member_id}" />
-						 <input type="hidden" name="country" value="${wlist.country }" />
-						 <input type="hidden" name="city" value="${wlist.city }" />
-						 <input type="hidden" name="start_date" value="${wlist.start_date }" />
-						 <input type="hidden" name="end_date" value="${wlist.end_date }" />
-					</c:if>
-						</form>
+						<form class="wrForm" name="wrForm" action="<%=request.getContextPath()%>/auth/withmelist/request" method="post">
+							<td width="5%"><button type="submit" class="btn btn-success">신청하기</button></td>
+							 <input type="hidden" name="sender_id" value="${login_member.member_id}" />
+							 <input type="hidden" name="receiver_id" value="${wlist.member_id}" />
+							 <input type="hidden" name="country" value="${wlist.country }" />
+							 <input type="hidden" name="city" value="${wlist.city }" />
+							 <input type="hidden" name="start_date" value="${wlist.start_date }" />
+							 <input type="hidden" name="end_date" value="${wlist.end_date }" />
+						 </form>
+					</c:if>	
 				</c:if>
 		<form action="<%=request.getContextPath()%>/auth/withmelist/delete/${wlist.article_id}" method="post">
 		<c:if test="${login_member.member_id eq wlist.member_id}" var="r">
-		<td width="7%"><button type="submit" class="btn btn-default">삭제</button></td>
+		<td width="7%"><button type="submit" class="btn btn-default"><font color="#3498DB">삭제</font></button></td>
 		</c:if>
 		<c:if test="${not r}">
-		<td width="7%">삭제불가</td>
+		<td width="7%"><button class="btn btn-default" disabled>삭제</button></td>
 		</c:if>
 		</form>
 	</tr>

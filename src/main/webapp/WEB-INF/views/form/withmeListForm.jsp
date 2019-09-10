@@ -16,7 +16,7 @@
 <script type="text/javascript">
 // 일정 삭제 이벤트
 $(document).ready(function() {
-	$('.btn-default').click(function() {
+	$('.btn-danger').click(function() {
 		var result = confirm("삭제된 일정은 복구하실 수 없습니다.\n정말 삭제하시겠습니까?");
 		if ( result ) {
 			location.href='<%=request.getContextPath()%>/auth/withmelist/delete/${wlist.article_id}';
@@ -26,45 +26,24 @@ $(document).ready(function() {
 	});
 	
 	// 동행 신청하기 이벤트
-	/*
 	$('.btn-success').click(function() {
 		var result = confirm('동행 신청하시겠습니까?');
 		if ( result ) {
 			$('wrForm').submit();
-			$('.btn-success').css('disabled', 'disabled');
 		} else {
 			return false;
 		}
 	});
-});
-*/
-
-$(".wrForm").submit(function(event) {
-	event.preventDefault();
-	var form = $(this);
-	var button = form.find('.btn-success');
-
-   $.ajax({
-        type: "POST",
-        url: "<%=request.getContextPath()%>/auth/withmelist/request",
-        data: form.serialize()
-        	+ '&delay=1',
-        timeout: 10000,
-        
-        beforeSend: function(xhr, settings) {
-        	button.attr('disabled', true);
-        },
-        complete: function(xhr, textStatus) {
-        	button.attr('disabled', false);
-        },
-        
-        success: function (result, textStatus, xhr) {
-            form[0],reset();
-        },
-        error: function(xhr, textStatus, error) {
-        	
-        }
-    });
+	
+	// 동행 신청취소 이벤트
+	$('.btn-default').click(function() {
+		var result = confirm('동행 신청을 취소하시겠습니까?');
+		if ( result ) {
+			$('cancelForm').submit();
+		} else {
+			return false;
+		}
+	});
 });
 
 // 아이디 클릭 이벤트
@@ -165,21 +144,21 @@ th, td {
 		<td class="start_date" width="15%">${wlist.start_date}</td>
 		<td width="15%">${wlist.end_date}</td>
 		<!-- 카테고리 성별 -->
-		<c:if test="${wlist.category_gender eq 0 }"><td width="5%">무관</td></c:if>
-		<c:if test="${wlist.category_gender eq 1 }"><td width="5%">여성</td></c:if>
-		<c:if test="${wlist.category_gender eq 2 }"><td width="5%">남성</td></c:if>
+		<c:if test="${wlist.category_gender eq 0}"><td width="5%">무관</td></c:if>
+		<c:if test="${wlist.category_gender eq 1}"><td width="5%">여성</td></c:if>
+		<c:if test="${wlist.category_gender eq 2}"><td width="5%">남성</td></c:if>
 		<!-- 카테고리 연령대 -->
-		<c:if test="${wlist.category_age eq 0 }"><td width="5%">무관</td></c:if>
-		<c:if test="${wlist.category_age eq 1 }"><td width="5%">20대</td></c:if>
-		<c:if test="${wlist.category_age eq 2 }"><td width="5%">30대</td></c:if>
-		<c:if test="${wlist.category_age eq 3 }"><td width="5%">40대이상</td></c:if>
+		<c:if test="${wlist.category_age eq 0}"><td width="5%">무관</td></c:if>
+		<c:if test="${wlist.category_age eq 1}"><td width="5%">20대</td></c:if>
+		<c:if test="${wlist.category_age eq 2}"><td width="5%">30대</td></c:if>
+		<c:if test="${wlist.category_age eq 3}"><td width="5%">40대이상</td></c:if>
 		<!-- 카테고리 여행스타일 -->
-		<c:if test="${wlist.category_style eq 0 }"><td width="5%">무관</td></c:if>
-		<c:if test="${wlist.category_style eq 1 }"><td width="5%">관광</td></c:if>
-		<c:if test="${wlist.category_style eq 2 }"><td width="5%">맛집</td></c:if>
-		<c:if test="${wlist.category_style eq 3 }"><td width="5%">쇼핑</td></c:if>
-		<c:if test="${wlist.category_style eq 4 }"><td width="5%">휴양</td></c:if>
-		<c:if test="${wlist.category_style eq 5 }"><td width="5%">엑티비티</td></c:if>
+		<c:if test="${wlist.category_style eq 0}"><td width="5%">무관</td></c:if>
+		<c:if test="${wlist.category_style eq 1}"><td width="5%">관광</td></c:if>
+		<c:if test="${wlist.category_style eq 2}"><td width="5%">맛집</td></c:if>
+		<c:if test="${wlist.category_style eq 3}"><td width="5%">쇼핑</td></c:if>
+		<c:if test="${wlist.category_style eq 4}"><td width="5%">휴양</td></c:if>
+		<c:if test="${wlist.category_style eq 5}"><td width="5%">엑티비티</td></c:if>
 		<td width="10%"><input type="button" class="namebtn" id="${wlist.member_id}_namebtn" onclick="temp('${wlist.member_id}');" value="${wlist.name}"></td>
 		<td width="8%">${wlist.write_time}</td>
 			<jsp:useBean id="today" class="java.util.Date" />
@@ -190,25 +169,51 @@ th, td {
 					<c:if test="${login_member.member_id eq wlist.member_id}" var="me">
 						<td width="7%"><button class="btn btn-default" disabled>신청하기</button></td>
 					</c:if>
-					<c:if test="${not me}">
-						<form class="wrForm" name="wrForm" action="<%=request.getContextPath()%>/auth/withmelist/request" method="post">
-							<td width="5%"><button type="submit" class="btn btn-success">신청하기</button></td>
-							 <input type="hidden" name="sender_id" value="${login_member.member_id}" />
-							 <input type="hidden" name="receiver_id" value="${wlist.member_id}" />
-							 <input type="hidden" name="country" value="${wlist.country }" />
-							 <input type="hidden" name="city" value="${wlist.city }" />
-							 <input type="hidden" name="start_date" value="${wlist.start_date }" />
-							 <input type="hidden" name="end_date" value="${wlist.end_date }" />
-						 </form>
-					</c:if>	
+					
+						<c:if test="${not me}">
+								<%
+									Boolean flag = true;
+								%>
+								<c:forEach items="${dupleList}" var="duple">
+									<c:if test="${duple.article_id eq wlist.article_id}" var="what">
+										<%
+											flag = false;
+										%>
+									</c:if>
+								</c:forEach>
+								<%
+									if( flag == true ) {
+								%>
+								<form class="wrForm" name="wrForm" action="<%=request.getContextPath()%>/auth/withmelist/request" method="post">
+										<td width="5%"><button type="submit" class="btn btn-success">신청하기</button></td>
+									<input type="hidden" name="sender_id" value="${login_member.member_id}" />
+									<input type="hidden" name="receiver_id" value="${wlist.member_id}" />
+									<input type="hidden" name="country" value="${wlist.country}" />
+									<input type="hidden" name="city" value="${wlist.city}" />
+									<input type="hidden" name="start_date" value="${wlist.start_date}" />
+									<input type="hidden" name="end_date" value="${wlist.end_date}" />
+									<input type="hidden" name="article_id" value="${wlist.article_id}" />
+								</form>
+								<%
+									} else {
+								%>
+								<form class="cancelForm" name="cancelForm" action="<%=request.getContextPath()%>/auth/withmelist/cancel/${wlist.article_id}" method="post">
+										<td width="5%"><button type="submit" class="btn btn-default"><font color="#3498DB">신청취소</font></button></td>
+										<input type="hidden" name="member_id" value="${login_member.member_id}" />
+								</form>
+								<%
+									}
+								%>
+						</c:if>
+					
 				</c:if>
 		<form action="<%=request.getContextPath()%>/auth/withmelist/delete/${wlist.article_id}" method="post">
-		<c:if test="${login_member.member_id eq wlist.member_id}" var="r">
-		<td width="7%"><button type="submit" class="btn btn-default"><font color="#3498DB">삭제</font></button></td>
-		</c:if>
-		<c:if test="${not r}">
-		<td width="7%"><button class="btn btn-default" disabled>삭제</button></td>
-		</c:if>
+			<c:if test="${login_member.member_id eq wlist.member_id}" var="r">
+			<td width="7%"><button type="submit" class="btn btn-danger">삭제</font></td>
+			</c:if>
+			<c:if test="${not r}">
+			<td width="7%"><button class="btn btn-default" disabled>삭제</button></td>
+			</c:if>
 		</form>
 	</tr>
 	</c:forEach>

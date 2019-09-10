@@ -40,8 +40,9 @@ public class Withme_viewDAO {
 	// 게시글 작성
 	public boolean insert(Withme_view obj) {
 		boolean result = false;
-		String sql = "insert into withme_article values(null,?,?,?,?,?,?,?,?,now(),?)";
+		String sql = "insert into withme_article values(?,?,?,?,?,?,?,?,?,now(),?)";
 		result = this.jdbcTemplate.update(sql, 
+			obj.getArticle_id(),
 			obj.getMember_id(), obj.getCountry(),obj.getCity(), 
 			obj.getStart_date(), obj.getEnd_date(), obj.getCategory_gender(), 
 			obj.getCategory_age(), obj.getCategory_style(),obj.getTravel_id()) == 1? true : false;

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import com.tje.yeojeong.service.*;
 import com.tje.yeojeong.model.*;
+import com.tje.yeojeong.repository.Withme_requestDAO;
 import com.tje.yeojeong.setting.*;
 
 @Controller
@@ -44,6 +45,17 @@ public class WithmeController {
 	private PagingInfo pagingInfo;
 	@Autowired
 	private Withme_viewSelectTravelIdWhereMemberIdService wvstiwmiService;
+	@Autowired
+	private WithmeRequest_DeleteService wrdService;
+	@Autowired
+	private WithmeRequestDuple_DeleteService wmrddService;
+	@Autowired
+	private WithmeRequestDuple_InsertService wmrdiService;
+	@Autowired
+	private WithmeRequestDuple_SelectService wmrdsService;
+	@Autowired
+	private WithmeRequest_LastInsertService wmrliService;
+	
 	// 같이갈래 글 작성
 	@GetMapping("/auth/transform")
 	public String withmetransForm(Model model, HttpSession session) {
@@ -172,6 +184,14 @@ public class WithmeController {
 		model.addAttribute("beforePageNo", beforePageNo);
 		model.addAttribute("afterPageNo", afterPageNo);
 		model.addAttribute("curPage", page);
+		
+		Withme_requestDuple wrDuple = new Withme_requestDuple();
+		wrDuple.setMember_id(login_member.getMember_id());
+		model.addAttribute("dupleList", wmrdsService.service(wrDuple));
+		
+		List<Withme_requestDuple> temp =
+		(List<Withme_requestDuple>)wmrdsService.service(wrDuple);
+//		System.out.println("제발: "+temp.get(1)	);
 		return "form/withmeListForm";
 	}
 	
@@ -211,7 +231,9 @@ public class WithmeController {
 			@RequestParam("country") String country,
 			@RequestParam("city") String city,
 			@RequestParam("start_date") String strStart_date,
-			@RequestParam("end_date") String strEnd_date) {
+			@RequestParam("end_date") String strEnd_date,
+			@RequestParam("article_id") String strArticle_id) {
+		
 		Member member = 
 				(Member)session.getAttribute("login_member");
 		Withme_request withme_request = new Withme_request();
@@ -224,6 +246,20 @@ public class WithmeController {
 			 <input type="hidden" name="end_date" value="${wlist.end_date }" />
 		 * 
 		 */
+		
+		Withme_requestDuple wrDuple = new Withme_requestDuple();
+//		wrDuple.setArticle_id(wmrliService.service());
+		
+		wrDuple.setMember_id(member.getMember_id());
+		
+		int article_id = 0 ;
+		try {
+		article_id = Integer.parseInt(strArticle_id);
+		} catch(Exception e) {
+			;
+		}
+		wrDuple.setArticle_id(article_id);
+		wmrdiService.service(wrDuple);
 		
 		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date start_date = null;
@@ -246,7 +282,24 @@ public class WithmeController {
 			values.put("withme_request", withme_request);
 			HashMap<String, Object> result = (HashMap<String, Object>)wriService.service(values);
 			model.addAttribute("result", result.get("result"));
-		
+			System.out.println(wmrliService.service());
 		return "form/withmeRequestSubmit";
+	}
+	
+	// 동행신청 취소
+	@PostMapping("/auth/withmelist/cancel/{article_id}")
+	public String withmeCancel(
+			Model model, @PathVariable("article_id") int article_id, @RequestParam("member_id") String member_id) {
+		Withme_requestDuple wrduple = new Withme_requestDuple();
+		wrduple.setArticle_id(article_id);
+		wrduple.setMember_id(member_id);
+		wmrddService.service(wrduple);
+		
+		Withme_view withme_view = new Withme_view();
+		
+		model.addAttribute("result", wrduple.getArticle_id());
+		model.addAttribute("withme_view", withme_view);
+		
+		return "form/withmeCancelSubmit";
 	}
 }

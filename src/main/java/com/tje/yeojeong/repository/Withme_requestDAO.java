@@ -153,4 +153,12 @@ public class Withme_requestDAO {
 		String sql = "select count(*) from withme_request";
 		return this.jdbcTemplate.queryForObject(sql, Integer.class);
 	}
+	
+	public int last_insert_id() {
+		int result = -1;
+		String sql = "select last_insert_id()";
+		result = this.jdbcTemplate.queryForObject(sql, Integer.class);
+		return result;
+	}
+	
 }

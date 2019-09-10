@@ -48,9 +48,9 @@
 <div id="div_con">
 
 <div align="left">
-	<h3>
-		<font>자주 묻는 질문 FAQ |</font>
-	</h3>
+	<h1 style="color:rgb(52,152,219); font-weight:bold; text-align:center;"><img style="width: auto; height: auto; max-width: 100px; max-height: 100px;"
+					src="<%=request.getContextPath()%>/resources/images/logo.png"
+					alt="logo"><b>자주 묻는 질문</b></h1>
 	<hr size="5" noshade>	
 </div>
  

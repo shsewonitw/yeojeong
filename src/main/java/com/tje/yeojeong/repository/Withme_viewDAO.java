@@ -40,11 +40,11 @@ public class Withme_viewDAO {
 	// 게시글 작성
 	public boolean insert(Withme_view obj) {
 		boolean result = false;
-		String sql = "insert into withme_article values(null,?,?,?,?,?,?,?,?,now(),0)";
+		String sql = "insert into withme_article values(null,?,?,?,?,?,?,?,?,now(),?)";
 		result = this.jdbcTemplate.update(sql, 
 			obj.getMember_id(), obj.getCountry(),obj.getCity(), 
 			obj.getStart_date(), obj.getEnd_date(), obj.getCategory_gender(), 
-			obj.getCategory_age(), obj.getCategory_style()) == 1? true : false;
+			obj.getCategory_age(), obj.getCategory_style(),obj.getTravel_id()) == 1? true : false;
 		return result;
 	}
 	
@@ -69,12 +69,21 @@ public class Withme_viewDAO {
 	}
 	
 	// 게시글 삭제
-		public boolean delete(Withme_view model) {
-			boolean result = false;
-			String sql = "delete from withme_article where article_id = ?";
-			result = this.jdbcTemplate.update(
-					sql,model.getArticle_id()) == 0 ? false : true;
+	public boolean delete(Withme_view model) {
+		boolean result = false;
+		String sql = "delete from withme_article where article_id = ?";
+		result = this.jdbcTemplate.update(
+				sql,model.getArticle_id()) == 0 ? false : true;
 
-			return result;
-		}
+		return result;
+	}
+		
+	// 같이갈래 중복 검사용
+	public List<Withme_view> selectTravelIdWhereMemberId(Withme_view model) {
+		List<Withme_view> result = new ArrayList<Withme_view>();
+		String sql = "select * from withme_view where member_id = ?";
+		result = this.jdbcTemplate.query(sql,new Withme_viewRowMapper(),model.getMember_id());
+					
+		return result;
+	}
 }

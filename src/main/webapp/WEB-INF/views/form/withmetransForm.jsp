@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,50 +57,65 @@ div {
 </head>
 <body>
 <form action="<%=request.getContextPath()%>/auth/transform" method="post" enctype="multipart/form-data">
-<div class="top"></div>
-<div class="div_body">
-<div class="withme_bar">
-<h3>&nbsp;&nbsp;&nbsp;&nbsp;같이갈래?</h3>
-</div>
-<div class="middle" role="main">
-
-<select class="form-control" name="data" style="width:300px">
-<option value="default">여행지</option>
-<c:forEach items="${travelRegistList}" var="travelList" varStatus="status">
-		<option value="${travelList.country}&${travelList.city}&${travelList.start_date}&${travelList.end_date}">
-		${travelList.country} ${travelList.city} ${travelList.start_date} ~ ${travelList.end_date}</option>
-</c:forEach>
-</select>
-<select class="form-control" id="id_gender" name="category_gender" style="width:200px">
-  <option value="">성별</option>
-  <option value="0">무관</option>
-  <option value="1">여성</option>
-  <option value="2">남성</option>
-</select>
-<select class="form-control" name="category_age" style="width:200px">
-  <option value="">연령</option>
-  <option value="0">무관</option>
-  <option value="1">20대</option>
-  <option value="2">30대</option>
-  <option value="3">40대이상</option>
-</select>
-<select class="form-control" name="category_style" style="width:200px">
-  <option value="">여행스타일</option> 
-  <option value="0">무관</option>
-  <option value="1">관광</option>
-  <option value="2">맛집</option>
-  <option value="3">쇼핑</option>
-  <option value="4">휴양</option>
-  <option value="5">엑티비티</option>
-</select>
-</div>
-	<div class="write_btn">
-		<input class="btn btn-primary" type="submit" value="작성">
+	<div class="top"></div>
+	<div class="div_body">
+	<div class="withme_bar">
+	<h3>&nbsp;&nbsp;&nbsp;&nbsp;같이갈래?</h3>
 	</div>
-<div class="bottom">
-
-</div>
-</div>
+	<div class="middle" role="main">
+	
+	<jsp:useBean id="today" class="java.util.Date" />
+	<select class="form-control" name="data" style="width:400px" required="required">
+	<option value="">여행지</option>
+	<c:forEach items="${travelRegistList}" var="travelList" varStatus="status">
+			<option   
+				<c:forEach items="${withme_viewList}" var="withmeview">
+					<c:if test="${travelList.travel_id eq withmeview.travel_id || today > travelList.end_date}">disabled="disabled"
+					</c:if>
+				</c:forEach>
+			value="${travelList.country}&${travelList.city}&${travelList.start_date}&${travelList.end_date}&${travelList.travel_id}">
+			${travelList.country} ${travelList.city} ${travelList.start_date} ~ ${travelList.end_date}
+				<c:forEach items="${withme_viewList}" var="withmeview">
+					<c:if test="${travelList.travel_id eq withmeview.travel_id}">&nbsp;-등록완료
+					</c:if>
+				</c:forEach>
+					<c:if test="${today > travelList.end_date}">&nbsp;-여행종료
+					</c:if>
+			</option>
+	</c:forEach>
+	
+	</select>
+	<select class="form-control" name="category_gender" style="width:200px" required="required">
+	  <option value="">성별</option>
+	  <option value="0">무관</option>
+	  <option value="1">여성</option>
+	  <option value="2">남성</option>
+	</select>
+	<select class="form-control" name="category_age" style="width:200px" required="required">
+	  <option value="">연령</option>
+	  <option value="0">무관</option>
+	  <option value="1">20대</option>
+	  <option value="2">30대</option>
+	  <option value="3">40대이상</option>
+	</select>
+	<select class="form-control" name="category_style" style="width:200px" required="required">
+	  <option value="">여행스타일</option>
+	  <option value="0">무관</option>
+	  <option value="1">관광</option>
+	  <option value="2">맛집</option>
+	  <option value="3">쇼핑</option>
+	  <option value="4">휴양</option>
+	  <option value="5">엑티비티</option>
+	</select>
+	</div>
+		<div class="write_btn">
+			<input class="btn btn-primary" type="submit" value="작성">
+		</div>
+	<div class="bottom">
+	
+	</div>
+	</div>
+	
 </form>
 </body>
 </html>

@@ -83,7 +83,7 @@
     // client -> admin
 	function sendMessage(){
 		if(inputMessage.value == ""){
-			;
+			return;
 		} else {
             $("#messageWindow").html($("#messageWindow").html()
                     + "<div class='alert alert-success' role='alert' style='clear:both;float:right;max-width:280px;word-break:break-all;text-align:right;'>" + inputMessage.value + "</div>");

@@ -47,8 +47,8 @@
 	</script>
 </head>
 <body>
-<div class="dropmenu" style="z-index:200;position:absolute; background-color:black; width:100%; height:170px; opacity:0.2; transition:all 0.4s ease-out;text-align:left;" id="menu">
-	<a href="<%= request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/img/title3.png" style="height: 50%;"></a>
+<div class="dropmenu" style="z-index:200;position:absolute; background-color:black; width:100%; height:170px; opacity:0.2; transition:all 0.4s ease-out;text-align:center;" id="menu">
+	<a href="<%= request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/img/yeojeongtitle2.png" style="height: 50%;"></a>
 	<div class="content">
 		<ul class="content_ul">
 			<c:if test="${ empty sessionScope.login_member }" var="r">
@@ -81,7 +81,7 @@
 			 <li><a href="<%=request.getContextPath()%>/reviewlist"><b class="menu_font">여행자들의 웃음(여행후기)</b></a></li>
 			 <li><a href="<%=request.getContextPath()%>/airportInfo"><b class="menu_font">지금 공항은?</b></a></li>
 			 <li><a href="<%=request.getContextPath()%>/qaarticle"><b class="menu_font">자주 묻는 질문</b></a></li>
-			 <li><a href="<%= request.getContextPath()%>/wsClient" onClick="window.open(this.href, '', 'width=520px, height=400px'); return false;"><b class="menu_font">문의하기</b></a></li>
+			 <li><a href="<%= request.getContextPath()%>/wsClient" onClick="window.open(this.href, '', 'width=540px, height=450px'); return false;"><b class="menu_font">문의하기</b></a></li>
 		</ul>
 	</div>
 </div>

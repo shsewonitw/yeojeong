@@ -19,11 +19,13 @@ import com.tje.yeojeong.model.*;
 import com.tje.yeojeong.setting.*;
 
 @Controller
-public class Withme_Controller {
+public class WithmeController {
 	@Autowired
 	private WithmeListService wlService;
 	@Autowired
 	private Withme_InsertService wiService;
+	@Autowired
+	private WithmeRequest_InsertService wriService;
 	@Autowired
 	private Withme_requestCountService wrcService;
 	@Autowired
@@ -40,17 +42,37 @@ public class Withme_Controller {
 	private WithmeDeleteService wdService;
 	@Autowired
 	private PagingInfo pagingInfo;
-	
+	@Autowired
+	private Withme_viewSelectTravelIdWhereMemberIdService wvstiwmiService;
 	// 같이갈래 글 작성
 	@GetMapping("/auth/transform")
 	public String withmetransForm(Model model, HttpSession session) {
 		Member member = (Member) session.getAttribute("login_member");
+		
+		// 미로그인 시, 로그인 페이지로 안내
+		if(member == null) {
+			return "error/needLogin";
+		}
+		
 		Travel_regist travelRegist = new Travel_regist();
 		travelRegist.setMember_id(member.getMember_id());
 		List<Travel_regist> TravelRegistList = (List<Travel_regist>) tstlService.service(travelRegist);
+		
+		// 여행일정 미등록 시, 등록페이지로 안내
+		if( TravelRegistList == null ) {
+			return "error/needTravelRegist";
+		}
+		Withme_view withme_view = new Withme_view();
+		withme_view.setMember_id(member.getMember_id());
+		
+		// 중복 등록 검사용 모델
+		List<Withme_view> Withme_viewList = (List<Withme_view>) wvstiwmiService.service(withme_view);
+		
 		List<String> countryList = (List<String>) cdsCountryService.service();
 		model.addAttribute("countryList", countryList);
 		model.addAttribute("travelRegistList", TravelRegistList);
+		model.addAttribute("withme_viewList",Withme_viewList);
+		
 		return "form/withmetransForm";
 	}
 	
@@ -58,7 +80,8 @@ public class Withme_Controller {
 	public String withmeSubmit(Model model, HttpSession session,
 			@RequestParam("data") String data,
 			@RequestParam("category_gender") String category_gender, 
-			@RequestParam("category_age") String category_age, @RequestParam("category_style") String category_style) {
+			@RequestParam("category_age") String category_age, 
+			@RequestParam("category_style") String category_style) {
 		Member member = 
 				(Member)session.getAttribute("login_member");
 		Withme_view withme_view = new Withme_view();
@@ -67,21 +90,24 @@ public class Withme_Controller {
 		String city = "";
 		String strStart_date = "";
 		String strEnd_date = "";
-		
+		String strTravel_id = "";
 		StringTokenizer st = new StringTokenizer(data, "&");
 		while(st.hasMoreTokens()) {
 			country = st.nextToken();
 			city = st.nextToken();
 			strStart_date = st.nextToken();
 			strEnd_date = st.nextToken();
+			strTravel_id = st.nextToken();
 		}
 		
 		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date start_date = null;
 		Date end_date = null;
+		int travel_id = 0;
 		try {
 			start_date = transFormat.parse(strStart_date);
 			end_date = transFormat.parse(strEnd_date);
+			travel_id = Integer.parseInt(strTravel_id);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -94,7 +120,7 @@ public class Withme_Controller {
 			withme_view.setCategory_gender(Integer.parseInt(category_gender));
 			withme_view.setCategory_age(Integer.parseInt(category_age));
 			withme_view.setCategory_style(Integer.parseInt(category_style));
-			
+			withme_view.setTravel_id(travel_id);
 			Travel_regist travelRegist = new Travel_regist();
 			HashMap<String, Object> values = new HashMap<String, Object>();
 			values.put("withme_view", withme_view);
@@ -111,6 +137,13 @@ public class Withme_Controller {
 	// 같이갈래 전체 목록 페이지
 	public String withmeListForm(
 			Integer page, Model model, HttpSession session) {
+		Member login_member = (Member)session.getAttribute("login_member");
+		
+		// 미로그인 시, 로그인 페이지로 안내
+		if(login_member == null) {
+			return "error/needLogin";
+		}
+		
 		HashMap<String, Object> args = 
 				(HashMap<String, Object>)wlService.service(page);
 		args.put("curPageNo", page);
@@ -169,5 +202,51 @@ public class Withme_Controller {
 		model.addAttribute("result", result.get("result"));
 		
 		return "form/withmeDeleteSubmit";
+	}
+	// 동행 신청하기
+	@PostMapping("/auth/withmelist/request")
+	public String withmeRequestSubmit(Model model, HttpSession session,
+			@RequestParam("sender_id") String sender_id,
+			@RequestParam("receiver_id") String receiver_id,
+			@RequestParam("country") String country,
+			@RequestParam("city") String city,
+			@RequestParam("start_date") String strStart_date,
+			@RequestParam("end_date") String strEnd_date) {
+		Member member = 
+				(Member)session.getAttribute("login_member");
+		Withme_request withme_request = new Withme_request();
+		/*
+		 * <input type="hidden" name="sender_id" value="${login_member.member_id}" />
+			 <input type="hidden" name="receiver_id" value="${wlist.member_id}" />
+			 <input type="hidden" name="country" value="${wlist.country }" />
+			 <input type="hidden" name="city" value="${wlist.city }" />
+			 <input type="hidden" name="start_date" value="${wlist.start_date }" />
+			 <input type="hidden" name="end_date" value="${wlist.end_date }" />
+		 * 
+		 */
+		
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date start_date = null;
+		Date end_date = null;
+		try {
+			start_date = transFormat.parse(strStart_date);
+			end_date = transFormat.parse(strEnd_date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+			withme_request.setSender_id(sender_id);
+			withme_request.setReceiver_id(receiver_id);
+			withme_request.setCountry(country);
+			withme_request.setCity(city);
+			withme_request.setStart_date(start_date);
+			withme_request.setEnd_date(end_date);
+			withme_request.setStatue("요청대기");
+			
+			HashMap<String, Object> values = new HashMap<String, Object>();
+			values.put("withme_request", withme_request);
+			HashMap<String, Object> result = (HashMap<String, Object>)wriService.service(values);
+			model.addAttribute("result", result.get("result"));
+		
+		return "form/withmeRequestSubmit";
 	}
 }

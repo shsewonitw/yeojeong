@@ -24,7 +24,9 @@
 <body>
 
 	<div class="top"></div>
-	<div class="titleDIV">여행자들의 웃음 리스트</div>
+	<h1 style="color:rgb(52,152,219); font-weight:bold; text-align:center;"><img style="width: auto; height: auto; max-width: 100px; max-height: 100px;"
+					src="<%=request.getContextPath()%>/resources/images/logo.png"
+					alt="logo"><b>여행자들의 웃음</b></h1>
 	
 	<div class="formDIV">
 		

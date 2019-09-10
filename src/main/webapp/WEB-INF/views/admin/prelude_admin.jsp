@@ -72,7 +72,7 @@ function time_format(s) {
 	 <li style="padding-top:30px; margin:auto;"><a href="<%=request.getContextPath()%>/wsAdmin"><b class="menu_font">
 	 <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;실시간 문의</b></a></li>
 	 
-	 <li style="line-height:135.5px; margin:auto; float:right;">
+	 <li style="line-height:135.5px; margin:auto; float:left;">
 	 <span id="counter"> </span> <b>후 자동로그아웃 </b><input type="button" class="btn btn-primary" value="연장" onclick="counter_reset()">
 	 <form style="display:inline-block;" action="<%=request.getContextPath()%>/adminLogout" method="GET">
 	 <input style="display:inline-block;" type="submit" class="btn btn-primary" value="로그아웃">

@@ -21,11 +21,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.google.gson.Gson;
 import com.mysql.cj.Session;
 import com.tje.yeojeong.model.*;
 import com.tje.yeojeong.service.*;
@@ -75,17 +78,50 @@ public class ReviewController {
 	private Review_Like_MinusCountService rlmcService;
 	@Autowired
 	private Review_Like_PlusCountService rlpcservice;
+	@Autowired
+	private City_DataSelectCountryService cdsCountryService;
+	@Autowired
+	private City_DataSelectCityService cdscService;
 	
 
 	
+
+//	@GetMapping("/review")
+//	public String reviewForm(Model model){
+//		
+//		
+//		List<String> countryList = (List<String>) cdsCountryService.service();
+//		model.addAttribute("countryList", countryList);
+//		return "form/reviewForm";
+//	}
+	
 	@GetMapping("/auth/review")
-	public String reviewForm(){
-		
+	public String reviewForm(Model model){
+
+		List<String> countryList = (List<String>) cdsCountryService.service();
+		model.addAttribute("countryList", countryList);
 		return "form/reviewForm";
 	}
 	
+	
+	@RequestMapping(value="/reviewcityAjax",method=RequestMethod.POST,produces="application/jason;charset=utf8")
+	@ResponseBody
+	public String reviewcityAjax(@RequestParam(value = "country") String country) {
+		
+		City_Data city_data = new City_Data();
+		city_data.setCountry(country);
+		
+		List<City_Data> city_data_list = (List<City_Data>)cdscService.service(city_data);
+		Gson gson = new Gson();
+		String jsonPlace = gson.toJson(city_data_list);
+		System.out.println("jsonPlace" + jsonPlace);
+		return jsonPlace;
+	}
+	
 	// 게시판 작성
+
 	@PostMapping("/auth/review")
+
 	public String reviewSubmit(Model model, HttpSession session, HttpServletRequest request,
 			@RequestParam("country") String country,@RequestParam("city") String city,
 			@RequestParam("content") String content,@RequestParam("image_src") MultipartFile uploadFile1, MultipartHttpServletRequest mpRequest,
@@ -95,6 +131,7 @@ public class ReviewController {
 		// 파일이름가져오기
 		UtilFile utilFile = new UtilFile();
 		String img_src = utilFile.fileUpload(mpRequest, uploadFile1);
+		
 		
 		
 		Review_view reviewview = new Review_view();
@@ -128,16 +165,22 @@ public class ReviewController {
 		
 		model.addAttribute("result", resultMap.get("result"));
 		
-		
-		
-		return "form/reviewSubmit";
+		 System.out.println(request.getParameter("member_id"));
+	     System.out.println(request.getParameter("country"));
+	     System.out.println(request.getParameter("city"));
+	     System.out.println(request.getParameter("review_star"));
+	     System.out.println(request.getParameter("city"));
+	     
+	     return "form/reviewSubmit";
 	}
 	
 	// 게시판 수정
+
 	@GetMapping("/auth/reviewchange")
-	public String reviewchangeSubmit() {
+	public String reviewchangeSubmit(Model model) {
 		
-		
+		List<String> countryList = (List<String>) cdsCountryService.service();
+		model.addAttribute("countryList", countryList);
 		return "form/reviewchangeForm";
 	}
 	

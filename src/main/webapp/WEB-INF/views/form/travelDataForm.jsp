@@ -65,16 +65,22 @@
 <body style="height:100%; overflow:scroll;">
 
 <div style="height:200px;"></div>
-<div style="height:100%;">
+
 <div id="div_menu"></div>
 
 <div id="div_con">
 
 <div align="center">
+<h1 style="color:rgb(52,152,219); font-weight:bold; text-align:center;"><img style="width: auto; height: auto; max-width: 100px; max-height: 100px;"
+				src="<%=request.getContextPath()%>/resources/images/logo.png"
+				alt="logo"><b>여행지 정보</b></h1>
+	<hr size="5" noshade>
+				<!-- 
 	<span style="color: #3498DB"><i class="fas fa-city fa-4x"></i></span>
 	<h1>여행지 정보</h1>
 	<p>가고싶은 여행지를 선택하세요.</p>
-	<hr size="5" noshade>	
+	<hr size="5" noshade>
+	 -->	
 </div>
 
 <div id="traveldata">

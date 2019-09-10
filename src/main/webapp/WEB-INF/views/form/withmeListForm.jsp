@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,14 +13,24 @@
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/contextmenu.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/contextmenuui.js"></script>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/css/contextmenu.css">
-
 <script type="text/javascript">
-// 게시글 삭제 이벤트
+// 일정 삭제 이벤트
 $(document).ready(function() {
 	$('.btn-default').click(function() {
-		var result = confirm("삭제된 게시글은 복구하실 수 없습니다.\n정말 삭제하시겠습니까?");
+		var result = confirm("삭제된 일정은 복구하실 수 없습니다.\n정말 삭제하시겠습니까?");
 		if ( result ) {
-			location.href='<%=request.getContextPath()%>/withmelist/delete/${wlist.article_id}';
+			location.href='<%=request.getContextPath()%>/auth/withmelist/delete/${wlist.article_id}';
+		} else {
+			return false;
+		}
+	});
+	
+	// 동행 신청하기 이벤트
+	$('.btn-success').click(function() {
+		var result = confirm('동행 신청하시겠습니까?');
+		if ( result ) {
+			document.getElementById('wrForm').submit();
+			$('#withme_request').text('신청완료');
 		} else {
 			return false;
 		}
@@ -72,7 +83,8 @@ th, td {
 }
 .write_btn {
 	position:absolute;
-	left:15%;
+	top:250px;
+	left:83%;
 }
 .bottom {
 	position:relative;
@@ -90,10 +102,18 @@ th, td {
 <body>
 <div class="top"></div>
 <div class="div_body">
-<div class="withme_bar">
-<h3>&nbsp;&nbsp;&nbsp;&nbsp;같이갈래?</h3>
-</div>
+	<div class="withme_bar">
+	<h1 style="color:rgb(52,152,219); font-weight:bold; text-align:center;"><img style="width: auto; height: auto; max-width: 100px; max-height: 100px;"
+					src="<%=request.getContextPath()%>/resources/images/logo.png"
+					alt="logo"><b>같이 갈래?</b></h1>
+	
+	</div>
+	<div class="write_btn">
+	<a class="btn btn-primary" href="<%=request.getContextPath()%>/auth/transform" role="button">일정등록</a>
+	</div>
+	
 <div class="middle">
+
 <table class="table">
 	<tr class="trcolor">
 		<th><input type="hidden" value="No"></th>
@@ -114,7 +134,6 @@ th, td {
 	</tr>
 	</c:if>
 	<c:forEach items="${withmelist}" var="wlist">
-	<form action="<%=request.getContextPath()%>/withmelist/delete/${wlist.article_id}" method="post">
 	<tr>
 		<td><input type="hidden" value="${wlist.article_id}"></td>
 		<td width="15%">${wlist.country} ${wlist.city}</td>
@@ -138,27 +157,49 @@ th, td {
 		<c:if test="${wlist.category_style eq 5 }"><td width="5%">엑티비티</td></c:if>
 		<td width="10%"><input type="button" class="namebtn" id="${wlist.member_id}_namebtn" onclick="temp('${wlist.member_id}');" value="${wlist.name}"></td>
 		<td width="8%">${wlist.write_time}</td>
-		<td width="5%">상태</td>
+			<jsp:useBean id="today" class="java.util.Date" />
+				<c:if test="${today > wlist.end_date}" var="a">
+					<td width="5%"><font color="red">여행종료</font></td>
+				</c:if>
+				<c:if test="${not a}">
+					<c:if test="${login_member.member_id eq wlist.member_id}" var="me">
+						<td width="7%">신청불가</td>
+					</c:if>
+						<form name="wrForm" action="<%=request.getContextPath()%>/auth/withmelist/request" method="post">
+					<c:if test="${not me}">
+						<td width="5%"><span id="withme_request"><button type="submit" class="btn btn-success">신청하기</button></span></td>
+						 <input type="hidden" name="sender_id" value="${login_member.member_id}" />
+						 <input type="hidden" name="receiver_id" value="${wlist.member_id}" />
+						 <input type="hidden" name="country" value="${wlist.country }" />
+						 <input type="hidden" name="city" value="${wlist.city }" />
+						 <input type="hidden" name="start_date" value="${wlist.start_date }" />
+						 <input type="hidden" name="end_date" value="${wlist.end_date }" />
+					</c:if>
+						</form>
+				</c:if>
+		<form action="<%=request.getContextPath()%>/auth/withmelist/delete/${wlist.article_id}" method="post">
 		<c:if test="${login_member.member_id eq wlist.member_id}" var="r">
 		<td width="7%"><button type="submit" class="btn btn-default">삭제</button></td>
 		</c:if>
 		<c:if test="${not r}">
-		<td width="7%">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		<td width="7%">삭제불가</td>
 		</c:if>
+		</form>
 	</tr>
-	</form>
 	</c:forEach>
 </table>
 </div>
+
 	<div class="write_btn">
 		<a class="btn btn-primary" href="<%=request.getContextPath()%>/auth/transform" role="button">일정등록</a>
 	</div>
+
 <div class="bottom">
 <nav>
   <ul class="pagination">
   
   <c:if test="${ beforePageNo ne -1 }">
-    <li><a href="<%=request.getContextPath()%>/withmelist/${ beforePageNo }" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+    <li><a href="<%=request.getContextPath()%>/auth/withmelist/${ beforePageNo }" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
     </c:if>
     
   <c:forEach var="pageNo" begin="${ startPageNo }" end="${ endPageNo }">
@@ -166,12 +207,12 @@ th, td {
     <li class="active"><a href="#">${ pageNo }</a></li>
     </c:if>
     <c:if test="${ not r }">
-    <li><a href="<%=request.getContextPath()%>/withmelist/${ pageNo }">${ pageNo }</a></li>
+    <li><a href="<%=request.getContextPath()%>/auth/withmelist/${ pageNo }">${ pageNo }</a></li>
     </c:if>
   </c:forEach>
   
   <c:if test="${ afterPageNo ne -1 }">
-    <li><a href="<%=request.getContextPath()%>/withmelist/${ afterPageNo }" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+    <li><a href="<%=request.getContextPath()%>/auth/withmelist/${ afterPageNo }" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
 	</c:if>
 	
    </ul>

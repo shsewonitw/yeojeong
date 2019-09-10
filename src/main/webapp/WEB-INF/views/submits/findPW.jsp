@@ -30,7 +30,7 @@ $(function(){
 				</td>
 			</tr>
 			<tr>
-				<td><input type="submit" value="찾기"></td>
+				<td style="text-align: right;"><input type="submit" value="찾기"></td>
 				<td>
 					<button href="#" onclick="javascript:self.close();">닫기</button>
 				</td>

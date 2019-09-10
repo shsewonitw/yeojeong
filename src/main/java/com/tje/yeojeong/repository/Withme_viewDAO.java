@@ -60,6 +60,13 @@ public class Withme_viewDAO {
 		return this.jdbcTemplate.queryForObject(sql, Integer.class);
 	}
 	
+	// 안드로이드용 쿼리
+	public List<Withme_view> select(Withme_view obj){
+		String sql = "select * from withme_view where member_id != ?";
+		List<Withme_view> result = this.jdbcTemplate.query(sql,new Withme_viewRowMapper(),obj.getMember_id());
+		return result.isEmpty() ? null : result;
+	}
+	
 	// 리뷰 뷰 전체 리스트 검색
 	public List<Withme_view> selectAll(int page) {
 		String sql = "select * from withme_view order by write_time desc limit ?, ?";

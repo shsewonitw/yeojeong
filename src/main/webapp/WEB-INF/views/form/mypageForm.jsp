@@ -46,7 +46,7 @@ function mypage_delete_write(article_id){
 			success : function(data) {
 				if (eval(data)) {
 					alert("삭제를 완료했습니다.");
-					location.href = "http://192.168.0.87:8080/yeojeong/auth/mypage/${curPage}";
+					location.href = "http://localhost:8080/yeojeong/auth/mypage/${curPage}";
 				} else {
 					alert("삭제를 실패헀습니다.(관리자에게 문의하세요.)");
 				}
@@ -812,7 +812,7 @@ function removeAll(e){
 									<span><b>입국날짜&nbsp;&nbsp;&nbsp; : ${travelList.end_date }</b></span>
 								</div>
 								<div style="padding-left: 30px;">
-									<button type="button" onClick="location.href='http://192.168.0.87:8080/yeojeong/review'"  class="btn btn-primary">여행지 후기 등록</button>							
+									<button type="button" onClick="location.href='http://localhost:8080/yeojeong/review'"  class="btn btn-primary">여행지 후기 등록</button>							
 								</div>
 							</div>
 						</form>

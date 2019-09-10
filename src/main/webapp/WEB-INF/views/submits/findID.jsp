@@ -18,7 +18,7 @@
 	<form action="<%= request.getContextPath() %>/findID" method="post">
 		<table style="margin: auto;">
 			<tr>
-				<td colspan="2">이름  : <input type="text" name="name">
+				<td colspan="2">이름 &nbsp; : <input type="text" name="name">
 				</td>
 			</tr> 
 			<tr>

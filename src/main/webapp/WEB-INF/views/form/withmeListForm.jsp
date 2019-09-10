@@ -205,6 +205,7 @@ th, td {
 								<form class="cancelForm" name="cancelForm" action="<%=request.getContextPath()%>/auth/withmelist/cancel/${wlist.article_id}" method="post">
 										<td width="5%"><button type="submit" class="btn btn-default"><font color="#3498DB">신청취소</font></button></td>
 										<input type="hidden" name="member_id" value="${login_member.member_id}" />
+										
 								</form>
 								<%
 									}

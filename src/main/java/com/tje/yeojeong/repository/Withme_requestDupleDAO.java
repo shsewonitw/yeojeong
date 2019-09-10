@@ -39,6 +39,13 @@ public class Withme_requestDupleDAO {
 		return result;
 	}
 
+	public boolean deleteWhereRequestID(Withme_requestDuple obj) {
+		boolean result = false;
+		String sql = "delete from withme_requestduple where request_id = ?";
+		result = this.jdbcTemplate.update(sql, obj.getRequest_id()) == 0 ? false : true;
+		return result;
+	}
+	
 	// Member_id에 해당하는 여행지등록 정보 조회 - 시작 날짜 기준으로 오름차순
 
 	public List<Withme_requestDuple> selectWhereMember_id(Withme_requestDuple obj) {
@@ -52,6 +59,12 @@ public class Withme_requestDupleDAO {
 		}, obj.getMember_id());
 
 		return withme_requestDuple.isEmpty() ? null : withme_requestDuple;
+	}
+	
+	public int selectRequest_id(Withme_requestDuple obj) {
+		String sql = "select request_id from withme_requestduple where member_id = ? and article_id = ?";
+		int result = this.jdbcTemplate.queryForObject(sql, Integer.class, obj.getMember_id(), obj.getArticle_id());
+		return result;
 	}
 
 }

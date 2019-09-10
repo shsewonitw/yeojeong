@@ -2,6 +2,7 @@ package com.tje.yeojeong.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,7 +56,8 @@ public class WithmeController {
 	private WithmeRequestDuple_SelectService wmrdsService;
 	@Autowired
 	private WithmeRequest_LastInsertService wmrliService;
-	
+	@Autowired
+	private WithmeRequestDuple_SelectRequestIdService wrdsriService;
 	// 같이갈래 글 작성
 	@GetMapping("/auth/transform")
 	public String withmetransForm(Model model, HttpSession session) {
@@ -247,19 +249,7 @@ public class WithmeController {
 		 * 
 		 */
 		
-		Withme_requestDuple wrDuple = new Withme_requestDuple();
-//		wrDuple.setArticle_id(wmrliService.service());
 		
-		wrDuple.setMember_id(member.getMember_id());
-		
-		int article_id = 0 ;
-		try {
-		article_id = Integer.parseInt(strArticle_id);
-		} catch(Exception e) {
-			;
-		}
-		wrDuple.setArticle_id(article_id);
-		wmrdiService.service(wrDuple);
 		
 		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date start_date = null;
@@ -282,23 +272,45 @@ public class WithmeController {
 			values.put("withme_request", withme_request);
 			HashMap<String, Object> result = (HashMap<String, Object>)wriService.service(values);
 			model.addAttribute("result", result.get("result"));
-			System.out.println(wmrliService.service());
+			
+			int request_id = wmrliService.service();
+			
+			
+			Withme_requestDuple wrDuple = new Withme_requestDuple();
+			wrDuple.setMember_id(member.getMember_id());
+			int article_id = 0 ;
+			try {
+				article_id = Integer.parseInt(strArticle_id);
+			} catch(Exception e) {
+				;
+			}
+			wrDuple.setArticle_id(article_id);
+			wrDuple.setRequest_id(request_id);
+			wmrdiService.service(wrDuple);
+			
 		return "form/withmeRequestSubmit";
 	}
 	
 	// 동행신청 취소
 	@PostMapping("/auth/withmelist/cancel/{article_id}")
+	@Transactional
 	public String withmeCancel(
 			Model model, @PathVariable("article_id") int article_id, @RequestParam("member_id") String member_id) {
 		Withme_requestDuple wrduple = new Withme_requestDuple();
 		wrduple.setArticle_id(article_id);
 		wrduple.setMember_id(member_id);
-		wmrddService.service(wrduple);
+		int request_id = (int)wrdsriService.service(wrduple);
+		boolean flag1 = (boolean)wmrddService.service(wrduple);
 		
-		Withme_view withme_view = new Withme_view();
 		
-		model.addAttribute("result", wrduple.getArticle_id());
-		model.addAttribute("withme_view", withme_view);
+		
+		Withme_request withme_request = new Withme_request();
+		withme_request.setRequest_id(request_id);
+		boolean flag2 = (boolean)wrdService.service(withme_request);
+		
+		
+		model.addAttribute("result", flag1&&flag2);
+
 		
 		return "form/withmeCancelSubmit";
 	}

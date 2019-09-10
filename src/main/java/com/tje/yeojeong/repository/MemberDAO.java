@@ -81,6 +81,16 @@ public class MemberDAO {
 
 		}
 	}
+	public List<Member> selectOne_Name(Member obj) {
+		
+		try {
+			return this.jdbcTemplate.query("select * from member where name = ?", new MemberRowMapper(),
+					obj.getName());
+		} catch (Exception e) {
+			return null;
+
+		}
+	}
 
 	public List<Member> selectAll() {
 		List<Member> result = this.jdbcTemplate.query("select * from member", new MemberRowMapper());

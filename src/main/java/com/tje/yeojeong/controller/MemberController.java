@@ -33,6 +33,7 @@ import com.tje.yeojeong.service.MemberKAKAOInsertService;
 import com.tje.yeojeong.service.MemberLoginService;
 import com.tje.yeojeong.service.MemberSearchEmailService;
 import com.tje.yeojeong.service.MemberSearchIDService;
+import com.tje.yeojeong.service.MemberSearchNAMEService;
 import com.tje.yeojeong.service.ReviewCountByMemberService;
 import com.tje.yeojeong.service.ReviewSearchByMemberService;
 import com.tje.yeojeong.service.ReviewSelectWhereIdService;
@@ -80,6 +81,8 @@ public class MemberController {
 	private TravelRegistSelectService trssService;
 	@Autowired
 	private MemberSearchEmailService mseService;
+	@Autowired
+	private MemberSearchNAMEService msnService;
 	@Autowired
 	private PagingInfo pagingInfo;
 
@@ -223,14 +226,13 @@ public class MemberController {
 		List<String> countryList = (List<String>) cdsCountryService.service();
 		// 내여행 관련
 		model.addAttribute("countryList", countryList);
-		
-		// 내가 다녀온 곳 관련 
+
+		// 내가 다녀온 곳 관련
 		Travel_end travelend = new Travel_end();
 		travelend.setMember_id(member.getMember_id());
 		List<Travel_end> TravelendList = (List<Travel_end>) tesiService.service(travelend);
 		// 내여행 관련
 		model.addAttribute("TravelendList", TravelendList);
-
 
 		HashMap<String, Object> args = new HashMap<String, Object>();
 		args.put("curPageNo", page);
@@ -274,13 +276,12 @@ public class MemberController {
 		return "form/mypageForm";
 	}
 
-
 	@PostMapping("/auth/mypageTravelRegistDelete")
 	@ResponseBody
 	public String mypageTravelRegistDelete_Submit(HttpSession session, @RequestBody Travel_regist travelRegist) {
-		
+
 		boolean result_flag = (Boolean) trdService.service(travelRegist);
-		List<Travel_regist> count= (List<Travel_regist>)trssService.service();
+		List<Travel_regist> count = (List<Travel_regist>) trssService.service();
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put("result", result_flag);
 		result.put("count", count);
@@ -295,12 +296,11 @@ public class MemberController {
 
 		return result;
 	}
-	
+
 	@PostMapping("/regist_app")
 	@ResponseBody
 	public boolean regist_Regular_appt(HttpServletRequest request, Model model, @RequestBody Member member) {
-		
-		
+
 		return (Boolean) miService.service(member);
 	}
 
@@ -311,14 +311,19 @@ public class MemberController {
 	}
 
 	@PostMapping("/findID")
-	public String find_Submit(Member member) {
+	public String find_Submit(Member member, Model model) {
 
-		msiService.service(member);
-		mseService.service(member);
-		
-		System.out.println(member.getEmail());
-		System.out.println(member.getName());
-		return "submits/findID";
+		if (msnService.service(member) == null || member.getName().length() == 0 || mseService.service(member) == null
+				|| member.getEmail().length() == 0) {
+			String id_result = "일치하는 아이디가 없습니다.";
+			model.addAttribute("id_result", id_result);
+			return "submits/findID";
+		} else {
+			List<Member> result = (List<Member>) mseService.service(member);
+			model.addAttribute("member_result", result.get(0));
+			return "submits/findID_sub";
+		}
+
 	}
 
 	@GetMapping("/findPW")
@@ -328,10 +333,18 @@ public class MemberController {
 	}
 
 	@PostMapping("/findPW")
-	public String find_Sumit() {
+	public String findPW_Sumit(Member member, Model model) {
+		if (msiService.service(member) == null || mseService.service(member) == null
+				|| member.getEmail().length() == 0) {
+			String id_result = "일치하는 아이디가 없습니다.";
+			model.addAttribute("id_result", id_result);
+			return "submits/findPW";
+		} else {
+			List<Member> result = (List<Member>) mseService.service(member);
+			model.addAttribute("member_result", result.get(0));
+			return "submits/findPW_sub";
+		}
 
-		return "submits/findPW";
 	}
 
-	
 }

@@ -33,9 +33,11 @@ public class Android_WithMeController {
 	
 	@GetMapping(value="/android_withme_article",produces="application/json; charset=utf8")
 	@ResponseBody
-	public String withme_article() {
+	public String withme_article(
+			@RequestParam(value="member_id") String member_id) {
 		Withme_view obj = new Withme_view();
-		obj.setMember_id(null);
+		System.out.println("안드로이드에서 온 아이디: "+member_id);
+		obj.setMember_id(member_id);
 		List<Withme_view> list = wmsService.service(obj);	
 		
 		String result = gson.toJson(list);

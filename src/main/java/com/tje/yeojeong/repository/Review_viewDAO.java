@@ -2,6 +2,7 @@ package com.tje.yeojeong.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +51,12 @@ public class Review_viewDAO {
 				(page-1)*this.pagingInfo.getPagingSize(),this.pagingInfo.getPagingSize());
 		return result.isEmpty() ? null : result;
 	}
+	
+	public List<Review_view> selectAll() {
+		String sql = "select * from Review_view order by write_time desc";
+		List<Review_view> result = this.jdbcTemplate.query(sql, new Review_viewRowMapper());
+		return result.isEmpty() ? null : result;
+	}
 
 	// 아이디로 리뷰 뷰 리스트 검색
 	public List<Review_view> selectWhereId(Review_view obj) {
@@ -94,7 +101,7 @@ public class Review_viewDAO {
 		Review_view result = this.jdbcTemplate.queryForObject(sql, new Review_viewRowMapper(), obj.getArticle_id());
 		return result;
 	}
-
+	
 	// 조회수
 	public int AticleCount(Review_view obj) {
 		String sql = "update Review_article set read_count = read_count + 1 where article_id = ?";

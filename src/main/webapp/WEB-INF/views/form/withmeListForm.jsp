@@ -205,7 +205,6 @@ th, td {
 								<form class="cancelForm" name="cancelForm" action="<%=request.getContextPath()%>/auth/withmelist/cancel/${wlist.article_id}" method="post">
 										<td width="5%"><button type="submit" class="btn btn-default"><font color="#3498DB">신청취소</font></button></td>
 										<input type="hidden" name="member_id" value="${login_member.member_id}" />
-										
 								</form>
 								<%
 									}
@@ -215,7 +214,7 @@ th, td {
 				</c:if>
 		<form action="<%=request.getContextPath()%>/auth/withmelist/delete/${wlist.article_id}" method="post">
 			<c:if test="${login_member.member_id eq wlist.member_id}" var="r">
-			<td width="7%"><button type="submit" class="btn btn-danger">삭제</font></td>
+			<td width="7%"><button type="submit" class="btn btn-danger">삭제</button></td>
 			</c:if>
 			<c:if test="${not r}">
 			<td width="7%"><button class="btn btn-default" disabled>삭제</button></td>
@@ -225,10 +224,6 @@ th, td {
 	</c:forEach>
 </table>
 </div>
-
-	<div class="write_btn">
-		<a class="btn btn-primary" href="<%=request.getContextPath()%>/auth/transform" role="button">일정등록</a>
-	</div>
 
 <div class="bottom">
 <nav>

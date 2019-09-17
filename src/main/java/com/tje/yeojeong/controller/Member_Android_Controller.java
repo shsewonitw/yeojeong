@@ -83,6 +83,7 @@ public class Member_Android_Controller {
 
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		if (session.getAttribute("login_member") != null) {
+			login_flag = true;
 			result.put("result", login_flag);
 			result.put("login_message", "이미 접속중인 아이디 입니다.");
 			return result;
@@ -126,7 +127,7 @@ public class Member_Android_Controller {
 	}
 
 	private HashMap<String, Object> mypageForm(Integer page, Model model, HttpSession session) {
-		
+		System.out.println(111);
 		HashMap<String, Object> android_result = new HashMap<String, Object>();
 		
 		Review_view review_view = new Review_view();

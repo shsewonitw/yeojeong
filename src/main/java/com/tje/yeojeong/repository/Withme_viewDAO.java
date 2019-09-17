@@ -40,8 +40,9 @@ public class Withme_viewDAO {
 	// 게시글 작성
 	public boolean insert(Withme_view obj) {
 		boolean result = false;
-		String sql = "insert into withme_article values(null,?,?,?,?,?,?,?,?,now(),?)";
+		String sql = "insert into withme_article values(?,?,?,?,?,?,?,?,?,now(),?)";
 		result = this.jdbcTemplate.update(sql, 
+			obj.getArticle_id(),
 			obj.getMember_id(), obj.getCountry(),obj.getCity(), 
 			obj.getStart_date(), obj.getEnd_date(), obj.getCategory_gender(), 
 			obj.getCategory_age(), obj.getCategory_style(),obj.getTravel_id()) == 1? true : false;
@@ -58,6 +59,13 @@ public class Withme_viewDAO {
 	public int withme_viewCount() {
 		String sql = "select count(*) from withme_view";
 		return this.jdbcTemplate.queryForObject(sql, Integer.class);
+	}
+	
+	// 안드로이드용 쿼리
+	public List<Withme_view> select(Withme_view obj){
+		String sql = "select * from withme_view where member_id != ?";
+		List<Withme_view> result = this.jdbcTemplate.query(sql,new Withme_viewRowMapper(),obj.getMember_id());
+		return result.isEmpty() ? null : result;
 	}
 	
 	// 리뷰 뷰 전체 리스트 검색

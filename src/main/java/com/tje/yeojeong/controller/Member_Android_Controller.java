@@ -83,7 +83,11 @@ public class Member_Android_Controller {
 
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		if (session.getAttribute("login_member") != null) {
+<<<<<<< HEAD
 			login_flag = true;
+=======
+			login_flag=true;
+>>>>>>> 436bf0aee02fe34feecaec5e94f23679b86f4cf2
 			result.put("result", login_flag);
 			result.put("login_message", "이미 접속중인 아이디 입니다.");
 			return result;
@@ -109,6 +113,18 @@ public class Member_Android_Controller {
 		return result;
 	}
 
+	@PostMapping("/android_logout")
+	@ResponseBody
+	public HashMap<String, Object> android_logout_sumit(HttpSession session) {
+		
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		
+		if(session.getAttribute("login_member") != null) {
+			result.put("result", "true");
+		}
+		
+		return result;
+	}
 	
 
 	@PostMapping("/auth/mypage")

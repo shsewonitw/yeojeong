@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,10 +19,12 @@ import com.google.gson.JsonObject;
 import com.tje.yeojeong.model.Member;
 import com.tje.yeojeong.model.Review_view;
 import com.tje.yeojeong.model.Withme_request;
+import com.tje.yeojeong.model.Withme_requestDuple;
 import com.tje.yeojeong.service.MemberChangeTelService;
 import com.tje.yeojeong.service.MemberSearchEmailService;
 import com.tje.yeojeong.service.MemberSearchIDService;
 import com.tje.yeojeong.service.Review_Mypage_DeleteService;
+import com.tje.yeojeong.service.WithmeRequestDuple_DeleteWhereReqeustIdService;
 import com.tje.yeojeong.service.WithmeRequest_DeleteService;
 import com.tje.yeojeong.service.WithmeRequest_UpdateStatusService;
 
@@ -46,6 +49,9 @@ public class MemberExtraController {
 	@Autowired
 	private Review_Mypage_DeleteService rmdService;
 
+	@Autowired
+	private WithmeRequestDuple_DeleteWhereReqeustIdService wrddwriService;
+	
 	@PostMapping("/searchID")
 	@ResponseBody
 	public boolean login_search(@RequestParam("member_id") String member_id) {
@@ -111,6 +117,7 @@ public class MemberExtraController {
 
 	@PostMapping("/auth/deleteWithMeRquest")
 	@ResponseBody
+	@Transactional
 	public String deleteWithMeRquest(@RequestParam String request_id_val, @RequestParam String div, HttpSession session,
 			HttpServletResponse response) {
 
@@ -119,7 +126,12 @@ public class MemberExtraController {
 		withme_request.setRequest_id(request_id);
 		boolean result = (Boolean) wrdService.service(withme_request);
 
-		String jsonTxt = "{\"result\":\"" + result + "\", \"div\":\"" + div + "\"}";
+		
+		Withme_requestDuple withme_requestDuple = new Withme_requestDuple();
+		withme_requestDuple.setRequest_id(request_id);
+		boolean result2 = (boolean) wrddwriService.service(withme_requestDuple);
+		System.out.println(result+", "+ result2);
+		String jsonTxt = "{\"result\":\"" + (result&&result2) + "\", \"div\":\"" + div + "\"}";
 
 		return jsonTxt;
 	}

@@ -16,7 +16,7 @@ public class Review_DetileService {
 	
 	public Object service(HashMap<String, Object> values) {
 		
-HashMap<String, Object> result = new HashMap<>();
+		HashMap<String, Object> result = new HashMap<>();
 		
 		Review_view review = (Review_view)values.get("review");
 		
@@ -25,4 +25,10 @@ HashMap<String, Object> result = new HashMap<>();
 				
 		return result;
 	}
+	
+	public Review_view service(Object values) {
+		
+		return reviewDAO.selectAticleId((Review_view) values);
+	}
+
 }

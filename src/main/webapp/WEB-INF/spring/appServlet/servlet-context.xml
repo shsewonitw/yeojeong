@@ -33,6 +33,7 @@
 	<context:component-scan base-package="com.tje.yeojeong.controller" />
 	<context:component-scan base-package="com.tje.yeojeong.repository" />
 	<context:component-scan base-package="com.tje.yeojeong.setting" />
+	<context:component-scan base-package="com.tje.yeojeong.appcontroller" />
 	
 	<beans:bean id="pagingInfo" class="com.tje.yeojeong.setting.PagingInfo"
 	p:pagingSize="5" p:pageRange="5" />

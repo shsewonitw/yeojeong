@@ -11,6 +11,8 @@ import com.tje.yeojeong.model.Member;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter{
 
+	
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {

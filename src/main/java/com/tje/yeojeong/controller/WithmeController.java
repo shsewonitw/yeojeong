@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.tje.yeojeong.service.*;
@@ -193,7 +194,6 @@ public class WithmeController {
 		
 		List<Withme_requestDuple> temp =
 		(List<Withme_requestDuple>)wmrdsService.service(wrDuple);
-//		System.out.println("제발: "+temp.get(1)	);
 		return "form/withmeListForm";
 	}
 	
@@ -209,6 +209,7 @@ public class WithmeController {
 			Model model, HttpSession session) {
 		return withmeListForm(1, model, session);
 	}
+	
 	// 게시글 삭제
 	@PostMapping("/auth/withmelist/delete/{article_id}")
 	public String withmeDelete(

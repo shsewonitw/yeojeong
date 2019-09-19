@@ -1,3 +1,7 @@
+<%@page import="com.tje.yeojeong.model.Member"%>
+<%@page import="com.tje.yeojeong.model.Message"%>
+<%@page import="com.tje.yeojeong.service.MessageCountByReadService"%>
+<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -46,6 +50,9 @@
 
 	</script>
 </head>
+
+
+
 <body>
 <div class="dropmenu" style="z-index:200;position:absolute; background-color:black; width:100%; height:170px; opacity:0.2; transition:all 0.4s ease-out;text-align:center;" id="menu">
 	<a href="<%= request.getContextPath()%>"><img src="<%=request.getContextPath()%>/resources/img/yeojeongtitle2.png" style="height: 50%;"></a>

@@ -68,7 +68,7 @@ public class Withme_viewDAO {
 		return result.isEmpty() ? null : result;
 	}
 	
-	// 리뷰 뷰 전체 리스트 검색
+	// 같이갈래 전체 리스트 검색
 	public List<Withme_view> selectAll(int page) {
 		String sql = "select * from withme_view order by write_time desc limit ?, ?";
 		List<Withme_view> result = this.jdbcTemplate.query(sql, new Withme_viewRowMapper(),

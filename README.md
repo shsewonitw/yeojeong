@@ -6,7 +6,7 @@
 
 여행자들의 스케줄 관리, 동행자 구하기 서비스, 공항 정보 등 제공
 
-![main-image][./pics/main.gif]
+![main-image](./pics/main.gif)
 
 ## DATABASE
 

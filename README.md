@@ -15,4 +15,4 @@
 [데이터베이스 쿼리문 보기](https://github.com/shsewonitw/yeojeong/blob/master/docs/yeojeong_sql.sql)
 
 
-[main-image]: ./pics/main.gif
+[main-image]: pics/main.gif

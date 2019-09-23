@@ -22,7 +22,7 @@
 
 ## 사용 예제
 
-#### 메인화면
+> 메인화면
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
@@ -34,7 +34,7 @@
 
 
 
-#### 로그인
+> 로그인
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">

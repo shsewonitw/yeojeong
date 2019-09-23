@@ -26,7 +26,9 @@
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
+ 
 ![](./pics/main.gif)
+
 </div>
 </details>
 

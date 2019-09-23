@@ -33,7 +33,7 @@
 </details>
 
 
-
+  
 > 로그인
 <details>
 <summary>이미지 보기/숨기기</summary>
@@ -44,7 +44,7 @@
 </div>
 </details>
 
-
+  
 > 여행등록 & 정보
 <details>
 <summary>이미지 보기/숨기기</summary>

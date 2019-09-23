@@ -24,9 +24,7 @@
 
 > 메인화면
 <details>
- <font size="2px">
  <summary>이미지 보기/숨기기</summary>
-  </font>
 <div markdown="1">
  
 ![](./pics/main.gif)
@@ -47,7 +45,7 @@
 </details>
 
 
-#### 여행등록 & 정보
+> 여행등록 & 정보
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
@@ -58,7 +56,7 @@
 </details>
 
 
-#### 동행자 구하기
+> 동행자 구하기
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
@@ -69,7 +67,7 @@
 </details>
 
 
-#### 후기 게시판
+> 후기 게시판
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
@@ -80,7 +78,7 @@
 </details>
 
 
-#### 공항정보
+> 공항정보
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
@@ -91,7 +89,7 @@
 </details>
 
 
-#### 자주묻는 질문
+> 자주묻는 질문
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
@@ -102,7 +100,7 @@
 </details>
 
 
-#### 관리자로그인
+> 관리자로그인
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
@@ -113,7 +111,7 @@
 </details>
 
 
-#### 도시 정보 등록
+> 도시 정보 등록
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
@@ -124,7 +122,7 @@
 </details>
 
 
-#### 회원관리
+> 회원관리
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
@@ -135,7 +133,7 @@
 </details>
 
 
-#### 소켓통신기반 채팅
+> 소켓통신기반 채팅
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">

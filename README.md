@@ -24,7 +24,7 @@
 
 > 메인화면
 <details>
-<summary>이미지 보기/숨기기</summary>
+ <summary><font size="1">이미지 보기/숨기기</font></summary>
 <div markdown="1">
  
 ![](./pics/main.gif)

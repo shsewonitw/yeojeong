@@ -38,7 +38,9 @@
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
+ 
 ![](./pics/login.gif)
+
 </div>
 </details>
 
@@ -47,7 +49,9 @@
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
+ 
 ![](./pics/travel.gif)
+
 </div>
 </details>
 
@@ -56,7 +60,9 @@
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
+ 
 ![](./pics/withme.gif)
+
 </div>
 </details>
 
@@ -65,7 +71,9 @@
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
+ 
 ![](./pics/review.gif)
+
 </div>
 </details>
 
@@ -74,7 +82,9 @@
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
+ 
 ![](./pics/airport.gif)
+
 </div>
 </details>
 
@@ -83,7 +93,9 @@
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
+ 
 ![](./pics/qna.gif)
+
 </div>
 </details>
 
@@ -92,7 +104,9 @@
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
+ 
 ![](./pics/adminLogin.gif)
+
 </div>
 </details>
 
@@ -101,7 +115,9 @@
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
+ 
 ![](./pics/cityregist.gif)
+
 </div>
 </details>
 
@@ -110,7 +126,9 @@
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
+ 
 ![](./pics/user.gif)
+
 </div>
 </details>
 
@@ -119,7 +137,9 @@
 <details>
 <summary>이미지 보기/숨기기</summary>
 <div markdown="1">
+ 
 ![](./pics/chatting.gif)
+
 </div>
 </details>
 

@@ -23,8 +23,16 @@
 ## 사용 예제
 
 #### 메인화면
+<details>
+<summary>이미지 보기</summary>
+<div markdown="1">
 
 ![](./pics/main.gif)
+
+</div>
+</details>
+
+
 
 #### 로그인
 
@@ -67,14 +75,4 @@
 ![](./pics/chatting.gif)
 
 
-<details>
-<summary>접기/펼치기 버튼</summary>
-<div markdown="1">
 
-|제목|내용|
-|--|--|
-|1|1|
-|2|10|
-
-</div>
-</details>

@@ -22,7 +22,7 @@
 
 ## 사용 예제
 
-> 메인화면
+## > 메인화면
 <details>
  <summary><font size="1px">이미지 보기/숨기기</font></summary>
 <div markdown="1">

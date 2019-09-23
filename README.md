@@ -6,4 +6,13 @@
 
 여행자들의 스케줄 관리, 동행자 구하기 서비스, 공항 정보 등 제공
 
-![](./pics/main.gif)
+![main-image](./pics/main.gif)
+
+## DATABASE
+
+[데이터베이스 설계 Detail 다운로드 (xlsx파일)](https://github.com/shsewonitw/yeojeong/raw/master/docs/yeojoeng_db.xlsx)
+
+[데이터베이스 쿼리문 보기](https://github.com/shsewonitw/yeojeong/blob/master/docs/yeojeong_sql.sql)
+
+
+
